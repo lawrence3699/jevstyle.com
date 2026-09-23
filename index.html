@@ -235,8 +235,8 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
 .cta-acts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .cta .pill.soft{background:var(--bg)}
 .cta .pill.soft:hover{background:var(--soft2)}
-.cta-p{font-size:14px;color:var(--ink2);display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px}
-.mail{font:13px/1.5 var(--mono);color:var(--ink);user-select:all}
+.cta-p{font-size:15px;line-height:1.6;color:var(--ink2);max-width:62ch;text-wrap:balance}
+.mail{font-weight:500;color:var(--ink);user-select:all;overflow-wrap:anywhere}
 .typein{background:linear-gradient(var(--ink),var(--ink)) no-repeat 0 0/100% 100%,linear-gradient(var(--ink3),var(--ink3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .typein.go{animation:type 1.6s cubic-bezier(.6,0,.4,1) both}
 @keyframes type{from{background-size:0% 100%,auto}}
@@ -418,7 +418,7 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
       <button type="button" class="pill soft" id="copyEmail" data-i18n="final.mail"></button>
       <a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a>
     </div>
-    <p class="cta-p"><span data-i18n="cta.p"></span><span class="mail" id="email"></span></p>
+    <p class="cta-p"><span><span data-i18n="cta.p"></span><span class="mail" id="email"></span><span data-i18n="cta.end"></span></span></p>
   </section>
 </main>
 
@@ -473,7 +473,7 @@ en:{
  "feat.macjev":"MacJev 322M: decisions on your own Mac","feat.v2":"Decision 2B v2: calibrated English classification","feat.eval":"v2 evaluated on held-out tasks","feat.v1":"Decision 2B v1: the first release","tasks":"held-out tasks",
  "sec.releases":"Recent releases","sec.bench":"Benchmarks","sec.dev":"Run it locally","sec.road":"Roadmap",
  "viewall":"View all","dl30":"downloads · 30 days","dev.repo":"Open repository",
- "cta.h":"Get started with JevStyle","cta.p":"Open to internships, jobs and research collaboration.","final.mail":"Copy email",
+ "cta.h":"Get started with JevStyle","cta.p":"I welcome internship, employment, and research collaboration opportunities. Please contact me at ","cta.end":".","final.mail":"Copy email",
  "f.models":"Models","f.formats":"Formats","f.research":"Research","f.dev":"Developers","f.comm":"Community","f.calib":"Calibration","f.contact":"Contact",
  "prev":"Previous","next":"Next","lang.name":"English",
  "one.macjev":"Decisions for local Mac agents.","one.v2":"Calibrated English classification.","one.v1":"First release. Superseded by v2.",
@@ -511,7 +511,7 @@ zh:{
  "feat.macjev":"MacJev 322M：在你自己的 Mac 上做决定","feat.v2":"Decision 2B v2：概率校准的英文分类","feat.eval":"v2 在留出任务上的评测","feat.v1":"Decision 2B v1：首个版本","tasks":"个留出任务",
  "sec.releases":"最新发布","sec.bench":"评测","sec.dev":"本地运行","sec.road":"路线图",
  "viewall":"查看全部","dl30":"次下载 · 近 30 天","dev.repo":"打开仓库",
- "cta.h":"开始使用 JevStyle","cta.p":"欢迎实习、工作与科研合作。","final.mail":"复制邮箱",
+ "cta.h":"开始使用 JevStyle","cta.p":"欢迎提供实习、工作及科研合作机会，请邮件联系：","cta.end":"。","final.mail":"复制邮箱",
  "f.models":"模型","f.formats":"格式","f.research":"研究","f.dev":"开发者","f.comm":"社区","f.calib":"校准","f.contact":"联系",
  "prev":"上一个","next":"下一个","lang.name":"简体中文",
  "one.macjev":"本地 Mac agent 的决策模型。","one.v2":"概率校准的英文分类模型。","one.v1":"首个版本，已由 v2 取代。",
@@ -537,7 +537,7 @@ zh:{
 
 let lang;
 try { lang = localStorage.getItem('lang'); } catch(e) {}
-if (lang !== 'en' && lang !== 'zh') lang = (navigator.language||'').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+if (lang !== 'en' && lang !== 'zh') lang = 'en';   // English by default; 中文 only when the visitor picks it
 const t = k => I18N[lang][k] ?? I18N.en[k] ?? k;
 const pct = (v,d=1) => (v*100).toFixed(d)+'%';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
