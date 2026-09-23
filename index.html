@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://jevstyle.com/">
+<title>JevStyle Decision Models</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Small, calibrated decision models that run on your own machine.">
+<meta property="og:title" content="JevStyle Decision Models">
+<meta property="og:description" content="Small, calibrated decision models that run on your own machine.">
+<meta property="og:url" content="https://jevstyle.com/">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --ink:#0D0D0F; --ink2:#5E5E66; --ink3:#8E8E96; --line:#ECECEF; --soft:#F3F3F5; --soft2:#E4E4E8; --cell:#FFFFFF;
+  --acc:#3456F0; --acc-ink:#2340D0; --t4:#A7B3D3; --muted:#D6D6DC; --flash:#7F99FF; --splash:rgba(13,13,15,.05);
+  --shadow:0 0 0 1px rgba(13,13,15,.06),0 10px 44px -14px rgba(13,13,15,.16);
+  --shadow-f:0 0 0 1px rgba(13,13,15,.22),0 10px 44px -14px rgba(13,13,15,.2);
+  --code-bg:#0E0E11;
+  --sans:"Figtree","PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --ease:cubic-bezier(.4,0,.2,1); --out:cubic-bezier(.2,.8,.2,1);
+  --hdr:64px; --g:24px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0A0A0B; --ink:#F1F1F3; --ink2:#A2A2AA; --ink3:#72727A; --line:#232327; --soft:#18181B; --soft2:#27272C; --cell:#111113;
+    --acc:#8198FF; --acc-ink:#A5B5FF; --t4:#5B6685; --muted:#3A3A40; --flash:#6F88FF; --splash:rgba(255,255,255,.05);
+    --shadow:0 0 0 1px rgba(255,255,255,.08),0 10px 44px -14px rgba(0,0,0,.7);
+    --shadow-f:0 0 0 1px rgba(255,255,255,.28),0 10px 44px -14px rgba(0,0,0,.7);
+    --code-bg:#141417;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0A0A0B; --ink:#F1F1F3; --ink2:#A2A2AA; --ink3:#72727A; --line:#232327; --soft:#18181B; --soft2:#27272C; --cell:#111113;
+  --acc:#8198FF; --acc-ink:#A5B5FF; --t4:#5B6685; --muted:#3A3A40; --flash:#6F88FF; --splash:rgba(255,255,255,.05);
+  --shadow:0 0 0 1px rgba(255,255,255,.08),0 10px 44px -14px rgba(0,0,0,.7);
+  --shadow-f:0 0 0 1px rgba(255,255,255,.28),0 10px 44px -14px rgba(0,0,0,.7);
+  --code-bg:#141417;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
+h1,h2,h3{margin:0;font-weight:500;letter-spacing:-.02em;text-wrap:balance}
+:lang(zh) h1,:lang(zh) h2,:lang(zh) h3{letter-spacing:0}
+p{margin:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1600px;margin:0 auto;padding-inline:clamp(16px,2.3vw,32px)}
+.num{font-variant-numeric:tabular-nums}
+section[id]{scroll-margin-top:calc(var(--hdr) + 24px)}
+main{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(80px,9vw,128px)}
+main > section{min-width:0}
+
+/* header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);transition:box-shadow .2s var(--ease)}
+.hdr.scrolled{box-shadow:0 1px 0 var(--line)}
+.hdr-in{display:flex;align-items:center;gap:6px;height:var(--hdr)}
+.brand{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:18px;letter-spacing:-.03em;margin-right:24px}
+.brand svg{width:20px;height:20px;flex:none}
+.nav{display:flex;gap:2px}
+.nav a{font-size:13.5px;font-weight:500;padding:8px 12px;border-radius:999px;transition:background .2s var(--ease)}
+.nav a:hover{background:var(--soft)}
+.icon-btn{display:inline-grid;place-items:center;width:36px;height:36px;flex:none;border:0;border-radius:999px;background:none;color:var(--ink);transition:background .2s var(--ease)}
+.icon-btn:hover{background:var(--soft)}
+.icon-btn svg{width:18px;height:18px}
+.sp{flex:1}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:999px;border:0;font-size:14px;font-weight:500;white-space:nowrap;transition:background .2s var(--ease),opacity .2s var(--ease)}
+.pill.soft{background:var(--soft);color:var(--ink)}
+.pill.soft:hover{background:var(--soft2)}
+.pill.dark{background:var(--ink);color:var(--bg)}
+.pill.dark:hover{opacity:.84}
+.pill svg{width:16px;height:16px}
+.ne{display:inline-block;transition:transform .2s var(--ease)}
+a:hover > .ne,button:hover > .ne{transform:translate(2px,-2px)}
+.menu-btn{display:none}
+@media (max-width:900px){.nav,#hfTop{display:none}.menu-btn{display:inline-grid}.brand{margin-right:0}}
+.mnav{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + var(--hdr));bottom:0;z-index:29;background:var(--bg);padding:12px clamp(16px,2.3vw,32px) calc(32px + env(safe-area-inset-bottom,0px));overflow-y:auto;animation:mnav-in .35s var(--out)}
+.mnav nav{display:flex;flex-direction:column}
+.mnav nav a{font-size:28px;font-weight:500;letter-spacing:-.02em;padding:8px 0;animation:fade-rise .5s var(--out) both;animation-delay:calc(var(--i)*45ms)}
+.mnav-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+@keyframes mnav-in{from{opacity:0;transform:translateY(-8px)}}
+@keyframes fade-rise{from{opacity:0;transform:translateY(12px)}}
+@keyframes fade-in{from{opacity:0}}
+
+/* hero: word reveal, model switcher with countdown, live stage */
+.hero{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;text-align:center;padding-block:clamp(48px,9vh,104px) 0}
+.hero::before{content:"";position:absolute;left:50%;top:12%;width:min(1100px,100%);aspect-ratio:2.4;transform:translate(-50%,-50%);background:radial-gradient(closest-side,var(--splash),transparent);z-index:-1;pointer-events:none}
+.hero h1{font-size:clamp(28px,3vw,40px);line-height:1.15}
+.w{display:inline-block;white-space:pre}
+.w.go{animation:w-in .7s var(--out) both,w-flash 1.2s ease-out backwards;animation-delay:var(--d),var(--d)}
+@keyframes w-in{0%{opacity:0;transform:translateY(6px)}.01%{opacity:1}100%{opacity:1;transform:none}}
+@keyframes w-flash{0%{color:var(--flash)}}
+.tabs.mtabs{flex-wrap:wrap;justify-content:center;overflow:visible;margin:24px 0 0;animation:fade-rise .8s var(--out) .3s both}
+.stage{width:100%;margin-top:28px;text-align:left;animation:fade-rise .9s var(--out) .45s both}
+.stage .fx-wrap{aspect-ratio:12/5}
+.stage-info{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:24px 48px;align-items:start;margin-top:24px}
+.st-name{font-size:clamp(24px,2.4vw,34px);line-height:1.15}
+.st-one{color:var(--ink2);margin-top:8px}
+.st-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.pill .ar{display:inline-block;transition:transform .2s var(--ease)}
+.pill:hover .ar{transform:translateX(3px)}
+.specs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:0}
+.specs div{background:var(--soft);border-radius:14px;padding:14px 16px;min-width:0}
+.specs dt{font-size:12.5px;line-height:1.3;color:var(--ink2)}
+.specs dd{margin:8px 0 0;font-size:clamp(20px,1.7vw,26px);line-height:1.1;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.swap-in{animation:swap .5s var(--out)}
+@keyframes swap{from{opacity:0;transform:translateY(8px)}}
+@media (max-width:1023px){.stage .fx-wrap{aspect-ratio:16/9}.stage-info{grid-template-columns:1fr}}
+@media (max-width:640px){.tabs.mtabs{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;max-width:100%;gap:4px}.tabs.mtabs > :first-child{margin-left:auto}.tabs.mtabs > :last-child{margin-right:auto}.tabs.mtabs .tab{padding:0 11px;font-size:13px}.stage .fx-wrap{aspect-ratio:4/5}.specs{grid-template-columns:repeat(2,minmax(0,1fr))}.specs div:last-child{grid-column:1/-1}}
+
+/* shared: media tiles, meta lines, section heads */
+.media{position:relative;overflow:hidden;border-radius:8px;aspect-ratio:1/1;max-width:100%;background:var(--soft);isolation:isolate}
+.media.wide{aspect-ratio:4/3}
+.mi{position:absolute;inset:0;transition:transform .3s var(--ease)}
+a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
+.art{position:absolute;left:-15%;top:-15%;width:130%;height:130%;display:block;animation:fade-in .9s ease-out both,drift var(--dur,24s) ease-in-out var(--dl,0s) infinite alternate}
+@keyframes drift{from{transform:translate(-3%,-2%) rotate(-3deg)}to{transform:translate(3%,2%) rotate(4deg) scale(1.08)}}
+.media::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.32;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ov{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:12px;padding:clamp(14px,1.7vw,24px);color:#0D0D0F}
+.ov .big{font-size:clamp(40px,4.6vw,72px);font-weight:500;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.ovs{font-size:14px;font-weight:500}
+.ovtag{font-size:12.5px;font-weight:500;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:5px 10px;border-radius:999px;color:#0D0D0F}
+.meta{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:13.5px;color:var(--ink2);margin-top:8px}
+.meta b{font-weight:500;color:var(--ink)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;margin-bottom:28px}
+.sec-head h2{font-size:22px;line-height:1.25}
+.sec-aside{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2)}
+.more{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:500;color:var(--ink);padding:8px 12px;border-radius:999px;transition:background .2s var(--ease)}
+.more:hover{background:var(--soft)}
+.card-t{font-size:17px;line-height:1.3;letter-spacing:-.01em;margin-top:14px;overflow-wrap:anywhere}
+
+/* live stage canvas */
+.fx-wrap{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:8px;overflow:hidden;background:#06070C}
+.fx-wrap canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.lab{position:absolute;top:50%;z-index:1;transform:translateY(-50%);font-size:clamp(30px,5vw,84px);font-weight:500;letter-spacing:-.035em;line-height:1;color:#fff;pointer-events:none;white-space:nowrap;will-change:transform,opacity}
+.lab.l{left:5.5%}.lab.r{right:5.5%}
+.lab span{display:inline-block}
+.fx-wrap.anim:not(.go) .lab span{opacity:0}
+.fx-wrap.go .lab span{animation:lab-in 1.1s var(--out) both;animation-delay:var(--d)}
+@keyframes lab-in{from{opacity:0;filter:blur(10px);transform:translateY(10px)}}
+.fx-cap{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;justify-content:space-between;gap:12px;padding:14px 18px;font:500 11.5px/1 var(--mono);letter-spacing:.04em;color:rgba(255,255,255,.55);pointer-events:none}
+@media (max-width:640px){.fx-cap span:nth-child(2){display:none}}
+
+/* all models */
+.filters{display:flex;flex-wrap:wrap;gap:4px}
+.fbtn{height:34px;padding:0 14px;border-radius:999px;border:0;background:none;font-size:13.5px;font-weight:500;color:var(--ink2);transition:background .2s var(--ease),color .2s var(--ease)}
+.fbtn:hover{color:var(--ink)}
+.fbtn span{margin-left:6px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.fbtn[aria-pressed="true"]{background:var(--soft);color:var(--ink)}
+.mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px var(--g)}
+@media (max-width:1023px){.mgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.mgrid{grid-template-columns:1fr;gap:36px}}
+.mcard{position:relative;min-width:0}
+.mt{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;letter-spacing:inherit;text-align:left;cursor:pointer}
+.mt::after{content:"";position:absolute;inset:0;z-index:3}
+.mt:focus-visible{outline:none}
+.mcard:has(.mt:focus-visible){outline:2px solid var(--acc);outline-offset:6px;border-radius:10px}
+.fchips{position:relative;z-index:4;display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.fchips a{font-size:12.5px;font-weight:500;padding:5px 10px;border-radius:999px;background:var(--soft);color:var(--ink);transition:background .2s var(--ease)}
+.fchips a:hover{background:var(--soft2)}
+.mcard.in{animation:fade-rise .5s var(--out) both;animation-delay:calc(var(--i)*60ms)}
+
+/* recent releases */
+.rel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px var(--g)}
+.rel{display:grid;grid-template-columns:clamp(104px,12.5vw,184px) minmax(0,1fr);gap:clamp(16px,2vw,28px);align-items:center}
+.rel .card-t{margin-top:0;font-size:clamp(16px,1.3vw,19px)}
+@media (max-width:860px){.rel-grid{grid-template-columns:1fr;gap:20px}}
+
+/* benchmarks carousel with progress ring */
+.car-track{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 2*var(--g))/3);gap:var(--g);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.car-track::-webkit-scrollbar{display:none}
+.car-track > *{scroll-snap-align:start;min-width:0}
+@media (max-width:1023px){.car-track{grid-auto-columns:calc((100% - var(--g))/2)}}
+@media (max-width:640px){.car-track{grid-auto-columns:84%}}
+.circ{position:relative;width:40px;height:40px;border-radius:999px;border:0;background:var(--soft);display:grid;place-items:center;color:var(--ink);transition:background .2s var(--ease)}
+.circ:hover{background:var(--soft2)}
+.circ .chev{width:16px;height:16px}
+.ring{position:absolute;inset:0;width:40px;height:40px;transform:rotate(-90deg);pointer-events:none}
+.ring circle{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:100;stroke-dashoffset:100;opacity:0}
+.ring.run circle{opacity:1;animation:ring 6s linear forwards,ring-fade .4s ease-out 5.6s forwards}
+.car:hover .ring.run circle{animation-play-state:paused}
+@keyframes ring{to{stroke-dashoffset:0}}
+@keyframes ring-fade{to{opacity:0}}
+.cmp{display:grid;gap:7px;width:100%;font:500 12px/1.2 var(--mono)}
+.cmp > div{display:grid;grid-template-columns:6.4em minmax(0,1fr) 3.6em;align-items:center;gap:8px}
+.cmp .tk{height:6px;border-radius:3px;background:rgba(13,13,15,.08);overflow:hidden}
+.cmp .tk i{display:block;height:100%;border-radius:3px;background:rgba(13,13,15,.86)}
+.cmp .b .tk i{background:rgba(13,13,15,.3)}
+.cmp > div span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.cmp p{font-size:11px;opacity:.7}
+
+/* developers: tabs with countdown fill */
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:16px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;isolation:isolate;overflow:hidden;flex:none;height:36px;padding:0 16px;border-radius:999px;border:0;background:none;font-size:14px;font-weight:500;color:var(--ink2);transition:color .2s var(--ease),background .2s var(--ease)}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--soft);color:var(--ink)}
+.tab .cd{position:absolute;inset:0;z-index:-1;background:var(--soft2);transform:scaleX(0);transform-origin:left}
+.tab.run .cd{animation:cd 6s linear both}
+@keyframes cd{0%,33.33%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+.code{background:var(--code-bg);color:#E9E9EE;border-radius:16px;overflow:hidden;min-width:0}
+.code-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px 10px 18px;font:500 12.5px/1 var(--mono);color:#8A8A94;border-bottom:1px solid #1F1F25}
+.cbtn{height:28px;padding:0 12px;border-radius:999px;border:0;background:#212128;color:#E9E9EE;font:500 12.5px/1 var(--sans);transition:background .2s var(--ease)}
+.cbtn:hover{background:#2C2C34}
+.code pre{margin:0;padding:18px;overflow-x:auto;font:13.5px/1.7 var(--mono)}
+.code .c1{color:#7C7C87}.code .k{color:#FF9AC8}.code .s2{color:#9EE6C3}
+#qsCode{min-height:20.5em}
+.swap{animation:fade-in .35s ease-out}
+
+.rsub{font-size:14.5px;color:var(--ink2);margin-top:4px}
+
+/* about */
+.about{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px var(--g);align-items:start}
+.ab-lead{grid-column:span 6;font-size:clamp(24px,2.4vw,34px);line-height:1.2;letter-spacing:-.02em;font-weight:500;text-wrap:balance}
+.ab-sig{display:block;margin-top:20px;font-size:14px;font-weight:400;letter-spacing:0;color:var(--ink2)}
+.ab-list{grid-column:8 / span 5;display:grid}
+.ab-item{padding:20px 0;border-top:1px solid var(--line)}
+.ab-item:last-child{border-bottom:1px solid var(--line)}
+.ab-item h3{font-size:15px;line-height:1.3}
+.ab-item p{font-size:15px;color:var(--ink2);margin-top:6px;max-width:52ch}
+@media (max-width:1023px){.ab-lead,.ab-list{grid-column:1/-1}}
+
+/* closing band */
+.cta{background:var(--soft);border-radius:8px;padding:clamp(56px,9vw,112px) 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:24px}
+.cta h2{font-size:clamp(32px,4vw,48px);line-height:1.1}
+.cta-acts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.cta .pill.soft{background:var(--bg)}
+.cta .pill.soft:hover{background:var(--soft2)}
+.cta-p{font-size:14px;color:var(--ink2);display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px}
+.mail{font:13px/1.5 var(--mono);color:var(--ink);user-select:all}
+.typein{background:linear-gradient(var(--ink),var(--ink)) no-repeat 0 0/100% 100%,linear-gradient(var(--ink3),var(--ink3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.typein.go{animation:type 1.6s cubic-bezier(.6,0,.4,1) both}
+@keyframes type{from{background-size:0% 100%,auto}}
+
+/* footer */
+.foot{padding-top:clamp(80px,9vw,128px);padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))}
+.fcols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:36px var(--g)}
+.fcol{display:flex;flex-direction:column;align-items:flex-start;gap:12px;font-size:13.5px}
+.fh{color:var(--ink2);margin-bottom:2px}
+.fcol a,.fcol button{background:none;border:0;padding:0;text-align:left;font-size:13.5px;color:var(--ink);transition:color .2s var(--ease)}
+.fcol a:hover,.fcol button:hover{color:var(--ink2)}
+.fbot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:72px;font-size:13px;color:var(--ink2)}
+.fnote{max-width:56ch}
+.fcopy{display:inline-flex;align-items:center;gap:8px}
+.fcopy svg{width:16px;height:16px;color:var(--ink)}
+@media (max-width:860px){.fcols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* search */
+.srch{position:fixed;inset:0;z-index:50}
+.srch-scrim{position:absolute;inset:0;background:rgba(0,0,0,.36);animation:fade-in .2s ease-out}
+.srch-box{position:absolute;left:50%;top:max(12vh,calc(env(safe-area-inset-top,0px) + 16px));width:min(640px,calc(100% - 32px));background:var(--bg);border-radius:20px;box-shadow:0 24px 80px -12px rgba(0,0,0,.35),0 0 0 1px var(--line);transform:translateX(-50%);animation:show .3s var(--out);overflow:hidden}
+@keyframes show{from{opacity:0;transform:translate(-50%,10px) scale(.96)}}
+.srch-in{display:flex;align-items:center;gap:10px;padding:0 16px;height:56px;border-bottom:1px solid var(--line);color:var(--ink3)}
+.srch-in svg{width:18px;height:18px;flex:none}
+.srch-in input{flex:1;min-width:0;border:0;background:none;font:16px var(--sans);color:var(--ink);outline:none}
+.srch-in kbd{font:500 11px/1 var(--mono);color:var(--ink3);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+#srchList{list-style:none;margin:0;padding:8px;max-height:min(420px,60vh);overflow-y:auto}
+#srchList a,#srchList button{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:10px;border:0;background:none;text-align:left;font-size:14.5px;color:var(--ink)}
+#srchList .on,#srchList a:hover,#srchList button:hover{background:var(--soft)}
+#srchList small{color:var(--ink3);font-size:12.5px;flex:none}
+#srchList .none{padding:14px 12px;color:var(--ink3);font-size:14px}
+
+/* model drawer */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:40;animation:fade-in .25s ease-out}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(720px,100%);background:var(--bg);z-index:41;overflow-y:auto;box-shadow:-24px 0 80px -20px rgba(0,0,0,.3);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);animation:slide-in .45s var(--out)}
+@keyframes slide-in{from{transform:translateX(40px);opacity:0}}
+.dr-head{position:sticky;top:0;z-index:1;background:var(--bg);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 24px;border-bottom:1px solid var(--line)}
+.dr-head button{height:32px;padding:0 14px;border-radius:999px;border:0;background:var(--soft);font-size:13.5px;font-weight:500}
+.dr-head button:hover{background:var(--soft2)}
+.dr-body{padding:28px 24px 48px;display:grid;gap:32px}
+.dr-body > *{min-width:0}
+.dr-body h2{font-size:clamp(28px,4vw,40px);line-height:1.08}
+.cap{font-size:13px;font-weight:500;color:var(--ink2)}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.badge{font-size:12.5px;font-weight:500;padding:5px 10px;border-radius:999px;background:var(--soft);color:var(--ink2)}
+.badge.new{background:var(--ink);color:var(--bg)}
+.btn{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;border-radius:999px;border:0;background:var(--soft);font-size:14px;font-weight:500;transition:background .2s var(--ease),opacity .2s var(--ease)}
+.btn:hover{background:var(--soft2)}
+.btn.dark{background:var(--ink);color:var(--bg)}
+.btn.dark:hover{opacity:.84}
+.ar{display:inline-block;transition:transform .2s var(--ease)}
+.btn:hover .ar{transform:translateX(3px)}
+.btn:hover .ar.ne{transform:translate(2px,-2px)}
+.dr-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.kpis div{background:var(--soft);border-radius:14px;padding:16px}
+.kpis b{display:block;font-weight:500;font-size:28px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpis span{font-size:13px;color:var(--ink2)}
+.kpis small{display:block;font:500 11.5px/1.35 var(--mono);color:var(--ink3);margin-top:6px}
+.chart svg{display:block;width:100%;max-width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink2);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.fmts{border-top:1px solid var(--line)}
+.fmt{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.fmt:hover .f{color:var(--acc-ink)}
+.fmt .f{font-weight:500}
+.fmt .m{font-size:12.5px;color:var(--ink3)}
+.fmt .d{grid-row:1/3;grid-column:2;align-self:center;font:500 13px/1.3 var(--mono);text-align:right}
+.fmt .d small{display:block;font-size:10.5px;color:var(--ink3)}
+.dr-note{font-size:12.5px;color:var(--ink3)}
+
+/* scroll reveal (fade-rise) */
+.rv{transition:opacity .8s var(--out),transform .8s var(--out)}
+.rv.pre{opacity:0;transform:translateY(24px)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn"></span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#models" data-i18n="nav.models"></a>
+      <a href="#releases" data-i18n="nav.releases"></a>
+      <a href="#benchmarks" data-i18n="nav.bench"></a>
+      <a href="#developers" data-i18n="nav.dev"></a>
+      <a href="#about" data-i18n="nav.about"></a>
+    </nav>
+    <button type="button" class="icon-btn" id="searchBtn" data-i18n-aria="search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.6 3.6" stroke-linecap="round"/></svg></button>
+    <span class="sp"></span>
+    <button type="button" class="pill soft" id="langBtn"></button>
+    <a class="pill dark" id="hfTop" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mnav" data-i18n-aria="menu"></button>
+  </div>
+</header>
+<div class="mnav" id="mnav" hidden>
+  <nav aria-label="Mobile">
+    <a href="#models" data-i18n="nav.models" style="--i:0"></a>
+    <a href="#releases" data-i18n="nav.releases" style="--i:1"></a>
+    <a href="#benchmarks" data-i18n="nav.bench" style="--i:2"></a>
+    <a href="#developers" data-i18n="nav.dev" style="--i:3"></a>
+    <a href="#about" data-i18n="nav.about" style="--i:4"></a>
+    <a href="#contact" data-i18n="f.contact" style="--i:5"></a>
+  </nav>
+  <div class="mnav-acts"><a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a></div>
+</div>
+
+<main id="top" class="wrap">
+  <section class="hero" id="hero">
+    <h1 id="heroTitle"></h1>
+    <div class="tabs mtabs" id="mTabs" role="tablist" data-i18n-aria="sec.models"></div>
+    <div class="stage">
+      <div class="fx-wrap" id="fxWrap">
+        <canvas id="fx" aria-hidden="true"></canvas>
+        <span class="lab l" id="labL" aria-hidden="true"></span><span class="lab r" id="labR" aria-hidden="true"></span>
+        <div class="fx-cap" id="fxCap" aria-hidden="true"></div>
+      </div>
+      <div class="stage-info" id="stInfo">
+        <div>
+          <h2 class="st-name" id="stName"></h2>
+          <p class="st-one" id="stOne"></p>
+          <div class="st-acts"><button type="button" class="pill dark" id="stOpen" data-open="macjev"><span data-i18n="details"></span> <span class="ar" aria-hidden="true">→</span></button><a class="pill soft" id="stHF" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a></div>
+        </div>
+        <dl class="specs" id="stSpecs"></dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="models">
+    <div class="sec-head"><h2 data-i18n="sec.models"></h2><div class="filters" id="mFilters"></div></div>
+    <div class="mgrid" id="mGrid"></div>
+  </section>
+
+  <section id="releases">
+    <div class="sec-head"><h2 data-i18n="sec.releases"></h2><div class="sec-aside"><span id="dlTotal" class="num"></span><a class="more hf" href="#" target="_blank" rel="noopener"><span data-i18n="viewall"></span> <span class="ne" aria-hidden="true">↗</span></a></div></div>
+    <div class="rel-grid" id="relGrid"></div>
+  </section>
+
+  <section id="benchmarks" class="car">
+    <div class="sec-head"><h2 data-i18n="sec.bench"></h2>
+      <div class="sec-aside">
+        <button type="button" class="circ" id="carPrev" data-i18n-aria="prev"><svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg></button>
+        <button type="button" class="circ" id="carNext" data-i18n-aria="next"><svg class="ring" id="ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l5 5-5 5"/></svg></button>
+      </div>
+    </div>
+    <div class="car-track" id="carTrack"></div>
+  </section>
+
+  <section id="developers">
+    <div class="sec-head"><h2 data-i18n="sec.dev"></h2><a class="more" id="qsRepo" href="#" target="_blank" rel="noopener"><span data-i18n="dev.repo"></span> <span class="ne" aria-hidden="true">↗</span></a></div>
+    <div class="dev-body">
+      <div class="tabs" id="qsTabs" role="tablist" data-i18n-aria="sec.dev"></div>
+      <div class="code">
+        <div class="code-head"><span id="qsFile"></span><button type="button" class="cbtn" id="copyBtn" data-i18n="copy"></button></div>
+        <pre id="qsCode"></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head"><h2 data-i18n="sec.about"></h2></div>
+    <div class="about">
+      <p class="ab-lead"><span data-i18n="ab.lead"></span><span class="ab-sig" data-i18n="ab.sig"></span></p>
+      <div class="ab-list">
+        <div class="ab-item"><h3 data-i18n="ab.h1"></h3><p data-i18n="ab.p1"></p></div>
+        <div class="ab-item"><h3 data-i18n="ab.h2"></h3><p data-i18n="ab.p2"></p></div>
+        <div class="ab-item"><h3 data-i18n="ab.h3"></h3><p data-i18n="ab.p3"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <h2 class="typein" id="ctaH" data-i18n="cta.h"></h2>
+    <div class="cta-acts">
+      <a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a>
+      <button type="button" class="pill soft" id="copyEmail" data-i18n="final.mail"></button>
+      <a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a>
+    </div>
+    <p class="cta-p"><span data-i18n="cta.p"></span><span class="mail" id="email"></span></p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <div class="fcols">
+    <div class="fcol"><p class="fh" data-i18n="f.models"></p><button type="button" data-open="macjev">MacJev 322M</button><button type="button" data-open="v2">Decision 2B v2</button><button type="button" data-open="v1">Decision 2B v1</button></div>
+    <div class="fcol"><p class="fh" data-i18n="f.formats"></p><a data-repo="chaoliangUNSW/MacJev-322M-4K-Laya" href="#" target="_blank" rel="noopener">PyTorch ↗</a><a data-repo="chaoliangUNSW/MacJev-322M-4K-Laya-MLX" href="#" target="_blank" rel="noopener">MLX ↗</a><a data-repo="chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF" href="#" target="_blank" rel="noopener">GGUF ↗</a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.research"></p><a href="#benchmarks" data-i18n="nav.bench"></a><button type="button" data-open="v2" data-i18n="f.calib"></button><a href="#models" data-i18n="sec.models"></a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.dev"></p><a href="#developers" data-i18n="chip.qs"></a><a class="hf" href="#" target="_blank" rel="noopener">Hugging Face ↗</a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.comm"></p><a class="dc" href="#" target="_blank" rel="noopener">Discord ↗</a><a href="#about" data-i18n="nav.about"></a><a href="#contact" data-i18n="f.contact"></a></div>
+  </div>
+  <div class="fbot">
+    <p class="fnote" data-i18n="foot"></p>
+    <span class="fcopy"><span class="bn"></span> © 2026 · <span id="snap"></span></span>
+    <button type="button" class="pill soft" id="langBtn2"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3c2.2 2.4 2.2 11.6 0 14M10 3c-2.2 2.4-2.2 11.6 0 14"/></svg><span></span></button>
+  </div>
+</footer>
+
+<div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-labelledby="srchLab">
+  <div class="srch-scrim" id="srchScrim"></div>
+  <div class="srch-box">
+    <label class="sr-only" id="srchLab" for="srchIn" data-i18n="search"></label>
+    <div class="srch-in"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.6 3.6" stroke-linecap="round"/></svg><input id="srchIn" type="search" autocomplete="off" spellcheck="false"><kbd>Esc</kbd></div>
+    <ul id="srchList"></ul>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="drTitle">
+  <div class="dr-head"><span class="cap" id="drCap"></span><button type="button" id="drClose" data-i18n="close"></button></div>
+  <div class="dr-body" id="drBody"></div>
+</aside>
+
+<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"latest","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":0,"likes":0,"lastModified":"2026-09-23T21:35:56.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":0,"likes":3,"lastModified":"2026-09-23T21:35:57.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":0,"likes":0,"lastModified":"2026-09-23T21:36:02.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"likes":1,"lastModified":"2026-09-23T01:11:29.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"likes":0,"lastModified":"2026-09-23T01:11:32.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":36,"likes":0,"lastModified":"2026-09-23T01:11:36.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":2743,"likes":9,"lastModified":"2026-09-23T21:36:03.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":1564,"likes":2,"lastModified":"2026-09-23T21:36:07.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"mj08","name":"MacJev-0.8B-8K","params":"0.8B","tags":["8K INPUT","MULTILINGUAL","AGENT"]},{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]}},"snapshot":"2026-09-23"}</script>
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const DATA = JSON.parse($('site-data').textContent);
+const I18N = {
+en:{
+ "nav.models":"Models","nav.releases":"Releases","nav.bench":"Benchmarks","nav.dev":"Developers","nav.road":"Roadmap","nav.about":"About",
+ "sec.about":"About",
+ "ab.lead":"I build small models that each make one kind of decision: calibrated, and small enough to run on your own machine.","ab.sig":"Chaoliang Yan · UNSW",
+ "ab.h1":"Why small","ab.p1":"A decision needs a label and a probability, not a paragraph. A model trained for one job can stay under 1B parameters: fast, private and cheap to run.",
+ "ab.h2":"How I measure","ab.p2":"Held-out data only, compared against the base model, with calibration error reported next to accuracy.",
+ "ab.h3":"What's next","ab.p3":"One model per scenario: longer inputs, LLM routing, guardrails. Requests and collaborations are welcome.",
+ "search":"Search","search.ph":"Search models, repositories and pages","search.none":"No matches","menu":"Menu","page":"Page",
+ "hero.h":"Small models. Calibrated decisions.","chip.qs":"Quickstart","details":"Details",
+ "sec.models":"All models","side.all":"All","side.released":"Released","side.planned":"Planned",
+ "s.input":"Input tokens","s.langs":"Languages","s.dl":"Downloads · 30 d","s.acc11":"Accuracy · 11 tasks",
+ "cat.model":"Model","cat.bench":"Benchmark","cat.plan":"Planned","cat.arch":"Archived",
+ "feat.macjev":"MacJev 322M: decisions on your own Mac","feat.v2":"Decision 2B v2: calibrated English classification","feat.eval":"v2 evaluated on held-out tasks","feat.v1":"Decision 2B v1: the first release","tasks":"held-out tasks",
+ "sec.releases":"Recent releases","sec.bench":"Benchmarks","sec.dev":"Run it locally","sec.road":"Roadmap",
+ "viewall":"View all","dl30":"downloads · 30 days","dev.repo":"Open repository",
+ "cta.h":"Get started with JevStyle","cta.p":"Open to internships, jobs and research collaboration.","final.mail":"Copy email",
+ "f.models":"Models","f.formats":"Formats","f.research":"Research","f.dev":"Developers","f.comm":"Community","f.calib":"Calibration","f.contact":"Contact",
+ "prev":"Previous","next":"Next","lang.name":"English",
+ "one.macjev":"Decisions for local Mac agents.","one.v2":"Calibrated English classification.","one.v1":"First release. Superseded by v2.",
+ "one.mj08":"Next MacJev. Longer input, more languages.","one.router":"Send each request to the right LLM.","one.guard":"Safety checks before an LLM call.",
+ "b.open":"Open weights","b.latest":"Latest","b.archived":"Archived",
+ "m1":"v2 accuracy across 11 tasks","m1s":"English Laya 75.1%",
+ "m2":"MacJev yes/no checks on 2K–4K-token inputs","m2s":"Laya multilingual 31.0%",
+ "m3":"v1 calibration error (ECE)","m3s":"Qwen3.5-2B-Base 0.065",
+ "m4":"v2 decisions that flip when options are reordered","m4s":"English Laya 12.0%",
+ "copy":"Copy","copied":"Copied",
+ "foot":"Independent project. Not affiliated with TypeSafe AI (Jev) or the Laya authors. Weights: Apache-2.0.","snap":"Stats as of ",
+ "up":"↑ higher is better","down":"↓ lower is better","hf":"Open on Hugging Face","newer":"See v2",
+ "close":"Close","vs":"vs","formats":"Formats","code":"Quickstart",
+ "k.params":"Parameters","k.ctx":"input tokens",
+ "c.tasks":"Accuracy by task","c.rel":"Reliability · confidence vs accuracy","c.pair":"Held-out accuracy",
+ "rel.x":"Stated confidence","rel.n":"decisions per bin","lower":"lower is better",
+ "m.yesno_long":"Yes/no, 2K–4K tokens","m.rule_long":"Rules, 2K–4K tokens","m.rule_all":"Rules, all long inputs","m.typed":"Typed decisions","m.ece_long":"Calibration error, long inputs",
+ "m.mnli":"MNLI","m.sst5":"SST-5","m.boolq":"BoolQ","m.sst2":"SST-2","m.ag_news":"AG News","m.ece5":"Calibration error (ECE)",
+ "t.ag_news":"AG News","t.anli":"ANLI","t.boolq":"BoolQ","t.emotion":"Emotion","t.enron_spam":"Enron spam","t.hans":"HANS","t.imdb":"IMDb","t.mnli":"MNLI","t.rte":"RTE","t.sst2":"SST-2","t.sst5":"SST-5",
+ "note.v2":"Single training seed; per-task gaps are point estimates. Full records ship in the repository.",
+ "note.v1":"1,500 held-out decisions across 5 tasks.","note.macjev":"Same 4,096-token budget. Gains reproduced across 3 seeds."
+},
+zh:{
+ "nav.models":"模型","nav.releases":"发布","nav.bench":"评测","nav.dev":"开发者","nav.road":"路线图","nav.about":"说明",
+ "sec.about":"说明",
+ "ab.lead":"我在做一系列小模型：每个只负责一类判断，给出校准过的概率，小到能在你自己的电脑上运行。","ab.sig":"严超亮 · UNSW",
+ "ab.h1":"为什么做小模型","ab.p1":"做判断只需要一个标签和一个概率，不需要一段长回答。只做一件事的模型可以控制在 1B 参数以内：更快、更私密，也更便宜。",
+ "ab.h2":"怎么评测","ab.p2":"只用留出集，和底座模型对比，准确率旁边同时给出校准误差。",
+ "ab.h3":"接下来","ab.p3":"每个场景一个模型：更长输入、大模型路由、安全护栏。欢迎提需求，也欢迎合作。",
+ "search":"搜索","search.ph":"搜索模型、仓库与页面","search.none":"没有匹配项","menu":"菜单","page":"页面",
+ "hero.h":"小模型，校准过的决策。","chip.qs":"快速开始","details":"详情",
+ "sec.models":"全部模型","side.all":"全部","side.released":"已发布","side.planned":"规划中",
+ "s.input":"输入 token","s.langs":"语言","s.dl":"近 30 天下载","s.acc11":"11 个任务准确率",
+ "cat.model":"模型","cat.bench":"评测","cat.plan":"规划中","cat.arch":"已归档",
+ "feat.macjev":"MacJev 322M：在你自己的 Mac 上做决定","feat.v2":"Decision 2B v2：概率校准的英文分类","feat.eval":"v2 在留出任务上的评测","feat.v1":"Decision 2B v1：首个版本","tasks":"个留出任务",
+ "sec.releases":"最新发布","sec.bench":"评测","sec.dev":"本地运行","sec.road":"路线图",
+ "viewall":"查看全部","dl30":"次下载 · 近 30 天","dev.repo":"打开仓库",
+ "cta.h":"开始使用 JevStyle","cta.p":"欢迎实习、工作与科研合作。","final.mail":"复制邮箱",
+ "f.models":"模型","f.formats":"格式","f.research":"研究","f.dev":"开发者","f.comm":"社区","f.calib":"校准","f.contact":"联系",
+ "prev":"上一个","next":"下一个","lang.name":"简体中文",
+ "one.macjev":"本地 Mac agent 的决策模型。","one.v2":"概率校准的英文分类模型。","one.v1":"首个版本，已由 v2 取代。",
+ "one.mj08":"下一代 MacJev：更长输入，更多语言。","one.router":"把每个请求交给合适的大模型。","one.guard":"调用大模型之前的安全检查。",
+ "b.open":"开放权重","b.latest":"最新","b.archived":"已归档",
+ "m1":"v2 在 11 个任务上的准确率","m1s":"英文 Laya 75.1%",
+ "m2":"MacJev 在 2K–4K token 输入上的是/否判断","m2s":"Laya 多语版 31.0%",
+ "m3":"v1 校准误差 ECE","m3s":"Qwen3.5-2B-Base 0.065",
+ "m4":"v2 打乱选项顺序后改判的比例","m4s":"英文 Laya 12.0%",
+ "copy":"复制","copied":"已复制",
+ "foot":"独立项目，与 TypeSafe AI（Jev）及 Laya 作者无关。权重许可 Apache-2.0。","snap":"数据更新于 ",
+ "up":"↑ 越高越好","down":"↓ 越低越好","hf":"在 Hugging Face 打开","newer":"查看 v2",
+ "close":"关闭","vs":"对比","formats":"格式","code":"快速开始",
+ "k.params":"参数量","k.ctx":"输入 token",
+ "c.tasks":"分任务准确率","c.rel":"可靠性 · 把握 vs 准确率","c.pair":"留出集准确率",
+ "rel.x":"模型给出的把握","rel.n":"每档决策数","lower":"越低越好",
+ "m.yesno_long":"是/否，2K–4K token","m.rule_long":"规则，2K–4K token","m.rule_all":"规则，全部长输入","m.typed":"类型化决策","m.ece_long":"长输入校准误差",
+ "m.mnli":"MNLI","m.sst5":"SST-5","m.boolq":"BoolQ","m.sst2":"SST-2","m.ag_news":"AG News","m.ece5":"校准误差 ECE",
+ "t.ag_news":"AG News","t.anli":"ANLI","t.boolq":"BoolQ","t.emotion":"Emotion","t.enron_spam":"Enron 垃圾邮件","t.hans":"HANS","t.imdb":"IMDb","t.mnli":"MNLI","t.rte":"RTE","t.sst2":"SST-2","t.sst5":"SST-5",
+ "note.v2":"单个训练种子；分任务差异为点估计。完整记录见仓库。",
+ "note.v1":"5 个任务共 1,500 条留出决策。","note.macjev":"同样 4,096 token 预算，三个种子均复现。"
+}};
+
+let lang;
+try { lang = localStorage.getItem('lang'); } catch(e) {}
+if (lang !== 'en' && lang !== 'zh') lang = (navigator.language||'').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+const t = k => I18N[lang][k] ?? I18N.en[k] ?? k;
+const pct = (v,d=1) => (v*100).toFixed(d)+'%';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fam = id => DATA.families.find(f => f.id === id);
+const HF = 'https://huggingface.co/';
+const display = f => ({macjev:'MacJev 322M', v2:'Decision 2B v2', v1:'Decision 2B v1'})[f.id] || f.name;
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmtDate = iso => { if (!iso) return ''; const d = new Date(iso.length <= 10 ? iso+'T00:00:00Z' : iso);
+  return new Intl.DateTimeFormat(lang==='zh' ? 'zh-CN' : 'en-US', {year:'numeric', month:'short', day:'numeric', timeZone:'UTC'}).format(d); };
+function hash(s){ let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
+function rng(seed){ let a = hash(seed); return () => { a = a + 0x6D2B79F5 | 0; let x = Math.imul(a ^ a >>> 15, 1 | a); x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x; return ((x ^ x >>> 14) >>> 0) / 4294967296; }; }
+
+/* ---------- generative gradient art (one seeded composition per tile) ---------- */
+const PAL = {
+  macjev:['#E9EEFF','#8FB0FF','#A8EBD7','#6A86F5','#DCE7FF'],
+  v2:['#FFF0E8','#FFB39A','#F59AC0','#B7A2FF','#FFE3D3'],
+  v1:['#F2EEE3','#C9DDB6','#9CC7D6','#E7D9B8','#F7F4EC'],
+  eval:['#EEF7FF','#9ED3F7','#C3B8FF','#86E0C8','#F2F0FF'],
+  b1:['#F4FFE9','#B9EE8C','#77D9C9','#E8F99F','#DFF8F0'],
+  b2:['#EAF3FF','#7FB2FF','#A99CFF','#A6E3FF','#E4ECFF'],
+  b3:['#FFF6E5','#FFCE7A','#FF9C8A','#FFE5A8','#FFF0DD'],
+  b4:['#F3ECFF','#C7A5FF','#FF9FD0','#9AB8FF','#F7EEFF'],
+  plan:['#F1F1F1','#CFCFD6','#E6E3DA','#BCC6D2','#F7F7F7'],
+};
+function art(cv, seed, pal){
+  const n = 48, x = cv.getContext('2d'), r = rng(seed);
+  cv.width = cv.height = n;
+  x.fillStyle = pal[0]; x.fillRect(0,0,n,n);
+  for (let i=0;i<6;i++){
+    const cx = r()*n, cy = r()*n, rad = n*(.3 + r()*.55), c = pal[1 + i%(pal.length-1)];
+    const g = x.createRadialGradient(cx,cy,0,cx,cy,rad); g.addColorStop(0,c); g.addColorStop(1,c+'00');
+    x.fillStyle = g; x.fillRect(0,0,n,n);
+  }
+  const a = r()*Math.PI, dx = Math.cos(a)*n, dy = Math.sin(a)*n, lg = x.createLinearGradient(n/2-dx, n/2-dy, n/2+dx, n/2+dy);
+  lg.addColorStop(.4,'rgba(255,255,255,0)'); lg.addColorStop(.5,'rgba(255,255,255,.5)'); lg.addColorStop(.6,'rgba(255,255,255,0)');
+  x.fillStyle = lg; x.fillRect(0,0,n,n);
+}
+function media(seed, pal, cls='', ov=''){
+  return `<div class="media ${cls}"><div class="mi"><canvas class="art" data-seed="${esc(seed)}" data-pal="${pal}" aria-hidden="true"></canvas>${ov}</div></div>`;
+}
+function paintArt(root){
+  root.querySelectorAll('canvas.art').forEach(cv => {
+    art(cv, cv.dataset.seed, PAL[cv.dataset.pal] || PAL.plan);
+    const r = rng(cv.dataset.seed+'/drift');
+    cv.style.setProperty('--dur', (18 + r()*14).toFixed(1)+'s'); cv.style.setProperty('--dl', (-r()*20).toFixed(1)+'s');
+  });
+}
+
+/* ---------- hero: words rise in with a colour flash ---------- */
+function words(el, text){
+  el.textContent = '';
+  const segs = (lang==='zh' && window.Intl && Intl.Segmenter) ? [...new Intl.Segmenter('zh',{granularity:'word'}).segment(text)].map(s => s.segment) : text.split(/(\s+)/);
+  let i = 0;
+  segs.forEach(s => {
+    if (!s) return;
+    if (/^\s+$/.test(s)) { el.append(s); return; }
+    const sp = document.createElement('span'); sp.className = 'w' + (REDUCED ? '' : ' go'); sp.textContent = s;
+    sp.style.setProperty('--d', (100 + i++*80)+'ms'); el.append(sp);
+  });
+}
+
+/* ---------- hero: model switcher (countdown tabs) driving the live stage ---------- */
+const LANES = {
+  macjev:{w:[.68,.31,.01], y:[.34,.56,.74], tint:'#D4E1FF'},
+  v2:{w:[.86,.14], y:[.4,.64], tint:'#FFDCC8'},
+  v1:{w:[.46,.3,.14,.07,.03], y:[.24,.38,.52,.66,.8], tint:'#D6F0DC'},
+};
+const LABELS = {macjev:['MacJev','322M'], v2:['Decision','2B v2'], v1:['Decision','2B v1']};
+const HERO = {i:0, auto:!REDUCED, vis:true};
+function renderHeroTabs(){
+  $('mTabs').innerHTML = DATA.families.map((f,i) => `<button type="button" role="tab" class="tab" data-hm="${i}" aria-selected="${i===HERO.i}"><span class="cd" aria-hidden="true"></span>${esc(display(f))}</button>`).join('');
+  heroArm();
+}
+function heroArm(){
+  $('mTabs').querySelectorAll('.tab.run').forEach(b => b.classList.remove('run'));
+  const b = $('mTabs').querySelector('[aria-selected="true"]');
+  if (b && HERO.auto && HERO.vis){ void b.offsetWidth; b.classList.add('run'); }
+}
+function countUp(el, text){
+  const m = String(text).match(/^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/);
+  if (!m || REDUCED){ el.textContent = text; return; }
+  const dec = (m[2].split('.')[1] || '').length, comma = m[2].includes(','), target = parseFloat(m[2].replace(/,/g,'')), t0 = performance.now();
+  const fmt = v => comma ? v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec}) : v.toFixed(dec);
+  const step = now => { const k = Math.min(1, (now-t0)/700), e = 1 - Math.pow(1-k, 3); el.textContent = m[1] + fmt(target*e) + m[3]; if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+function heroSpecs(f){
+  const dl = f.repos.reduce((s,r) => s+(r.downloads||0), 0);
+  const top = f.metrics && f.metrics.find(m => m.better==='up');
+  const head = f.id === 'v2' ? [t('s.acc11'), pct(DATA.eval.v2.overview.v2.accuracy)] : [t('m.'+top.key), pct(top.model)];
+  return [[t('k.params'), f.params], [t('s.input'), f.context || '—'], [t('s.langs'), f.langs], head, [t('s.dl'), dl.toLocaleString('en-US')]];
+}
+function heroStage(animate){
+  const f = DATA.families[HERO.i];
+  $('stName').textContent = display(f); $('stOne').textContent = t('one.'+f.id);
+  $('stOpen').dataset.open = f.id; $('stHF').href = HF + f.repos[0].repo;
+  $('stSpecs').innerHTML = heroSpecs(f).map(([k,v]) => `<div><dt>${esc(k)}</dt><dd data-v="${esc(v)}">${esc(v)}</dd></div>`).join('');
+  $('fxCap').innerHTML = [`${f.context ? f.context+' TOKENS' : 'TEXT'} IN`, 'ONE FORWARD PASS', f.id === 'macjev' ? 'P(ANSWER) OUT' : 'P(OPTION) OUT'].map(x => `<span>${x}</span>`).join('');
+  renderLabels(f.id);
+  fxConfig(f.id, !animate);
+  if (animate){
+    $('stInfo').classList.remove('swap-in'); void $('stInfo').offsetWidth; $('stInfo').classList.add('swap-in');
+    $('stSpecs').querySelectorAll('dd').forEach(dd => countUp(dd, dd.dataset.v));
+  }
+}
+
+/* ---------- featured canvas: tokens stream through one lens into weighted answers ---------- */
+const FX = {parts:[], stars:[], W:0, H:0, t0:0, last:0, vis:true, ctx:null, cfg:null, from:null, laneY:null, lt0:0};
+function fxReset(p, init){
+  const H = FX.H, r = Math.random();
+  p.y0 = H*(.06 + Math.random()*.88);
+  const w = (FX.cfg || LANES.macjev).w; let k = 0, q = r; while (k < w.length-1 && (q -= w[k]) > 0) k++; p.lane = k;
+  p.t = init ? Math.random()*2 : 0;
+  p.v = .00017 + Math.random()*.00013;
+  p.s = Math.random() < .12 ? 2.2 : 1.35;
+  p.warm = Math.random() < .16;
+  p.j = (Math.random()-.5)*H*.06; p.jf = (Math.random()-.5)*6;
+  return p;
+}
+function fxSetup(){
+  const cv = $('fx'), W = $('fxWrap').clientWidth, H = $('fxWrap').clientHeight;
+  if (!W || !H) return;
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  Object.assign(FX, {W, H});
+  cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+  FX.ctx = cv.getContext('2d'); FX.ctx.setTransform(dpr,0,0,dpr,0,0);
+  FX.ctx.fillStyle = '#06070C'; FX.ctx.fillRect(0,0,W,H);
+  const r = rng('stars');
+  FX.stars = Array.from({length: Math.round(W*H/2400)}, () => ({x:r()*W, y:r()*H, a:.03 + r()*.08, ph:r()*6.28, sp:.0006 + r()*.0016, s:r() < .1 ? 1.6 : 1}));
+  FX.from = null;
+  FX.parts = Array.from({length: Math.min(900, Math.max(360, Math.round(W*H/760)))}, () => fxReset({}, true));
+}
+const qz = (a,b,c,u) => (1-u)*(1-u)*a + 2*(1-u)*u*b + u*u*c;
+function fxFrame(now){
+  const c = FX.ctx; if (!c) return;
+  const {W, H} = FX, fx = W*.5, fy = H*.5;
+  const dt = Math.min(48, now - (FX.last || now)); FX.last = now;
+  const age = now - FX.t0, amb = Math.min(1, age/3200), flow = Math.min(1, age/1400);
+  const cfg = FX.cfg || LANES.macjev, lk = Math.min(1, Math.max(0, (now - FX.lt0)/900)), le = lk*lk*(3-2*lk);
+  FX.laneY = cfg.y.map((y,i) => { const to = y*H; if (!FX.from) return to; const fr = FX.from[Math.min(i, FX.from.length-1)]; return fr + (to-fr)*le; });
+  c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
+  c.fillStyle = 'rgba(6,7,12,.24)'; c.fillRect(0,0,W,H);
+  c.globalCompositeOperation = 'lighter'; c.fillStyle = '#FFFFFF';
+  for (const s of FX.stars){ c.globalAlpha = amb*s.a*(.6 + .4*Math.sin(now*s.sp + s.ph)); c.fillRect(s.x, s.y, s.s, s.s); }
+  for (const p of FX.parts){
+    p.t += p.v*dt; if (p.t >= 2) fxReset(p, false);
+    let x, y;
+    if (p.t < 1){ x = qz(-12, W*.3, fx, p.t); y = qz(p.y0, p.y0, fy + p.jf, p.t); }
+    else { const u = p.t - 1, ly = FX.laneY[Math.min(p.lane, FX.laneY.length-1)] + p.j; x = qz(fx, W*.68, W + 12, u); y = qz(fy + p.jf, ly, ly, u); }
+    c.globalAlpha = flow*(p.t < 1 ? .4 + .55*p.t : .95 - .45*(p.t - 1));
+    c.fillStyle = p.warm ? '#FFD3AE' : cfg.tint;
+    c.fillRect(x, y, p.s, p.s);
+  }
+  const rad = 44*(1 + .08*Math.sin(now/650)), g = c.createRadialGradient(fx, fy, 0, fx, fy, rad);
+  g.addColorStop(0,'rgba(210,225,255,.09)'); g.addColorStop(1,'rgba(210,225,255,0)');
+  c.globalAlpha = flow; c.fillStyle = g; c.fillRect(fx-rad, fy-rad, rad*2, rad*2);
+  c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
+}
+function fxLoop(now){
+  if (FX.vis && !document.hidden) fxFrame(now); else FX.last = 0;
+  requestAnimationFrame(fxLoop);
+}
+function fxStart(){
+  fxSetup();
+  if (REDUCED){ FX.t0 = -1e5; for (let i=0;i<120;i++) fxFrame(i*16); return; }
+  FX.t0 = performance.now(); requestAnimationFrame(fxLoop);
+}
+function fxConfig(id, instant){
+  const cfg = LANES[id] || LANES.macjev;
+  FX.from = (instant || REDUCED || !FX.laneY) ? null : FX.laneY.slice();
+  FX.cfg = cfg; FX.lt0 = performance.now();
+  FX.parts.forEach(p => { if (p.lane >= cfg.w.length) p.lane = cfg.w.length - 1; });
+  if (REDUCED && FX.ctx){ FX.t0 = -1e5; for (let i=0;i<120;i++) fxFrame(i*16); }
+}
+function renderLabels(id){
+  const [a, b] = LABELS[id] || [id, ''];
+  const mk = (el, s, left) => el.innerHTML = [...s].map((ch,i,arr) => `<span style="--d:${150 + (left ? arr.length-1-i : i)*80}ms">${ch === ' ' ? '&nbsp;' : esc(ch)}</span>`).join('');
+  mk($('labL'), a, true); mk($('labR'), b, false);
+}
+function fxScroll(){
+  const r = $('fxWrap').getBoundingClientRect();
+  const p = Math.min(1, Math.max(0, (innerHeight*.2 - r.top) / Math.max(1, r.height))), e = p*p*(3-2*p);
+  $('labL').style.transform = `translate(${-e*56}px,-50%)`; $('labR').style.transform = `translate(${e*56}px,-50%)`;
+  $('labL').style.opacity = $('labR').style.opacity = String(1 - e*.75);
+}
+
+/* ---------- sections ---------- */
+let mFilter = 'all', mAnim = false;
+function renderModels(){
+  const rel = DATA.families.map(f => ({...f, kind:'released'})), plan = DATA.planned.map(x => ({...x, kind:'planned'}));
+  const counts = {all:rel.length + plan.length, released:rel.length, planned:plan.length};
+  $('mFilters').innerHTML = ['all','released','planned'].map(k => `<button type="button" class="fbtn" data-mf="${k}" aria-pressed="${mFilter===k}">${t('side.'+k)}<span>${counts[k]}</span></button>`).join('');
+  const list = [...rel, ...plan].filter(m => mFilter==='all' || m.kind===mFilter);
+  $('mGrid').innerHTML = list.map((m,i) => {
+    const planned = m.kind === 'planned', name = planned ? m.name : display(m);
+    const tag = planned ? t('cat.plan') : t(m.status==='latest' ? 'b.latest' : 'b.archived');
+    const ov = `<div class="ov"><span class="ovtag">${tag}</span><b class="big">${esc(m.params)}</b></div>`;
+    const chips = planned ? '' : `<div class="fchips">${m.repos.map(r => `<a href="${HF+r.repo}" target="_blank" rel="noopener">${esc(r.format.split(' ')[0])} ↗</a>`).join('')}</div>`;
+    const meta = planned ? m.tags.map(x => `<span>${esc(x)}</span>`).join('')
+      : `<b>${t('cat.model')}</b><span>${fmtDate(m.released)}</span><span class="num">↓ ${m.repos.reduce((s,r) => s+(r.downloads||0), 0).toLocaleString('en-US')}</span>`;
+    return `<article class="mcard hov${planned ? ' plan' : ''}${mAnim ? ' in' : ''}" style="--i:${i}">${media('model-'+m.id, planned ? 'plan' : m.id, 'wide', ov)}<h3 class="card-t">${planned ? esc(name) : `<button type="button" class="mt" data-open="${m.id}">${esc(name)}</button>`}</h3><p class="rsub">${t('one.'+m.id)}</p>${chips}<p class="meta">${meta}</p></article>`;
+  }).join('');
+  paintArt($('mGrid'));
+}
+function renderReleases(){
+  const repos = DATA.families.flatMap(f => f.repos.map(r => ({...r, fid:f.id})))
+    .sort((a,b) => (b.createdAt||'').localeCompare(a.createdAt||'') || a.repo.localeCompare(b.repo));
+  $('relGrid').innerHTML = repos.map(r => `<a class="rel" href="${HF+r.repo}" target="_blank" rel="noopener">${media(r.repo, r.fid)}<div><h3 class="card-t">${esc(r.repo.split('/')[1])}</h3><p class="meta"><b>${esc(r.format)}</b><span>${fmtDate(r.createdAt)}</span><span class="num">↓ ${(r.downloads ?? 0).toLocaleString('en-US')}</span></p></div></a>`).join('');
+  paintArt($('relGrid'));
+  $('dlTotal').textContent = `${repos.reduce((s,r) => s+(r.downloads||0), 0).toLocaleString('en-US')} ${t('dl30')}`;
+}
+function renderBench(){
+  const v2 = DATA.eval.v2, mj = fam('macjev').metrics[0], v1 = fam('v1').metrics.find(m => m.key==='ece5');
+  const items = [
+    {me:v2.overview.v2.accuracy, base:v2.overview.laya.accuracy, fmt:v => pct(v), who:'v2', vs:'Laya EN', lab:'m1', up:true, open:'v2', pal:'b2', model:'Decision 2B v2'},
+    {me:mj.model, base:mj.base, fmt:v => pct(v), who:'MacJev', vs:'Laya ML', lab:'m2', up:true, open:'macjev', pal:'b1', model:'MacJev 322M'},
+    {me:v1.model, base:v1.base, fmt:v => v.toFixed(3), who:'v1', vs:'Qwen base', lab:'m3', up:false, open:'v1', pal:'b3', model:'Decision 2B v1'},
+    {me:v2.permutation.v2.semantic_flip_rate, base:v2.permutation.laya.semantic_flip_rate, fmt:v => pct(v), who:'v2', vs:'Laya EN', lab:'m4', up:false, open:'v2', pal:'b4', model:'Decision 2B v2'},
+  ];
+  $('carTrack').innerHTML = items.map((it,i) => {
+    const mx = Math.max(it.me, it.base);
+    const row = (cls, name, v) => `<div class="${cls}"><span>${esc(name)}</span><span class="tk"><i style="width:${(v/mx*100).toFixed(1)}%"></i></span><span>${it.fmt(v)}</span></div>`;
+    const ov = `<div class="ov"><b class="big">${it.fmt(it.me)}</b><div class="cmp">${row('a', it.who, it.me)}${row('b', it.vs, it.base)}<p>${t(it.up ? 'up' : 'down')}</p></div></div>`;
+    return `<a class="bcard" href="#${it.open}" data-open="${it.open}">${media('bench-'+i, it.pal, '', ov)}<h3 class="card-t">${esc(t(it.lab))}</h3><p class="meta"><b>${t('cat.bench')}</b><span>${it.model}</span></p></a>`;
+  }).join('');
+  paintArt($('carTrack'));
+}
+/* ---------- carousel with progress ring ---------- */
+const CAR = {i:0, auto:!REDUCED, vis:false};
+function carPer(){ const tr = $('carTrack'), it = tr.firstElementChild; return it ? Math.max(1, Math.round((tr.clientWidth + 24) / (it.offsetWidth + 24))) : 1; }
+function carGo(i){
+  const tr = $('carTrack'), n = tr.children.length, max = Math.max(0, n - carPer());
+  CAR.i = i > max ? 0 : i < 0 ? max : i;
+  tr.scrollTo({left: tr.children[CAR.i].offsetLeft - tr.firstElementChild.offsetLeft, behavior: REDUCED ? 'auto' : 'smooth'});
+  carArm();
+}
+function carArm(){ const r = $('ring'); r.classList.remove('run'); void r.getBoundingClientRect(); if (CAR.auto && CAR.vis) r.classList.add('run'); }
+function carStop(){ if (!CAR.auto) return; CAR.auto = false; carArm(); }
+
+/* ---------- quickstart tabs with countdown ---------- */
+const QS = [
+ {id:'mj', repo:'chaoliangUNSW/MacJev-322M-4K-Laya', label:'MacJev · PyTorch', file:'python', code:`# hf download chaoliangUNSW/MacJev-322M-4K-Laya --local-dir MacJev
+from macjev import MacJev
+
+model = MacJev(".", device="mps")
+result = model.decide(
+    state={"request": "打开浏览器",
+           "available_actions": ["open_browser", "copy_file", "ask_user"]},
+    question={"t": "choice",
+              "ins": "Which available action best matches the user's request?",
+              "crit": {"open_browser": "Open the user's browser",
+                       "copy_file": "Copy a file inside the approved folder",
+                       "ask_user": "Ask for clarification"}},
+)
+print(result["answer"], result["probabilities"])`},
+ {id:'mjx', repo:'chaoliangUNSW/MacJev-322M-4K-Laya-MLX', label:'MacJev · MLX', file:'python', code:`# hf download chaoliangUNSW/MacJev-322M-4K-Laya-MLX --local-dir MacJev-MLX
+from macjev_mlx import MacJevMLX
+
+model = MacJevMLX(".")
+result = model.decide(
+    state={"request": "打开浏览器"},
+    question={"t": "noul", "ins": "Does the request ask to open a browser?"},
+)
+print(result["answer"], result["top_probability"])`},
+ {id:'v2g', repo:'chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF', label:'v2 · GGUF', file:'shell', code:`hf download chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF --local-dir jev-v2-gguf
+cd jev-v2-gguf
+llama-server -m Jev-Style-v2-Q8_0-Calibrated.gguf -c 2048 -ngl 99 --port 8080
+
+python jev_decision_client.py --url http://127.0.0.1:8080 \\
+  --state "The film was excellent." \\
+  --question "What is the sentiment of this review?" \\
+  --options negative positive`},
+ {id:'v2h', repo:'chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2', label:'v2 · Transformers', file:'shell', code:`hf download chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2 --local-dir jev-v2
+cd jev-v2 && python -m pip install -r requirements.txt
+python -m jev_h100.decide --model . --device cpu \\
+  --state "The film was excellent." \\
+  --question "What is the sentiment of this review?" \\
+  --options negative positive`},
+];
+const QS_FOR = {macjev:'mj', v2:'v2g'};
+let qsActive = 'mj', qsAuto = !REDUCED, qsVis = false;
+function hl(code){
+  return esc(code).split('\n').map(line => {
+    const i = line.indexOf('#'); let head = i>=0 ? line.slice(0,i) : line; const tail = i>=0 ? `<span class="c1">${line.slice(i)}</span>` : '';
+    head = head.replace(/(&quot;.*?&quot;)/g,'<span class="s2">$1</span>').replace(/\b(from|import|print|python|hf|cd|llama-server)\b/g,'<span class="k">$1</span>');
+    return head + tail;
+  }).join('\n');
+}
+function renderQS(swap){
+  const q = QS.find(x => x.id===qsActive);
+  $('qsTabs').innerHTML = QS.map(x => `<button type="button" role="tab" class="tab" id="qs-${x.id}" data-qs="${x.id}" aria-selected="${x.id===qsActive}"><span class="cd" aria-hidden="true"></span>${esc(x.label)}</button>`).join('');
+  $('qsFile').textContent = q.file;
+  $('qsCode').innerHTML = hl(q.code);
+  if (swap){ $('qsCode').classList.remove('swap'); void $('qsCode').offsetWidth; $('qsCode').classList.add('swap'); }
+  $('qsRepo').href = HF + q.repo;
+  qsArm();
+}
+function qsArm(){
+  document.querySelectorAll('.tab.run').forEach(b => b.classList.remove('run'));
+  const b = document.querySelector('.tab[aria-selected="true"]');
+  if (b && qsAuto && qsVis){ void b.offsetWidth; b.classList.add('run'); }
+}
+
+/* ---------- charts (drawer) ---------- */
+function txt(x,y,s,o={}){ return `<text x="${x}" y="${y}" fill="${o.fill||css('--ink2')}" font-size="${o.size||12}" font-family="${o.mono?css('--mono'):css('--sans')}" text-anchor="${o.anchor||'start'}" dominant-baseline="${o.base||'middle'}"${o.weight?` font-weight="${o.weight}"`:''}>${esc(s)}</text>`; }
+function svg(w,h,g){ return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img">${g}</svg>`; }
+function dotPlot(el, rows, series, o={}){
+  const W = Math.max(280, el.clientWidth), narrow = W<480, labW = narrow?100:150, rowH = 30, top = 22;
+  const x0 = labW, x1 = W-50, H = top+rows.length*rowH+4, [lo,hi] = o.domain||[0,1], X = v => x0+(v-lo)/(hi-lo)*(x1-x0);
+  let g = '';
+  (o.ticks||[0,.25,.5,.75,1]).forEach(v => { g += `<line x1="${X(v)}" x2="${X(v)}" y1="${top-6}" y2="${H-4}" stroke="${css('--line')}"/>` + txt(X(v), top-14, Math.round(v*100)+'%', {size:10.5, mono:true, anchor:'middle', fill:css('--ink3')}); });
+  rows.forEach((r,i) => {
+    const y = top+i*rowH+rowH/2, vs = r.values.map(v => v.v);
+    g += txt(0, y, r.label, {size:12, fill:css('--ink')});
+    g += `<line x1="${X(Math.min(...vs))}" x2="${X(Math.max(...vs))}" y1="${y}" y2="${y}" stroke="${css('--muted')}" stroke-width="2"/>`;
+    r.values.forEach(v => { const s = series[v.key]; g += `<circle cx="${X(v.v)}" cy="${y}" r="${s.r}" fill="${s.color}" stroke="${css('--bg')}" stroke-width="1.5"><title>${esc(s.label)}: ${pct(v.v)}</title></circle>`; });
+    const h = r.values.find(v => v.key===o.highlight);
+    if (h) g += txt(W, y, pct(h.v), {size:12, mono:true, anchor:'end', fill:css('--acc-ink'), weight:500});
+  });
+  el.innerHTML = svg(W,H,g);
+}
+function legend(series){ return `<div class="legend">${Object.values(series).map(s => `<span><i style="background:${s.color}"></i>${esc(s.label)}</span>`).join('')}</div>`; }
+function reliability(el, rel){
+  const W = Math.max(260, el.clientWidth), H = Math.round(Math.min(W*.62, 300)), l = 40, r = 8, tp = 8, histH = 30, b = 36+histH, lo = .3;
+  const X = v => l+(v-lo)/(1-lo)*(W-l-r), Y = v => tp+(1-v)/(1-lo)*(H-tp-b);
+  let g = '';
+  [.3,.5,.7,.9].forEach(v => { g += `<line x1="${l}" x2="${W-r}" y1="${Y(v)}" y2="${Y(v)}" stroke="${css('--line')}"/>` + txt(l-6, Y(v), Math.round(v*100)+'%', {size:10.5, mono:true, anchor:'end', fill:css('--ink3')}) + txt(X(v), H-b+14, Math.round(v*100)+'%', {size:10.5, mono:true, anchor:'middle', fill:css('--ink3')}); });
+  g += `<line x1="${X(lo)}" y1="${Y(lo)}" x2="${X(1)}" y2="${Y(1)}" stroke="${css('--ink3')}" stroke-dasharray="4 4"/>`;
+  const maxN = Math.max(...rel.bins.map(x => x.n)), bw = (X(1)-X(lo))/(1-lo)/15 - 2;
+  rel.bins.forEach(bn => {
+    const cx = X(bn.mean_confidence), cy = Y(Math.max(lo,bn.accuracy)), s = 3+3.5*Math.sqrt(bn.n/maxN);
+    g += `<line x1="${cx}" x2="${cx}" y1="${Y(Math.max(lo,bn.wilson95[0]))}" y2="${Y(Math.min(1,bn.wilson95[1]))}" stroke="${css('--acc')}" opacity=".45" stroke-width="1.5"/>`;
+    g += `<circle cx="${cx}" cy="${cy}" r="${s}" fill="${css('--acc')}"><title>${pct(bn.mean_confidence)} → ${pct(bn.accuracy)} (n=${bn.n})</title></circle>`;
+    const hh = (histH-6)*bn.n/maxN; g += `<rect x="${X((bn.lo+bn.hi)/2)-bw/2}" y="${H-hh}" width="${bw}" height="${hh}" rx="1.5" fill="${css('--muted')}"/>`;
+  });
+  g += txt(X(lo), H-b+29, t('rel.x'), {size:11, fill:css('--ink3')}) + txt(W-r, H-histH-4, t('rel.n'), {size:10.5, anchor:'end', fill:css('--ink3'), base:'auto'});
+  el.innerHTML = svg(W,H,g);
+}
+
+/* ---------- drawer ---------- */
+let openId = null, lastFocus;
+function kpi(v, label, sub){ return `<div><b>${v}</b><span>${label}</span>${sub?`<small>${sub}</small>`:''}</div>`; }
+function drawDrawer(){
+  if (!openId) return;
+  const f = fam(openId), name = display(f);
+  $('drCap').textContent = f.name;
+  let k, charts;
+  if (f.id === 'v2'){
+    const ev = DATA.eval.v2;
+    k = kpi(pct(ev.overview.v2.accuracy), t('m1'), `${t('vs')} ${t('m1s')}`) + kpi(pct(ev.permutation.v2.semantic_flip_rate), t('m4'), `${t('vs')} ${t('m4s')}`) + kpi(f.params, t('k.params'), `${f.context} ${t('k.ctx')}`);
+    charts = `<div><p class="cap">${t('c.tasks')}</p><div class="chart" id="dc1" style="margin-top:10px"></div><div id="dl1"></div></div><div><p class="cap">${t('c.rel')}</p><div class="chart" id="dc2" style="margin-top:10px"></div></div><p class="dr-note">${t('note.v2')}</p>`;
+  } else {
+    const top = f.metrics.find(m => m.better==='up'), ece = f.metrics.find(m => m.better==='down');
+    k = kpi(pct(top.model), t('m.'+top.key), `${t('vs')} ${pct(top.base)}`) + kpi(ece.model.toFixed(3), t('m.'+ece.key), `${t('vs')} ${ece.base.toFixed(3)} · ${t('lower')}`) + kpi(f.params, t('k.params'), f.context ? `${f.context} ${t('k.ctx')}` : f.langs);
+    charts = `<div><p class="cap">${t('c.pair')}</p><div class="chart" id="dc1" style="margin-top:10px"></div><div id="dl1"></div></div><p class="dr-note">${t('note.'+f.id)}</p>`;
+  }
+  const fmts = f.repos.map(r => `<a class="fmt" href="${HF+r.repo}" target="_blank" rel="noopener"><span class="f">${esc(r.format)} ↗</span><span class="m">${esc(r.size)} · ${esc(r.runs)}</span><span class="d">${(r.downloads??0).toLocaleString('en-US')}<small>↓ 30 d${r.likes?` · ♥ ${r.likes}`:''}</small></span></a>`).join('');
+  const q = QS.find(x => x.id === QS_FOR[f.id]);
+  $('drBody').innerHTML = `
+    <div><div class="badges" style="margin-bottom:14px"><span class="badge">${t('b.open')}</span><span class="badge ${f.status==='latest'?'new':''}">${t(f.status==='latest'?'b.latest':'b.archived')}</span></div><h2 id="drTitle">${esc(name)}</h2><p style="color:var(--ink2);margin-top:10px">${t('one.'+f.id)}</p>
+      <div class="dr-actions"><a class="btn dark" href="${HF+f.repos[0].repo}" target="_blank" rel="noopener">${t('hf')} <span class="ar ne" aria-hidden="true">↗</span></a>${f.status!=='latest' ? `<button type="button" class="btn" data-open="v2">${t('newer')} <span class="ar" aria-hidden="true">→</span></button>` : ''}</div></div>
+    <div class="kpis">${k}</div>${charts}
+    <div><p class="cap" style="margin-bottom:6px">${t('formats')}</p><div class="fmts">${fmts}</div></div>
+    ${q ? `<div><p class="cap" style="margin-bottom:10px">${t('code')}</p><div class="code"><pre>${hl(q.code)}</pre></div></div>` : ''}`;
+  if (f.id === 'v2'){
+    const ev = DATA.eval.v2, series = {v1:{label:'v1',color:css('--t4'),r:4}, laya:{label:'English Laya',color:css('--ink3'),r:4}, v2:{label:'v2',color:css('--acc'),r:5.5}};
+    const tasks = Object.keys(ev.by_task.v2).filter(x => x!=='typed_decisions').sort((a,b) => ev.by_task.v2[b]-ev.by_task.v2[a]);
+    dotPlot($('dc1'), tasks.map(x => ({label:t('t.'+x), values:['v1','laya','v2'].map(m => ({key:m, v:ev.by_task[m][x]}))})), series, {domain:[.25,1], ticks:[.25,.5,.75,1], highlight:'v2'});
+    $('dl1').innerHTML = legend(series);
+    reliability($('dc2'), ev.reliability);
+  } else {
+    const series = {base:{label:f.compare_label,color:css('--ink3'),r:4.5}, model:{label:name,color:css('--acc'),r:5.5}};
+    dotPlot($('dc1'), f.metrics.filter(m => m.better==='up').map(m => ({label:t('m.'+m.key), values:[{key:'base',v:m.base},{key:'model',v:m.model}]})), series, {highlight:'model'});
+    $('dl1').innerHTML = legend(series);
+  }
+}
+function openDrawer(id){
+  if (!fam(id)) return;
+  if (!$('drawer').contains(document.activeElement)) lastFocus = document.activeElement;
+  openId = id; setMenu(false);
+  $('drawer').hidden = false; $('scrim').hidden = false;
+  document.body.style.overflow = 'hidden'; $('drawer').scrollTop = 0; drawDrawer(); $('drClose').focus();
+}
+function closeDrawer(){
+  openId = null; $('drawer').hidden = true; $('scrim').hidden = true;
+  document.body.style.overflow = ''; if (lastFocus) lastFocus.focus();
+}
+
+/* ---------- search ---------- */
+let srchFocus;
+function searchItems(){
+  return [
+    ...DATA.families.map(f => ({label:display(f), sub:t('cat.model'), open:f.id})),
+    ...DATA.families.flatMap(f => f.repos).map(r => ({label:r.repo.split('/')[1], sub:r.format, href:HF+r.repo})),
+    ...DATA.planned.map(x => ({label:x.name, sub:t('cat.plan'), hash:'#models'})),
+    ...[['#models','sec.models'],['#releases','nav.releases'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
+  ];
+}
+function renderSearch(){
+  const q = $('srchIn').value.trim().toLowerCase();
+  const list = searchItems().filter(x => !q || x.label.toLowerCase().includes(q) || x.sub.toLowerCase().includes(q));
+  $('srchList').innerHTML = list.length ? list.map((x,i) => {
+    const on = i===0 ? ' class="on"' : '', inner = `<span>${esc(x.label)}</span><small>${esc(x.sub)}</small>`;
+    return `<li>${x.href ? `<a href="${x.href}" target="_blank" rel="noopener"${on}>${inner}</a>` : `<button type="button" ${x.open ? `data-sopen="${x.open}"` : `data-shash="${x.hash}"`}${on}>${inner}</button>`}</li>`;
+  }).join('') : `<li class="none">${t('search.none')}</li>`;
+}
+function openSearch(){
+  srchFocus = document.activeElement; setMenu(false);
+  $('srch').hidden = false; $('srchIn').value = ''; renderSearch();
+  document.body.style.overflow = 'hidden'; $('srchIn').focus();
+}
+function closeSearch(){ if ($('srch').hidden) return; $('srch').hidden = true; document.body.style.overflow = ''; if (srchFocus) srchFocus.focus(); }
+
+/* ---------- mobile menu ---------- */
+const ICON_MENU = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M3.5 7.5h13M3.5 12.5h13"/></svg>';
+const ICON_X = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9"/></svg>';
+function setMenu(open){
+  if ($('mnav').hidden === !open) return;
+  $('mnav').hidden = !open; $('menuBtn').setAttribute('aria-expanded', String(open)); $('menuBtn').innerHTML = open ? ICON_X : ICON_MENU;
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+/* ---------- reveal (below-the-fold only) and heading sweep ---------- */
+function setupReveal(){
+  if (REDUCED || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
+  ['.mcard','.rel','.bcard','.dev-body','.ab-lead','.ab-item','.fcol'].forEach(sel => document.querySelectorAll(sel).forEach((el,i) => {
+    if (el.getBoundingClientRect().top < innerHeight) return;
+    el.classList.add('rv','pre'); el.style.transitionDelay = (i%3)*80 + 'ms'; io.observe(el);
+  }));
+  const tio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('go'); tio.unobserve(e.target); } }), {rootMargin:'0px 0px -15% 0px'});
+  if ($('ctaH').getBoundingClientRect().top > innerHeight) tio.observe($('ctaH'));
+}
+
+/* ---------- wiring ---------- */
+function applyText(){
+  document.documentElement.lang = lang==='zh' ? 'zh-CN' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
+  $('srchIn').placeholder = t('search.ph');
+  $('langBtn').textContent = lang==='zh' ? 'English' : '中文';
+  $('langBtn').setAttribute('aria-label', lang==='zh' ? 'Switch to English' : '切换到中文');
+  $('langBtn2').lastElementChild.textContent = t('lang.name');
+  $('snap').textContent = t('snap') + DATA.snapshot;
+}
+function renderAll(){
+  applyText(); words($('heroTitle'), t('hero.h'));
+  renderHeroTabs(); heroStage(false); renderModels(); renderReleases(); renderBench(); renderQS(false); drawDrawer();
+  if (!$('srch').hidden) renderSearch();
+}
+function copy(text, btn, selEl){
+  const idle = btn.textContent;
+  const fallback = () => { if (!selEl) return; const s = getSelection(), r = document.createRange(); r.selectNodeContents(selEl); s.removeAllRanges(); s.addRange(r); };
+  try { navigator.clipboard.writeText(text).then(() => { btn.textContent = t('copied'); setTimeout(() => btn.textContent = idle, 1400); }, fallback); } catch(e) { fallback(); }
+}
+function setLang(l){ lang = l; try { localStorage.setItem('lang', lang); } catch(_){} renderAll(); }
+
+document.querySelectorAll('.bn').forEach(e => e.textContent = DATA.brand);
+document.querySelectorAll('.hf').forEach(a => a.href = HF + DATA.author);
+document.querySelectorAll('.dc').forEach(a => a.href = DATA.discord);
+document.querySelectorAll('[data-repo]').forEach(a => a.href = HF + a.dataset.repo);
+$('hfTop').href = HF + DATA.author;
+$('email').textContent = DATA.email;
+$('menuBtn').innerHTML = ICON_MENU;
+
+document.addEventListener('click', e => {
+  const so = e.target.closest('[data-sopen]'); if (so){ closeSearch(); openDrawer(so.dataset.sopen); return; }
+  const sh = e.target.closest('[data-shash]'); if (sh){ closeSearch(); document.querySelector(sh.dataset.shash)?.scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth'}); return; }
+  if (e.target.closest('#srch a')){ closeSearch(); return; }
+  if (e.target.closest('.fchips a')) return;
+  const hm = e.target.closest('[data-hm]'); if (hm){ HERO.auto = false; HERO.i = +hm.dataset.hm; renderHeroTabs(); heroStage(true); return; }
+  const mf = e.target.closest('[data-mf]'); if (mf){ mFilter = mf.dataset.mf; mAnim = true; renderModels(); return; }
+  const o = e.target.closest('[data-open]'); if (o){ e.preventDefault(); openDrawer(o.dataset.open); return; }
+  const q = e.target.closest('[data-qs]'); if (q){ qsAuto = false; qsActive = q.dataset.qs; renderQS(true); return; }
+  if (e.target.closest('#mnav a')) setMenu(false);
+});
+$('langBtn').addEventListener('click', () => setLang(lang==='zh' ? 'en' : 'zh'));
+$('langBtn2').addEventListener('click', () => setLang(lang==='zh' ? 'en' : 'zh'));
+$('menuBtn').addEventListener('click', () => setMenu($('mnav').hidden));
+$('searchBtn').addEventListener('click', openSearch);
+$('srchScrim').addEventListener('click', closeSearch);
+$('srchIn').addEventListener('input', renderSearch);
+$('srchIn').addEventListener('keydown', e => { if (e.key==='Enter'){ e.preventDefault(); $('srchList').querySelector('.on')?.click(); } });
+$('drClose').addEventListener('click', closeDrawer);
+$('scrim').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape'){ if (!$('srch').hidden) closeSearch(); else if (openId) closeDrawer(); else setMenu(false); return; }
+  if (e.key==='/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName) && !openId){ e.preventDefault(); openSearch(); }
+});
+$('copyBtn').addEventListener('click', e => copy(QS.find(x => x.id===qsActive).code, e.currentTarget, $('qsCode')));
+$('copyEmail').addEventListener('click', e => copy(DATA.email, e.currentTarget, $('email')));
+$('ring').addEventListener('animationend', e => { if (e.animationName === 'ring') carGo(CAR.i + 1); });
+$('carNext').addEventListener('click', () => { carStop(); carGo(CAR.i + 1); });
+$('carPrev').addEventListener('click', () => { carStop(); carGo(CAR.i - 1); });
+['pointerdown','wheel'].forEach(ev => $('carTrack').addEventListener(ev, carStop, {passive:true}));
+$('carTrack').addEventListener('scroll', () => { if (CAR.auto) return; const tr = $('carTrack'), w = tr.firstElementChild.offsetWidth + 24; CAR.i = Math.round(tr.scrollLeft / w); }, {passive:true});
+$('mTabs').addEventListener('animationend', e => {
+  if (!e.target.classList.contains('cd')) return;
+  HERO.i = (HERO.i + 1) % DATA.families.length; renderHeroTabs(); heroStage(true);
+});
+$('qsTabs').addEventListener('animationend', e => {
+  if (!e.target.classList.contains('cd')) return;
+  const i = QS.findIndex(x => x.id===qsActive); qsActive = QS[(i+1) % QS.length].id; renderQS(true);
+});
+
+const redraw = () => drawDrawer();
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', redraw);
+new MutationObserver(redraw).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+let rz, lastW = 0;
+new ResizeObserver(() => { if (document.body.clientWidth === lastW) return; lastW = document.body.clientWidth; clearTimeout(rz); rz = setTimeout(() => { fxSetup(); if (REDUCED) for (let i=0;i<120;i++) fxFrame(i*16); drawDrawer(); if (innerWidth > 900) setMenu(false); }, 100); }).observe(document.body);
+
+if ('IntersectionObserver' in window){
+  new IntersectionObserver(es => { FX.vis = HERO.vis = es[0].isIntersecting; heroArm(); }).observe($('fxWrap'));
+  new IntersectionObserver(es => { if (es[0].isIntersecting){ $('fxWrap').classList.add('go'); } }, {rootMargin:'0px 0px -10% 0px'}).observe($('fxWrap'));
+  new IntersectionObserver(es => { CAR.vis = es[0].isIntersecting; carArm(); }, {threshold:.35}).observe($('benchmarks'));
+  new IntersectionObserver(es => { qsVis = es[0].isIntersecting; qsArm(); }, {threshold:.35}).observe($('developers'));
+} else $('fxWrap').classList.add('go');
+if (!REDUCED) $('fxWrap').classList.add('anim');
+
+let ticking = false;
+addEventListener('scroll', () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; fxScroll(); $('hdr').classList.toggle('scrolled', scrollY > 4); }); }, {passive:true});
+
+renderAll();
+fxStart();
+$('stSpecs').querySelectorAll('dd').forEach(dd => countUp(dd, dd.dataset.v));
+fxScroll();
+setupReveal();
+const h = location.hash.slice(1); if (fam(h)) openDrawer(h);
+})();
+</script>
+
+</body>
+</html>
