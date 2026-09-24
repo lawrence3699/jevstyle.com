@@ -299,6 +299,52 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
   .tl-dot{top:1px}
 }
 
+/* demos: data from registry "demos". "featured" ones are big tiles that autoplay muted while on screen;
+   the rest sit in the "More demos" expander (#dMore, collapsed by default) as cards with a hover preview.
+   Every card: video, title, one-line caption (.dcap). All open the lightbox player. */
+.dfeat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px var(--g)}
+.dfeat.one{grid-template-columns:minmax(0,880px);justify-content:center}
+.dfeat[hidden],.dmore-row[hidden],.dmore-body[hidden]{display:none}
+@media (max-width:767px){.dfeat{grid-template-columns:minmax(0,1fr);gap:32px}}
+.dcard.big .media.vid{aspect-ratio:16/10}
+.dcard.big .card-t{margin-top:16px;font-size:clamp(17px,1.35vw,19px)}
+.dcard.big.hov:hover .mi{transform:scale(1.02)}
+.dcap{font-size:13.5px;line-height:1.45;color:var(--ink2);margin-top:4px;text-wrap:pretty}
+.dmore-row{display:flex;justify-content:center;margin-top:clamp(32px,4vw,48px)}
+.dmore .dmn{color:var(--ink2);font-variant-numeric:tabular-nums}
+.dmore svg{transition:transform .25s var(--ease)}
+.dmore[aria-expanded="true"] svg{transform:rotate(180deg)}
+.dmore-body{margin-top:clamp(32px,4vw,48px)}
+.dgrid.in .dcard{animation:fade-rise .5s var(--out) both;animation-delay:calc(var(--i)*60ms)}
+.dgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px var(--g)}
+@media (max-width:1023px){.dgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.dgrid{grid-template-columns:minmax(0,1fr);gap:32px}}
+.dcard{position:relative;min-width:0}
+.dcard:has(.mt:focus-visible){outline:2px solid var(--acc);outline-offset:6px;border-radius:10px}
+.media.vid{aspect-ratio:16/9;background:var(--soft2)}
+.media.vid::after{display:none}
+.vid img,.vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vid video{opacity:0;transition:opacity .35s var(--ease)}
+.vid.playing video{opacity:1}
+.dov{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:clamp(12px,1.4vw,18px);pointer-events:none}
+.dpl{display:grid;place-items:center;width:36px;height:36px;border-radius:999px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#0D0D0F;transition:transform .2s var(--ease)}
+.dpl svg{width:14px;height:14px}
+.dcard:hover .dpl{transform:scale(1.08)}
+.vbox{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px))}
+.vbox[hidden]{display:none}
+.vb-scrim{position:absolute;inset:0;background:rgba(0,0,0,.88);animation:fade-in .2s ease-out}
+.vb-panel{position:relative;width:min(1200px,100%);min-width:0;display:grid;gap:12px;animation:fade-rise .35s var(--out)}
+.vb-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;color:#fff;min-width:0}
+.vb-head > div:first-child{min-width:0}
+.vb-head h2{font-size:17px;line-height:1.3;letter-spacing:-.01em;overflow-wrap:anywhere}
+.vb-head p{font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.72);margin-top:2px}
+.vb-acts{display:flex;gap:6px;flex:none}
+.vb-btn{width:36px;height:36px;border-radius:999px;border:0;display:grid;place-items:center;background:rgba(255,255,255,.14);color:#fff;transition:background .2s var(--ease)}
+.vb-btn:hover{background:rgba(255,255,255,.26)}
+.vb-btn[hidden]{display:none}
+.vb-btn svg{width:16px;height:16px}
+.vb-video{display:block;width:100%;max-height:calc(100vh - 140px);max-height:calc(100dvh - 140px);aspect-ratio:16/9;border-radius:12px;background:#000;object-fit:contain}
+
 /* downloads */
 .live{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2)}
 .live i{width:8px;height:8px;border-radius:50%;background:var(--ink3)}
@@ -431,6 +477,7 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
     <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn"></span></a>
     <nav class="nav" aria-label="Primary">
       <a href="#models" data-i18n="nav.models"></a>
+      <a href="#demos" data-i18n="nav.demos" hidden></a>
       <a href="#timeline" data-i18n="nav.tl"></a>
       <a href="#downloads" data-i18n="nav.dl"></a>
       <a href="#benchmarks" data-i18n="nav.bench"></a>
@@ -447,13 +494,14 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
 <div class="mnav" id="mnav" hidden>
   <nav aria-label="Mobile">
     <a href="#models" data-i18n="nav.models" style="--i:0"></a>
-    <a href="#timeline" data-i18n="nav.tl" style="--i:1"></a>
-    <a href="#downloads" data-i18n="nav.dl" style="--i:2"></a>
-    <a href="#releases" data-i18n="nav.releases" style="--i:3"></a>
-    <a href="#benchmarks" data-i18n="nav.bench" style="--i:4"></a>
-    <a href="#developers" data-i18n="nav.dev" style="--i:5"></a>
-    <a href="#about" data-i18n="nav.about" style="--i:6"></a>
-    <a href="#contact" data-i18n="f.contact" style="--i:7"></a>
+    <a href="#demos" data-i18n="nav.demos" style="--i:1" hidden></a>
+    <a href="#timeline" data-i18n="nav.tl" style="--i:2"></a>
+    <a href="#downloads" data-i18n="nav.dl" style="--i:3"></a>
+    <a href="#releases" data-i18n="nav.releases" style="--i:4"></a>
+    <a href="#benchmarks" data-i18n="nav.bench" style="--i:5"></a>
+    <a href="#developers" data-i18n="nav.dev" style="--i:6"></a>
+    <a href="#about" data-i18n="nav.about" style="--i:7"></a>
+    <a href="#contact" data-i18n="f.contact" style="--i:8"></a>
   </nav>
   <div class="mnav-acts"><a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a></div>
 </div>
@@ -492,6 +540,13 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
     </div>
     <dl class="spot-stats" id="spStats"></dl>
     <p class="spot-note" data-i18n="sp.note"></p>
+  </section>
+
+  <section id="demos" hidden>
+    <div class="sec-head"><h2 data-i18n="sec.demos"></h2><p class="sec-aside" data-i18n="dm.sub"></p></div>
+    <div class="dfeat" id="dFeat"></div>
+    <div class="dmore-row" id="dMoreRow" hidden><button type="button" class="pill soft dmore" id="dMoreBtn" aria-expanded="false" aria-controls="dMore"><span data-i18n="dm.more"></span><span class="dmn">(<span id="dMoreN"></span>)</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button></div>
+    <div class="dmore-body" id="dMore" hidden><div class="dgrid" id="dGrid"></div></div>
   </section>
 
   <section id="timeline">
@@ -591,7 +646,22 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
   <div class="dr-body" id="drBody"></div>
 </div>
 
-<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v3","name":"Jev-Style-0.8B-Decision-v3","short":"v3","status":"latest","params":"0.8B","params_exact":"752,393,024","arch":"decoder","base":"Qwen/Qwen3.5-0.8B, full fine-tune","langs":"51","context":"25,600","types":["choice","noul","score"],"released":"2026-09-24","train":"1 × H100 · full fine-tune in bf16 · ~96 min · 321,756-row pool in 19 languages","compare_label":"Laya typed","headline":[["0.8B","hl.params"],["25,600","hl.ctx"],["77","hl.opts"],["51","hl.langs"],["0.53 GB","hl.q4"]],"metrics":[{"key":"typed","base":0.766,"model":0.7915,"better":"up"},{"key":"massive51","base":0.4008,"model":0.7175,"better":"up"},{"key":"ece49","base":0.2994,"model":0.0542,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3","format":"Transformers BF16","size":"1.50 GB","runs":"PyTorch · CUDA · MPS · CPU","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:45.000Z","createdAt":"2026-09-24T14:59:46.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"0.53–1.52 GB","runs":"llama.cpp · jev-score","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:54.000Z","createdAt":"2026-09-24T15:00:37.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX","format":"MLX BF16 / 8-bit","size":"0.80–1.50 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:38.000Z","createdAt":"2026-09-24T16:02:31.000Z"}],"tags":["DECISION","25.6K INPUT","51 LANGUAGES","CALIBRATED","GGUF · MLX"]},{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":832,"downloadsAllTime":832,"likes":0,"lastModified":"2026-09-23T22:16:19.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":380,"downloadsAllTime":380,"likes":5,"lastModified":"2026-09-24T03:41:41.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":894,"downloadsAllTime":894,"likes":0,"lastModified":"2026-09-23T22:16:21.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"downloadsAllTime":0,"likes":3,"lastModified":"2026-09-23T22:16:11.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:13.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":113,"downloadsAllTime":113,"likes":0,"lastModified":"2026-09-23T22:16:14.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":4548,"downloadsAllTime":4548,"likes":9,"lastModified":"2026-09-24T15:06:17.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":2801,"downloadsAllTime":2801,"likes":2,"lastModified":"2026-09-24T16:03:03.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]},"v3":{"beyond":[{"task":"Banking77","metric":"accuracy, 77 intents","v3":0.6825,"best_laya":0.4925,"best_laya_checkpoint":"typed","n":400},{"task":"Jailbreak","metric":"balanced accuracy","v3":0.9036238842064085,"best_laya":0.8311462000782389,"best_laya_checkpoint":"multilingual","n":400},{"task":"Toxicity","metric":"macro-F1","v3":0.7089254055198327,"best_laya":0.41360068097985436,"best_laya_checkpoint":"multilingual","n":400},{"task":"Model routing","metric":"accuracy","v3":0.9624060150375939,"best_laya":0.6591478696741855,"best_laya_checkpoint":"typed","n":399},{"task":"MASSIVE intent","metric":"37 held-out locales","v3":0.6551351351351351,"best_laya":0.36108108108108106,"best_laya_checkpoint":"multilingual","n":3700}],"calib":{"NLL":{"v3":0.4928839178581892,"best_laya":2.212565130608199,"checkpoint":"multilingual"},"Brier score":{"v3":0.23930092306086748,"best_laya":0.7120664110846202,"checkpoint":"multilingual"},"ECE":{"v3":0.05416919804670487,"best_laya":0.2994167384382702,"checkpoint":"multilingual"}},"massive":{"languages":51,"v3_beats_laya_multilingual":51,"v3_beats_best_laya_checkpoint":51,"v3_beats_laya_multilingual_never_trained":37,"v3_above_3x_chance":51,"laya_multilingual_above_3x_chance":48,"macro_v3":0.7174509803921569,"macro_laya_multilingual":0.4007843137254902,"macro_v3_never_trained37":0.6551351351351351,"macro_laya_multilingual_never_trained37":0.36108108108108106,"min_margin_vs_laya_multilingual":0.11}}},"snapshot":"2026-09-24"}</script>
+<div class="vbox" id="vbox" hidden role="dialog" aria-modal="true" aria-labelledby="vbTitle">
+  <div class="vb-scrim" id="vbScrim"></div>
+  <div class="vb-panel">
+    <div class="vb-head">
+      <div><h2 id="vbTitle"></h2><p id="vbCap"></p></div>
+      <div class="vb-acts">
+        <button type="button" class="vb-btn" id="vbPrev" data-i18n-aria="prev"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg></button>
+        <button type="button" class="vb-btn" id="vbNext" data-i18n-aria="next"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l5 5-5 5"/></svg></button>
+        <button type="button" class="vb-btn" id="vbClose" data-i18n-aria="close"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9"/></svg></button>
+      </div>
+    </div>
+    <video class="vb-video" id="vbVideo" controls playsinline muted preload="metadata"></video>
+  </div>
+</div>
+
+<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v3","name":"Jev-Style-0.8B-Decision-v3","short":"v3","status":"latest","params":"0.8B","params_exact":"752,393,024","arch":"decoder","base":"Qwen/Qwen3.5-0.8B, full fine-tune","langs":"51","context":"25,600","types":["choice","noul","score"],"released":"2026-09-24","train":"1 × H100 · full fine-tune in bf16 · ~96 min · 321,756-row pool in 19 languages","compare_label":"Laya typed","headline":[["0.8B","hl.params"],["25,600","hl.ctx"],["77","hl.opts"],["51","hl.langs"],["0.53 GB","hl.q4"]],"metrics":[{"key":"typed","base":0.766,"model":0.7915,"better":"up"},{"key":"massive51","base":0.4008,"model":0.7175,"better":"up"},{"key":"ece49","base":0.2994,"model":0.0542,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3","format":"Transformers BF16","size":"1.50 GB","runs":"PyTorch · CUDA · MPS · CPU","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:45.000Z","createdAt":"2026-09-24T14:59:46.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"0.53–1.52 GB","runs":"llama.cpp · jev-score","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:54.000Z","createdAt":"2026-09-24T15:00:37.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX","format":"MLX BF16 / 8-bit","size":"0.80–1.50 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:38.000Z","createdAt":"2026-09-24T16:02:31.000Z"}],"tags":["DECISION","25.6K INPUT","51 LANGUAGES","CALIBRATED","GGUF · MLX"]},{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":832,"downloadsAllTime":832,"likes":0,"lastModified":"2026-09-23T22:16:19.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":380,"downloadsAllTime":380,"likes":5,"lastModified":"2026-09-24T03:41:41.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":894,"downloadsAllTime":894,"likes":0,"lastModified":"2026-09-23T22:16:21.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"downloadsAllTime":0,"likes":3,"lastModified":"2026-09-23T22:16:11.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:13.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":113,"downloadsAllTime":113,"likes":0,"lastModified":"2026-09-23T22:16:14.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":4548,"downloadsAllTime":4548,"likes":10,"lastModified":"2026-09-24T15:06:17.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":2801,"downloadsAllTime":2801,"likes":2,"lastModified":"2026-09-24T16:03:03.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"demos":[{"slug":"snake","featured":true,"title_en":"Snake","title_zh":"贪吃蛇","caption_en":"Code lists the legal moves; the model picks every step in about 0.1 s.","caption_zh":"代码列出能走的方向，模型每一步约 0.1 秒做出选择。","video":"media/demos/snake.mp4","webm":"media/demos/snake.webm","poster":"media/demos/snake.jpg","duration_s":44.6},{"slug":"playground","featured":false,"title_en":"Playground","title_zh":"试用","caption_en":"Type a situation and questions; get a probability for every option.","caption_zh":"输入情况和问题，每个选项都得到一个概率。","video":"media/demos/playground.mp4","webm":"media/demos/playground.webm","poster":"media/demos/playground.jpg","duration_s":25.3},{"slug":"workflows","featured":false,"title_en":"Workflows","title_zh":"工作流","caption_en":"Security alerts, invoices, support: code does the math, the model makes the calls.","caption_zh":"安全告警、发票、客服：代码算数，模型做判断。","video":"media/demos/workflows.mp4","webm":"media/demos/workflows.webm","poster":"media/demos/workflows.jpg","duration_s":36.6},{"slug":"patterns","featured":false,"title_en":"Patterns","title_zh":"模式","caption_en":"One ticket, seven questions, one call; code turns the answers into actions.","caption_zh":"一张工单一次问七个问题，代码据此决定下一步。","video":"media/demos/patterns.mp4","webm":"media/demos/patterns.webm","poster":"media/demos/patterns.jpg","duration_s":25.4},{"slug":"long-context","featured":false,"title_en":"Long document","title_zh":"长文档","caption_en":"Reads a 19,000-token document once and answers ten questions.","caption_zh":"读一遍 1.9 万 token 的文档，连答十个问题。","video":"media/demos/long-context.mp4","webm":"media/demos/long-context.webm","poster":"media/demos/long-context.jpg","duration_s":36.4},{"slug":"chinese","featured":false,"title_en":"Chinese & 51 languages","title_zh":"中文与多语言","caption_en":"Chinese tickets and e-mails, plus one question in 51 languages.","caption_zh":"中文工单和邮件，同一个问题问 51 种语言。","video":"media/demos/chinese.mp4","webm":"media/demos/chinese.webm","poster":"media/demos/chinese.jpg","duration_s":27.7},{"slug":"confidence","featured":false,"title_en":"Confidence","title_zh":"置信度","caption_en":"Drag the probabilities and watch how confidence is scored.","caption_zh":"拖动概率，看“把握”是怎么算的。","video":"media/demos/confidence.mp4","webm":"media/demos/confidence.webm","poster":"media/demos/confidence.jpg","duration_s":23.0}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]},"v3":{"beyond":[{"task":"Banking77","metric":"accuracy, 77 intents","v3":0.6825,"best_laya":0.4925,"best_laya_checkpoint":"typed","n":400},{"task":"Jailbreak","metric":"balanced accuracy","v3":0.9036238842064085,"best_laya":0.8311462000782389,"best_laya_checkpoint":"multilingual","n":400},{"task":"Toxicity","metric":"macro-F1","v3":0.7089254055198327,"best_laya":0.41360068097985436,"best_laya_checkpoint":"multilingual","n":400},{"task":"Model routing","metric":"accuracy","v3":0.9624060150375939,"best_laya":0.6591478696741855,"best_laya_checkpoint":"typed","n":399},{"task":"MASSIVE intent","metric":"37 held-out locales","v3":0.6551351351351351,"best_laya":0.36108108108108106,"best_laya_checkpoint":"multilingual","n":3700}],"calib":{"NLL":{"v3":0.4928839178581892,"best_laya":2.212565130608199,"checkpoint":"multilingual"},"Brier score":{"v3":0.23930092306086748,"best_laya":0.7120664110846202,"checkpoint":"multilingual"},"ECE":{"v3":0.05416919804670487,"best_laya":0.2994167384382702,"checkpoint":"multilingual"}},"massive":{"languages":51,"v3_beats_laya_multilingual":51,"v3_beats_best_laya_checkpoint":51,"v3_beats_laya_multilingual_never_trained":37,"v3_above_3x_chance":51,"laya_multilingual_above_3x_chance":48,"macro_v3":0.7174509803921569,"macro_laya_multilingual":0.4007843137254902,"macro_v3_never_trained37":0.6551351351351351,"macro_laya_multilingual_never_trained37":0.36108108108108106,"min_margin_vs_laya_multilingual":0.11}}},"snapshot":"2026-09-24"}</script>
 <script>
 (function(){
 const $ = id => document.getElementById(id);
@@ -599,6 +669,7 @@ const DATA = JSON.parse($('site-data').textContent);
 const I18N = {
 en:{
  "nav.models":"Models","nav.tl":"Timeline","sec.tl":"Release timeline","tl.next.when":"Next",
+ "nav.demos":"Demos","sec.demos":"Demos","dm.sub":"Jev-Style v3, running locally","dm.play":"Play video","dm.more":"More demos",
  "an.tag":"New","an.text":"Decision 0.8B v3: 25,600-token inputs, 51 languages, every option scored",
  "sp.new":"New model","sp.tag":"One state. One pass. Every option scored.",
  "sp.c1":"Typed decisions, 2,000 items","sp.c2":"Intent accuracy, 51 languages","sp.c3":"Calibration error (ECE), 49 suites",
@@ -647,6 +718,7 @@ en:{
 },
 zh:{
  "nav.models":"模型","nav.tl":"时间线","sec.tl":"发布时间线","tl.next.when":"下一步",
+ "nav.demos":"演示","sec.demos":"演示","dm.sub":"Jev-Style v3，本机运行","dm.play":"播放视频","dm.more":"更多演示",
  "an.tag":"新","an.text":"Decision 0.8B v3：25,600 token 输入、51 种语言、每个选项一次打分",
  "sp.new":"新模型","sp.tag":"读一次输入，一次前向，给每个选项打分。",
  "sp.c1":"多题型决策，2,000 条","sp.c2":"意图识别准确率，51 种语言","sp.c3":"校准误差（ECE），49 个测试集",
@@ -877,7 +949,7 @@ function fxFrame(now){
   c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
 }
 function fxLoop(now){
-  if (FX.vis && !FX.paused && !document.hidden && !openId && $('srch').hidden && $('mnav').hidden) fxFrame(now); else FX.last = 0;
+  if (FX.vis && !FX.paused && !document.hidden && !openId && $('srch').hidden && $('mnav').hidden && $('vbox').hidden) fxFrame(now); else FX.last = 0;
   requestAnimationFrame(fxLoop);
 }
 function fxStill(){ FX.t0 = -1e5; FX.last = 0; for (let i=0;i<120;i++) fxFrame(i*16); }
@@ -886,7 +958,8 @@ const ICON_PLAY = '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2.5v9
 function setPaused(on){
   FX.paused = on; document.documentElement.classList.toggle('still', on);
   const b = $('fxPause'); b.setAttribute('aria-pressed', String(on)); b.innerHTML = on ? ICON_PLAY : ICON_PAUSE; b.setAttribute('aria-label', t(on ? 'play' : 'pause'));
-  if (on){ HERO.auto = false; heroArm(); }
+  if (on){ HERO.auto = false; heroArm(); previewsOff(); }
+  featArm();
 }
 function fxStart(){
   fxSetup();
@@ -976,6 +1049,110 @@ function renderTimeline(){
   $('tlList').style.setProperty('--n', rel.length + (next ? 1 : 0));
   $('tlList').innerHTML = html;
 }
+
+/* ---------- demos: featured tiles (autoplay while on screen), "More demos" expander with cards (hover preview), lightbox ---------- */
+let DLIST = null, moreOpen = false, featIO = null;
+const DEMOS = () => DLIST || (DLIST = (l => [...l.filter(d => d.featured), ...l.filter(d => !d.featured)])(DATA.demos || []));   // lightbox order = page order
+const dtxt = (d, k) => d[k + '_' + lang] || d[k + '_en'] || '';
+const fmtDur = s => { s = Math.max(0, Math.round(+s || 0)); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
+const quiet = () => REDUCED || FX.paused;   // no video motion under reduced motion or the #fxPause 'still' state
+const ICON_EXPAND = '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M8.5 2.5h3v3M5.5 11.5h-3v-3M11.5 2.5 8 6M2.5 11.5 6 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const FEAT_ON = new Set();   // featured tiles currently on screen
+function vidSources(v, d){
+  v.textContent = '';
+  [[d.video, 'video/mp4'], [d.webm, 'video/webm']].forEach(([src, type]) => { if (!src) return; const s = document.createElement('source'); s.src = src; s.type = type; v.append(s); });
+  v.load();
+}
+const dLabel = d => `${esc(dtxt(d, 'title'))}<span class="sr-only"> · ${t('dm.play')}${+d.duration_s > 0 ? ' · ' + fmtDur(d.duration_s) : ''}</span>`;
+function dcard(d, i, j, big){
+  const cap = dtxt(d, 'caption');
+  return `<article class="dcard hov${big ? ' big' : ''}" style="--i:${j}"><div class="media vid"><div class="mi"><img src="${esc(d.poster)}" alt="" loading="lazy" decoding="async"><video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video></div><div class="dov">${+d.duration_s > 0 ? `<span class="ovtag num">${fmtDur(d.duration_s)}</span>` : '<span></span>'}<span class="dpl" aria-hidden="true">${big ? ICON_EXPAND : ICON_PLAY}</span></div></div><h3 class="card-t"><button type="button" class="mt" data-demo="${i}">${dLabel(d)}</button></h3><p class="dcap"${cap ? '' : ' hidden'}>${esc(cap)}</p></article>`;
+}
+function renderDemos(){
+  const list = DEMOS(), nf = list.filter(d => d.featured).length, rest = list.length - nf, key = list.map(d => d.slug).join();
+  $('demos').hidden = !list.length;
+  document.querySelectorAll('a[href="#demos"]').forEach(a => a.hidden = !list.length);
+  if ($('demos').dataset.k !== key){   // cards are built once; a language switch only swaps their text, so playing videos keep playing
+    $('demos').dataset.k = key;
+    $('dFeat').innerHTML = list.slice(0, nf).map((d,i) => dcard(d, i, i, true)).join('');
+    $('dGrid').innerHTML = list.slice(nf).map((d,j) => dcard(d, nf + j, j, false)).join('');
+    featWatch();
+  }
+  $('demos').querySelectorAll('[data-demo]').forEach(b => {
+    const d = list[+b.dataset.demo], p = b.closest('.dcard').querySelector('.dcap'), cap = dtxt(d, 'caption');
+    b.innerHTML = dLabel(d); p.textContent = cap; p.hidden = !cap;
+  });
+  const expander = nf > 0 && rest > 0;   // no featured demos: the cards show directly; no other demos: no expander
+  $('dFeat').hidden = !nf; $('dFeat').classList.toggle('one', nf === 1);
+  $('dMoreRow').hidden = !expander; $('dMoreN').textContent = rest;
+  $('dMore').hidden = expander ? !moreOpen : !rest;
+  $('dMoreBtn').setAttribute('aria-expanded', String(expander && moreOpen));
+}
+function setMore(open){
+  moreOpen = open;
+  $('dMoreBtn').setAttribute('aria-expanded', String(open)); $('dMore').hidden = !open;
+  if (open && !REDUCED){ const g = $('dGrid'); g.classList.remove('in'); void g.offsetWidth; g.classList.add('in'); }
+  if (!open) gridPreviewsOff();
+}
+/* featured tiles: muted loop while at least a quarter is on screen; paused off screen, in a hidden tab and while the
+   lightbox is open; never loaded under reduced motion or the 'still' state, where the poster shows instead */
+function featWatch(){
+  if (featIO) featIO.disconnect();
+  FEAT_ON.clear();
+  if (!('IntersectionObserver' in window)) return;
+  featIO = new IntersectionObserver(es => { es.forEach(e => { const c = e.target.closest('.dcard'); if (e.isIntersecting) FEAT_ON.add(c); else FEAT_ON.delete(c); }); featArm(); }, {threshold:.25});
+  $('dFeat').querySelectorAll('.vid').forEach(el => featIO.observe(el));
+}
+function featArm(){
+  $('dFeat').querySelectorAll('.dcard').forEach(card => {
+    const v = card.querySelector('video'), box = card.querySelector('.vid'), d = DEMOS()[+card.querySelector('[data-demo]').dataset.demo];
+    const live = () => FEAT_ON.has(card) && card.isConnected && !quiet() && !document.hidden && $('vbox').hidden;
+    if (!d || !v) return;
+    if (!live()){ if (!v.paused) v.pause(); if (quiet()) box.classList.remove('playing'); return; }
+    if (!v.firstChild) vidSources(v, d);
+    v.muted = true;
+    const p = v.play(); if (p) p.then(() => { if (live()) box.classList.add('playing'); else v.pause(); }, () => {});
+  });
+}
+function previewOn(card){
+  const d = DEMOS()[+card.querySelector('[data-demo]').dataset.demo], v = card.querySelector('video');
+  if (!d || !v || quiet() || !$('vbox').hidden) return;
+  if (!v.firstChild) vidSources(v, d);
+  v.muted = true;
+  const p = v.play(); if (p) p.then(() => { if (v.closest('.dcard:hover')) card.querySelector('.vid').classList.add('playing'); else v.pause(); }, () => {});
+}
+function previewOff(card){ const v = card.querySelector('video'); if (v) v.pause(); card.querySelector('.vid')?.classList.remove('playing'); }
+const gridPreviewsOff = () => $('dGrid').querySelectorAll('.dcard').forEach(previewOff);
+const previewsOff = () => document.querySelectorAll('.dcard').forEach(previewOff);   // every card and tile back to its poster
+let vbI = -1, vbFocus;
+function vbFill(){
+  const d = DEMOS()[vbI]; if (!d) return;
+  $('vbTitle').textContent = dtxt(d, 'title');
+  $('vbCap').textContent = [dtxt(d, 'caption'), +d.duration_s > 0 ? fmtDur(d.duration_s) : ''].filter(Boolean).join(' · ');
+  $('vbPrev').hidden = $('vbNext').hidden = DEMOS().length < 2;
+}
+function vbLoad(){
+  const d = DEMOS()[vbI], v = $('vbVideo');
+  vbFill(); v.pause(); v.muted = true; v.poster = d.poster || ''; vidSources(v, d);
+  if (!quiet()){ const p = v.play(); if (p) p.catch(() => {}); }   // muted autoplay; the controls unmute
+}
+function openDemo(i){
+  if (!DEMOS()[i]) return;
+  if ($('vbox').hidden) vbFocus = document.activeElement;
+  gridPreviewsOff(); setMenu(false); vbI = i;
+  $('vbox').hidden = false; setInert(true); document.body.style.overflow = 'hidden';
+  featArm(); vbLoad(); $('vbClose').focus();
+}
+function closeDemo(){
+  if ($('vbox').hidden) return;
+  const v = $('vbVideo'); v.pause(); v.textContent = ''; v.removeAttribute('poster'); v.load();
+  $('vbox').hidden = true; setInert(false); document.body.style.overflow = '';
+  const shown = el => el && el.isConnected && el.getClientRects().length > 0;   // a card in the collapsed "More demos" is not
+  const back = [document.querySelector(`[data-demo="${vbI}"]`), vbFocus, $('dMoreBtn')].find(shown);
+  back?.focus();
+  featArm();
+}
+function stepDemo(k){ const n = DEMOS().length; if ($('vbox').hidden || n < 2) return; vbI = (vbI + k + n) % n; vbLoad(); }
 
 /* ---------- downloads: totals + one bar per repository ---------- */
 const LIVE = {ok:false, src:null, at:null};
@@ -1250,7 +1427,7 @@ function searchItems(){
     ...DATA.families.map(f => ({label:display(f), sub:t('cat.model'), open:f.id})),
     ...DATA.families.flatMap(f => f.repos).map(r => ({label:r.repo.split('/')[1], sub:r.format, href:HF+r.repo})),
     ...DATA.planned.map(x => ({label:x.name, sub:t('cat.plan'), hash:'#models'})),
-    ...[['#spotlight','an.tag'],['#timeline','sec.tl'],['#models','sec.models'],['#downloads','nav.dl'],['#releases','nav.releases'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
+    ...[['#spotlight','an.tag'], ...(DEMOS().length ? [['#demos','sec.demos']] : []), ['#timeline','sec.tl'],['#models','sec.models'],['#downloads','nav.dl'],['#releases','nav.releases'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
   ];
 }
 function renderSearch(){
@@ -1285,7 +1462,7 @@ let revIO, sweepSet = false;
 function setupReveal(){
   if (REDUCED || !('IntersectionObserver' in window)) return;
   revIO = revIO || new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.remove('pre'); revIO.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
-  ['.mcard','.rel','.bcard','.dev-body','.ab-lead','.ab-item','.fcol'].forEach(sel => document.querySelectorAll(sel).forEach((el,i) => {
+  ['.dcard','.mcard','.rel','.bcard','.dev-body','.ab-lead','.ab-item','.fcol'].forEach(sel => document.querySelectorAll(sel).forEach((el,i) => {
     if (el.classList.contains('rv') || el.getBoundingClientRect().top < innerHeight) return;
     el.classList.add('rv','pre'); el.style.transitionDelay = (i%3)*80 + 'ms'; revIO.observe(el);
   }));
@@ -1311,8 +1488,9 @@ function applyText(){
 }
 function renderAll(){
   applyText(); words($('heroTitle'), t('hero.h'));
-  renderHeroTabs(); heroStage(false); renderSpot(); renderTimeline(); renderModels(); renderDownloads(); renderReleases(); renderBench(); renderQS(false); drawDrawer();
+  renderHeroTabs(); heroStage(false); renderSpot(); renderDemos(); renderTimeline(); renderModels(); renderDownloads(); renderReleases(); renderBench(); renderQS(false); drawDrawer();
   if (!$('srch').hidden) renderSearch();
+  if (!$('vbox').hidden) vbFill();
 }
 function copy(text, btn, selEl){
   const fallback = () => { if (!selEl) return; const s = getSelection(), r = document.createRange(); r.selectNodeContents(selEl); s.removeAllRanges(); s.addRange(r); };
@@ -1336,6 +1514,7 @@ document.addEventListener('click', e => {
   if (e.target.closest('.fchips a')) return;
   const hm = e.target.closest('[data-hm]'); if (hm){ HERO.auto = false; HERO.i = +hm.dataset.hm; renderHeroTabs(); heroStage(true); return; }
   const mf = e.target.closest('[data-mf]'); if (mf){ mFilter = mf.dataset.mf; mAnim = true; renderModels(); return; }
+  const dm = e.target.closest('[data-demo]'); if (dm){ openDemo(+dm.dataset.demo); return; }
   const o = e.target.closest('[data-open]'); if (o){ e.preventDefault(); openDrawer(o.dataset.open); return; }
   const q = e.target.closest('[data-qs]'); if (q){ qsAuto = false; qsActive = q.dataset.qs; renderQS(true); return; }
   if (e.target.closest('#mnav a')) setMenu(false);
@@ -1350,9 +1529,18 @@ $('srchIn').addEventListener('keydown', e => { if (e.key==='Enter'){ e.preventDe
 $('drClose').addEventListener('click', closeDrawer);
 $('scrim').addEventListener('click', closeDrawer);
 document.addEventListener('keydown', e => {
-  if (e.key==='Escape'){ if (!$('srch').hidden) closeSearch(); else if (openId) closeDrawer(); else if (!$('mnav').hidden){ setMenu(false); $('menuBtn').focus(); } return; }
+  if (e.key==='Escape'){ if (!$('vbox').hidden) closeDemo(); else if (!$('srch').hidden) closeSearch(); else if (openId) closeDrawer(); else if (!$('mnav').hidden){ setMenu(false); $('menuBtn').focus(); } return; }
+  if (!$('vbox').hidden){ if ((e.key==='ArrowLeft' || e.key==='ArrowRight') && document.activeElement !== $('vbVideo')){ e.preventDefault(); stepDemo(e.key==='ArrowLeft' ? -1 : 1); } return; }
   if (e.key==='/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName) && !openId){ e.preventDefault(); openSearch(); }
 });
+$('vbClose').addEventListener('click', closeDemo);
+$('vbScrim').addEventListener('click', closeDemo);
+$('vbPrev').addEventListener('click', () => stepDemo(-1));
+$('vbNext').addEventListener('click', () => stepDemo(1));
+$('dMoreBtn').addEventListener('click', () => setMore(!moreOpen));
+document.addEventListener('visibilitychange', featArm);
+$('dGrid').addEventListener('pointerover', e => { const c = e.target.closest('.dcard'); if (c && e.pointerType === 'mouse' && !c.contains(e.relatedTarget)) previewOn(c); });
+$('dGrid').addEventListener('pointerout', e => { const c = e.target.closest('.dcard'); if (c && !c.contains(e.relatedTarget)) previewOff(c); });
 $('copyBtn').addEventListener('click', e => copy(QS.find(x => x.id===qsActive).code, e.currentTarget, $('qsCode')));
 $('copyEmail').addEventListener('click', e => copy(DATA.email, e.currentTarget, $('email')));
 $('ring').addEventListener('animationend', e => { if (e.animationName === 'ring') carGo(CAR.i + 1); });
