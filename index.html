@@ -218,6 +218,29 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
 
 .rsub{font-size:14.5px;color:var(--ink2);margin-top:4px}
 
+/* downloads */
+.live{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--ink3)}
+.live.on i{background:#16A34A;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.3}}
+.dl-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:28px}
+.dl-tiles div{background:var(--soft);border-radius:14px;padding:16px 18px;min-width:0}
+.dl-tiles span{font-size:13px;color:var(--ink2)}
+.dl-tiles b{display:block;margin-top:8px;font-size:clamp(26px,2.6vw,38px);line-height:1.1;font-weight:500;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.dl-list{border-top:1px solid var(--line)}
+.dl-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,2fr) 8em;gap:20px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.dl-row:hover .dl-name b{text-decoration:underline;text-underline-offset:3px}
+.dl-name b{display:block;font-weight:500;font-size:15px;overflow-wrap:anywhere}
+.dl-name small{display:block;font-size:12.5px;color:var(--ink3);margin-top:2px}
+.dl-bar{height:8px;border-radius:4px;background:var(--soft);overflow:hidden}
+.dl-bar i{display:block;height:100%;width:var(--w);border-radius:4px;background:var(--ink);transform-origin:left;transition:transform 1.1s var(--out);transition-delay:calc(var(--i)*70ms)}
+.dl-list.pre .dl-bar i{transform:scaleX(0)}
+.dl-num{text-align:right;font-variant-numeric:tabular-nums}
+.dl-num b{display:block;font-weight:500;font-size:16px}
+.dl-num small{display:block;font-size:12px;color:var(--ink3)}
+.dl-note{font-size:12.5px;color:var(--ink3);margin-top:14px}
+@media (max-width:760px){.dl-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.dl-row{grid-template-columns:minmax(0,1fr) 7em;gap:8px 16px}.dl-bar{grid-column:1/-1;grid-row:2}}
+
 /* about */
 .about{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px var(--g);align-items:start}
 .ab-lead{grid-column:span 6;font-size:clamp(24px,2.4vw,34px);line-height:1.2;letter-spacing:-.02em;font-weight:500;text-wrap:balance}
@@ -323,6 +346,7 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
     <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn"></span></a>
     <nav class="nav" aria-label="Primary">
       <a href="#models" data-i18n="nav.models"></a>
+      <a href="#downloads" data-i18n="nav.dl"></a>
       <a href="#releases" data-i18n="nav.releases"></a>
       <a href="#benchmarks" data-i18n="nav.bench"></a>
       <a href="#developers" data-i18n="nav.dev"></a>
@@ -338,6 +362,7 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
 <div class="mnav" id="mnav" hidden>
   <nav aria-label="Mobile">
     <a href="#models" data-i18n="nav.models" style="--i:0"></a>
+    <a href="#downloads" data-i18n="nav.dl" style="--i:1"></a>
     <a href="#releases" data-i18n="nav.releases" style="--i:1"></a>
     <a href="#benchmarks" data-i18n="nav.bench" style="--i:2"></a>
     <a href="#developers" data-i18n="nav.dev" style="--i:3"></a>
@@ -373,8 +398,15 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
     <div class="mgrid" id="mGrid"></div>
   </section>
 
+  <section id="downloads">
+    <div class="sec-head"><h2 data-i18n="sec.dl"></h2><div class="sec-aside"><span class="live" id="liveBadge"></span></div></div>
+    <div class="dl-tiles" id="dlTiles"></div>
+    <div class="dl-list" id="dlList"></div>
+    <p class="dl-note" data-i18n="dl.note"></p>
+  </section>
+
   <section id="releases">
-    <div class="sec-head"><h2 data-i18n="sec.releases"></h2><div class="sec-aside"><span id="dlTotal" class="num"></span><a class="more hf" href="#" target="_blank" rel="noopener"><span data-i18n="viewall"></span> <span class="ne" aria-hidden="true">↗</span></a></div></div>
+    <div class="sec-head"><h2 data-i18n="sec.releases"></h2><div class="sec-aside"><a class="more hf" href="#" target="_blank" rel="noopener"><span data-i18n="viewall"></span> <span class="ne" aria-hidden="true">↗</span></a></div></div>
     <div class="rel-grid" id="relGrid"></div>
   </section>
 
@@ -452,7 +484,7 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
   <div class="dr-body" id="drBody"></div>
 </aside>
 
-<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"latest","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":0,"likes":0,"lastModified":"2026-09-23T21:35:56.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":0,"likes":3,"lastModified":"2026-09-23T21:35:57.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":0,"likes":0,"lastModified":"2026-09-23T21:36:02.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"likes":1,"lastModified":"2026-09-23T01:11:29.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"likes":0,"lastModified":"2026-09-23T01:11:32.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":36,"likes":0,"lastModified":"2026-09-23T01:11:36.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":2743,"likes":9,"lastModified":"2026-09-23T21:36:03.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":1564,"likes":2,"lastModified":"2026-09-23T21:36:07.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"mj08","name":"MacJev-0.8B-8K","params":"0.8B","tags":["8K INPUT","MULTILINGUAL","AGENT"]},{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]}},"snapshot":"2026-09-23"}</script>
+<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"latest","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:19.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":0,"downloadsAllTime":0,"likes":3,"lastModified":"2026-09-23T22:16:05.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:21.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"downloadsAllTime":0,"likes":2,"lastModified":"2026-09-23T22:16:11.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:13.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":36,"downloadsAllTime":36,"likes":0,"lastModified":"2026-09-23T22:16:14.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":2743,"downloadsAllTime":2743,"likes":9,"lastModified":"2026-09-23T22:16:00.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":1564,"downloadsAllTime":1564,"likes":2,"lastModified":"2026-09-23T22:16:09.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"mj08","name":"MacJev-0.8B-8K","params":"0.8B","tags":["8K INPUT","MULTILINGUAL","AGENT"]},{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]}},"snapshot":"2026-09-24"}</script>
 <script>
 (function(){
 const $ = id => document.getElementById(id);
@@ -468,7 +500,8 @@ en:{
  "search":"Search","search.ph":"Search models, repositories and pages","search.none":"No matches","menu":"Menu","page":"Page",
  "hero.h":"Small models. Calibrated decisions.","chip.qs":"Quickstart","details":"Details",
  "sec.models":"All models","side.all":"All","side.released":"Released","side.planned":"Planned",
- "s.input":"Input tokens","s.langs":"Languages","s.dl":"Downloads · 30 d","s.acc11":"Accuracy · 11 tasks",
+ "s.input":"Input tokens","s.langs":"Languages","s.dl":"Downloads · 30 d","s.dlall":"Downloads · all time",
+ "nav.dl":"Downloads","sec.dl":"Downloads","dl.all":"All-time downloads","dl.30":"Last 30 days","dl.likes":"Likes","dl.repos":"Repositories","dl.live":"Live from Hugging Face","dl.snap":"Snapshot","dl.allShort":"all time","dl.note":"Read straight from the Hugging Face API every time this page loads. Hugging Face itself can take up to a day to update its counts.","s.acc11":"Accuracy · 11 tasks",
  "cat.model":"Model","cat.bench":"Benchmark","cat.plan":"Planned","cat.arch":"Archived",
  "feat.macjev":"MacJev 322M: decisions on your own Mac","feat.v2":"Decision 2B v2: calibrated English classification","feat.eval":"v2 evaluated on held-out tasks","feat.v1":"Decision 2B v1: the first release","tasks":"held-out tasks",
  "sec.releases":"Recent releases","sec.bench":"Benchmarks","sec.dev":"Run it locally","sec.road":"Roadmap",
@@ -506,7 +539,8 @@ zh:{
  "search":"搜索","search.ph":"搜索模型、仓库与页面","search.none":"没有匹配项","menu":"菜单","page":"页面",
  "hero.h":"小模型，校准过的决策。","chip.qs":"快速开始","details":"详情",
  "sec.models":"全部模型","side.all":"全部","side.released":"已发布","side.planned":"规划中",
- "s.input":"输入 token","s.langs":"语言","s.dl":"近 30 天下载","s.acc11":"11 个任务准确率",
+ "s.input":"输入 token","s.langs":"语言","s.dl":"近 30 天下载","s.dlall":"累计下载",
+ "nav.dl":"下载量","sec.dl":"下载量","dl.all":"累计下载","dl.30":"近 30 天","dl.likes":"点赞","dl.repos":"仓库","dl.live":"实时来自 Hugging Face","dl.snap":"快照","dl.allShort":"累计","dl.note":"每次打开页面都会直接读取 Hugging Face 接口；Hugging Face 自己更新这些数字最多可能延迟一天。","s.acc11":"11 个任务准确率",
  "cat.model":"模型","cat.bench":"评测","cat.plan":"规划中","cat.arch":"已归档",
  "feat.macjev":"MacJev 322M：在你自己的 Mac 上做决定","feat.v2":"Decision 2B v2：概率校准的英文分类","feat.eval":"v2 在留出任务上的评测","feat.v1":"Decision 2B v1：首个版本","tasks":"个留出任务",
  "sec.releases":"最新发布","sec.bench":"评测","sec.dev":"本地运行","sec.road":"路线图",
@@ -625,17 +659,22 @@ function countUp(el, text){
   const step = now => { const k = Math.min(1, (now-t0)/700), e = 1 - Math.pow(1-k, 3); el.textContent = m[1] + fmt(target*e) + m[3]; if (k < 1) requestAnimationFrame(step); };
   requestAnimationFrame(step);
 }
+const dlAll = r => r.downloadsAllTime ?? r.downloads ?? 0, dl30 = r => r.downloads ?? 0;
+const famDl = f => f.repos.reduce((s,r) => s + dlAll(r), 0);
 function heroSpecs(f){
-  const dl = f.repos.reduce((s,r) => s+(r.downloads||0), 0);
+  const dl = famDl(f);
   const top = f.metrics && f.metrics.find(m => m.better==='up');
   const head = f.id === 'v2' ? [t('s.acc11'), pct(DATA.eval.v2.overview.v2.accuracy)] : [t('m.'+top.key), pct(top.model)];
-  return [[t('k.params'), f.params], [t('s.input'), f.context || '—'], [t('s.langs'), f.langs], head, [t('s.dl'), dl.toLocaleString('en-US')]];
+  return [[t('k.params'), f.params], [t('s.input'), f.context || '—'], [t('s.langs'), f.langs], head, dl ? [t('s.dlall'), dl.toLocaleString('en-US')] : [t('formats'), f.repos.map(r => r.format.split(' ')[0]).join(' · ')]];
+}
+function renderSpecs(f){
+  $('stSpecs').innerHTML = heroSpecs(f).map(([k,v]) => `<div><dt>${esc(k)}</dt><dd data-v="${esc(v)}">${esc(v)}</dd></div>`).join('');
 }
 function heroStage(animate){
   const f = DATA.families[HERO.i];
   $('stName').textContent = display(f); $('stOne').textContent = t('one.'+f.id);
   $('stOpen').dataset.open = f.id; $('stHF').href = HF + f.repos[0].repo;
-  $('stSpecs').innerHTML = heroSpecs(f).map(([k,v]) => `<div><dt>${esc(k)}</dt><dd data-v="${esc(v)}">${esc(v)}</dd></div>`).join('');
+  renderSpecs(f);
   $('fxCap').innerHTML = [`${f.context ? f.context+' TOKENS' : 'TEXT'} IN`, 'ONE FORWARD PASS', f.id === 'macjev' ? 'P(ANSWER) OUT' : 'P(OPTION) OUT'].map(x => `<span>${x}</span>`).join('');
   renderLabels(f.id);
   fxConfig(f.id, !animate);
@@ -738,17 +777,57 @@ function renderModels(){
     const ov = `<div class="ov"><span class="ovtag">${tag}</span><b class="big">${esc(m.params)}</b></div>`;
     const chips = planned ? '' : `<div class="fchips">${m.repos.map(r => `<a href="${HF+r.repo}" target="_blank" rel="noopener">${esc(r.format.split(' ')[0])} ↗</a>`).join('')}</div>`;
     const meta = planned ? m.tags.map(x => `<span>${esc(x)}</span>`).join('')
-      : `<b>${t('cat.model')}</b><span>${fmtDate(m.released)}</span><span class="num">↓ ${m.repos.reduce((s,r) => s+(r.downloads||0), 0).toLocaleString('en-US')}</span>`;
+      : `<b>${t('cat.model')}</b><span>${fmtDate(m.released)}</span><span class="num">↓ ${famDl(m).toLocaleString('en-US')}</span>`;
     return `<article class="mcard hov${planned ? ' plan' : ''}${mAnim ? ' in' : ''}" style="--i:${i}">${media('model-'+m.id, planned ? 'plan' : m.id, 'wide', ov)}<h3 class="card-t">${planned ? esc(name) : `<button type="button" class="mt" data-open="${m.id}">${esc(name)}</button>`}</h3><p class="rsub">${t('one.'+m.id)}</p>${chips}<p class="meta">${meta}</p></article>`;
   }).join('');
   paintArt($('mGrid'));
 }
 function renderReleases(){
-  const repos = DATA.families.flatMap(f => f.repos.map(r => ({...r, fid:f.id})))
+  const repos = [...DATA.families.flatMap(f => f.repos.map(r => ({...r, fid:f.id}))), ...(DATA.extra || [])]
     .sort((a,b) => (b.createdAt||'').localeCompare(a.createdAt||'') || a.repo.localeCompare(b.repo));
-  $('relGrid').innerHTML = repos.map(r => `<a class="rel" href="${HF+r.repo}" target="_blank" rel="noopener">${media(r.repo, r.fid)}<div><h3 class="card-t">${esc(r.repo.split('/')[1])}</h3><p class="meta"><b>${esc(r.format)}</b><span>${fmtDate(r.createdAt)}</span><span class="num">↓ ${(r.downloads ?? 0).toLocaleString('en-US')}</span></p></div></a>`).join('');
+  $('relGrid').innerHTML = repos.map(r => `<a class="rel" href="${HF+r.repo}" target="_blank" rel="noopener">${media(r.repo, r.fid)}<div><h3 class="card-t">${esc(r.repo.split('/')[1])}</h3><p class="meta"><b>${esc(r.format)}</b><span>${fmtDate(r.createdAt)}</span><span class="num">↓ ${dlAll(r).toLocaleString('en-US')}</span></p></div></a>`).join('');
   paintArt($('relGrid'));
-  $('dlTotal').textContent = `${repos.reduce((s,r) => s+(r.downloads||0), 0).toLocaleString('en-US')} ${t('dl30')}`;
+}
+
+/* ---------- downloads: totals + one bar per repository ---------- */
+const LIVE = {ok:false, at:null};
+let dlShown = false;
+function renderDownloads(){
+  const fams = Object.fromEntries(DATA.families.map(f => [f.id, display(f)]));
+  const repos = [...DATA.families.flatMap(f => f.repos.map(r => ({...r, fid:f.id}))), ...(DATA.extra || [])].sort((a,b) => dlAll(b) - dlAll(a) || a.repo.localeCompare(b.repo));
+  const tot = repos.reduce((s,r) => s + dlAll(r), 0), t30 = repos.reduce((s,r) => s + dl30(r), 0), likes = repos.reduce((s,r) => s + (r.likes || 0), 0);
+  const max = Math.max(1, ...repos.map(dlAll));
+  $('dlTiles').innerHTML = [[t('dl.all'), tot], [t('dl.30'), t30], [t('dl.likes'), likes], [t('dl.repos'), repos.length]]
+    .map(([k,v]) => `<div><span>${esc(k)}</span><b data-v="${v.toLocaleString('en-US')}">${v.toLocaleString('en-US')}</b></div>`).join('');
+  $('dlList').innerHTML = repos.map((r,i) => `<a class="dl-row" href="${HF+r.repo}" target="_blank" rel="noopener" style="--i:${i}"><span class="dl-name"><b>${esc(r.repo.split('/')[1])}</b><small>${esc(r.format)} · ${esc(fams[r.fid] || 'New')}</small></span><span class="dl-bar"><i style="--w:${dlAll(r) ? Math.max(2, dlAll(r)/max*100).toFixed(1) : 0}%"></i></span><span class="dl-num"><b>${dlAll(r).toLocaleString('en-US')}</b><small>30 d · ${dl30(r).toLocaleString('en-US')}</small></span></a>`).join('');
+  const b = $('liveBadge'); b.classList.toggle('on', LIVE.ok);
+  b.innerHTML = `<i aria-hidden="true"></i>${LIVE.ok ? `${t('dl.live')} · ${LIVE.at.toLocaleTimeString(lang==='zh' ? 'zh-CN' : 'en-US', {hour:'2-digit', minute:'2-digit'})}` : `${t('dl.snap')} · ${DATA.snapshot}`}`;
+}
+function showDownloads(){
+  if (dlShown) return; dlShown = true;
+  $('dlList').classList.remove('pre');
+  $('dlTiles').querySelectorAll('b').forEach(el => countUp(el, el.dataset.v));
+}
+const guessFormat = id => /gguf/i.test(id) ? 'GGUF' : /mlx/i.test(id) ? 'MLX' : 'HF';
+async function liveStats(){
+  try {
+    const url = `https://huggingface.co/api/models?author=${encodeURIComponent(DATA.author)}&limit=200&expand[]=downloads&expand[]=downloadsAllTime&expand[]=likes&expand[]=createdAt`;
+    const res = await fetch(url, {cache:'no-store'});
+    if (!res.ok) return;
+    const list = await res.json(), byId = Object.fromEntries(list.map(m => [m.id, m]));
+    const before = JSON.stringify(DATA.families.map(f => f.repos.map(r => [dlAll(r), dl30(r), r.likes])));
+    DATA.families.forEach(f => f.repos.forEach(r => { const m = byId[r.repo]; if (m) Object.assign(r, {downloads:m.downloads ?? 0, downloadsAllTime:m.downloadsAllTime ?? m.downloads ?? 0, likes:m.likes ?? 0, createdAt:m.createdAt || r.createdAt}); }));
+    const known = new Set(DATA.families.flatMap(f => f.repos.map(r => r.repo)));
+    DATA.extra = list.filter(m => !known.has(m.id)).map(m => ({repo:m.id, format:guessFormat(m.id), downloads:m.downloads ?? 0, downloadsAllTime:m.downloadsAllTime ?? m.downloads ?? 0, likes:m.likes ?? 0, createdAt:m.createdAt, fid:'new'}));
+    LIVE.ok = true; LIVE.at = new Date();
+    const changed = before !== JSON.stringify(DATA.families.map(f => f.repos.map(r => [dlAll(r), dl30(r), r.likes]))) || DATA.extra.length;
+    if (changed){
+      const keepAnim = mAnim; mAnim = false;
+      renderModels(); renderReleases(); renderSpecs(DATA.families[HERO.i]); drawDrawer();
+      mAnim = keepAnim;
+    }
+    renderDownloads();
+  } catch(e) { /* offline or blocked: keep the build-time snapshot */ }
 }
 function renderBench(){
   const v2 = DATA.eval.v2, mj = fam('macjev').metrics[0], v1 = fam('v1').metrics.find(m => m.key==='ece5');
@@ -895,7 +974,7 @@ function drawDrawer(){
     k = kpi(pct(top.model), t('m.'+top.key), `${t('vs')} ${pct(top.base)}`) + kpi(ece.model.toFixed(3), t('m.'+ece.key), `${t('vs')} ${ece.base.toFixed(3)} · ${t('lower')}`) + kpi(f.params, t('k.params'), f.context ? `${f.context} ${t('k.ctx')}` : f.langs);
     charts = `<div><p class="cap">${t('c.pair')}</p><div class="chart" id="dc1" style="margin-top:10px"></div><div id="dl1"></div></div><p class="dr-note">${t('note.'+f.id)}</p>`;
   }
-  const fmts = f.repos.map(r => `<a class="fmt" href="${HF+r.repo}" target="_blank" rel="noopener"><span class="f">${esc(r.format)} ↗</span><span class="m">${esc(r.size)} · ${esc(r.runs)}</span><span class="d">${(r.downloads??0).toLocaleString('en-US')}<small>↓ 30 d${r.likes?` · ♥ ${r.likes}`:''}</small></span></a>`).join('');
+  const fmts = f.repos.map(r => `<a class="fmt" href="${HF+r.repo}" target="_blank" rel="noopener"><span class="f">${esc(r.format)} ↗</span><span class="m">${esc(r.size)} · ${esc(r.runs)}</span><span class="d">${dlAll(r).toLocaleString('en-US')}<small>↓ ${t('dl.allShort')} · 30 d ${dl30(r).toLocaleString('en-US')}${r.likes?` · ♥ ${r.likes}`:''}</small></span></a>`).join('');
   const q = QS.find(x => x.id === QS_FOR[f.id]);
   $('drBody').innerHTML = `
     <div><div class="badges" style="margin-bottom:14px"><span class="badge">${t('b.open')}</span><span class="badge ${f.status==='latest'?'new':''}">${t(f.status==='latest'?'b.latest':'b.archived')}</span></div><h2 id="drTitle">${esc(name)}</h2><p style="color:var(--ink2);margin-top:10px">${t('one.'+f.id)}</p>
@@ -934,7 +1013,7 @@ function searchItems(){
     ...DATA.families.map(f => ({label:display(f), sub:t('cat.model'), open:f.id})),
     ...DATA.families.flatMap(f => f.repos).map(r => ({label:r.repo.split('/')[1], sub:r.format, href:HF+r.repo})),
     ...DATA.planned.map(x => ({label:x.name, sub:t('cat.plan'), hash:'#models'})),
-    ...[['#models','sec.models'],['#releases','nav.releases'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
+    ...[['#models','sec.models'],['#downloads','nav.dl'],['#releases','nav.releases'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
   ];
 }
 function renderSearch(){
@@ -986,7 +1065,7 @@ function applyText(){
 }
 function renderAll(){
   applyText(); words($('heroTitle'), t('hero.h'));
-  renderHeroTabs(); heroStage(false); renderModels(); renderReleases(); renderBench(); renderQS(false); drawDrawer();
+  renderHeroTabs(); heroStage(false); renderModels(); renderDownloads(); renderReleases(); renderBench(); renderQS(false); drawDrawer();
   if (!$('srch').hidden) renderSearch();
 }
 function copy(text, btn, selEl){
@@ -1055,6 +1134,8 @@ if ('IntersectionObserver' in window){
   new IntersectionObserver(es => { if (es[0].isIntersecting){ $('fxWrap').classList.add('go'); } }, {rootMargin:'0px 0px -10% 0px'}).observe($('fxWrap'));
   new IntersectionObserver(es => { CAR.vis = es[0].isIntersecting; carArm(); }, {threshold:.35}).observe($('benchmarks'));
   new IntersectionObserver(es => { qsVis = es[0].isIntersecting; qsArm(); }, {threshold:.35}).observe($('developers'));
+  const dio = new IntersectionObserver(es => { if (es[0].isIntersecting){ showDownloads(); dio.disconnect(); } }, {rootMargin:'0px 0px -12% 0px'});
+  if (!REDUCED && $('downloads').getBoundingClientRect().top > innerHeight){ $('dlList').classList.add('pre'); dio.observe($('downloads')); }
 } else $('fxWrap').classList.add('go');
 if (!REDUCED) $('fxWrap').classList.add('anim');
 
@@ -1066,6 +1147,7 @@ fxStart();
 $('stSpecs').querySelectorAll('dd').forEach(dd => countUp(dd, dd.dataset.v));
 fxScroll();
 setupReveal();
+liveStats();
 const h = location.hash.slice(1); if (fam(h)) openDrawer(h);
 })();
 </script>
