@@ -200,7 +200,7 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
 @keyframes ring{to{stroke-dashoffset:0}}
 @keyframes ring-fade{to{opacity:0}}
 .cmp{display:grid;gap:7px;width:100%;font:500 12px/1.2 var(--mono)}
-.cmp > div{display:grid;grid-template-columns:6.4em minmax(0,1fr) 3.6em;align-items:center;gap:8px}
+.cmp > div{display:grid;grid-template-columns:7.6em minmax(0,1fr) 3.6em;align-items:center;gap:8px}
 .cmp .tk{height:6px;border-radius:3px;background:rgba(13,13,15,.08);overflow:hidden}
 .cmp .tk i{display:block;height:100%;border-radius:3px;background:rgba(13,13,15,.86)}
 .cmp .b .tk i{background:rgba(13,13,15,.3)}
@@ -226,6 +226,78 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
 .swap{animation:fade-in .35s ease-out}
 
 .rsub{font-size:14.5px;color:var(--ink2);margin-top:4px}
+
+/* announcement pill */
+.announce{display:inline-flex;align-items:center;gap:10px;min-height:36px;max-width:100%;padding:5px 14px 5px 5px;margin-bottom:22px;border-radius:999px;background:var(--soft);font-size:13.5px;font-weight:500;line-height:1.35;text-align:left;animation:fade-rise .7s var(--out) both;transition:background .2s var(--ease)}
+.announce:hover{background:var(--soft2)}
+.an-tag{flex:none;background:var(--ink);color:var(--bg);border-radius:999px;padding:4px 10px;font-size:12px;line-height:1.2}
+.announce .ar{flex:none;display:inline-block;transition:transform .2s var(--ease)}
+.announce:hover .ar{transform:translateX(3px)}
+
+/* spotlight: the newest model */
+.spot{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px var(--g);align-items:stretch}
+.spot-mediawrap{grid-column:span 5;display:block}
+.spot-mediawrap > a{display:block}
+.spot-mediawrap .media{aspect-ratio:4/5}
+.spot-mediawrap .ov .big{font-size:clamp(72px,10vw,150px)}
+.ov-sub{display:block;font-size:14px;font-weight:500;margin-top:10px}
+.spot-body{grid-column:span 7;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.eyebrow{font-size:13.5px;font-weight:500;color:var(--ink2)}
+.spot-title{font-size:clamp(34px,4vw,56px);line-height:1.05;margin-top:10px}
+.spot-tag{font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:var(--ink2);margin-top:12px;letter-spacing:-.01em}
+.spot-cmp{display:grid;gap:18px;margin-top:32px}
+.sc-row > p{display:flex;justify-content:space-between;gap:12px;font-size:14.5px;font-weight:500}
+.sc-row > p span:last-child{font-weight:400;font-size:13px;color:var(--ink3)}
+.sc-bars{display:grid;gap:4px;margin-top:8px}
+.sc-bars i{display:block;height:8px;border-radius:4px;background:var(--ink);width:var(--w);transform-origin:left;transition:transform 1.1s var(--out)}
+.sc-bars i.b{background:var(--muted)}
+.sc-bars i:nth-child(2){transition-delay:.12s}
+.spot.pre .sc-bars i{transform:scaleX(0)}
+.sc-vals{display:flex;justify-content:space-between;gap:12px;margin-top:6px;font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.sc-vals b{font-weight:500;color:var(--ink)}
+.spot-stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:0}
+.spot-stats div{background:var(--soft);border-radius:12px;padding:16px 18px;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:8px}
+.spot-stats dt{font-size:13px;line-height:1.3;color:var(--ink2)}
+.spot-stats dd{margin:0;font-size:clamp(24px,2.4vw,34px);line-height:1.1;font-weight:500;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.spot-note{grid-column:1/-1;font-size:12.5px;line-height:1.5;color:var(--ink3);max-width:110ch}
+@media (max-width:1023px){.spot-mediawrap,.spot-body{grid-column:1/-1}.spot-mediawrap .media{aspect-ratio:16/9}.spot-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.spot-mediawrap .media{aspect-ratio:4/3}.spot-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.spot-stats div:last-child{grid-column:1/-1}}
+
+/* release timeline */
+.tl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:var(--g)}
+.tl-item{position:relative;display:flex;flex-direction:column;padding-top:32px;min-width:0}
+.tl-item::before{content:"";position:absolute;top:7px;left:16px;right:calc(-1 * var(--g));height:2px;background:var(--ink);transform-origin:left;transition:transform .7s var(--out);transition-delay:calc(var(--i) * 180ms)}
+.tl-item:last-child::before{display:none}
+.tl-item.to-next::before{background:repeating-linear-gradient(90deg,var(--ink3) 0 6px,transparent 6px 12px)}
+.tl-dot{position:absolute;top:0;left:0;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--ink);transition:transform .45s var(--out),opacity .45s;transition-delay:calc(var(--i) * 180ms)}
+.is-latest .tl-dot{background:var(--ink);animation:ping-ring 2.2s ease-out infinite}
+@keyframes ping-ring{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ink) 35%,transparent)}100%{box-shadow:0 0 0 12px color-mix(in srgb,var(--ink) 0%,transparent)}}
+.is-next .tl-dot{border-style:dashed;border-color:var(--ink3)}
+.tl time{display:block;font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.tl-card{flex:1;display:block;margin-top:10px;padding:18px;border-radius:12px;background:var(--soft);transition:background .2s var(--ease),transform .3s var(--ease)}
+a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
+.tl-card .v{display:block;font-size:12.5px;font-weight:500;color:var(--ink2)}
+.tl-card b{display:block;font-size:17px;font-weight:500;letter-spacing:-.01em;margin-top:6px}
+.tl-card .d{display:block;font-size:14px;line-height:1.45;color:var(--ink2);margin-top:6px}
+.tl-card .c{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tl-card .c span{font-size:12px;font-weight:500;padding:3px 8px;border-radius:999px;background:var(--bg);color:var(--ink2)}
+.is-latest .tl-card{background:var(--ink);color:var(--bg)}
+.is-latest a.tl-card:hover{background:var(--ink);opacity:.9}
+.is-latest .tl-card .v,.is-latest .tl-card .d{color:color-mix(in srgb,var(--bg) 72%,var(--ink))}
+.is-latest .tl-card .c span{background:color-mix(in srgb,var(--bg) 16%,var(--ink));color:var(--bg)}
+.is-next .tl-card{background:transparent;border:1px dashed var(--muted)}
+.tl.pre .tl-item::before{transform:scaleX(0)}
+.tl.pre .tl-dot{transform:scale(.4);opacity:0}
+.tl.pre time,.tl.pre .tl-card{opacity:0}
+.tl.go time,.tl.go .tl-card{animation:fade-rise .6s var(--out) both;animation-delay:calc(var(--i) * 180ms + 120ms)}
+@media (max-width:860px){
+  .tl{grid-template-columns:1fr;gap:0}
+  .tl-item{padding:0 0 28px 36px}
+  .tl-item::before{top:20px;bottom:-4px;left:7px;right:auto;width:2px;height:auto;transform-origin:top}
+  .tl-item.to-next::before{background:repeating-linear-gradient(180deg,var(--ink3) 0 6px,transparent 6px 12px)}
+  .tl.pre .tl-item::before{transform:scaleY(0)}
+  .tl-dot{top:1px}
+}
 
 /* downloads */
 .live{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2)}
@@ -359,8 +431,8 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
     <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn"></span></a>
     <nav class="nav" aria-label="Primary">
       <a href="#models" data-i18n="nav.models"></a>
+      <a href="#timeline" data-i18n="nav.tl"></a>
       <a href="#downloads" data-i18n="nav.dl"></a>
-      <a href="#releases" data-i18n="nav.releases"></a>
       <a href="#benchmarks" data-i18n="nav.bench"></a>
       <a href="#developers" data-i18n="nav.dev"></a>
       <a href="#about" data-i18n="nav.about"></a>
@@ -375,18 +447,20 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
 <div class="mnav" id="mnav" hidden>
   <nav aria-label="Mobile">
     <a href="#models" data-i18n="nav.models" style="--i:0"></a>
-    <a href="#downloads" data-i18n="nav.dl" style="--i:1"></a>
-    <a href="#releases" data-i18n="nav.releases" style="--i:2"></a>
-    <a href="#benchmarks" data-i18n="nav.bench" style="--i:3"></a>
-    <a href="#developers" data-i18n="nav.dev" style="--i:4"></a>
-    <a href="#about" data-i18n="nav.about" style="--i:5"></a>
-    <a href="#contact" data-i18n="f.contact" style="--i:6"></a>
+    <a href="#timeline" data-i18n="nav.tl" style="--i:1"></a>
+    <a href="#downloads" data-i18n="nav.dl" style="--i:2"></a>
+    <a href="#releases" data-i18n="nav.releases" style="--i:3"></a>
+    <a href="#benchmarks" data-i18n="nav.bench" style="--i:4"></a>
+    <a href="#developers" data-i18n="nav.dev" style="--i:5"></a>
+    <a href="#about" data-i18n="nav.about" style="--i:6"></a>
+    <a href="#contact" data-i18n="f.contact" style="--i:7"></a>
   </nav>
   <div class="mnav-acts"><a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a></div>
 </div>
 
 <main id="top" class="wrap">
   <section class="hero" id="hero">
+    <a class="announce" href="#spotlight"><span class="an-tag" data-i18n="an.tag"></span><span data-i18n="an.text"></span><span class="ar" aria-hidden="true">→</span></a>
     <h1 id="heroTitle"></h1>
     <div class="tabs mtabs" id="mTabs" role="tablist" data-i18n-aria="sec.models"></div>
     <div class="stage">
@@ -405,6 +479,24 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
         <dl class="specs" id="stSpecs"></dl>
       </div>
     </div>
+  </section>
+
+  <section id="spotlight" class="spot" aria-labelledby="spTitle">
+    <div class="spot-mediawrap" id="spMedia"></div>
+    <div class="spot-body">
+      <p class="eyebrow" id="spEyebrow"></p>
+      <h2 class="spot-title" id="spTitle"></h2>
+      <p class="spot-tag" data-i18n="sp.tag"></p>
+      <div class="st-acts"><button type="button" class="pill dark" id="spOpen" data-open="v3"><span data-i18n="details"></span> <span class="ar" aria-hidden="true">→</span></button><a class="pill soft" id="spHF" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a></div>
+      <div class="spot-cmp" id="spCmp"></div>
+    </div>
+    <dl class="spot-stats" id="spStats"></dl>
+    <p class="spot-note" data-i18n="sp.note"></p>
+  </section>
+
+  <section id="timeline">
+    <div class="sec-head"><h2 data-i18n="sec.tl"></h2></div>
+    <ol class="tl" id="tlList"></ol>
   </section>
 
   <section id="models">
@@ -499,19 +591,28 @@ a:hover .mi,.hov:hover .mi{transform:scale(1.04)}
   <div class="dr-body" id="drBody"></div>
 </div>
 
-<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"latest","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":832,"downloadsAllTime":832,"likes":0,"lastModified":"2026-09-23T22:16:19.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":380,"downloadsAllTime":380,"likes":5,"lastModified":"2026-09-24T03:41:41.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":894,"downloadsAllTime":894,"likes":0,"lastModified":"2026-09-23T22:16:21.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"downloadsAllTime":0,"likes":2,"lastModified":"2026-09-23T22:16:11.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:13.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":113,"downloadsAllTime":113,"likes":0,"lastModified":"2026-09-23T22:16:14.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":4548,"downloadsAllTime":4548,"likes":9,"lastModified":"2026-09-23T22:16:00.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":2801,"downloadsAllTime":2801,"likes":2,"lastModified":"2026-09-23T22:16:09.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"mj08","name":"MacJev-0.8B","params":"0.8B","status":"demo","context":"25,600","types":["noul","choice","score"],"tags":["25K INPUT","DECISION","LOCAL SERVER","EN · 中文"],"demo":{"state":"local demos built; model training in progress; nothing published","space":null,"links":[{"label":"Demos","path":"mac-laya/docs/demos/README.md","public":false},{"label":"Limits","path":"mac-laya/docs/demos/LIMITS.md","public":false},{"label":"API","path":"mac-laya/docs/demos/API.md","public":false},{"label":"HF Space (not pushed)","path":"mac-laya/spaces/macjev-demo/README.md","public":false}]}},{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]}},"snapshot":"2026-09-24"}</script>
+<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v3","name":"Jev-Style-0.8B-Decision-v3","short":"v3","status":"latest","params":"0.8B","params_exact":"752,393,024","arch":"decoder","base":"Qwen/Qwen3.5-0.8B, full fine-tune","langs":"51","context":"25,600","types":["choice","noul","score"],"released":"2026-09-24","train":"1 × H100 · full fine-tune in bf16 · ~96 min · 321,756-row pool in 19 languages","compare_label":"Laya typed","headline":[["0.8B","hl.params"],["25,600","hl.ctx"],["77","hl.opts"],["51","hl.langs"],["0.53 GB","hl.q4"]],"metrics":[{"key":"typed","base":0.766,"model":0.7915,"better":"up"},{"key":"massive51","base":0.4008,"model":0.7175,"better":"up"},{"key":"ece49","base":0.2994,"model":0.0542,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3","format":"Transformers BF16","size":"1.50 GB","runs":"PyTorch · CUDA · MPS · CPU","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:45.000Z","createdAt":"2026-09-24T14:59:46.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"0.53–1.52 GB","runs":"llama.cpp · jev-score","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:54.000Z","createdAt":"2026-09-24T15:00:37.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX","format":"MLX BF16 / 8-bit","size":"0.80–1.50 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-24T16:02:38.000Z","createdAt":"2026-09-24T16:02:31.000Z"}],"tags":["DECISION","25.6K INPUT","51 LANGUAGES","CALIBRATED","GGUF · MLX"]},{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":832,"downloadsAllTime":832,"likes":0,"lastModified":"2026-09-23T22:16:19.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":380,"downloadsAllTime":380,"likes":5,"lastModified":"2026-09-24T03:41:41.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":894,"downloadsAllTime":894,"likes":0,"lastModified":"2026-09-23T22:16:21.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"downloadsAllTime":0,"likes":3,"lastModified":"2026-09-23T22:16:11.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:13.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":113,"downloadsAllTime":113,"likes":0,"lastModified":"2026-09-23T22:16:14.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":4548,"downloadsAllTime":4548,"likes":9,"lastModified":"2026-09-24T15:06:17.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":2801,"downloadsAllTime":2801,"likes":2,"lastModified":"2026-09-24T16:03:03.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]},"v3":{"beyond":[{"task":"Banking77","metric":"accuracy, 77 intents","v3":0.6825,"best_laya":0.4925,"best_laya_checkpoint":"typed","n":400},{"task":"Jailbreak","metric":"balanced accuracy","v3":0.9036238842064085,"best_laya":0.8311462000782389,"best_laya_checkpoint":"multilingual","n":400},{"task":"Toxicity","metric":"macro-F1","v3":0.7089254055198327,"best_laya":0.41360068097985436,"best_laya_checkpoint":"multilingual","n":400},{"task":"Model routing","metric":"accuracy","v3":0.9624060150375939,"best_laya":0.6591478696741855,"best_laya_checkpoint":"typed","n":399},{"task":"MASSIVE intent","metric":"37 held-out locales","v3":0.6551351351351351,"best_laya":0.36108108108108106,"best_laya_checkpoint":"multilingual","n":3700}],"calib":{"NLL":{"v3":0.4928839178581892,"best_laya":2.212565130608199,"checkpoint":"multilingual"},"Brier score":{"v3":0.23930092306086748,"best_laya":0.7120664110846202,"checkpoint":"multilingual"},"ECE":{"v3":0.05416919804670487,"best_laya":0.2994167384382702,"checkpoint":"multilingual"}},"massive":{"languages":51,"v3_beats_laya_multilingual":51,"v3_beats_best_laya_checkpoint":51,"v3_beats_laya_multilingual_never_trained":37,"v3_above_3x_chance":51,"laya_multilingual_above_3x_chance":48,"macro_v3":0.7174509803921569,"macro_laya_multilingual":0.4007843137254902,"macro_v3_never_trained37":0.6551351351351351,"macro_laya_multilingual_never_trained37":0.36108108108108106,"min_margin_vs_laya_multilingual":0.11}}},"snapshot":"2026-09-24"}</script>
 <script>
 (function(){
 const $ = id => document.getElementById(id);
 const DATA = JSON.parse($('site-data').textContent);
 const I18N = {
 en:{
- "nav.models":"Models","nav.releases":"Releases","nav.bench":"Benchmarks","nav.dev":"Quickstart","nav.road":"Roadmap","nav.about":"About",
+ "nav.models":"Models","nav.tl":"Timeline","sec.tl":"Release timeline","tl.next.when":"Next",
+ "an.tag":"New","an.text":"Decision 0.8B v3: 25,600-token inputs, 51 languages, every option scored",
+ "sp.new":"New model","sp.tag":"One state. One pass. Every option scored.",
+ "sp.c1":"Typed decisions, 2,000 items","sp.c2":"Intent accuracy, 51 languages","sp.c3":"Calibration error (ECE), 49 suites",
+ "sp.note":"Laya: official checkpoints re-run on identical rows with their shipped temperatures. Typed decisions: both models were trained on that dataset's train split. Protocols and confidence intervals are on the model card.",
+ "hl.params":"Parameters, full fine-tune","hl.ctx":"Input tokens","hl.opts":"Options scored in one pass (largest tested)","hl.langs":"Languages evaluated","hl.q4":"4-bit Q4_K_M file",
+ "tl.v1":"First Jev-style release: 2B, LoRA, one option letter per answer.","tl.macjev":"A 322M encoder for local Mac agents.","tl.v2":"Calibrated English classification across 11 held-out tasks.","tl.v3":"0.8B full fine-tune: long inputs, 51 languages, no cap on options.","tl.next":"Dedicated models for LLM routing and guardrails.",
+ "one.v3":"Long-input, multilingual decisions in 0.8B.","note.v3":"Laya: best of the three official checkpoints per task, re-run on identical rows with shipped temperatures. Every paired 95% CI excludes zero; details on the model card.",
+ "m.massive51":"Intent accuracy, 51 languages","m.ece49":"Calibration error, 49 suites","c.beyond":"v3 vs the best official Laya checkpoint, 5 tasks",
+ "b.v3typed":"v3 accuracy on 2,000 typed decisions","b.v3massive":"v3 intent accuracy across 51 languages (MASSIVE)","b.v3ece":"v3 calibration error across 49 suites (ECE)","nav.releases":"Releases","nav.bench":"Benchmarks","nav.dev":"Quickstart","nav.road":"Roadmap","nav.about":"About",
  "sec.about":"About",
  "ab.lead":"I build small models that each make one kind of decision: calibrated, and small enough to run on your own machine.","ab.sig":"Chaoliang Yan · UNSW",
  "ab.h1":"Why small","ab.p1":"A decision needs a label and a probability, not a paragraph. A model built for one job can stay small (322M–2B parameters): fast, private and cheap to run.",
  "ab.h2":"How I measure","ab.p2":"Held-out data only, compared against a baseline, with calibration error next to accuracy.",
- "ab.h3":"What's next","ab.p3":"Next: an 8K-input MacJev, an LLM router and a guardrail model. Requests and collaborations welcome.",
+ "ab.h3":"What's next","ab.p3":"Next: dedicated models for LLM routing and guardrails. Requests and collaborations welcome.",
  "search":"Search","search.ph":"Search models, repositories and pages","search.none":"No matches","menu":"Menu","page":"Page",
  "hero.h":"Small models. Calibrated decisions.","chip.qs":"Quickstart","details":"Details",
  "sec.models":"Models","side.all":"All","side.released":"Released","side.planned":"Planned",
@@ -524,7 +625,7 @@ en:{
  "cta.h":"Get started with JevStyle","cta.p":"I welcome internship, employment, and research collaboration opportunities. Please contact me at ","cta.end":".","final.mail":"Copy email",
  "f.models":"Models","f.formats":"Formats","f.research":"Research","f.dev":"Developers","f.comm":"Community","f.calib":"Calibration","f.contact":"Contact",
  "prev":"Previous","next":"Next","lang.name":"English",
- "one.macjev":"Decisions for local Mac agents.","one.v2":"Calibrated English classification.","one.v1":"First release. Superseded by v2.",
+ "one.macjev":"Decisions for local Mac agents.","one.v2":"Calibrated English classification.","one.v1":"First release. Superseded by v3.",
  "one.mj08":"Next MacJev. Longer input, more languages.","one.router":"Send each request to the right LLM.","one.guard":"Safety checks before an LLM call.",
  "b.open":"Open weights","b.latest":"Latest","b.archived":"Previous",
  "m1":"v2 accuracy across 11 tasks","m1s":"English Laya 75.1%",
@@ -533,7 +634,7 @@ en:{
  "m4":"v2 decisions that flip when options are reordered","m4s":"English Laya 12.0%",
  "copy":"Copy","copied":"Copied",
  "foot":"Independent project. Not affiliated with TypeSafe AI (Jev) or the Laya authors. Weights: Apache-2.0.","snap":"Stats as of ",
- "up":"higher is better","down":"lower is better","hf":"Open on Hugging Face","newer":"See v2",
+ "up":"higher is better","down":"lower is better","hf":"Open on Hugging Face","newer":"See v3",
  "close":"Close","vs":"vs","formats":"Formats","code":"Quickstart",
  "k.params":"Parameters","k.ctx":"input tokens",
  "c.tasks":"Accuracy by task","c.rel":"Reliability · confidence vs accuracy","c.pair":"Held-out accuracy",
@@ -545,12 +646,21 @@ en:{
  "note.v1":"1,500 held-out decisions across 5 tasks.","note.macjev":"Same 4,096-token budget. Gains reproduced across 3 seeds."
 },
 zh:{
- "nav.models":"模型","nav.releases":"发布","nav.bench":"评测","nav.dev":"快速开始","nav.road":"路线图","nav.about":"说明",
+ "nav.models":"模型","nav.tl":"时间线","sec.tl":"发布时间线","tl.next.when":"下一步",
+ "an.tag":"新","an.text":"Decision 0.8B v3：25,600 token 输入、51 种语言、每个选项一次打分",
+ "sp.new":"新模型","sp.tag":"读一次输入，一次前向，给每个选项打分。",
+ "sp.c1":"多题型决策，2,000 条","sp.c2":"意图识别准确率，51 种语言","sp.c3":"校准误差（ECE），49 个测试集",
+ "sp.note":"Laya：官方权重在相同样本上重跑，使用其自带温度。多题型决策：两个模型都用该数据集的训练集训练过。完整协议与置信区间见模型页。",
+ "hl.params":"参数，全量微调","hl.ctx":"输入 token","hl.opts":"一次打分的选项数（实测最多）","hl.langs":"评测语言数","hl.q4":"4-bit Q4_K_M 文件",
+ "tl.v1":"首个 Jev-style 模型：2B、LoRA，每个答案用一个选项字母读出。","tl.macjev":"给本地 Mac agent 用的 322M 编码器模型。","tl.v2":"概率校准的英文分类，覆盖 11 个留出任务。","tl.v3":"0.8B 全量微调：长输入、51 种语言、选项数不设上限。","tl.next":"专门的大模型路由和安全护栏模型。",
+ "one.v3":"0.8B 模型，支持长输入与多语言的决策。","note.v3":"Laya：每个任务取三个官方权重中最好的一个，在相同样本上重跑，使用其自带温度。所有配对 95% 置信区间都不含零，详见模型页。",
+ "m.massive51":"51 种语言意图识别准确率","m.ece49":"49 个测试集校准误差","c.beyond":"v3 对比最佳官方 Laya 权重，5 个任务",
+ "b.v3typed":"v3 在 2,000 个多题型决策上的准确率","b.v3massive":"v3 在 51 种语言上的意图识别准确率（MASSIVE）","b.v3ece":"v3 在 49 个测试集上的校准误差（ECE）","nav.releases":"发布","nav.bench":"评测","nav.dev":"快速开始","nav.road":"路线图","nav.about":"说明",
  "sec.about":"说明",
  "ab.lead":"我在做一系列小模型：每个只负责一类判断，给出校准过的概率，小到能在你自己的电脑上运行。","ab.sig":"严超亮 · UNSW",
  "ab.h1":"为什么做小模型","ab.p1":"做判断只需要一个标签和一个概率，不需要长篇回答。只做一件事的模型可以很小（322M–2B 参数）：更快、更私密，也更便宜。",
  "ab.h2":"怎么评测","ab.p2":"只用留出集，与基线模型对比，准确率旁边同时给出校准误差。",
- "ab.h3":"接下来","ab.p3":"下一步：8K 输入的 MacJev、大模型路由和安全护栏模型。欢迎提需求或合作。",
+ "ab.h3":"接下来","ab.p3":"下一步：专门的大模型路由和安全护栏模型。欢迎提需求或合作。",
  "search":"搜索","search.ph":"搜索模型、仓库与页面","search.none":"没有匹配项","menu":"菜单","page":"页面",
  "hero.h":"小模型，校准过的决策。","chip.qs":"快速开始","details":"详情",
  "sec.models":"模型","side.all":"全部","side.released":"已发布","side.planned":"规划中",
@@ -563,7 +673,7 @@ zh:{
  "cta.h":"开始使用 JevStyle","cta.p":"欢迎提供实习、工作及科研合作机会，请邮件联系：","cta.end":"。","final.mail":"复制邮箱",
  "f.models":"模型","f.formats":"格式","f.research":"研究","f.dev":"开发者","f.comm":"社区","f.calib":"校准","f.contact":"联系",
  "prev":"上一个","next":"下一个","lang.name":"简体中文",
- "one.macjev":"本地 Mac agent 的决策模型。","one.v2":"概率校准的英文分类模型。","one.v1":"首个版本，已由 v2 取代。",
+ "one.macjev":"本地 Mac agent 的决策模型。","one.v2":"概率校准的英文分类模型。","one.v1":"首个版本，已由 v3 取代。",
  "one.mj08":"下一代 MacJev：更长输入，更多语言。","one.router":"把每个请求交给合适的大模型。","one.guard":"调用大模型之前的安全检查。",
  "b.open":"开放权重","b.latest":"最新","b.archived":"旧版",
  "m1":"v2 在 11 个任务上的准确率","m1s":"英文 Laya 75.1%",
@@ -572,7 +682,7 @@ zh:{
  "m4":"v2 打乱选项顺序后改判的比例","m4s":"英文 Laya 12.0%",
  "copy":"复制","copied":"已复制",
  "foot":"独立项目，与 TypeSafe AI（Jev）及 Laya 作者无关。权重采用 Apache-2.0 许可。","snap":"数据更新于 ",
- "up":"越高越好","down":"越低越好","hf":"在 Hugging Face 打开","newer":"查看 v2",
+ "up":"越高越好","down":"越低越好","hf":"在 Hugging Face 打开","newer":"查看 v3",
  "close":"关闭","vs":"对比","formats":"格式","code":"快速开始",
  "k.params":"参数量","k.ctx":"token 输入",
  "c.tasks":"分任务准确率","c.rel":"可靠性图 · 置信度与准确率","c.pair":"留出集准确率",
@@ -588,14 +698,14 @@ let lang;
 try { lang = localStorage.getItem('lang'); } catch(e) {}
 if (lang !== 'en' && lang !== 'zh') lang = 'en';   // English by default; 中文 only when the visitor picks it
 const t = k => I18N[lang][k] ?? I18N.en[k] ?? k;
-const pct = (v,d=1) => (v*100).toFixed(d)+'%';
+const pct = (v,d=1) => (Math.round(v*100*10**d + 1e-6)/10**d).toFixed(d)+'%';   // round half up: 0.7915 -> 79.2%
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fam = id => DATA.families.find(f => f.id === id);
 const HF = 'https://huggingface.co/';
-const display = f => ({macjev:'MacJev 322M', v2:'Decision 2B v2', v1:'Decision 2B v1'})[f.id] || f.name;
+const display = f => ({v3:'Decision 0.8B v3', macjev:'MacJev 322M', v2:'Decision 2B v2', v1:'Decision 2B v1'})[f.id] || f.name;
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const LBL = {zh:{'English Laya':'英文 Laya','Laya EN':'英文 Laya','Laya multilingual':'Laya 多语版','Laya':'Laya','Qwen3.5-2B-Base zero-shot':'Qwen3.5-2B-Base 零样本','Qwen base':'Qwen 底座'}};
+const LBL = {en:{'MASSIVE intent':'MASSIVE, 37 held-out locales'}, zh:{'Laya typed':'Laya typed 版','Laya multi':'Laya 多语版','Best Laya':'最佳 Laya','Best official Laya':'最佳官方 Laya','Jailbreak':'越狱检测','Toxicity':'毒性检测','Model routing':'模型路由','MASSIVE intent':'MASSIVE，37 个留出语种','English Laya':'英文 Laya','Laya EN':'英文 Laya','Laya multilingual':'Laya 多语版','Laya':'Laya','Qwen3.5-2B-Base zero-shot':'Qwen3.5-2B-Base 零样本','Qwen base':'Qwen 底座'}};
 const lbl = x => (LBL[lang] && LBL[lang][x]) || x;
 function keepFocus(box, fn){
   const a = document.activeElement, key = box.contains(a) ? ['hm','qs','mf'].find(k => a.dataset && k in a.dataset) : null, val = key && a.dataset[key];
@@ -618,6 +728,10 @@ const PAL = {
   b3:['#FFF6E5','#FFCE7A','#FF9C8A','#FFE5A8','#FFF0DD'],
   b4:['#F3ECFF','#C7A5FF','#FF9FD0','#9AB8FF','#F7EEFF'],
   plan:['#F1F1F1','#CFCFD6','#E6E3DA','#BCC6D2','#F7F7F7'],
+  v3:['#F1ECFF','#B9A6FF','#8FD3FF','#FFC2E2','#E9F4FF'],
+  b5:['#EEF0FF','#9AA8FF','#C9B8FF','#9FE3F0','#F4F1FF'],
+  b6:['#EFFBF5','#8FE0C0','#A7C8FF','#D8F59A','#F0FAFF'],
+  b7:['#FFF1F4','#FFB0C4','#D1B4FF','#FFD8A8','#FFF6EE'],
 };
 function art(cv, seed, pal){
   const n = 48, x = cv.getContext('2d'), r = rng(seed);
@@ -660,11 +774,12 @@ function words(el, text){
 
 /* ---------- hero: model switcher (countdown tabs) driving the live stage ---------- */
 const LANES = {
+  v3:{w:[.44,.18,.1,.08,.06,.05,.04,.03,.02], y:[.16,.25,.34,.43,.52,.61,.7,.79,.88], tint:'#E6DAFF'},
   macjev:{w:[.68,.31,.01], y:[.34,.56,.74], tint:'#D4E1FF'},
   v2:{w:[.86,.14], y:[.4,.64], tint:'#FFDCC8'},
   v1:{w:[.46,.3,.14,.07,.03], y:[.24,.38,.52,.66,.8], tint:'#D6F0DC'},
 };
-const LABELS = {macjev:['MacJev','322M'], v2:['Decision','2B v2'], v1:['Decision','2B v1']};
+const LABELS = {v3:['Decision','0.8B v3'], macjev:['MacJev','322M'], v2:['Decision','2B v2'], v1:['Decision','2B v1']};
 const HERO = {i:0, auto:!REDUCED, vis:true};
 function renderHeroTabs(){
   keepFocus($('mTabs'), () => $('mTabs').innerHTML = DATA.families.map((f,i) => `<button type="button" role="tab" class="tab" id="hm-${f.id}" data-hm="${i}" aria-controls="stInfo" aria-selected="${i===HERO.i}" tabindex="${i===HERO.i ? 0 : -1}"><span class="cd" aria-hidden="true"></span>${esc(display(f))}</button>`).join(''));
@@ -700,7 +815,7 @@ function heroStage(animate){
   $('stName').textContent = display(f); $('stOne').textContent = t('one.'+f.id);
   $('stOpen').dataset.open = f.id; $('stHF').href = HF + f.repos[0].repo;
   renderSpecs(f);
-  $('fxCap').innerHTML = [`${f.context ? f.context+' TOKENS' : 'TEXT'} IN`, 'ONE FORWARD PASS', f.id === 'macjev' ? 'P(ANSWER) OUT' : 'P(OPTION) OUT'].map(x => `<span>${x}</span>`).join('');
+  $('fxCap').innerHTML = [`${f.context ? f.context+' TOKENS' : 'TEXT'} IN`, 'ONE FORWARD PASS', f.id === 'macjev' ? 'P(ANSWER) OUT' : f.id === 'v3' ? 'EVERY OPTION SCORED' : 'P(OPTION) OUT'].map(x => `<span>${x}</span>`).join('');
   renderLabels(f.id);
   fxConfig(f.id, !animate);
   if (animate){
@@ -823,6 +938,45 @@ function renderReleases(){
   paintArt($('relGrid'));
 }
 
+/* ---------- spotlight: the newest model, pushed hard ---------- */
+let spotShown = false;
+function renderSpot(){
+  const f = fam('v3'), e3 = DATA.eval.v3; if (!f || !e3) return;
+  const typed = f.metrics.find(m => m.key === 'typed');
+  const ov = `<div class="ov"><span class="ovtag">${t('an.tag')}</span><span><b class="big">${esc(f.short)}</b><span class="ov-sub">${esc(f.params)} · ${esc(f.context)} ${t('k.ctx')}</span></span></div>`;
+  $('spMedia').innerHTML = `<a href="#${f.id}" data-open="${f.id}" class="hov" aria-label="${esc(display(f))}">${media('spot-' + f.id, f.id, '', ov)}</a>`;
+  paintArt($('spMedia'));
+  $('spEyebrow').textContent = `${t('sp.new')} · ${fmtDate(f.released)}`;
+  $('spTitle').textContent = display(f);
+  $('spOpen').dataset.open = f.id; $('spHF').href = HF + f.repos[0].repo;
+  const rows = [
+    {lab:t('sp.c1'), me:typed.model, base:typed.base, vs:lbl('Laya typed'), fmt:v => pct(v), up:true},
+    {lab:t('sp.c2'), me:e3.massive.macro_v3, base:e3.massive.macro_laya_multilingual, vs:lbl('Laya multi'), fmt:v => pct(v), up:true},
+    {lab:t('sp.c3'), me:e3.calib.ECE.v3, base:e3.calib.ECE.best_laya, vs:lbl('Best Laya'), fmt:v => v.toFixed(3), up:false},
+  ];
+  $('spCmp').innerHTML = rows.map(r => { const mx = Math.max(r.me, r.base);
+    return `<div class="sc-row"><p><span>${esc(r.lab)}</span><span>${t(r.up ? 'up' : 'down')}</span></p><div class="sc-bars" aria-hidden="true"><i style="--w:${(r.me/mx*100).toFixed(1)}%"></i><i class="b" style="--w:${(r.base/mx*100).toFixed(1)}%"></i></div><p class="sc-vals"><span><b>v3</b> ${r.fmt(r.me)}</span><span>${esc(r.vs)} ${r.fmt(r.base)}</span></p></div>`; }).join('');
+  $('spStats').innerHTML = f.headline.map(([v,k]) => `<div><dt>${esc(t(k))}</dt><dd data-v="${esc(v)}">${esc(v)}</dd></div>`).join('');
+}
+function showSpot(){
+  if (spotShown) return; spotShown = true;
+  $('spotlight').classList.remove('pre');
+  $('spStats').querySelectorAll('dd').forEach(dd => countUp(dd, dd.dataset.v));
+}
+
+/* ---------- release timeline, oldest to newest, then what's next ---------- */
+function renderTimeline(){
+  const first = f => f.repos.map(r => r.createdAt || '').filter(Boolean).sort()[0] || f.released || '';
+  const rel = [...DATA.families].sort((a,b) => (a.released || '').localeCompare(b.released || '') || first(a).localeCompare(first(b)));
+  const newest = rel[rel.length-1], next = DATA.planned.length > 0;
+  const tag = f => ({macjev:'MacJev'})[f.id] || f.short;
+  const fmts = f => [...new Set(f.repos.map(r => r.format.split(' ')[0]))].join(' · ');
+  let html = rel.map((f,i) => `<li class="tl-item${f === newest ? ' is-latest' : ''}${f === newest && next ? ' to-next' : ''}" style="--i:${i}"><span class="tl-dot" aria-hidden="true"></span><time datetime="${esc(f.released)}">${fmtDate(f.released)}</time><a class="tl-card" href="#${f.id}" data-open="${f.id}"><span class="v">${esc(tag(f))} · ${esc(f.params)}</span><b>${esc(display(f))}</b><span class="d">${t('tl.' + f.id)}</span><span class="c">${[f.context ? `${f.context} ${t('k.ctx')}` : '', fmts(f)].filter(Boolean).map(x => `<span>${esc(x)}</span>`).join('')}</span></a></li>`).join('');
+  if (next) html += `<li class="tl-item is-next" style="--i:${rel.length}"><span class="tl-dot" aria-hidden="true"></span><time>${t('tl.next.when')}</time><div class="tl-card"><span class="v">${t('cat.plan')}</span><b>${DATA.planned.map(x => esc(x.name)).join(' · ')}</b><span class="d">${t('tl.next')}</span><span class="c">${DATA.planned.map(x => `<span>${esc(x.params)}</span>`).join('')}</span></div></li>`;
+  $('tlList').style.setProperty('--n', rel.length + (next ? 1 : 0));
+  $('tlList').innerHTML = html;
+}
+
 /* ---------- downloads: totals + one bar per repository ---------- */
 const LIVE = {ok:false, src:null, at:null};
 let dlShown = false;
@@ -875,7 +1029,13 @@ async function liveStats(){
 }
 function renderBench(){
   const v2 = DATA.eval.v2, mj = fam('macjev').metrics[0], v1 = fam('v1').metrics.find(m => m.key==='ece5');
+  const e3 = DATA.eval.v3, f3 = fam('v3'), ty = f3 && f3.metrics.find(m => m.key === 'typed');
   const items = [
+    ...(e3 && ty ? [
+      {me:ty.model, base:ty.base, fmt:v => pct(v), who:'v3', vs:lbl('Laya typed'), lab:'b.v3typed', up:true, open:'v3', pal:'b5', model:'Decision 0.8B v3'},
+      {me:e3.massive.macro_v3, base:e3.massive.macro_laya_multilingual, fmt:v => pct(v), who:'v3', vs:lbl('Laya multi'), lab:'b.v3massive', up:true, open:'v3', pal:'b6', model:'Decision 0.8B v3'},
+      {me:e3.calib.ECE.v3, base:e3.calib.ECE.best_laya, fmt:v => v.toFixed(3), who:'v3', vs:lbl('Best Laya'), lab:'b.v3ece', up:false, open:'v3', pal:'b7', model:'Decision 0.8B v3'},
+    ] : []),
     {me:v2.overview.v2.accuracy, base:v2.overview.laya.accuracy, fmt:v => pct(v), who:'v2', vs:lbl('Laya EN'), lab:'m1', up:true, open:'v2', pal:'b2', model:'Decision 2B v2'},
     {me:mj.model, base:mj.base, fmt:v => pct(v), who:'MacJev', vs:lbl('Laya'), lab:'m2', up:true, open:'macjev', pal:'b1', model:'MacJev 322M'},
     {me:v1.model, base:v1.base, fmt:v => v.toFixed(3), who:'v1', vs:lbl('Qwen base'), lab:'m3', up:false, open:'v1', pal:'b3', model:'Decision 2B v1'},
@@ -903,6 +1063,31 @@ function carStop(){ if (!CAR.auto) return; CAR.auto = false; carArm(); }
 
 /* ---------- quickstart tabs with countdown ---------- */
 const QS = [
+ {id:'v3t', repo:'chaoliangUNSW/Jev-Style-0.8B-Decision-v3', label:'v3 · Transformers', file:'python', code:`# hf download chaoliangUNSW/Jev-Style-0.8B-Decision-v3 --local-dir jev-v3
+# cd jev-v3 && pip install -r requirements.txt
+from jev_style_decision import JevStyleDecision
+
+m = JevStyleDecision(".")        # CUDA, Apple MPS or CPU
+r = m.decide(
+    {"ticket": "I was charged twice for my subscription this month.", "customer_tier": "pro"},
+    "Which team should handle this ticket?",
+    options={"billing": "payments, invoices, refunds",
+             "technical": "bugs and outages",
+             "sales": "new purchases"},
+    category="theme_routing",
+)
+print(r["answer"], r["probabilities"])`},
+ {id:'v3g', repo:'chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF', label:'v3 · GGUF', file:'shell', code:`hf download chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF --local-dir jev-v3-gguf
+cd jev-v3-gguf && pip install -r requirements.txt
+
+git clone https://github.com/ggml-org/llama.cpp
+git -C llama.cpp checkout 441df11f65ea0b6d0c72965aaf70c8241070ddcb
+sh build_jev_score.sh llama.cpp          # -> ./build/jev-score
+
+python jev_style_decision_gguf.py --quant Q4_K_M \\
+  --state "The film was excellent." \\
+  --question "What is the sentiment of this review?" \\
+  --options '["negative", "positive"]' --category general_sentiment`},
  {id:'mj', repo:'chaoliangUNSW/MacJev-322M-4K-Laya', label:'MacJev · PyTorch', file:'python', code:`# hf download chaoliangUNSW/MacJev-322M-4K-Laya --local-dir MacJev
 from macjev import MacJev
 
@@ -934,19 +1119,13 @@ python jev_decision_client.py --url http://127.0.0.1:8080 \\
   --state "The film was excellent." \\
   --question "What is the sentiment of this review?" \\
   --options negative positive`},
- {id:'v2h', repo:'chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2', label:'v2 · Transformers', file:'shell', code:`hf download chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2 --local-dir jev-v2
-cd jev-v2 && python -m pip install -r requirements.txt
-python -m jev_h100.decide --model . --device cpu \\
-  --state "The film was excellent." \\
-  --question "What is the sentiment of this review?" \\
-  --options negative positive`},
 ];
-const QS_FOR = {macjev:'mj', v2:'v2g'};
-let qsActive = 'mj', qsAuto = !REDUCED, qsVis = false;
+const QS_FOR = {v3:'v3t', macjev:'mj', v2:'v2g'};
+let qsActive = 'v3t', qsAuto = !REDUCED, qsVis = false;
 function hl(code){
   return esc(code).split('\n').map(line => {
     const i = line.indexOf('#'); let head = i>=0 ? line.slice(0,i) : line; const tail = i>=0 ? `<span class="c1">${line.slice(i)}</span>` : '';
-    head = head.replace(/(&quot;.*?&quot;)/g,'<span class="s2">$1</span>').replace(/\b(from|import|print|python|hf|cd|llama-server)\b/g,'<span class="k">$1</span>');
+    head = head.replace(/(&quot;.*?&quot;)/g,'<span class="s2">$1</span>').replace(/\b(from|import|print|python|hf|cd|llama-server|git|sh|pip)\b/g,'<span class="k">$1</span>');
     return head + tail;
   }).join('\n');
 }
@@ -1015,6 +1194,10 @@ function drawDrawer(){
     const L = lbl('English Laya');
     k = kpi(pct(ev.overview.v2.accuracy), t('m1'), `${t('vs')} ${L} ${pct(ev.overview.laya.accuracy)}`) + kpi(ev.overview.v2.ece.toFixed(3), t('m.ece5'), `${t('vs')} ${L} ${ev.overview.laya.ece.toFixed(3)} · ${t('lower')}`) + kpi(pct(ev.permutation.v2.semantic_flip_rate), t('m4'), `${t('vs')} ${L} ${pct(ev.permutation.laya.semantic_flip_rate)} · ${t('lower')}`) + kpi(f.params, t('k.params'), `${f.context} ${t('k.ctx')}`);
     charts = `<div><p class="cap">${t('c.tasks')}</p><div class="chart" id="dc1" style="margin-top:10px"></div><div id="dl1"></div></div><div><p class="cap">${t('c.rel')}</p><div class="chart" id="dc2" style="margin-top:10px"></div></div><p class="dr-note">${t('note.v2')}</p>`;
+  } else if (f.id === 'v3'){
+    const e3 = DATA.eval.v3, typed = f.metrics.find(m => m.key === 'typed');
+    k = kpi(pct(typed.model), t('m.typed'), `${t('vs')} ${lbl('Laya typed')} ${pct(typed.base)}`) + kpi(e3.calib.ECE.v3.toFixed(3), t('m.ece49'), `${t('vs')} ${lbl('Best Laya')} ${e3.calib.ECE.best_laya.toFixed(3)} · ${t('lower')}`) + kpi(pct(e3.massive.macro_v3), t('m.massive51'), `${t('vs')} ${lbl('Laya multi')} ${pct(e3.massive.macro_laya_multilingual)}`) + kpi(f.params, t('k.params'), `${f.context} ${t('k.ctx')}`);
+    charts = `<div><p class="cap">${t('c.beyond')}</p><div class="chart" id="dc1" style="margin-top:10px"></div><div id="dl1"></div></div><p class="dr-note">${t('note.v3')}</p>`;
   } else {
     const top = f.metrics.find(m => m.better==='up'), ece = f.metrics.find(m => m.better==='down');
     k = kpi(pct(top.model), t('m.'+top.key), `${t('vs')} ${lbl(f.compare_label)} ${pct(top.base)}`) + kpi(ece.model.toFixed(3), t('m.'+ece.key), `${t('vs')} ${ece.base.toFixed(3)} · ${t('lower')}`) + kpi(f.params, t('k.params'), f.context ? `${f.context} ${t('k.ctx')}` : f.langs);
@@ -1024,8 +1207,8 @@ function drawDrawer(){
   const q = QS.find(x => x.id === QS_FOR[f.id]);
   $('drBody').innerHTML = `
     <div><div class="badges" style="margin-bottom:14px"><span class="badge">${t('b.open')}</span><span class="badge ${f.status==='latest'?'new':''}">${t(f.status==='latest'?'b.latest':'b.archived')}</span></div><h2 id="drTitle">${esc(name)}</h2><p style="color:var(--ink2);margin-top:10px">${t('one.'+f.id)}</p>
-      <div class="dr-actions"><a class="btn dark" href="${HF+f.repos[0].repo}" target="_blank" rel="noopener">${t('hf')} <span class="ar ne" aria-hidden="true">↗</span></a>${f.status!=='latest' ? `<button type="button" class="btn" data-open="v2">${t('newer')} <span class="ar" aria-hidden="true">→</span></button>` : ''}</div></div>
-    <div class="kpis${f.id === 'v2' ? ' k4' : ''}">${k}</div>${charts}
+      <div class="dr-actions"><a class="btn dark" href="${HF+f.repos[0].repo}" target="_blank" rel="noopener">${t('hf')} <span class="ar ne" aria-hidden="true">↗</span></a>${f.status!=='latest' ? `<button type="button" class="btn" data-open="v3">${t('newer')} <span class="ar" aria-hidden="true">→</span></button>` : ''}</div></div>
+    <div class="kpis${f.id === 'v2' || f.id === 'v3' ? ' k4' : ''}">${k}</div>${charts}
     <div><p class="cap" style="margin-bottom:6px">${t('formats')}</p><div class="fmts">${fmts}</div></div>
     ${q ? `<div><p class="cap" style="margin-bottom:10px">${t('code')}</p><div class="code"><pre>${hl(q.code)}</pre></div></div>` : ''}`;
   if (f.id === 'v2'){
@@ -1034,6 +1217,10 @@ function drawDrawer(){
     dotPlot($('dc1'), tasks.map(x => ({label:t('t.'+x), values:['v1','laya','v2'].map(m => ({key:m, v:ev.by_task[m][x]}))})), series, {domain:[.25,1], ticks:[.25,.5,.75,1], highlight:'v2'});
     $('dl1').innerHTML = legend(series);
     reliability($('dc2'), ev.reliability);
+  } else if (f.id === 'v3'){
+    const series = {base:{label:lbl('Best official Laya'),color:css('--ink3'),r:4.5}, model:{label:name,color:css('--acc'),r:5.5}};
+    dotPlot($('dc1'), DATA.eval.v3.beyond.map(r => ({label:lbl(r.task), values:[{key:'base',v:r.best_laya},{key:'model',v:r.v3}]})), series, {domain:[.25,1], ticks:[.25,.5,.75,1], highlight:'model'});
+    $('dl1').innerHTML = legend(series);
   } else {
     const series = {base:{label:lbl(f.compare_label),color:css('--ink3'),r:4.5}, model:{label:name,color:css('--acc'),r:5.5}};
     dotPlot($('dc1'), f.metrics.filter(m => m.better==='up').map(m => ({label:t('m.'+m.key), values:[{key:'base',v:m.base},{key:'model',v:m.model}]})), series, {highlight:'model'});
@@ -1063,7 +1250,7 @@ function searchItems(){
     ...DATA.families.map(f => ({label:display(f), sub:t('cat.model'), open:f.id})),
     ...DATA.families.flatMap(f => f.repos).map(r => ({label:r.repo.split('/')[1], sub:r.format, href:HF+r.repo})),
     ...DATA.planned.map(x => ({label:x.name, sub:t('cat.plan'), hash:'#models'})),
-    ...[['#models','sec.models'],['#downloads','nav.dl'],['#releases','nav.releases'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
+    ...[['#spotlight','an.tag'],['#timeline','sec.tl'],['#models','sec.models'],['#downloads','nav.dl'],['#releases','nav.releases'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
   ];
 }
 function renderSearch(){
@@ -1124,7 +1311,7 @@ function applyText(){
 }
 function renderAll(){
   applyText(); words($('heroTitle'), t('hero.h'));
-  renderHeroTabs(); heroStage(false); renderModels(); renderDownloads(); renderReleases(); renderBench(); renderQS(false); drawDrawer();
+  renderHeroTabs(); heroStage(false); renderSpot(); renderTimeline(); renderModels(); renderDownloads(); renderReleases(); renderBench(); renderQS(false); drawDrawer();
   if (!$('srch').hidden) renderSearch();
 }
 function copy(text, btn, selEl){
@@ -1209,6 +1396,10 @@ if ('IntersectionObserver' in window){
   new IntersectionObserver(es => { if (es[0].isIntersecting){ $('fxWrap').classList.add('go'); } }, {rootMargin:'0px 0px -10% 0px'}).observe($('fxWrap'));
   new IntersectionObserver(es => { CAR.vis = es[es.length-1].isIntersecting; carArm(); }, {threshold:.35}).observe($('benchmarks'));
   new IntersectionObserver(es => { qsVis = es[es.length-1].isIntersecting; qsArm(); }, {threshold:.35}).observe($('developers'));
+  const sio = new IntersectionObserver(es => { if (es[es.length-1].isIntersecting){ showSpot(); sio.disconnect(); } }, {rootMargin:'0px 0px -15% 0px'});
+  if (!REDUCED && $('spotlight').getBoundingClientRect().top > innerHeight){ $('spotlight').classList.add('pre'); sio.observe($('spotlight')); }
+  const tlio = new IntersectionObserver(es => { if (es[es.length-1].isIntersecting){ $('tlList').classList.remove('pre'); $('tlList').classList.add('go'); tlio.disconnect(); } }, {rootMargin:'0px 0px -15% 0px'});
+  if (!REDUCED && $('timeline').getBoundingClientRect().top > innerHeight){ $('tlList').classList.add('pre'); tlio.observe($('timeline')); }
   const dio = new IntersectionObserver(es => { if (es[0].isIntersecting){ showDownloads(); dio.disconnect(); } }, {rootMargin:'0px 0px -12% 0px'});
   if (!REDUCED && $('downloads').getBoundingClientRect().top > innerHeight){ $('dlList').classList.add('pre'); dio.observe($('downloads')); }
 } else $('fxWrap').classList.add('go');
