@@ -1,0 +1,51 @@
+name: Deploy site with fresh Hugging Face stats
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 */3 * * *"   # every 3 hours
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch Hugging Face stats into stats.json
+        run: |
+          python3 - <<'EOF'
+          import json, datetime, urllib.request
+          url = ("https://huggingface.co/api/models?author=chaoliangUNSW&limit=200"
+                 "&expand[]=downloads&expand[]=downloadsAllTime&expand[]=likes&expand[]=createdAt")
+          try:
+              with urllib.request.urlopen(url, timeout=60) as r:
+                  data = json.load(r)
+          except Exception as e:
+              print("stats fetch failed, page keeps its built-in snapshot:", e)
+              raise SystemExit(0)
+          keep = ("id", "downloads", "downloadsAllTime", "likes", "createdAt")
+          out = {"updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+                 "models": [{k: m.get(k) for k in keep} for m in data]}
+          with open("stats.json", "w") as f:
+              json.dump(out, f, indent=1)
+          print(len(data), "repos,", sum(m.get("downloadsAllTime") or 0 for m in data), "all-time downloads")
+          EOF
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
