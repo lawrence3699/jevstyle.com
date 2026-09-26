@@ -608,6 +608,7 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
     <h2 class="typein" id="ctaH" data-i18n="cta.h"></h2>
     <div class="cta-acts">
       <a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a>
+      <a class="pill soft" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a>
       <button type="button" class="pill soft" id="copyEmail" data-i18n="final.mail"></button>
       <a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a>
     </div>
@@ -617,10 +618,10 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
 
 <footer class="wrap foot">
   <div class="fcols">
-    <div class="fcol"><p class="fh" data-i18n="f.models"></p><button type="button" data-open="macjev">MacJev 322M</button><button type="button" data-open="v2">Decision 2B v2</button><button type="button" data-open="v1">Decision 2B v1</button></div>
-    <div class="fcol"><p class="fh" data-i18n="f.formats"></p><a data-repo="chaoliangUNSW/MacJev-322M-4K-Laya" href="#" target="_blank" rel="noopener">PyTorch <span aria-hidden="true">↗</span></a><a data-repo="chaoliangUNSW/MacJev-322M-4K-Laya-MLX" href="#" target="_blank" rel="noopener">MLX <span aria-hidden="true">↗</span></a><a data-repo="chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF" href="#" target="_blank" rel="noopener">GGUF <span aria-hidden="true">↗</span></a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.models"></p><button type="button" data-open="v3">Decision 0.8B v3</button><button type="button" data-open="macjev">MacJev 322M</button><button type="button" data-open="v2">Decision 2B v2</button><button type="button" data-open="v1">Decision 2B v1</button></div>
+    <div class="fcol"><p class="fh" data-i18n="f.formats"></p><a data-repo="chaoliangUNSW/Jev-Style-0.8B-Decision-v3" href="#" target="_blank" rel="noopener">PyTorch <span aria-hidden="true">↗</span></a><a data-repo="chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX" href="#" target="_blank" rel="noopener">MLX <span aria-hidden="true">↗</span></a><a data-repo="chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF" href="#" target="_blank" rel="noopener">GGUF <span aria-hidden="true">↗</span></a></div>
     <div class="fcol"><p class="fh" data-i18n="f.research"></p><a href="#benchmarks" data-i18n="nav.bench"></a><button type="button" data-open="v2" data-i18n="f.calib"></button><a href="#models" data-i18n="sec.models"></a></div>
-    <div class="fcol"><p class="fh" data-i18n="f.dev"></p><a href="#developers" data-i18n="chip.qs"></a><a class="hf" href="#" target="_blank" rel="noopener">Hugging Face <span aria-hidden="true">↗</span></a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.dev"></p><a href="#developers" data-i18n="chip.qs"></a><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener">PyPI <span aria-hidden="true">↗</span></a><a href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-v3" target="_blank" rel="noopener"><span data-i18n="f.demo"></span> <span aria-hidden="true">↗</span></a><a class="hf" href="#" target="_blank" rel="noopener">Hugging Face <span aria-hidden="true">↗</span></a></div>
     <div class="fcol"><p class="fh" data-i18n="f.comm"></p><a class="dc" href="#" target="_blank" rel="noopener">Discord <span aria-hidden="true">↗</span></a><a href="#about" data-i18n="nav.about"></a><a href="#contact" data-i18n="f.contact"></a></div>
   </div>
   <div class="fbot">
@@ -694,7 +695,7 @@ en:{
  "sec.releases":"Recent releases","sec.bench":"Benchmarks","sec.dev":"Quickstart","sec.road":"Roadmap",
  "viewall":"View all","dl30":"downloads · 30 days","dev.repo":"Open repository",
  "cta.h":"Get started with JevStyle","cta.p":"I welcome internship, employment, and research collaboration opportunities. Please contact me at ","cta.end":".","final.mail":"Copy email",
- "f.models":"Models","f.formats":"Formats","f.research":"Research","f.dev":"Developers","f.comm":"Community","f.calib":"Calibration","f.contact":"Contact",
+ "f.models":"Models","f.formats":"Formats","f.research":"Research","f.dev":"Developers","f.comm":"Community","f.calib":"Calibration","f.contact":"Contact","f.demo":"Live demo",
  "prev":"Previous","next":"Next","lang.name":"English",
  "one.macjev":"Decisions for local Mac agents.","one.v2":"Calibrated English classification.","one.v1":"First release. Superseded by v3.",
  "one.mj08":"Next MacJev. Longer input, more languages.","one.router":"Send each request to the right LLM.","one.guard":"Safety checks before an LLM call.",
@@ -743,7 +744,7 @@ zh:{
  "sec.releases":"最新发布","sec.bench":"评测","sec.dev":"快速开始","sec.road":"路线图",
  "viewall":"查看全部","dl30":"次下载 · 近 30 天","dev.repo":"打开仓库",
  "cta.h":"开始使用 JevStyle","cta.p":"欢迎提供实习、工作及科研合作机会，请邮件联系：","cta.end":"。","final.mail":"复制邮箱",
- "f.models":"模型","f.formats":"格式","f.research":"研究","f.dev":"开发者","f.comm":"社区","f.calib":"校准","f.contact":"联系",
+ "f.models":"模型","f.formats":"格式","f.research":"研究","f.dev":"开发者","f.comm":"社区","f.calib":"校准","f.contact":"联系","f.demo":"在线试用",
  "prev":"上一个","next":"下一个","lang.name":"简体中文",
  "one.macjev":"本地 Mac agent 的决策模型。","one.v2":"概率校准的英文分类模型。","one.v1":"首个版本，已由 v3 取代。",
  "one.mj08":"下一代 MacJev：更长输入，更多语言。","one.router":"把每个请求交给合适的大模型。","one.guard":"调用大模型之前的安全检查。",
