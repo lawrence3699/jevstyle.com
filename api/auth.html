@@ -58,6 +58,7 @@
       <p style="color:var(--ink2)">Console uses an HTTP-only session cookie on <code>api.jevstyle.com</code> with <code>credentials: &quot;include&quot;</code>. Browser CORS allows only <code>https://jevstyle.com</code>. OAuth client secrets never ship in the frontend.</p>
       <p style="margin-top:12px;color:var(--ink2)">Google sign-in is available via <code>/control/v1/auth/google/start</code> (or the button on <a href="/login/">Log in</a> / <a href="/register/">Register</a>).</p>
       <p>Email/password and Google use separate accounts, even for the same email. Google sign-in requires a verified Google email. Accounts are never automatically linked by email.</p>
+      <p>Email/password accounts must <a href="/verify-email/">verify their email</a> before creating or using API keys. Use <a href="/forgot-password/">Forgot password</a> to recover an email/password account. Verification and password reset revoke old sessions and API keys; sign in again and create new keys afterwards.</p>
       <h2>Revoke</h2>
       <p style="color:var(--ink2)">Revoke any key anytime in Console. Revoked keys fail with <code>401</code>.</p>
 

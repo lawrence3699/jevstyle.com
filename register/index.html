@@ -20,7 +20,7 @@
   </a>
   <div class="card">
     <h1>Create account</h1>
-    <p class="sub">Sign up to create API keys in Console.</p>
+    <p class="sub">Verify your email, then create API keys in Console.</p>
     <form id="form" novalidate>
       <label for="email">Email</label>
       <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
@@ -85,7 +85,9 @@
             msg.textContent = errText;
             msg.className = "msg err"; msg.hidden = false; return;
           }
-          location.href = "/console/";
+          try { sessionStorage.setItem("jev-verification-email", email); sessionStorage.setItem("jev-verification-sent", "1"); } catch (e) {}
+          document.getElementById("password").value = "";
+          location.href = "/verify-email/";
         } catch (e) {
           msg.textContent = "Can't reach the control plane. Auth routes may not be live yet — try again later.";
           msg.className = "msg err"; msg.hidden = false;

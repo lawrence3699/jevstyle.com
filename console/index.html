@@ -104,6 +104,7 @@
       var activeCount = 0;
       var maxKeys = 3;
       var creating = false;
+      var accountVerified = false;
 
       function showMsg(el, text, cls) {
         el.textContent = text;
@@ -137,7 +138,13 @@
           var me = payload.user;
           if (!me) throw new Error("Invalid account response");
           userChip.textContent = me.email || me.name || "Signed in";
-          gate.hidden = true;
+          accountVerified = me.email_verified === true;
+          gate.hidden = accountVerified;
+          if (!accountVerified) {
+            gate.innerHTML = 'Verify your email before creating or using API keys. Verification revokes old sessions and keys. <a id="verify-link" href="/verify-email/">Send verification email</a>';
+            gate.className = "msg err";
+            try { sessionStorage.setItem("jev-verification-email", me.email); } catch (e) {}
+          }
           return me;
         } catch (e) {
           userChip.textContent = "Offline";
@@ -151,7 +158,7 @@
       function renderKeys(keys) {
         if (!Array.isArray(keys)) throw new Error("Invalid keys response");
         activeCount = keys.filter(function (k) { return k.status === "active"; }).length;
-        createBtn.disabled = creating || activeCount >= maxKeys;
+        createBtn.disabled = !accountVerified || creating || activeCount >= maxKeys;
         createBtn.title = activeCount >= maxKeys ? "You've reached the 3-key limit. Revoke a key to create another." : "";
         if (!keys.length) {
           keysList.innerHTML = '<div class="row"><span class="meta">No keys yet — create one to call the API.</span></div>';
@@ -203,6 +210,7 @@
       }
 
       async function createKey() {
+        if (!accountVerified) { showMsg(keysMsg, "Verify your email before creating API keys.", "err"); return; }
         if (creating) return;
         showMsg(keysMsg, "");
         if (activeCount >= maxKeys) {
@@ -226,7 +234,7 @@
         } catch (e) {
           showMsg(keysMsg, "Can't reach the control plane.", "err");
         } finally {
-          creating = false; createBtn.disabled = activeCount >= maxKeys;
+          creating = false; createBtn.disabled = !accountVerified || activeCount >= maxKeys;
         }
       }
 
