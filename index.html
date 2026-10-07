@@ -861,7 +861,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fam = id => DATA.families.find(f => f.id === id);
 const HF = 'https://huggingface.co/';
-const display = f => ({'v3-2b':'Jev-Style 2B v3', v3:'Jev-Style 0.8B v3', macjev:'MacJev 322M', v2:'Decision 2B v2', v1:'Decision 2B v1', 'cascade-9b':'Jev-Style Cascade 9B'})[f.id] || f.name;
+const display = f => ({'9b-unc':'9B Uncensored', 'v3-2b':'Jev-Style 2B v3', v3:'Jev-Style 0.8B v3', macjev:'MacJev 322M', v2:'Decision 2B v2', v1:'Decision 2B v1', 'cascade-9b':'Jev-Style Cascade 9B'})[f.id] || f.name;
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const LBL = {en:{'MASSIVE intent':'MASSIVE, 37 held-out locales'}, zh:{'Laya typed':'Laya typed 版','Laya multi':'Laya 多语版','Best Laya':'最佳 Laya','Best official Laya':'最佳官方 Laya','Jailbreak':'越狱检测','Toxicity':'毒性检测','Model routing':'模型路由','MASSIVE intent':'MASSIVE，37 个留出语种','English Laya':'英文 Laya','Laya EN':'英文 Laya','Laya multilingual':'Laya 多语版','Laya':'Laya','Qwen3.5-2B-Base zero-shot':'Qwen3.5-2B-Base 零样本','Qwen base':'Qwen 底座'}};
 const lbl = x => (LBL[lang] && LBL[lang][x]) || x;
@@ -878,6 +878,7 @@ function rng(seed){ let a = hash(seed); return () => { a = a + 0x6D2B79F5 | 0; l
 
 /* ---------- generative gradient art (one seeded composition per tile) ---------- */
 const PAL = {
+  '9b-unc':['#E8FBFF','#7ED7F5','#A8B8FF','#6AE0C8','#DFF6FF'],
   macjev:['#E9EEFF','#8FB0FF','#A8EBD7','#6A86F5','#DCE7FF'],
   v2:['#FFF0E8','#FFB39A','#F59AC0','#B7A2FF','#FFE3D3'],
   v1:['#F2EEE3','#C9DDB6','#9CC7D6','#E7D9B8','#F7F4EC'],
@@ -940,6 +941,7 @@ function words(el, text){
 
 /* ---------- hero: model switcher (countdown tabs) driving the live stage ---------- */
 const LANES = {
+  '9b-unc':{w:[.5,.22,.12,.08,.05,.03], y:[.2,.34,.48,.62,.74,.86], tint:'#C8F0FF'},
   'v3-2b':{w:[.58,.17,.09,.06,.04,.03,.015,.01,.005], y:[.16,.25,.34,.43,.52,.61,.7,.79,.88], tint:'#BFEAFF'},
   v3:{w:[.44,.18,.1,.08,.06,.05,.04,.03,.02], y:[.16,.25,.34,.43,.52,.61,.7,.79,.88], tint:'#E6DAFF'},
   macjev:{w:[.68,.31,.01], y:[.34,.56,.74], tint:'#D4E1FF'},
@@ -947,7 +949,7 @@ const LANES = {
   v1:{w:[.46,.3,.14,.07,.03], y:[.24,.38,.52,.66,.8], tint:'#D6F0DC'},
   'cascade-9b':{w:[.36,.11,.04,.02,.3,.1,.04,.03], y:[.14,.21,.28,.35,.6,.67,.74,.81], tint:'#FFE7A3'},   // patch_9b.py: two bands, settled by the 2B (53%) / sent to 9B (47%)
 };
-const LABELS = {'v3-2b':['Jev-Style','2B v3'], v3:['Jev-Style','0.8B v3'], macjev:['MacJev','322M'], v2:['Decision','2B v2'], v1:['Decision','2B v1'], 'cascade-9b':['Cascade','2B → 9B']};
+const LABELS = {'9b-unc':['9B Uncensored','9B'], 'v3-2b':['Jev-Style','2B v3'], v3:['Jev-Style','0.8B v3'], macjev:['MacJev','322M'], v2:['Decision','2B v2'], v1:['Decision','2B v1'], 'cascade-9b':['Cascade','2B → 9B']};
 const HERO = {i:0, auto:!REDUCED, vis:true};
 function renderHeroTabs(){
   keepFocus($('mTabs'), () => $('mTabs').innerHTML = DATA.families.map((f,i) => `<button type="button" role="tab" class="tab" id="hm-${f.id}" data-hm="${i}" aria-controls="stInfo" aria-selected="${i===HERO.i}" tabindex="${i===HERO.i ? 0 : -1}"><span class="cd" aria-hidden="true"></span>${esc(display(f))}</button>`).join(''));
@@ -976,7 +978,11 @@ function heroSpecs(f){
   const c9 = f.cascade && f.cascade.jevbench;   // patch_9b.py
   if (c9) return [[t('s.tiers'), f.params], [t('s.input'), f.context], [t('s.jbpub'), pct(c9.acc)], [t('s.settled'), pct(c9.settled_by_2b / c9.items, 0)], [t('s.ece'), c9.ece.toFixed(3)]];
   const top = f.metrics && f.metrics.find(m => m.better==='up');
-  const head = f.id === 'v2' ? [t('s.acc11'), pct(DATA.eval.v2.overview.v2.accuracy)] : [t('m.'+top.key), pct(top.model)];
+  const head = f.id === 'v2'
+    ? [t('s.acc11'), pct(DATA.eval.v2.overview.v2.accuracy)]
+    : top
+      ? [t('m.'+top.key), pct(top.model)]
+      : (f.headline && f.headline[0] ? [t(f.headline[0][1]), f.headline[0][0]] : [t('formats'), f.repos.map(r => r.format.split(' ')[0]).join(' · ')]);
   return [[t('k.params'), f.params], [t('s.input'), f.context || '—'], [t('s.langs'), f.langs], head, dl ? [t('s.dlall'), dl.toLocaleString('en-US')] : [t('formats'), f.repos.map(r => r.format.split(' ')[0]).join(' · ')]];
 }
 function renderSpecs(f){
@@ -1568,6 +1574,12 @@ function drawDrawer(){
     const e3 = DATA.eval.v3, typed = f.metrics.find(m => m.key === 'typed');
     k = kpi(pct(typed.model), t('m.typed'), `${t('vs')} ${lbl('Laya typed')} ${pct(typed.base)}`) + kpi(e3.calib.ECE.v3.toFixed(3), t('m.ece49'), `${t('vs')} ${lbl('Best Laya')} ${e3.calib.ECE.best_laya.toFixed(3)} · ${t('lower')}`) + kpi(pct(e3.massive.macro_v3), t('m.massive51'), `${t('vs')} ${lbl('Laya multi')} ${pct(e3.massive.macro_laya_multilingual)}`) + kpi(f.params, t('k.params'), `${f.context} ${t('k.ctx')}`);
     charts = `<div><p class="cap">${t('c.beyond')}</p><div class="chart" id="dc1" style="margin-top:10px"></div><div id="dl1"></div></div><p class="dr-note">${t('note.v3')}</p>`;
+  } else if (!(f.metrics && f.metrics.length)) {
+    // e.g. 9b-unc: no numeric metrics yet — use headline chips
+    const hl = f.headline || [];
+    k = hl.slice(0, 4).map(([v, key]) => kpi(v, t(key), '')).join('') || kpi(f.params, t('k.params'), f.context ? `${f.context} ${t('k.ctx')}` : (f.langs || ''));
+    const space = f.space ? `<p class="dr-note"><a href="https://huggingface.co/spaces/${esc(f.space)}" target="_blank" rel="noopener">${t('demo.try')} <span aria-hidden="true">↗</span></a></p>` : '';
+    charts = `${space}<p class="dr-note">${t('one.'+f.id)}</p>`;
   } else {
     const top = f.metrics.find(m => m.better==='up'), ece = f.metrics.find(m => m.better==='down');
     k = kpi(pct(top.model), t('m.'+top.key), `${t('vs')} ${lbl(f.compare_label)} ${pct(top.base)}`) + kpi(ece.model.toFixed(3), t('m.'+ece.key), `${t('vs')} ${ece.base.toFixed(3)} · ${t('lower')}`) + kpi(f.params, t('k.params'), f.context ? `${f.context} ${t('k.ctx')}` : f.langs);
