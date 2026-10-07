@@ -16,27 +16,27 @@
   <header class="hdr">
     <div class="hdr-in">
       <button type="button" class="menu-btn" id="menu-btn" aria-label="Open docs menu"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13"/></svg></button>
-      <a class="brand" href="../home/index.html"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>JevStyle</a>
+      <a class="brand" href="/"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>JevStyle</a>
       <span class="brand-sub">Docs</span>
-      <nav class="top-nav"><a href="./index.html" aria-current="page">Docs</a><a class="hide-sm" href="../console/index.html">Console</a></nav>
+      <nav class="top-nav"><a href="/api/" aria-current="page">Docs</a><a class="hide-sm" href="/console/">Console</a></nav>
       <div class="sp"></div>
       <button type="button" class="icon-btn" id="theme-btn" title="Theme" aria-label="Toggle theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg></button>
-      <a class="pill soft" href="../auth/login.html">Log in</a>
-      <a class="pill dark" href="../console/index.html">Console</a>
+      <a class="pill soft" href="/login/">Log in</a>
+      <a class="pill dark" href="/console/">Console</a>
     </div>
   </header>
   <div class="shell">
     <aside class="side" id="side" aria-label="Docs">
       <div class="side-label">API reference</div>
-      <a href="./index.html">Overview</a>
+      <a href="/api/">Overview</a>
       <a href="./auth.html" aria-current="page">Authentication</a>
       <a href="./endpoints.html">Endpoints</a>
       <a href="./limits.html">Limits</a>
       <a href="./errors.html">Errors</a>
       <div class="side-label" style="margin-top:16px">Guides</div>
       <a href="./index.html#examples">SDKs / examples</a>
-      <a href="../auth/register.html">Create account</a>
-      <a href="../console/index.html">Console</a>
+      <a href="/register/">Create account</a>
+      <a href="/console/">Console</a>
     </aside>
     <main class="content">
 
@@ -50,13 +50,14 @@
       <p style="margin-top:14px;color:var(--ink2)">Prefer <code>Authorization: Bearer</code>. Missing or invalid key → <code>401</code>.</p>
       <h2>Get a key</h2>
       <ol style="margin:0;padding-left:1.2em;color:var(--ink2)">
-        <li style="margin-bottom:8px"><a href="../auth/register.html">Register</a> or <a href="../auth/login.html">log in</a> (email/password or Google).</li>
-        <li style="margin-bottom:8px">Open <a href="../console/index.html">Console</a> → <strong>Create API key</strong>.</li>
+        <li style="margin-bottom:8px"><a href="/register/">Register</a> or <a href="/login/">log in</a> (email/password or Google).</li>
+        <li style="margin-bottom:8px">Open <a href="/console/">Console</a> → <strong>Create API key</strong>.</li>
         <li>Copy the plaintext key immediately — it is shown <strong>only once</strong>. Up to <strong>3 keys</strong> per account.</li>
       </ol>
       <h2>Account session (Console)</h2>
       <p style="color:var(--ink2)">Console uses an HTTP-only session cookie on <code>api.jevstyle.com</code> with <code>credentials: &quot;include&quot;</code>. Browser CORS allows only <code>https://jevstyle.com</code>. OAuth client secrets never ship in the frontend.</p>
       <p style="margin-top:12px;color:var(--ink2)">Google sign-in is available via <code>/control/v1/auth/google/start</code> (or the button on <a href="/login/">Log in</a> / <a href="/register/">Register</a>).</p>
+      <p>Email/password and Google use separate accounts, even for the same email. Google sign-in requires a verified Google email. Accounts are never automatically linked by email.</p>
       <h2>Revoke</h2>
       <p style="color:var(--ink2)">Revoke any key anytime in Console. Revoked keys fail with <code>401</code>.</p>
 

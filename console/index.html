@@ -31,7 +31,7 @@
   </header>
 
   <main class="page">
-    <div class="banner"><strong>Stage 0:</strong> Inference may return <code>503</code>. Keys work for auth/usage now. Create up to <strong>3 keys</strong> per account.</div>
+    <div class="banner"><strong>Stage 0:</strong> Inference currently returns <code>503</code>. Keys work for auth/usage now. Create up to <strong>3 keys</strong> per account.</div>
     <h1>Console</h1>
     <p class="lead">Create and revoke API keys. Plaintext keys are shown only once at creation.</p>
     <div id="gate" class="msg" hidden></div>
@@ -46,6 +46,7 @@
     </div>
 
     <h2>Usage</h2>
+    <p class="lead">Totals cover your active keys. Each key has 500 requests/day. Stage 0 failures do not consume daily quota.</p>
     <div id="usage-msg" class="msg" hidden></div>
     <div class="stat-grid" id="usage-grid">
       <div class="stat"><div class="lbl">Daily used</div><div class="val" id="u-used">—</div></div>
@@ -101,6 +102,8 @@
       var userChip = document.getElementById("user-chip");
       var modal = document.getElementById("modal");
       var activeCount = 0;
+      var maxKeys = 3;
+      var creating = false;
 
       function showMsg(el, text, cls) {
         el.textContent = text;
@@ -130,7 +133,9 @@
             return null;
           }
           if (!res.ok) throw new Error("me " + res.status);
-          var me = await res.json();
+          var payload = await res.json();
+          var me = payload.user;
+          if (!me) throw new Error("Invalid account response");
           userChip.textContent = me.email || me.name || "Signed in";
           gate.hidden = true;
           return me;
@@ -144,10 +149,10 @@
       }
 
       function renderKeys(keys) {
-        keys = keys || [];
+        if (!Array.isArray(keys)) throw new Error("Invalid keys response");
         activeCount = keys.filter(function (k) { return k.status === "active"; }).length;
-        createBtn.disabled = activeCount >= 3;
-        createBtn.title = activeCount >= 3 ? "You've reached the 3-key limit. Revoke a key to create another." : "";
+        createBtn.disabled = creating || activeCount >= maxKeys;
+        createBtn.title = activeCount >= maxKeys ? "You've reached the 3-key limit. Revoke a key to create another." : "";
         if (!keys.length) {
           keysList.innerHTML = '<div class="row"><span class="meta">No keys yet — create one to call the API.</span></div>';
           return;
@@ -171,37 +176,41 @@
       async function loadKeys() {
         try {
           var res = await api("/keys");
-          if (res.status === 401) return;
+          if (res.status === 401) throw new Error("Session expired — sign in again");
           if (!res.ok) throw new Error("keys " + res.status);
           var data = await res.json();
-          renderKeys(data.keys || data || []);
+          maxKeys = data.max_keys;
+          renderKeys(data.items);
         } catch (e) {
-          showMsg(keysMsg, "Couldn't load keys — control plane unreachable.", "err");
+          showMsg(keysMsg, "Couldn't load keys. Refresh or sign in again.", "err");
+          createBtn.disabled = true;
         }
       }
 
       async function loadUsage() {
         try {
           var res = await api("/usage");
-          if (res.status === 401) return;
+          if (res.status === 401) throw new Error("Session expired — sign in again");
           if (!res.ok) throw new Error("usage " + res.status);
           var u = await res.json();
           document.getElementById("u-used").textContent = u.daily_used != null ? u.daily_used : "—";
-          document.getElementById("u-rem").textContent = u.remaining != null ? u.remaining : "—";
+          document.getElementById("u-rem").textContent = u.daily_remaining != null ? u.daily_remaining : "—";
           document.getElementById("u-rpm").textContent = u.rpm_limit != null ? u.rpm_limit : 20;
           document.getElementById("u-reset").textContent = u.reset_at || "UTC midnight";
         } catch (e) {
-          showMsg(usageMsg, "Couldn't load usage — control plane unreachable.", "err");
+          showMsg(usageMsg, "Couldn't load usage. Refresh or sign in again.", "err");
         }
       }
 
       async function createKey() {
+        if (creating) return;
         showMsg(keysMsg, "");
-        if (activeCount >= 3) {
+        if (activeCount >= maxKeys) {
           showMsg(keysMsg, "You've reached the 3-key limit. Revoke a key to create another.", "err");
           return;
         }
         try {
+          creating = true; createBtn.disabled = true;
           var res = await api("/keys", { method: "POST", body: "{}" });
           if (!res.ok) {
             var t = "Create failed.";
@@ -213,8 +222,11 @@
           document.getElementById("modal-secret").textContent = secret;
           modal.classList.add("open");
           await loadKeys();
+          await loadUsage();
         } catch (e) {
           showMsg(keysMsg, "Can't reach the control plane.", "err");
+        } finally {
+          creating = false; createBtn.disabled = activeCount >= maxKeys;
         }
       }
 
@@ -225,13 +237,14 @@
           if (!res.ok) { showMsg(keysMsg, "Revoke failed.", "err"); return; }
           showMsg(keysMsg, "Key revoked.", "ok");
           await loadKeys();
+          await loadUsage();
         } catch (e) {
           showMsg(keysMsg, "Can't reach the control plane.", "err");
         }
       }
 
       document.getElementById("create-btn").onclick = createKey;
-      document.getElementById("modal-close").onclick = function () { modal.classList.remove("open"); };
+      document.getElementById("modal-close").onclick = function () { modal.classList.remove("open"); document.getElementById("modal-secret").textContent = ""; };
       document.getElementById("copy-btn").onclick = function () {
         var t = document.getElementById("modal-secret").textContent;
         if (navigator.clipboard) navigator.clipboard.writeText(t);
