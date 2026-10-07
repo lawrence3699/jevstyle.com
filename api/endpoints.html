@@ -45,7 +45,7 @@
       <h2>Inference</h2>
       <table>
         <tr><th>Method</th><th>Path</th><th>Auth</th><th>Notes</th></tr>
-        <tr><td><code>POST</code></td><td><code>/v1/systemone</code></td><td>API key</td><td>Decision API; Stage 0 returns 503 after key/request checks</td></tr>
+        <tr><td><code>POST</code></td><td><code>/v1/systemone</code></td><td>API key</td><td>Decision API: calibrated probabilities for noul / choice / score questions</td></tr>
       </table>
       <h3>Request body</h3>
       <p style="color:var(--ink2)"><code>state</code> (string) + <code>questions</code> (map of id → question). Each question has <code>type</code>, <code>instructions</code>, and optional/required <code>criteria</code>.</p>

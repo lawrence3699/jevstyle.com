@@ -31,7 +31,7 @@
   </header>
 
   <main class="page">
-    <div class="banner"><strong>Stage 0:</strong> Inference currently returns <code>503</code>. Keys work for auth/usage now. Create up to <strong>3 keys</strong> per account.</div>
+    <div class="banner"><strong>Free tier:</strong> per account, 1 request at a time, 20/min and 500 successful requests/day (UTC), shared by up to <strong>3 keys</strong>.</div>
     <h1>Console</h1>
     <p class="lead">Create and revoke API keys. Plaintext keys are shown only once at creation.</p>
     <div id="gate" class="msg" hidden></div>
@@ -46,7 +46,7 @@
     </div>
 
     <h2>Usage</h2>
-    <p class="lead">Totals cover your active keys. Each key has 500 requests/day. Stage 0 failures do not consume daily quota.</p>
+    <p class="lead">Usage is per account: all your keys share 500 successful requests/day. Failed requests do not consume quota.</p>
     <div id="usage-msg" class="msg" hidden></div>
     <div class="stat-grid" id="usage-grid">
       <div class="stat"><div class="lbl">Daily used</div><div class="val" id="u-used">—</div></div>

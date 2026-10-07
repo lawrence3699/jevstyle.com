@@ -44,19 +44,18 @@
       <p class="lead">Fair-use free tier. No SLA. Limits may change. Best effort.</p>
       <table>
         <tr><th>Dimension</th><th>Value</th><th>On exceed</th></tr>
-        <tr><td>Requests / minute</td><td><strong>20</strong> / key</td><td><code>429</code> + <code>Retry-After</code></td></tr>
-        <tr><td>Requests / day</td><td><strong>500</strong> / key (UTC)</td><td><code>429</code></td></tr>
-        <tr><td>Concurrent in-flight</td><td><strong>1</strong> / key</td><td><code>429</code></td></tr>
-        <tr><td>Input soft cap / request</td><td><strong>32,000</strong> UTF-8 bytes (Stage 0)</td><td><code>413</code></td></tr>
-        <tr><td>Stage 1 tokenizer target</td><td>8k free / 25,600 model tokens</td><td>Validate before GPU enablement</td></tr>
+        <tr><td>Requests / minute</td><td><strong>20</strong> / account</td><td><code>429</code> + <code>Retry-After</code></td></tr>
+        <tr><td>Requests / day</td><td><strong>500</strong> successful / account (UTC)</td><td><code>429</code></td></tr>
+        <tr><td>Concurrent in-flight</td><td><strong>1</strong> / account</td><td><code>429</code></td></tr>
+        <tr><td>Input cap / request</td><td><strong>8,000</strong> model tokens (state + all questions), max 32,000 UTF-8 bytes</td><td><code>413</code></td></tr>
         <tr><td>API keys / account</td><td><strong>3</strong></td><td>Create disabled in Console</td></tr>
       </table>
-      <p>Daily quota counts successful inference only. Stage 0 503 responses do not spend daily quota. Global guards: 60 RPM, 1500 successful requests/day, 1 in-flight request. Byte guards are not exact tokenizer counts.</p>
+      <p>Limits are per account and shared by all of its keys (up to 3, for rotation). Daily quota counts successful inference only; rejected, failed or timed-out requests are not charged. Global guards across all accounts: 240 RPM, 20,000 successful requests/day, 8 requests in flight. Several requests are computed in parallel; the rest wait briefly in a queue.</p>
       <h2>Best practices</h2>
       <ul style="margin:0;padding-left:1.2em;color:var(--ink2)">
         <li style="margin-bottom:8px">Backoff on <code>429</code> / <code>504</code> / <code>5xx</code>.</li>
         <li style="margin-bottom:8px">Keep <code>state</code> + questions under the soft cap.</li>
-        <li style="margin-bottom:8px">One in-flight request per key unless you create another key (max 3).</li>
+        <li style="margin-bottom:8px">One in-flight request per account. Extra keys do not add capacity.</li>
         <li>Do not resell quota or scrape the free tier.</li>
       </ul>
 

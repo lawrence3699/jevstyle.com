@@ -47,15 +47,15 @@
         <tr><td><code>401</code></td><td>Missing or invalid API key</td></tr>
         <tr><td><code>413</code></td><td>Payload / token cap exceeded</td></tr>
         <tr><td><code>422</code></td><td>JSON or schema validation failed</td></tr>
-        <tr><td><code>429</code></td><td>RPM, daily, or concurrency limit</td></tr>
-        <tr><td><code>503</code></td><td><code>inference_not_ready</code> (Stage 0)</td></tr>
-        <tr><td><code>504</code></td><td>Upstream timeout</td></tr>
+        <tr><td><code>429</code></td><td>Account RPM, daily or concurrency limit, or global capacity — see <code>limit</code> and <code>Retry-After</code></td></tr>
+        <tr><td><code>503</code></td><td><code>inference_unavailable</code> / <code>inference_not_ready</code> — GPU temporarily unavailable; not charged</td></tr>
+        <tr><td><code>504</code></td><td><code>inference_timeout</code> — exceeded the 60 s deadline; not charged</td></tr>
         <tr><td><code>5xx</code></td><td>Server error — retry with backoff</td></tr>
       </table>
-      <h2>Stage 0 example</h2>
+      <h2>Unavailable example</h2>
 <pre>{
-  "error": "inference_not_ready",
-  "message": "Inference API is not online yet. Create a key in Console at https://jevstyle.com/console ; GPU endpoint coming in a later stage."
+  "error": "inference_unavailable",
+  "message": "GPU worker is temporarily unavailable."
 }</pre>
       <h2>Rate limit example</h2>
 <pre>{ "error": "rate_limited", "limit": "rpm", "reset_at": "…" }</pre>
