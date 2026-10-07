@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Terms · Jev-Style Free API</title>
+  <meta name="description" content="Free Jev-Style Decision API — typed noul / choice / score decisions with fair-use limits." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("jev-api-theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <header class="hdr" id="hdr">
+    <div class="hdr-in">
+      <a class="brand" href="https://jevstyle.com/" aria-label="JevStyle home">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        JevStyle
+      </a>
+      <span class="brand-sub">Free API</span>
+      <nav class="nav" aria-label="API">
+        <a href="./index.html">Home</a>
+        <a href="./docs.html">Docs</a>
+        <a href="./apply.html">Apply</a>
+        <a href="./usage.html">Usage</a>
+        <a href="./terms.html" aria-current="page">Terms</a>
+      </nav>
+      <div class="sp"></div>
+      <button type="button" class="icon-btn" id="theme-btn" title="Theme" aria-label="Toggle theme">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg>
+      </button>
+      <a class="pill dark" href="./apply.html">Apply</a>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <h1>Terms &amp; notices</h1>
+    <h2>Independent project</h2>
+    <p>This hosted API is an independent project around open-weight Jev-Style-2B-Decision-v3. It is <strong>not</strong> affiliated with, endorsed by, or operated by TypeSafe AI. Do not describe it as official TypeSafe / Jev hosting.</p>
+    <h2>Free tier</h2>
+    <p>Limits may change. No SLA. Abuse, resale of quota, or infrastructure attacks lead to key revocation.</p>
+    <h2>Model &amp; licence</h2>
+    <p>Weights are Apache-2.0. Review the Hugging Face model card training-data notes before commercial use. The service does not guarantee your downstream compliance.</p>
+    <h2>Privacy</h2>
+    <p>Keys are stored hashed. Requests may be logged for rate limits, security, and quality. Do not submit secrets or government IDs in <code>state</code>.</p>
+    <h2>Decisions only</h2>
+    <p>The model scores options you provide. It does not generate free-form text or take actions.</p>
+
+    <footer class="site-foot">
+      <span>Independent · not TypeSafe</span>
+      <span class="sep">·</span>
+      <a href="https://jevstyle.com/">jevstyle.com</a>
+      <span class="sep">·</span>
+      <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3">Model card</a>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      var KEY = "jev-api-theme";
+      var order = ["system", "light", "dark"];
+      function current() {
+        try { return localStorage.getItem(KEY) || "system"; } catch (e) { return "system"; }
+      }
+      function apply(t) {
+        var root = document.documentElement;
+        if (!t || t === "system") root.removeAttribute("data-theme");
+        else root.setAttribute("data-theme", t);
+        try { localStorage.setItem(KEY, t || "system"); } catch (e) {}
+        var btn = document.getElementById("theme-btn");
+        if (btn) btn.title = "Theme: " + (t || "system");
+      }
+      apply(current());
+      var btn = document.getElementById("theme-btn");
+      if (btn) btn.addEventListener("click", function () {
+        var i = order.indexOf(current());
+        apply(order[(i + 1) % order.length]);
+      });
+      var hdr = document.getElementById("hdr");
+      if (hdr) {
+        var onScroll = function () { hdr.classList.toggle("scrolled", window.scrollY > 2); };
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+      }
+    })();
+  </script>
+
+</body>
+</html>
