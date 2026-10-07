@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Log in · JevStyle</title>
+  <meta name="description" content="Log in to Jev-Style Free API Console." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&amp;display=swap" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script>(function(){try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+</head>
+<body>
+  <button type="button" class="theme-float" id="theme-btn" aria-label="Toggle theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg></button>
+  <a class="top-brand" href="/">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    JevStyle
+  </a>
+  <div class="card">
+    <h1>Log in</h1>
+    <p class="sub">Welcome back to JevStyle Free API.</p>
+    <form id="form" novalidate>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" minlength="8" />
+      
+      <button type="submit" class="btn primary">Continue</button>
+    </form>
+    <div class="divider">or</div>
+    <a class="btn google" href="https://api.jevstyle.com/control/v1/auth/google/start">
+      <svg viewBox="0 0 18 18" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.83.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.71A5.41 5.41 0 0 1 3.69 9c0-.59.1-1.17.28-1.71V4.96H.96A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.04l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.96l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+      Continue with Google
+    </a>
+    <div id="msg" class="msg" hidden></div>
+    <p class="swap">Need an account? <a href="/register/">Register</a></p>
+  </div>
+  <p class="foot">Independent · not TypeSafe</p>
+  <script>
+    (function () {
+      var KEY = "jev-api-theme";
+      var order = ["system", "light", "dark"];
+      function current() { try { return localStorage.getItem(KEY) || "system"; } catch (e) { return "system"; } }
+      function apply(t) {
+        var root = document.documentElement;
+        if (!t || t === "system") root.removeAttribute("data-theme");
+        else root.setAttribute("data-theme", t);
+        try { localStorage.setItem(KEY, t || "system"); } catch (e) {}
+      }
+      apply(current());
+      document.getElementById("theme-btn").onclick = function () {
+        var i = order.indexOf(current());
+        apply(order[(i + 1) % order.length]);
+      };
+
+      var CONTROL = "https://api.jevstyle.com/control/v1";
+      var form = document.getElementById("form");
+      var msg = document.getElementById("msg");
+      form.addEventListener("submit", async function (ev) {
+        ev.preventDefault();
+        msg.hidden = true;
+        var email = document.getElementById("email").value.trim();
+        var password = document.getElementById("password").value;
+        if (!email || password.length < 8) {
+          msg.textContent = "Enter a valid email and password (min 8 characters).";
+          msg.className = "msg err"; msg.hidden = false; return;
+        }
+        var path = "login" === "login" ? "/auth/login" : "/auth/register";
+        var body = { email: email, password: password };
+        try {
+          var res = await fetch(CONTROL + path, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(body)
+          });
+          if (!res.ok) {
+            var errText = "Could not login.";
+            try { var j = await res.json(); if (j.message) errText = j.message; } catch (e) {}
+            if (res.status === 0 || res.type === "opaque") errText = "Can't reach the control plane.";
+            msg.textContent = errText;
+            msg.className = "msg err"; msg.hidden = false; return;
+          }
+          location.href = "/console/";
+        } catch (e) {
+          msg.textContent = "Can't reach the control plane. Auth routes may not be live yet — try again later.";
+          msg.className = "msg err"; msg.hidden = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

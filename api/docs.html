@@ -2,115 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Docs · Jev-Style Free API</title>
-  <meta name="description" content="Free Jev-Style Decision API — typed noul / choice / score decisions with fair-use limits." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" />
-  <link rel="stylesheet" href="./styles.css" />
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem("jev-api-theme");
-        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
-      } catch (e) {}
-    })();
-  </script>
+  <meta http-equiv="refresh" content="0; url=./index.html" />
+  <script>location.replace("./index.html");</script>
+  <title>Redirect · Docs</title>
 </head>
 <body>
-  <header class="hdr" id="hdr">
-    <div class="hdr-in">
-      <a class="brand" href="https://jevstyle.com/" aria-label="JevStyle home">
-        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        JevStyle
-      </a>
-      <span class="brand-sub">Free API</span>
-      <nav class="nav" aria-label="API">
-        <a href="./index.html">Home</a>
-        <a href="./docs.html" aria-current="page">Docs</a>
-        <a href="./apply.html">Apply</a>
-        <a href="./usage.html">Usage</a>
-        <a href="./terms.html">Terms</a>
-      </nav>
-      <div class="sp"></div>
-      <button type="button" class="icon-btn" id="theme-btn" title="Theme" aria-label="Toggle theme">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg>
-      </button>
-      <a class="pill dark" href="./apply.html">Apply</a>
-    </div>
-  </header>
-
-  <main class="page">
-
-    <div class="banner">Inference endpoint is <strong>not ready</strong> in stage 0. Control plane (apply / usage) comes first.</div>
-    <h1>Quick start</h1>
-    <h2>Auth</h2>
-    <pre>Authorization: Bearer jev_YOUR_KEY</pre>
-    <h2>Bases</h2>
-    <pre>Site / docs:     https://jevstyle.com/api
-Control plane:   https://api.jevstyle.com/control/v1
-Inference (s1):  https://api.jevstyle.com/v1/systemone</pre>
-    <h2>Example (stage 1 — will fail with 503 today)</h2>
-    <pre>curl -sS https://api.jevstyle.com/v1/systemone \
-  -H "Authorization: Bearer jev_YOUR_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "state": "I was billed twice. Please refund one charge.",
-    "questions": {
-      "refund": {"type": "noul", "instructions": "The customer asks for money back."},
-      "team": {
-        "type": "choice",
-        "instructions": "Which team should handle this?",
-        "criteria": {"billing": "charges, refunds", "tech": "bugs", "sales": null}
-      }
-    }
-  }'</pre>
-    <h2>Limits</h2>
-    <p class="lead" style="margin:0">20 RPM · 500 / day (UTC) · concurrency 1 · ~8k tokens soft cap · 25,600 hard cap · no SLA.</p>
-    <h2>Errors</h2>
-    <p>See project file <code>api-errors-v1.md</code>. Stage 0 inference returns <code>503 inference_not_ready</code>.</p>
-    <p style="margin-top:16px"><a href="./apply.html">Apply for a key</a> · <a href="./usage.html">Check usage</a> · <a href="./terms.html">Terms</a></p>
-
-    <footer class="site-foot">
-      <span>Independent · not TypeSafe</span>
-      <span class="sep">·</span>
-      <a href="https://jevstyle.com/">jevstyle.com</a>
-      <span class="sep">·</span>
-      <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3">Model card</a>
-    </footer>
-  </main>
-
-  <script>
-    (function () {
-      var KEY = "jev-api-theme";
-      var order = ["system", "light", "dark"];
-      function current() {
-        try { return localStorage.getItem(KEY) || "system"; } catch (e) { return "system"; }
-      }
-      function apply(t) {
-        var root = document.documentElement;
-        if (!t || t === "system") root.removeAttribute("data-theme");
-        else root.setAttribute("data-theme", t);
-        try { localStorage.setItem(KEY, t || "system"); } catch (e) {}
-        var btn = document.getElementById("theme-btn");
-        if (btn) btn.title = "Theme: " + (t || "system");
-      }
-      apply(current());
-      var btn = document.getElementById("theme-btn");
-      if (btn) btn.addEventListener("click", function () {
-        var i = order.indexOf(current());
-        apply(order[(i + 1) % order.length]);
-      });
-      var hdr = document.getElementById("hdr");
-      if (hdr) {
-        var onScroll = function () { hdr.classList.toggle("scrolled", window.scrollY > 2); };
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-      }
-    })();
-  </script>
-
+  <p><a href="./index.html">Continue to API docs</a></p>
 </body>
 </html>

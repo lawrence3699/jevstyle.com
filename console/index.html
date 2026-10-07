@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Console · JevStyle Free API</title>
+  <meta name="description" content="Create and revoke API keys, view usage." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script>(function(){try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+</head>
+<body>
+  <header class="hdr">
+    <div class="hdr-in">
+      <a class="brand" href="/">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        JevStyle
+      </a>
+      <nav class="nav">
+        <a href="/api/">Docs</a>
+        <a href="./index.html" aria-current="page">Console</a>
+      </nav>
+      <div class="sp"></div>
+      <span class="user-chip" id="user-chip">…</span>
+      <button type="button" class="icon-btn" id="theme-btn" aria-label="Toggle theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg></button>
+      <button type="button" class="pill soft" id="logout-btn">Log out</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="banner"><strong>Stage 0:</strong> Inference may return <code>503</code>. Keys work for auth/usage now. Create up to <strong>3 keys</strong> per account.</div>
+    <h1>Console</h1>
+    <p class="lead">Create and revoke API keys. Plaintext keys are shown only once at creation.</p>
+    <div id="gate" class="msg" hidden></div>
+
+    <h2>API keys</h2>
+    <div class="actions">
+      <button type="button" class="pill dark" id="create-btn">Create API key</button>
+    </div>
+    <div id="keys-msg" class="msg" hidden style="margin-top:12px"></div>
+    <div class="panel" id="keys-list" style="margin-top:12px">
+      <div class="row"><span class="meta">Loading…</span></div>
+    </div>
+
+    <h2>Usage</h2>
+    <div id="usage-msg" class="msg" hidden></div>
+    <div class="stat-grid" id="usage-grid">
+      <div class="stat"><div class="lbl">Daily used</div><div class="val" id="u-used">—</div></div>
+      <div class="stat"><div class="lbl">Remaining</div><div class="val" id="u-rem">—</div></div>
+      <div class="stat"><div class="lbl">RPM limit</div><div class="val" id="u-rpm">20</div></div>
+      <div class="stat"><div class="lbl">Resets (UTC)</div><div class="val" id="u-reset" style="font-size:1rem">—</div></div>
+    </div>
+
+    <footer class="site-foot">
+      <span>Independent · not TypeSafe</span>
+      <span>·</span>
+      <span>Session cookie · CORS: jevstyle.com only · ≤3 keys</span>
+      <span>·</span>
+      <a href="/api/">API docs</a>
+    </footer>
+  </main>
+
+  <div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <h3 id="modal-title">API key created</h3>
+      <p>Copy this key now. You will not see the full value again.</p>
+      <div class="secret" id="modal-secret"></div>
+      <div class="actions">
+        <button type="button" class="pill dark" id="copy-btn">Copy</button>
+        <button type="button" class="pill soft" id="modal-close">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var CONTROL = "https://api.jevstyle.com/control/v1";
+      var KEY = "jev-api-theme";
+      var order = ["system", "light", "dark"];
+      function currentTheme() { try { return localStorage.getItem(KEY) || "system"; } catch (e) { return "system"; } }
+      function applyTheme(t) {
+        var root = document.documentElement;
+        if (!t || t === "system") root.removeAttribute("data-theme");
+        else root.setAttribute("data-theme", t);
+        try { localStorage.setItem(KEY, t || "system"); } catch (e) {}
+      }
+      applyTheme(currentTheme());
+      document.getElementById("theme-btn").onclick = function () {
+        var i = order.indexOf(currentTheme());
+        applyTheme(order[(i + 1) % order.length]);
+      };
+
+      var gate = document.getElementById("gate");
+      var keysList = document.getElementById("keys-list");
+      var keysMsg = document.getElementById("keys-msg");
+      var usageMsg = document.getElementById("usage-msg");
+      var createBtn = document.getElementById("create-btn");
+      var userChip = document.getElementById("user-chip");
+      var modal = document.getElementById("modal");
+      var activeCount = 0;
+
+      function showMsg(el, text, cls) {
+        el.textContent = text;
+        el.className = "msg" + (cls ? " " + cls : "");
+        el.hidden = !text;
+      }
+
+      async function api(path, opts) {
+        opts = opts || {};
+        var res = await fetch(CONTROL + path, Object.assign({
+          credentials: "include",
+          headers: Object.assign({ "Content-Type": "application/json" }, opts.headers || {})
+        }, opts));
+        return res;
+      }
+
+      async function loadMe() {
+        try {
+          var res = await api("/auth/me");
+          if (res.status === 401) {
+            userChip.textContent = "Not signed in";
+            showMsg(gate, "Sign in to manage keys.", "err");
+            gate.innerHTML = 'Sign in to manage keys. <a href="/login/">Log in</a> · <a href="/register/">Register</a>';
+            gate.className = "msg err"; gate.hidden = false;
+            createBtn.disabled = true;
+            keysList.innerHTML = '<div class="row"><span class="meta">Sign in required</span></div>';
+            return null;
+          }
+          if (!res.ok) throw new Error("me " + res.status);
+          var me = await res.json();
+          userChip.textContent = me.email || me.name || "Signed in";
+          gate.hidden = true;
+          return me;
+        } catch (e) {
+          userChip.textContent = "Offline";
+          showMsg(gate, "Can't reach the control plane (api.jevstyle.com). Auth may not be live yet — UI still previews locally.", "err");
+          createBtn.disabled = true;
+          keysList.innerHTML = '<div class="row"><span class="meta">Control plane unreachable</span></div>';
+          return null;
+        }
+      }
+
+      function renderKeys(keys) {
+        keys = keys || [];
+        activeCount = keys.filter(function (k) { return k.status === "active"; }).length;
+        createBtn.disabled = activeCount >= 3;
+        createBtn.title = activeCount >= 3 ? "You've reached the 3-key limit. Revoke a key to create another." : "";
+        if (!keys.length) {
+          keysList.innerHTML = '<div class="row"><span class="meta">No keys yet — create one to call the API.</span></div>';
+          return;
+        }
+        keysList.innerHTML = keys.map(function (k) {
+          var st = k.status || "active";
+          return '<div class="row">' +
+            '<span class="prefix">' + (k.key_prefix || k.prefix || "jev_…") + '</span>' +
+            '<span class="status ' + st + '">' + st + '</span>' +
+            '<span class="meta">' + (k.created_at || "") + '</span>' +
+            (st === "active"
+              ? '<button type="button" class="pill danger" data-revoke="' + k.id + '">Revoke</button>'
+              : "") +
+            '</div>';
+        }).join("");
+        keysList.querySelectorAll("[data-revoke]").forEach(function (btn) {
+          btn.onclick = function () { revokeKey(btn.getAttribute("data-revoke")); };
+        });
+      }
+
+      async function loadKeys() {
+        try {
+          var res = await api("/keys");
+          if (res.status === 401) return;
+          if (!res.ok) throw new Error("keys " + res.status);
+          var data = await res.json();
+          renderKeys(data.keys || data || []);
+        } catch (e) {
+          showMsg(keysMsg, "Couldn't load keys — control plane unreachable.", "err");
+        }
+      }
+
+      async function loadUsage() {
+        try {
+          var res = await api("/usage");
+          if (res.status === 401) return;
+          if (!res.ok) throw new Error("usage " + res.status);
+          var u = await res.json();
+          document.getElementById("u-used").textContent = u.daily_used != null ? u.daily_used : "—";
+          document.getElementById("u-rem").textContent = u.remaining != null ? u.remaining : "—";
+          document.getElementById("u-rpm").textContent = u.rpm_limit != null ? u.rpm_limit : 20;
+          document.getElementById("u-reset").textContent = u.reset_at || "UTC midnight";
+        } catch (e) {
+          showMsg(usageMsg, "Couldn't load usage — control plane unreachable.", "err");
+        }
+      }
+
+      async function createKey() {
+        showMsg(keysMsg, "");
+        if (activeCount >= 3) {
+          showMsg(keysMsg, "You've reached the 3-key limit. Revoke a key to create another.", "err");
+          return;
+        }
+        try {
+          var res = await api("/keys", { method: "POST", body: "{}" });
+          if (!res.ok) {
+            var t = "Create failed.";
+            try { var j = await res.json(); if (j.message) t = j.message; } catch (e) {}
+            showMsg(keysMsg, t, "err"); return;
+          }
+          var data = await res.json();
+          var secret = data.api_key || data.key || "";
+          document.getElementById("modal-secret").textContent = secret;
+          modal.classList.add("open");
+          await loadKeys();
+        } catch (e) {
+          showMsg(keysMsg, "Can't reach the control plane.", "err");
+        }
+      }
+
+      async function revokeKey(id) {
+        if (!confirm("Revoke this key? Calls with it will fail.")) return;
+        try {
+          var res = await api("/keys/" + encodeURIComponent(id) + "/revoke", { method: "POST", body: "{}" });
+          if (!res.ok) { showMsg(keysMsg, "Revoke failed.", "err"); return; }
+          showMsg(keysMsg, "Key revoked.", "ok");
+          await loadKeys();
+        } catch (e) {
+          showMsg(keysMsg, "Can't reach the control plane.", "err");
+        }
+      }
+
+      document.getElementById("create-btn").onclick = createKey;
+      document.getElementById("modal-close").onclick = function () { modal.classList.remove("open"); };
+      document.getElementById("copy-btn").onclick = function () {
+        var t = document.getElementById("modal-secret").textContent;
+        if (navigator.clipboard) navigator.clipboard.writeText(t);
+      };
+      document.getElementById("logout-btn").onclick = async function () {
+        try { await api("/auth/logout", { method: "POST", body: "{}" }); } catch (e) {}
+        location.href = "/login/";
+      };
+
+      (async function init() {
+        var me = await loadMe();
+        if (me) { await loadKeys(); await loadUsage(); }
+      })();
+    })();
+  </script>
+</body>
+</html>

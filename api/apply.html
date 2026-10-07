@@ -2,131 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Apply · Jev-Style Free API</title>
-  <meta name="description" content="Free Jev-Style Decision API — typed noul / choice / score decisions with fair-use limits." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apply → Register · Jev-Style API</title>
+  <meta http-equiv="refresh" content="0; url=/register/" />
+  <link rel="canonical" href="/register/" />
   <link rel="stylesheet" href="./styles.css" />
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem("jev-api-theme");
-        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
-      } catch (e) {}
-    })();
-  </script>
+  <script>location.replace("/register/");</script>
 </head>
 <body>
-  <header class="hdr" id="hdr">
-    <div class="hdr-in">
-      <a class="brand" href="https://jevstyle.com/" aria-label="JevStyle home">
-        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        JevStyle
-      </a>
-      <span class="brand-sub">Free API</span>
-      <nav class="nav" aria-label="API">
-        <a href="./index.html">Home</a>
-        <a href="./docs.html">Docs</a>
-        <a href="./apply.html" aria-current="page">Apply</a>
-        <a href="./usage.html">Usage</a>
-        <a href="./terms.html">Terms</a>
-      </nav>
-      <div class="sp"></div>
-      <button type="button" class="icon-btn" id="theme-btn" title="Theme" aria-label="Toggle theme">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg>
-      </button>
-      <a class="pill dark" href="./apply.html">Apply</a>
-    </div>
-  </header>
-
-  <main class="page">
-
-    <h1>Request a free API key</h1>
-    <p class="lead">Stage 0 uses manual review. If approved, we email your key once — store it securely.</p>
-    <form id="apply-form">
-      <label for="email">Email *</label>
-      <input id="email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" />
-      <label for="use_case">Use case (optional)</label>
-      <textarea id="use_case" name="use_case" placeholder="Short description of what you will use the API for"></textarea>
-      <label class="check"><input id="tos" type="checkbox" required /> I accept the <a href="./terms.html">Terms</a> and Independent / non-TypeSafe notices. *</label>
-      <div class="actions"><button class="pill dark" type="submit">Submit application</button></div>
-      <div id="out" class="msg" hidden></div>
-    </form>
-
-    <footer class="site-foot">
-      <span>Independent · not TypeSafe</span>
-      <span class="sep">·</span>
-      <a href="https://jevstyle.com/">jevstyle.com</a>
-      <span class="sep">·</span>
-      <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3">Model card</a>
-    </footer>
+  <main class="content" style="padding:48px 24px">
+    <h1>Applications moved</h1>
+    <p class="lead">API keys are no longer issued via an apply form. <a href="/register/">Create an account</a>, then create a key in <a href="/console/">Console</a>.</p>
+    <p><a class="pill dark" href="/register/">Go to Register</a></p>
   </main>
-
-  <script>
-    (function () {
-      var KEY = "jev-api-theme";
-      var order = ["system", "light", "dark"];
-      function current() {
-        try { return localStorage.getItem(KEY) || "system"; } catch (e) { return "system"; }
-      }
-      function apply(t) {
-        var root = document.documentElement;
-        if (!t || t === "system") root.removeAttribute("data-theme");
-        else root.setAttribute("data-theme", t);
-        try { localStorage.setItem(KEY, t || "system"); } catch (e) {}
-        var btn = document.getElementById("theme-btn");
-        if (btn) btn.title = "Theme: " + (t || "system");
-      }
-      apply(current());
-      var btn = document.getElementById("theme-btn");
-      if (btn) btn.addEventListener("click", function () {
-        var i = order.indexOf(current());
-        apply(order[(i + 1) % order.length]);
-      });
-      var hdr = document.getElementById("hdr");
-      if (hdr) {
-        var onScroll = function () { hdr.classList.toggle("scrolled", window.scrollY > 2); };
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-      }
-    })();
-  </script>
-
-  <script>
-    const CONTROL = "https://api.jevstyle.com/control/v1";
-    document.getElementById("apply-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const out = document.getElementById("out");
-      out.hidden = false;
-      out.className = "msg";
-      out.textContent = "Submitting…";
-      try {
-        const res = await fetch(CONTROL + "/applications", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: document.getElementById("email").value.trim(),
-            use_case: document.getElementById("use_case").value.trim() || null,
-            accept_tos: document.getElementById("tos").checked
-          })
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          out.className = "msg err";
-          out.textContent = data.message || data.error || ("Error " + res.status);
-          return;
-        }
-        out.className = "msg ok";
-        out.textContent = data.message || "Application submitted. We will email your key after review.";
-      } catch (err) {
-        out.className = "msg err";
-        out.textContent = "Network error. Control plane may be unreachable (api.jevstyle.com).";
-      }
-    });
-  </script>
-
 </body>
 </html>
