@@ -14,6 +14,7 @@
   var SERIES = ["var(--s1)", "var(--s2)", "var(--s3)"];
   var REVOKED_SERIES = "var(--s0)";
   var MAX_QUESTIONS = 64;
+  var MODEL_NAME = "jev-style-decision-v3";
 
   var state = {
     me: null, verified: false, keys: [], allKeys: [], keysLoaded: false, maxKeys: 3, showRevoked: false,
@@ -1876,7 +1877,7 @@
       box.appendChild(card);
     });
     if (result && result.usage && typeof result.usage.input_tokens === "number") {
-      $("pg-meta").textContent = fmtInt(result.usage.input_tokens) + " input tokens · model " + (result.model || "");
+      $("pg-meta").textContent = fmtInt(result.usage.input_tokens) + " input tokens · model " + MODEL_NAME;
     }
   }
 

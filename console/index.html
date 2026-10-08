@@ -149,7 +149,7 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
           <div class="card stat">
             <div class="card-label">Service status</div>
             <div class="status-line"><span class="status-dot" id="ov-status-dot" data-state="checking" aria-hidden="true"></span><span id="ov-status">Checking…</span></div>
-            <div class="card-foot">Model <code>jev-style-2b-decision-v3</code></div>
+            <div class="card-foot">Model <code>jev-style-decision-v3</code></div>
           </div>
           <div class="card stat">
             <div class="card-label">API keys</div>
@@ -383,7 +383,7 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
               <thead><tr><th scope="col">Model</th><th scope="col" class="num">Concurrent</th><th scope="col" class="num">Requests per minute</th><th scope="col" class="num">Requests per day</th><th scope="col" class="num">Input per request</th></tr></thead>
               <tbody>
                 <tr>
-                  <td><code class="model-id">jev-style-2b-decision-v3</code></td>
+                  <td><code class="model-id">jev-style-decision-v3</code></td>
                   <td class="num"><span id="l-conc">1</span></td>
                   <td class="num"><span id="l-rpm">20</span> RPM</td>
                   <td class="num"><span id="l-daily">10,000</span> RPD</td>
@@ -402,10 +402,10 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
           <h2>Models</h2>
           <div class="model">
             <div class="model-head">
-              <code class="model-id">jev-style-2b-decision-v3</code>
+              <code class="model-id">jev-style-decision-v3</code>
               <span class="tag">Free tier</span>
             </div>
-            <p class="muted">Jev-Style 2B Decision v3 reads a state and answers typed decision questions in a single pass, returning calibrated probabilities instead of generated text.</p>
+            <p class="muted">Jev-Style Decision v3 reads a state and answers typed decision questions in a single pass, returning calibrated probabilities instead of generated text.</p>
             <dl class="specs">
               <div><dt>Context window</dt><dd>25,600 tokens</dd></div>
               <div><dt>Free-tier input cap</dt><dd>8,000 tokens per request</dd></div>
