@@ -72,5 +72,6 @@
   <script>
     (function(){var KEY="jev-api-theme",order=["system","light","dark"];function cur(){try{return localStorage.getItem(KEY)||"system"}catch(e){return"system"}}function apply(t){var r=document.documentElement;if(!t||t==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",t);try{localStorage.setItem(KEY,t||"system")}catch(e){}}apply(cur());var b=document.getElementById("theme-btn");if(b)b.onclick=function(){var i=order.indexOf(cur());apply(order[(i+1)%order.length])};var m=document.getElementById("menu-btn"),s=document.getElementById("side");if(m&&s)m.onclick=function(){s.classList.toggle("open")}})();
   </script>
+<!-- Cloudflare Web Analytics (cookieless page-view counts) --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7a7432d7d2fe40b4b52e41e711938ac0"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
