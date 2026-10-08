@@ -863,6 +863,9 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
 /* ---------- 2026-10-08 trim: live decision strip, key numbers, trust line, 3 benchmark cards ---------- */
 .tick{width:min(600px,100%);margin-top:26px;padding:14px 16px 12px;border:1px solid var(--line);border-radius:16px;background:var(--bg);box-shadow:0 1px 2px rgba(13,13,15,.04),0 18px 40px -28px rgba(13,13,15,.35);text-align:left;font:13px/1.45 var(--mono);animation:fade-rise .9s var(--out) .55s both}
 .tk-head{display:flex;justify-content:space-between;gap:10px;color:var(--ink3);font-size:11.5px;letter-spacing:.02em;margin-bottom:8px}
+.tk-dots{display:inline-flex;align-items:center;gap:5px}
+.tk-dots i{width:6px;height:6px;border-radius:50%;background:var(--soft2);transition:background .3s var(--ease)}
+.tk-dots i.on{background:var(--acc)}
 .tk-t{font-variant-numeric:tabular-nums;color:var(--ink2)}
 .tk-state{margin:0 0 10px;min-height:2.9em;color:var(--ink);transition:opacity .35s var(--ease)}
 .tk-k{display:inline-block;margin-right:8px;padding:0 6px;border-radius:5px;background:var(--soft);color:var(--ink3);font-size:11.5px}
@@ -879,7 +882,7 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
 .tick.done .tk-row{opacity:1;transform:none}
 .tick.done .tk-bar i{transform:scaleX(1)}
 .tick.out .tk-rows,.tick.out .tk-state{opacity:0}
-@media (max-width:640px){.tick{font-size:12px;padding:12px}.tk-row{grid-template-columns:62px minmax(0,1fr) 92px;gap:8px}.tk-ty{display:none}}
+@media (max-width:640px){.tk-state{min-height:4.35em}.tick{font-size:12px;padding:12px}.tk-row{grid-template-columns:62px minmax(0,1fr) 92px;gap:8px}.tk-ty{display:none}}
 .kstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 20px}
 .kstats > div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:6px;padding:18px 18px 16px;border-radius:16px;background:var(--soft);min-width:0}
 .kstats dd{margin:0;font-size:clamp(24px,2.4vw,32px);font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
@@ -2548,33 +2551,56 @@ function tyArm(){
   if (b && tyAuto && tyVis){ void b.offsetWidth; b.classList.add('run'); }
 }
 
-/* ---------- hero: a live decision, typed out from the real production request/response ---------- */
-const TICK = {run:0, vis:true, tm:null};
-function tickBuild(){
-  const a = JSON.parse(EX_RES).answers, P = a.urgency.probabilities, top = Object.keys(P).reduce((m,k) => P[k] > P[m] ? k : m);
-  const rows = [
-    ['refund', 'noul', a.refund.noul, `${t('q.yes')} ${p3(a.refund.noul)}`],
-    ['team', 'choice', a.team.probabilities[a.team.choice], `${a.team.choice} ${p3(a.team.probabilities[a.team.choice])}`],
-    ['urgency', 'score', P[top], `${a.urgency.legend[top]} ${p3(P[top])}`],
-  ];
-  $('tick').innerHTML = `<div class="tk-head"><span>POST /v1/systemone</span><span class="tk-t" id="tkT"></span></div><p class="tk-state"><span class="tk-k">state</span><span id="tkTxt"></span><span class="tk-caret"></span></p><div class="tk-rows">${rows.map((r,i) => `<div class="tk-row" style="--i:${i}"><code>${r[0]}</code><span class="tk-ty">${r[1]}</span><span class="tk-bar"><i style="--w:${(r[2]*100).toFixed(1)}%"></i></span><span class="tk-v">${esc(r[3])}</span></div>`).join('')}</div>`;
+/* ---------- hero: three live decisions, typed out from real production calls, then it stops on the last ---------- */
+// #1 is the billing ticket below (EX_REQ/EX_RES); #2 and #3 were real calls on 2026-10-08 from a synthetic account
+// (evidence: Desktop/Jev免费API落地/gpu-release-20261008/evidence/homepage-sample-calls-2.json). Probabilities rounded to 3 places.
+const TICK_MORE = [
+  {state:'A coding agent wants to run: git push --force origin main. The user only asked it to tidy the commits on a feature branch.', s:'0.43',
+   answers:{safe:{type:'noul', noul:0.074}, action:{type:'choice', choice:'deny', probabilities:{allow:0.016, ask:0.303, deny:0.681}},
+            risk:{type:'score', legend:{0:'low', 1:'medium', 2:'high'}, probabilities:{0:0.022, 1:0.253, 2:0.725}}}},
+  {state:"Review: The blender arrived cracked and support hasn't answered my emails in a week. Never again.", s:'0.42',
+   answers:{reply:{type:'noul', noul:0.891}, topic:{type:'choice', choice:'support', probabilities:{product:0.103, delivery:0.306, support:0.591}},
+            mood:{type:'score', legend:{0:'calm', 1:'annoyed', 2:'furious'}, probabilities:{0:0.010, 1:0.201, 2:0.790}}}},
+];
+const TICK = {run:0, vis:true, tm:null, done:false};
+const tickExamples = () => [{state:JSON.parse(EX_REQ).state, answers:JSON.parse(EX_RES).answers, s:'0.42'}, ...TICK_MORE];
+function tickRows(ans){
+  return Object.keys(ans).map(k => {
+    const a = ans[k];
+    if (a.type === 'noul'){ const yes = a.noul >= .5, p = yes ? a.noul : 1 - a.noul; return [k, 'noul', p, `${t(yes ? 'q.yes' : 'q.no')} ${p3(p)}`]; }
+    const P = a.probabilities, top = a.type === 'choice' ? a.choice : Object.keys(P).reduce((m,x) => P[x] > P[m] ? x : m);
+    return [k, a.type, P[top], `${a.type === 'choice' ? top : a.legend[top]} ${p3(P[top])}`];
+  });
+}
+function tickBuild(i){
+  const EX = tickExamples(), ex = EX[i === undefined ? EX.length - 1 : i], at = EX.indexOf(ex);
+  $('tick').innerHTML = `<div class="tk-head"><span>POST /v1/systemone</span><span class="tk-dots">${EX.map((_, j) => `<i${j === at ? ' class="on"' : ''}></i>`).join('')}</span><span class="tk-t" id="tkT"></span></div><p class="tk-state"><span class="tk-k">state</span><span id="tkTxt"></span><span class="tk-caret"></span></p><div class="tk-rows">${tickRows(ex.answers).map((r,j) => `<div class="tk-row" style="--i:${j}"><code>${r[0]}</code><span class="tk-ty">${r[1]}</span><span class="tk-bar"><i style="--w:${(r[2]*100).toFixed(1)}%"></i></span><span class="tk-v">${esc(r[3])}</span></div>`).join('')}</div>`;
+  return ex;
 }
 function tickPlay(){
-  const el = $('tick'), txt = $('tkTxt'), clock = $('tkT'), st = JSON.parse(EX_REQ).state, run = ++TICK.run;
+  const el = $('tick'), EX = tickExamples(), run = ++TICK.run;
   clearTimeout(TICK.tm);
-  if (REDUCED){ txt.textContent = st; clock.textContent = '0.42 s'; el.classList.add('done'); return; }
-  el.classList.remove('done', 'out'); txt.textContent = ''; clock.textContent = '';
+  el.classList.remove('done', 'out');
+  if (REDUCED || TICK.done){   // finished (or no motion): rest on the last example
+    const ex = tickBuild(); $('tkTxt').textContent = ex.state; $('tkT').textContent = ex.s + ' s'; el.classList.add('done'); return;
+  }
   const live = () => run === TICK.run;
   const later = (fn, ms) => { TICK.tm = setTimeout(() => { if (!live()) return; if (!TICK.vis || document.hidden || FX.paused){ later(fn, 400); return; } fn(); }, ms); };
-  let i = 0;
-  const type = () => { i = Math.min(st.length, i + 2); txt.textContent = st.slice(0, i); if (i < st.length) later(type, 26); else later(answer, 260); };
-  const answer = () => {
-    el.classList.add('done');
-    const t0 = performance.now(), tickClock = now => { if (!live()) return; const k = Math.min(1, (now - t0) / 420); clock.textContent = (0.42 * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(tickClock); };
-    requestAnimationFrame(tickClock);
-    later(() => { el.classList.add('out'); later(tickPlay, 520); }, 4600);
+  const playOne = i => {
+    const ex = tickBuild(i), txt = $('tkTxt'), clock = $('tkT');
+    el.classList.remove('done', 'out');
+    let c = 0;
+    const type = () => { c = Math.min(ex.state.length, c + 2); txt.textContent = ex.state.slice(0, c); if (c < ex.state.length) later(type, 24); else later(answer, 260); };
+    const answer = () => {
+      el.classList.add('done');
+      const t0 = performance.now(), end = +ex.s, tickClock = now => { if (!live()) return; const k = Math.min(1, (now - t0) / 420); clock.textContent = (end * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(tickClock); };
+      requestAnimationFrame(tickClock);
+      if (i === EX.length - 1){ TICK.done = true; return; }   // three examples, then it stays put
+      later(() => { el.classList.add('out'); later(() => playOne(i + 1), 480); }, 3400);
+    };
+    later(type, i === 0 ? 700 : 160);
   };
-  later(type, 700);
+  playOne(0);
 }
 
 /* ---------- use cases: the first demo plays (muted) while it is on screen ---------- */
