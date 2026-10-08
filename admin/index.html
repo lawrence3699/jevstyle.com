@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin · JevStyle</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <style>
+    /* Owner dashboard. Same tokens as the Console; no third-party requests. */
+    :root {
+      --bg: #FFFFFF; --ink: #0D0D0F; --ink2: #55555D; --ink3: #6B6B73;
+      --line: #ECECEF; --soft: #F4F4F6; --card: #FFFFFF;
+      --acc: #3456F0; --s1: #2a78d6; --s3: #1baf7a;
+      --ok: #1B7A3E; --ok-bg: #E9F6EE; --danger: #C0392B; --danger-bg: #FBECEA;
+      --shadow: 0 0 0 1px rgba(13, 13, 15, .06), 0 16px 48px -16px rgba(13, 13, 15, .22);
+      --sans: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+      --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0A0A0B; --ink: #F1F1F3; --ink2: #A8A8B0; --ink3: #8E8E96;
+        --line: #232327; --soft: #18181B; --card: #111113;
+        --acc: #8198FF; --s1: #3987e5; --s3: #199e70;
+        --ok: #86EFAC; --ok-bg: #11251A; --danger: #FCA5A5; --danger-bg: #2A1414;
+        --shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 16px 48px -16px rgba(0, 0, 0, .8);
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans); }
+    a { color: var(--acc); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 24px 64px; }
+    header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--ink); }
+    .tag { font-size: 12px; color: var(--ink2); background: var(--soft); border-radius: 6px; padding: 2px 8px; }
+    .who { margin-left: auto; color: var(--ink3); font-size: 14px; }
+    h1 { font-size: 28px; letter-spacing: -.02em; margin: 26px 0 4px; }
+    .sub { color: var(--ink2); margin: 0 0 18px; }
+    .bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+    .seg { display: inline-flex; background: var(--soft); border-radius: 999px; padding: 3px; }
+    .seg button { border: 0; background: transparent; color: var(--ink2); font: inherit; font-size: 14px; padding: 5px 14px; border-radius: 999px; cursor: pointer; }
+    .seg button[aria-pressed=true] { background: var(--card); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+    .btn { border: 0; background: var(--soft); color: var(--ink); font: inherit; font-size: 14px; padding: 7px 14px; border-radius: 999px; cursor: pointer; }
+    .btn.primary { background: var(--ink); color: var(--bg); }
+    .stamp { color: var(--ink3); font-size: 13px; margin-left: auto; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .card { background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 18px 20px; min-width: 0; }
+    .k { font-size: 13px; color: var(--ink2); }
+    .v { font-size: 32px; font-weight: 600; letter-spacing: -.02em; margin-top: 4px; font-variant-numeric: tabular-nums; }
+    .n { font-size: 13px; color: var(--ink3); margin-top: 2px; }
+    .n b { color: var(--ok); font-weight: 600; }
+    .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .chart h2, .table h2 { font-size: 15px; margin: 0 0 2px; }
+    .chart .total { float: right; font-size: 13px; color: var(--ink2); }
+    .chart svg { display: block; width: 100%; height: 150px; margin-top: 12px; }
+    .axis { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink3); margin-top: 6px; }
+    .traffic { display: flex; align-items: center; gap: 16px; margin-top: 14px; }
+    .traffic p { margin: 2px 0 0; color: var(--ink2); font-size: 14px; }
+    .traffic .btn { margin-left: auto; white-space: nowrap; }
+    .table { margin-top: 14px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px; }
+    th { text-align: left; font-weight: 500; color: var(--ink3); font-size: 13px; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    td { padding: 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .pill { font-size: 12px; border-radius: 99px; padding: 2px 8px; background: var(--soft); color: var(--ink2); }
+    .pill.ok { background: var(--ok-bg); color: var(--ok); }
+    .gate { max-width: 460px; margin: 12vh auto 0; text-align: center; }
+    .gate h1 { margin-top: 0; }
+    .note { color: var(--ink3); font-size: 13px; margin-top: 12px; }
+    .err { background: var(--danger-bg); color: var(--danger); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; }
+    [hidden] { display: none !important; }
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .charts { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .wrap { padding: 20px 16px 48px; } .v { font-size: 26px; } .traffic { flex-wrap: wrap; } .traffic .btn { margin-left: 0; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="/"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>JevStyle</a>
+      <span class="tag">Admin</span>
+      <span class="who" id="who"></span>
+    </header>
+
+    <section id="gate" class="gate" hidden>
+      <h1 id="gate-title">Sign in</h1>
+      <p class="sub" id="gate-text">Sign in with the admin account to see the dashboard.</p>
+      <a class="btn primary" id="gate-link" href="/login/">Sign in</a>
+    </section>
+
+    <main id="dash" hidden>
+      <h1>Dashboard</h1>
+      <p class="sub">Accounts, API keys and successful API requests. Days follow UTC.</p>
+      <div class="err" id="err" hidden></div>
+      <div class="bar">
+        <div class="seg" id="range" role="group" aria-label="Range">
+          <button type="button" data-days="7" aria-pressed="false">7 days</button>
+          <button type="button" data-days="30" aria-pressed="true">30 days</button>
+          <button type="button" data-days="90" aria-pressed="false">90 days</button>
+        </div>
+        <button class="btn" type="button" id="refresh">Refresh</button>
+        <span class="stamp" id="stamp"></span>
+      </div>
+
+      <div class="grid">
+        <div class="card"><div class="k">Registered users</div><div class="v" id="m-users">–</div><div class="n" id="m-users-n"></div></div>
+        <div class="card"><div class="k">API keys</div><div class="v" id="m-keys">–</div><div class="n" id="m-keys-n"></div></div>
+        <div class="card"><div class="k">Requests today</div><div class="v" id="m-today">–</div><div class="n" id="m-today-n"></div></div>
+        <div class="card"><div class="k">Requests, all time</div><div class="v" id="m-all">–</div><div class="n" id="m-all-n"></div></div>
+      </div>
+
+      <div class="charts">
+        <div class="card chart"><h2>New users <span class="total" id="c-signups-t"></span></h2><svg id="c-signups" viewBox="0 0 600 150" preserveAspectRatio="none" role="img" aria-label="New users per day"></svg><div class="axis"><span id="c-signups-a"></span><span id="c-signups-b"></span></div></div>
+        <div class="card chart"><h2>Successful requests <span class="total" id="c-req-t"></span></h2><svg id="c-req" viewBox="0 0 600 150" preserveAspectRatio="none" role="img" aria-label="Successful requests per day"></svg><div class="axis"><span id="c-req-a"></span><span id="c-req-b"></span></div></div>
+      </div>
+
+      <div class="card traffic">
+        <div>
+          <div class="k">Website traffic</div>
+          <p>Page views and visitors for jevstyle.com are counted by Cloudflare Web Analytics (cookieless).</p>
+        </div>
+        <a class="btn" href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank" rel="noopener">Open Web Analytics ↗</a>
+      </div>
+
+      <div class="card table">
+        <h2>Users <span class="pill" id="u-count"></span></h2>
+        <table>
+          <thead><tr><th>Email</th><th>Sign-in</th><th>Joined (UTC)</th><th class="num">Keys</th><th class="num">Today</th><th class="num">All time</th><th>Last request</th></tr></thead>
+          <tbody id="users"></tbody>
+        </table>
+        <p class="note" id="u-note"></p>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+    var API = "https://api.jevstyle.com/control/v1";
+    var $ = function (id) { return document.getElementById(id); };
+    var days = 30;
+    var fmt = function (n) { return Number(n || 0).toLocaleString("en-US"); };
+    var day = function (iso) { return iso ? iso.slice(0, 10) : "—"; };
+    function ago(iso) {
+      if (!iso) return "—";
+      var s = (Date.now() - Date.parse(iso)) / 1000;
+      if (s < 90) return "just now";
+      if (s < 5400) return Math.round(s / 60) + " min ago";
+      if (s < 129600) return Math.round(s / 3600) + " h ago";
+      return Math.round(s / 86400) + " d ago";
+    }
+    function gate(title, text, link, label) {
+      $("dash").hidden = true;
+      $("gate").hidden = false;
+      $("gate-title").textContent = title;
+      $("gate-text").textContent = text;
+      $("gate-link").href = link;
+      $("gate-link").textContent = label;
+    }
+    function bars(svg, items, key, color) {
+      var w = 600, h = 150, n = items.length, max = 1;
+      items.forEach(function (it) { max = Math.max(max, it[key]); });
+      var gap = n > 40 ? 1 : 3, bw = (w - gap * (n - 1)) / n, out = "";
+      items.forEach(function (it, i) {
+        var bh = it[key] ? Math.max(2, (it[key] / max) * (h - 6)) : 0;
+        out += '<rect x="' + (i * (bw + gap)).toFixed(2) + '" y="' + (h - bh).toFixed(2) + '" width="' + bw.toFixed(2) + '" height="' + bh.toFixed(2) + '" rx="2" fill="' + color + '"><title>' + it.day + ": " + fmt(it[key]) + "</title></rect>";
+      });
+      out += '<line x1="0" y1="' + (h - 0.5) + '" x2="' + w + '" y2="' + (h - 0.5) + '" stroke="var(--line)" />';
+      $(svg).innerHTML = out;
+      $(svg + "-a").textContent = items.length ? items[0].day : "";
+      $(svg + "-b").textContent = items.length ? items[items.length - 1].day : "";
+    }
+    function render(d) {
+      var a = d.accounts, k = d.keys, r = d.requests;
+      $("m-users").textContent = fmt(a.active);
+      $("m-users-n").innerHTML = "<b>+" + fmt(a.new_today) + "</b> today · +" + fmt(a.new_7d) + " in 7 days · " + fmt(a.verified) + " verified";
+      $("m-keys").textContent = fmt(k.active);
+      $("m-keys-n").textContent = fmt(k.users_with_key) + " users with a key · " + fmt(k.revoked) + " revoked";
+      $("m-today").textContent = fmt(r.today);
+      $("m-today-n").textContent = fmt(r.active_users_today) + " active users · " + fmt(r.last_7d) + " in 7 days";
+      $("m-all").textContent = fmt(r.all_time);
+      $("m-all-n").textContent = fmt(r.window) + " in the last " + d.days + " days";
+      var signups = d.daily.reduce(function (s, x) { return s + x.signups; }, 0);
+      $("c-signups-t").textContent = fmt(signups) + " in " + d.days + " days";
+      $("c-req-t").textContent = fmt(r.window) + " in " + d.days + " days";
+      bars("c-signups", d.daily, "signups", "var(--s3)");
+      bars("c-req", d.daily, "requests", "var(--s1)");
+      var rows = "";
+      d.users.forEach(function (u) {
+        rows += "<tr><td></td><td>" + (u.sign_in === "google" ? "Google" : "Email") + (u.verified ? ' <span class="pill ok">verified</span>' : ' <span class="pill">unverified</span>') +
+          "</td><td>" + day(u.created_at) + '</td><td class="num">' + fmt(u.active_keys) + '</td><td class="num">' + fmt(u.requests_today) +
+          '</td><td class="num">' + fmt(u.requests_total) + "</td><td>" + ago(u.last_used_at) + "</td></tr>";
+      });
+      $("users").innerHTML = rows;
+      // Emails go in as text, never HTML.
+      Array.prototype.forEach.call($("users").rows, function (tr, i) { tr.cells[0].textContent = d.users[i].email; });
+      $("u-count").textContent = fmt(d.users.length);
+      $("u-note").textContent = a.disabled ? fmt(a.disabled) + " disabled test accounts are not counted anywhere on this page." : "";
+      $("stamp").textContent = "Updated " + new Date(d.generated_at).toLocaleTimeString();
+    }
+    async function load() {
+      $("err").hidden = true;
+      var res;
+      try {
+        res = await fetch(API + "/admin/stats?days=" + days, { credentials: "include", cache: "no-store" });
+      } catch (e) {
+        if ($("dash").hidden) gate("Can't reach JevStyle", "Check your connection and reload the page.", location.href, "Reload");
+        else { $("err").textContent = "Can't reach JevStyle. Check your connection and try again."; $("err").hidden = false; }
+        return;
+      }
+      if (res.status === 401) return gate("Sign in", "Sign in with the admin account to see the dashboard.", "/login/", "Sign in");
+      if (res.status === 403) return gate("Not an admin account", "This account can't open the dashboard. Sign out and sign in with the admin account.", "/console/", "Back to Console");
+      if (!res.ok) { $("err").textContent = "The dashboard couldn't load (HTTP " + res.status + "). Try again in a minute."; $("err").hidden = false; $("dash").hidden = false; return; }
+      var data = await res.json();
+      $("gate").hidden = true;
+      $("dash").hidden = false;
+      render(data);
+    }
+    async function loadMe() {
+      try {
+        var r = await fetch(API + "/auth/me", { credentials: "include", cache: "no-store" });
+        if (r.ok) { var me = await r.json(); $("who").textContent = me.user && me.user.email ? me.user.email : ""; }
+      } catch (e) {}
+    }
+    document.querySelectorAll("#range button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        days = Number(b.getAttribute("data-days"));
+        document.querySelectorAll("#range button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        load();
+      });
+    });
+    $("refresh").addEventListener("click", load);
+    loadMe();
+    load();
+  })();
+  </script>
+</body>
+</html>
