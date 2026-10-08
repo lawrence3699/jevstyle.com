@@ -897,8 +897,19 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
 .run-see:hover{text-decoration:underline}
 pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i,0)*45ms)}
 @keyframes ln-in{from{opacity:0;transform:translateX(-8px)}}
-.om-stats{margin-top:14px;color:var(--ink2);font-size:15px}
-.om-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+/* Open models: a big, centred chapter opener for the second half of the page */
+#open-models.om-big{display:block;text-align:center;padding:clamp(64px,9vw,136px) 0 clamp(28px,3.4vw,48px)}
+#open-models.om-big > div{display:flex;flex-direction:column;align-items:center}
+#open-models.om-big .half-k{font-size:13px}
+#open-models.om-big h2{font-size:clamp(46px,7vw,112px);line-height:1;letter-spacing:-.045em;margin-top:22px;transform:scale(calc(.88 + var(--p,1) * .12));transform-origin:50% 100%;opacity:calc(.25 + var(--p,1) * .75)}
+.om-stats{display:flex;justify-content:center;margin:clamp(32px,3.6vw,52px) 0 0}
+.om-stats > div{display:flex;flex-direction:column-reverse;align-items:center;gap:6px;padding:0 clamp(18px,3.6vw,56px);border-left:1px solid var(--line);min-width:0}
+.om-stats > div:first-child{border-left:0}
+.om-stats dd{margin:0;font-size:clamp(26px,3.6vw,52px);font-weight:600;letter-spacing:-.025em;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.om-stats dt{font-size:clamp(13px,1.1vw,15px);color:var(--ink3)}
+#open-models.om-big .hh-acts{justify-content:center;margin-top:clamp(32px,3.4vw,44px)}
+@media (max-width:480px){.om-stats > div{padding:0 12px}.om-stats dd{font-size:22px}}
+@media (prefers-reduced-motion:reduce){#open-models.om-big h2{transform:none;opacity:1}}
 #carTrack.bench3{display:grid;grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;overflow:visible;scroll-snap-type:none}
 #carTrack.bench3 > *{width:auto;min-width:0}
 @media (max-width:860px){#carTrack.bench3{grid-template-columns:minmax(0,1fr)}}
@@ -1013,12 +1024,12 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
   </section>
 
   <div class="half" id="modelsHalf">
-    <section id="open-models" class="half-head hh-m" aria-labelledby="omH">
+    <section id="open-models" class="half-head hh-m om-big" aria-labelledby="omH" data-sx="enter">
       <div>
         <p class="half-k m"><i aria-hidden="true"></i><span data-i18n="om.k"></span></p>
         <h2 id="omH" data-i18n="om3.h"></h2>
-        <p class="om-stats" id="omStats"></p>
-        <div class="hh-acts"><a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="#developers" data-i18n="chip.qs"></a></div>
+        <dl class="om-stats" id="omStats"></dl>
+        <div class="hh-acts"><a class="pill dark lg hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft lg" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft lg" href="#developers" data-i18n="chip.qs"></a></div>
       </div>
     </section>
 
@@ -1359,6 +1370,9 @@ en:{
  "tr.2":"Failed requests don't count",
  "tr.3":"3 GPU replicas",
  "om.stats":"{dl} downloads · {m} models · Apache-2.0",
+ "om.s.dl":"downloads",
+ "om.s.m":"models",
+ "om.s.lic":"license",
  "run.send":"Sending",
  "run.ok":"200 OK · {s} s end-to-end",
  "run.see":"See response"
@@ -1567,6 +1581,9 @@ zh:{
  "tr.2":"失败请求不计次",
  "tr.3":"3 份 GPU 副本",
  "om.stats":"{dl} 次下载 · {m} 个模型 · Apache-2.0",
+ "om.s.dl":"次下载",
+ "om.s.m":"个模型",
+ "om.s.lic":"许可证",
  "run.send":"发送中",
  "run.ok":"200 OK · 端到端 {s} 秒",
  "run.see":"查看响应"
@@ -1930,7 +1947,7 @@ function renderDownloads(){
   const tot = hub.reduce((s,r) => s + dlAll(r), 0), t30 = hub.reduce((s,r) => s + dl30(r), 0), likes = hub.reduce((s,r) => s + (r.likes || 0), 0);
   const published = DATA.families.filter(f => f.repos.some(onHub)).length;
   const max = Math.max(1, ...repos.map(dlAll));
-  $('omStats').innerHTML = esc(t('om.stats')).replace('{dl}', `<b data-v="${tot.toLocaleString('en-US')}">${tot.toLocaleString('en-US')}</b>`).replace('{m}', `<b>${published}</b>`);
+  $('omStats').innerHTML = [[tot.toLocaleString('en-US'), t('om.s.dl')], [String(published), t('om.s.m')], ['Apache-2.0', t('om.s.lic')]].map(([v, k], i) => `<div><dt>${esc(k)}</dt><dd${i < 2 ? ` data-v="${v}"` : ''}>${esc(v)}</dd></div>`).join('');
   $('dlList').innerHTML = repos.map((r,i) => `<a class="dl-row" href="${HF+r.repo}" target="_blank" rel="noopener" style="--i:${i}"><span class="dl-name"><b>${esc(r.repo.split('/')[1])}</b><small>${esc(r.format)} · ${esc(fams[r.fid] || t('new'))}${r.createdAt ? ' · ' + fmtDate(r.createdAt) : ''}</small></span><span class="dl-bar"><i style="--w:${dlAll(r) ? Math.max(2, dlAll(r)/max*100).toFixed(1) : 0}%"></i></span><span class="dl-num"><b>${dlAll(r).toLocaleString('en-US')}<span class="sr-only"> ${t('dl.unit')}</span></b><small>${t('dl.30s')} · ${dl30(r).toLocaleString('en-US')}</small></span></a>`).join('');
   $('repoSum').textContent = t('dl.allrepos').replace('{n}', repos.length);
   $('proofDl').textContent = t('pr.hf').replace('{n}', tot.toLocaleString('en-US'));
@@ -1939,7 +1956,7 @@ function renderDownloads(){
 function showDownloads(){
   if (dlShown) return; dlShown = true;
   $('dlList').classList.remove('pre');
-  const n = $('omStats').querySelector('b[data-v]'); if (n) countUp(n, n.dataset.v);
+  $('omStats').querySelectorAll('dd[data-v]').forEach(n => countUp(n, n.dataset.v));
 }
 const guessFormat = id => /gguf/i.test(id) ? 'GGUF' : /mlx/i.test(id) ? 'MLX' : 'HF';
 function applyStats(list, src, at){
