@@ -464,8 +464,8 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
 .dr-note{font-size:12.5px;color:var(--ink3)}
 
 /* scroll reveal (fade-rise) */
-.rv{transition:opacity .8s var(--out),transform .8s var(--out)}
-.rv.pre{opacity:0;transform:translateY(24px)}
+.rv{transition:opacity 1s var(--out),transform 1.1s var(--out),filter 1s var(--out)}
+.rv.pre{opacity:0;transform:translateY(44px) scale(.97);filter:blur(8px)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 /* Cascade 9B (patch_9b.py): the per-difficulty bars show counts ("85/111"), so their value column is wider */
 .jbars.wv > div{grid-template-columns:minmax(0,11em) minmax(0,1fr) 4.4em}
@@ -860,6 +860,67 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
 .uc3.uc3-feat{grid-template-columns:repeat(2,minmax(0,1fr))}
 #use-cases .dmore-row{margin-top:clamp(32px,4vw,48px)}
 @media (max-width:720px){.uc3.uc3-feat{grid-template-columns:minmax(0,1fr)}}
+/* ---------- 2026-10-08 trim: live decision strip, key numbers, trust line, 3 benchmark cards ---------- */
+.tick{width:min(600px,100%);margin-top:26px;padding:14px 16px 12px;border:1px solid var(--line);border-radius:16px;background:var(--bg);box-shadow:0 1px 2px rgba(13,13,15,.04),0 18px 40px -28px rgba(13,13,15,.35);text-align:left;font:13px/1.45 var(--mono);animation:fade-rise .9s var(--out) .55s both}
+.tk-head{display:flex;justify-content:space-between;gap:10px;color:var(--ink3);font-size:11.5px;letter-spacing:.02em;margin-bottom:8px}
+.tk-t{font-variant-numeric:tabular-nums;color:var(--ink2)}
+.tk-state{margin:0 0 10px;min-height:2.9em;color:var(--ink);transition:opacity .35s var(--ease)}
+.tk-k{display:inline-block;margin-right:8px;padding:0 6px;border-radius:5px;background:var(--soft);color:var(--ink3);font-size:11.5px}
+.tk-caret{display:inline-block;width:7px;height:1.05em;margin-left:2px;vertical-align:-.15em;background:var(--acc);animation:tk-blink 1s steps(1) infinite}
+.tick.done .tk-caret{opacity:0;animation:none}
+@keyframes tk-blink{50%{opacity:0}}
+.tk-rows{display:grid;gap:6px;transition:opacity .35s var(--ease)}
+.tk-row{display:grid;grid-template-columns:76px 56px minmax(0,1fr) 112px;align-items:center;gap:10px;opacity:0;transform:translateY(4px);transition:opacity .35s var(--out),transform .35s var(--out);transition-delay:calc(var(--i)*170ms)}
+.tk-row code{color:var(--ink);font:500 12.5px var(--mono)}
+.tk-ty{color:var(--ink3);font-size:11.5px}
+.tk-bar{height:6px;border-radius:999px;background:var(--soft2);overflow:hidden}
+.tk-bar i{display:block;height:100%;width:var(--w);border-radius:inherit;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i)*170ms + 120ms)}
+.tk-v{text-align:right;color:var(--ink2);font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tick.done .tk-row{opacity:1;transform:none}
+.tick.done .tk-bar i{transform:scaleX(1)}
+.tick.out .tk-rows,.tick.out .tk-state{opacity:0}
+@media (max-width:640px){.tick{font-size:12px;padding:12px}.tk-row{grid-template-columns:62px minmax(0,1fr) 92px;gap:8px}.tk-ty{display:none}}
+.kstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 20px}
+.kstats > div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:6px;padding:18px 18px 16px;border-radius:16px;background:var(--soft);min-width:0}
+.kstats dd{margin:0;font-size:clamp(24px,2.4vw,32px);font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.kstats dt{color:var(--ink3);font-size:13.5px;line-height:1.35}
+@media (max-width:860px){.kstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#api-code .ac-main{min-width:0}
+.trust{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:18px}
+.trust ul.chk{display:flex;flex-wrap:wrap;gap:6px 22px;margin:0;padding:0;list-style:none}
+.trust .more{margin-right:-12px}
+.code-head .run{display:inline-flex;align-items:center;gap:8px;margin-left:auto;color:#B9B9C2;font:500 12px var(--mono);white-space:nowrap}
+.code-head .run i{width:8px;height:8px;border-radius:50%;background:#FFC48A;animation:pulse 1s ease-in-out infinite}
+.code-head .run i.ok{background:#34C77B;animation:none}
+.code-head .run b{font-weight:500;color:#E9E9EE;font-variant-numeric:tabular-nums}
+.run-see{border:0;background:none;color:#A9C7FF;font:inherit;cursor:pointer;padding:0}
+.run-see:hover{text-decoration:underline}
+pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i,0)*45ms)}
+@keyframes ln-in{from{opacity:0;transform:translateX(-8px)}}
+.om-stats{margin-top:14px;color:var(--ink2);font-size:15px}
+.om-stats b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+#carTrack.bench3{display:grid;grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;overflow:visible;scroll-snap-type:none}
+#carTrack.bench3 > *{width:auto;min-width:0}
+@media (max-width:860px){#carTrack.bench3{grid-template-columns:minmax(0,1fr)}}
+.bcard .tk i{transition:width 1s var(--out) .25s}
+.bcard.pre .tk i{width:0 !important}
+@media (prefers-reduced-motion:reduce){.tick,.tk-row,.tk-bar i,pre.typing .ln{animation:none !important;transition:none !important}}
+/* ---------- 2026-10-08 round 2: Apple-style scroll motion (all off under reduced motion) ---------- */
+#mTabs[hidden],#stInfo[hidden]{display:none !important}
+#hero[data-sx]{transform-origin:50% 0;transform:translateY(calc(var(--p,0) * 60px)) scale(calc(1 - var(--p,0) * .07));opacity:calc(1 - var(--p,0) * .9);will-change:transform,opacity}
+#switcher[data-sx] .stage{transform:scale(calc(.86 + var(--p,1) * .14));transform-origin:50% 30%;will-change:transform}
+#switcher[data-sx] .fx-wrap{border-radius:calc(28px - var(--p,1) * 20px)}
+.uc3-card .media{transform:scale(calc(.9 + var(--p,1) * .1));transition:transform .2s linear}
+.kstats > div.rv{transition-delay:calc(var(--k,0) * 90ms)}
+.cta3.rv.pre:first-child{transform:translateX(-56px);filter:blur(8px)}
+.cta3.rv.pre:last-child{transform:translateX(56px);filter:blur(8px)}
+.scrub .sw{color:var(--muted);transition:color .3s var(--ease)}
+.scrub .sw.lit{color:var(--ink)}
+.s3-head h2,.half-head h2,.sec-head h2{transition:letter-spacing 1.2s var(--out)}
+.rv.pre h2{letter-spacing:.02em}
+.mcard.rv.pre .media{transform:scale(.86)}
+.mcard .media{transition:transform 1s var(--out)}
+@media (prefers-reduced-motion:reduce){#hero[data-sx],#switcher[data-sx] .stage,.uc3-card .media{transform:none !important;opacity:1 !important}.scrub .sw{color:inherit}}
 </style>
 </head>
 <body>
@@ -869,10 +930,9 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
   <div class="wrap hdr-in">
     <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn"></span></a>
     <nav class="nav" aria-label="Primary">
-      <a href="#api" data-i18n="n3.api"></a>
+      <a href="#try" data-i18n="n3.api"></a>
       <a href="#use-cases" data-i18n="n3.uc"></a>
       <a href="#open-models" data-i18n="n3.models"></a>
-      <a href="#benchmarks" data-i18n="nav.bench"></a>
       <a href="/api/" data-i18n="nav.docs"></a>
       <a href="/console/" data-i18n="nav.console"></a>
     </nav>
@@ -886,20 +946,19 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
 </header>
 <div class="mnav" id="mnav" hidden>
   <nav aria-label="Mobile">
-    <a href="#api" data-i18n="n3.api" style="--i:0"></a>
+    <a href="#try" data-i18n="n3.api" style="--i:0"></a>
     <a href="#use-cases" data-i18n="n3.uc" style="--i:1"></a>
     <a href="#open-models" data-i18n="n3.models" style="--i:2"></a>
-    <a href="#benchmarks" data-i18n="nav.bench" style="--i:3"></a>
-    <a href="#developers" data-i18n="nav.dev" style="--i:4"></a>
-    <a href="/api/" data-i18n="nav.docs" style="--i:5"></a>
-    <a href="/console/" data-i18n="nav.console" style="--i:6"></a>
-    <a href="#about" data-i18n="nav.about" style="--i:7"></a>
+    <a href="#developers" data-i18n="nav.dev" style="--i:3"></a>
+    <a href="/api/" data-i18n="nav.docs" style="--i:4"></a>
+    <a href="/console/" data-i18n="nav.console" style="--i:5"></a>
+    <a href="#about" data-i18n="nav.about" style="--i:6"></a>
   </nav>
   <div class="mnav-acts"><a class="pill dark" href="/register/" data-i18n="nav.getkey"></a><a class="pill soft" href="/login/" data-i18n="n3.login"></a><a class="pill soft hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a></div>
 </div>
 
 <main id="top" class="wrap v3">
-  <section class="h3" id="hero" aria-labelledby="heroTitle">
+  <section class="h3" id="hero" aria-labelledby="heroTitle" data-sx="exit">
     <h1 id="heroTitle"></h1>
     <p class="h3-sub" data-i18n="h3.sub"></p>
     <div class="h3-acts">
@@ -914,98 +973,43 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
       </div>
     </div>
     <p class="h3-status"><span class="api-status" hidden><i aria-hidden="true"></i><span></span></span></p>
+    <div class="tick" id="tick" aria-hidden="true"></div>
     <ul class="proof" data-i18n-aria="pr.label">
       <li><a class="hf" href="#" target="_blank" rel="noopener"><b>Hugging Face</b><span class="num" id="proofDl"></span></a></li>
       <li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener"><b>PyPI</b><span data-i18n="pr.pypi"></span></a></li>
       <li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener"><b>GitHub</b><span data-i18n="pr.gh"></span></a></li>
-      <li><span><b>MCP Registry</b><span data-i18n="pr.mcp"></span></span></li>
-      <li><a href="#benchmarks"><b>JevBench</b><span class="num" id="proofJb"></span></a></li>
       <li><span><b>Apache-2.0</b><span data-i18n="pr.weights"></span></span></li>
     </ul>
-  </section>
-
-  <section id="api" aria-labelledby="pmH">
-    <div class="s3-head"><h2 id="pmH" data-i18n="pm.h"></h2><p data-i18n="pm.p"></p></div>
-    <article class="mc">
-      <div class="mc-main">
-        <p class="mc-k"><span class="badge new" data-i18n="pm.badge"></span><span class="badge">noul · choice · score</span></p>
-        <h3 class="mc-name">Jev-Style 2B v3</h3>
-        <p class="mc-d" data-i18n="pm.d"></p>
-        <div class="mc-acts"><a class="pill dark" href="/register/" data-i18n="h3.cta"></a><a class="pill soft" id="pmHF" href="#" target="_blank" rel="noopener"><span data-i18n="pm.more"></span> <span class="ne" aria-hidden="true">↗</span></a><button type="button" class="more" data-open="v3-2b"><span data-i18n="pm.det"></span> <span class="ar" aria-hidden="true">→</span></button></div>
-      </div>
-      <dl class="mc-specs">
-        <div><dt data-i18n="ps.price"></dt><dd><b data-i18n="ps.price.v"></b><span data-i18n="ps.price.s"></span></dd></div>
-        <div><dt data-i18n="ps.rate"></dt><dd><b data-i18n="ps.rate.v"></b><span data-i18n="ps.rate.s"></span></dd></div>
-        <div><dt data-i18n="ps.ctx"></dt><dd><b data-i18n="ps.ctx.v"></b><span data-i18n="ps.ctx.s"></span></dd></div>
-        <div><dt data-i18n="ps.out"></dt><dd><b data-i18n="ps.out.v"></b><span data-i18n="ps.out.s"></span></dd></div>
-        <div><dt data-i18n="ps.types"></dt><dd><b>noul · choice · score</b><span data-i18n="ps.types.s"></span></dd></div>
-        <div><dt>JevBench</dt><dd><b class="num" id="pmJb"></b><span data-i18n="ps.jb.s"></span></dd></div>
-      </dl>
-    </article>
-    <div class="pm-dl" role="group" aria-labelledby="pmDlH">
-      <div class="pm-dl-head"><h3 id="pmDlH" data-i18n="pmdl.h"></h3><span class="live" id="liveBadge"></span></div>
-      <div class="dl-tiles" id="dlTiles"></div>
-      <p class="pm-dl-foot"><a href="#downloads" data-i18n="pmdl.all"></a></p>
-    </div>
-  </section>
-
-  <section class="band" aria-labelledby="bandH">
-    <div class="band-art" aria-hidden="true"><canvas class="art" data-seed="band-v3" data-pal="v3-2b"></canvas></div>
-    <h2 id="bandH" data-i18n="band.h"></h2>
-    <p data-i18n="band.p"></p>
-    <div class="h3-acts"><a class="pill dark lg" href="/register/" data-i18n="h3.cta"></a><a class="pill soft lg" href="/api/" data-i18n="band.docs"></a></div>
-  </section>
-
-  <section id="resources" aria-labelledby="resH">
-    <div class="s3-head"><h2 id="resH" data-i18n="res.h"></h2></div>
-    <div class="res-grid" id="resGrid">
-      <article class="res hov"><div class="media"><div class="mi"><canvas class="art" data-seed="res-qs" data-pal="b2" aria-hidden="true"></canvas><div class="ov"><span class="ovtag">POST /v1/systemone</span></div></div></div><h3><a class="res-a" href="/api/" data-i18n="res.qs.h"></a></h3><p data-i18n="res.qs.p"></p></article>
-      <article class="res hov"><div class="media"><div class="mi"><canvas class="art" data-seed="res-pg" data-pal="b6" aria-hidden="true"></canvas><div class="ov"><span class="ovtag">Console · Playground</span></div></div></div><h3><a class="res-a" href="/console/#playground" data-i18n="res.pg.h"></a></h3><p data-i18n="res.pg.p"></p></article>
-      <article class="res hov"><div class="media"><div class="mi"><canvas class="art" data-seed="res-om" data-pal="b3" aria-hidden="true"></canvas><div class="ov"><span class="ovtag">pip install jev-style</span></div></div></div><h3><a class="res-a" href="#open-models" data-i18n="res.om.h"></a></h3><p data-i18n="res.om.p"></p><p class="res-links"><a class="more" href="#models"><span data-i18n="res.om.a"></span> <span class="ar" aria-hidden="true">→</span></a><a class="more" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a></p></article>
-    </div>
   </section>
 
   <section id="try" aria-labelledby="tryH">
     <div class="s3-head"><h2 id="tryH" data-i18n="ex.h"></h2><p data-i18n="try.p"></p></div>
     <div class="tabs ftabs" id="tyTabs" role="tablist" data-i18n-aria="ex.h"></div>
     <div class="feat" id="tyPanel" role="tabpanel"></div>
-    <p class="feat-meta"><span data-i18n="ty.state"></span>: <q>Hi, I was billed twice for my March plan. Please refund one of them today.</q> · <span data-i18n="ty.meta"></span></p>
+    <p class="feat-meta"><span data-i18n="ty.state"></span>: <q>Hi, I was billed twice for my March plan. Please refund one of them today.</q></p>
   </section>
 
   <section id="api-code" aria-labelledby="codeH">
-    <div class="s3-head"><h2 id="codeH" data-i18n="code.h"></h2><p data-i18n="code.p"></p></div>
-    <div class="api-code">
-      <div class="ac-side">
-        <dl class="facts">
-          <div><dt data-i18n="code.ep"></dt><dd><code>POST https://api.jevstyle.com/v1/systemone</code></dd></div>
-          <div><dt data-i18n="code.auth"></dt><dd><code>Authorization: Bearer $JEV_API_KEY</code></dd></div>
-          <div><dt data-i18n="code.body"></dt><dd data-i18n="code.bodyv"></dd></div>
-          <div><dt data-i18n="code.cap"></dt><dd data-i18n="code.capv"></dd></div>
-        </dl>
-        <a class="more" href="/api/endpoints.html"><span data-i18n="code.ref"></span> <span class="ar" aria-hidden="true">→</span></a>
-      </div>
-      <div class="ac-main">
-        <div class="tabs" id="apTabs" role="tablist" data-i18n-aria="code.h"></div>
-        <div class="code" id="apPanel" role="tabpanel"><div class="code-head"><span id="apFile"></span><button type="button" class="cbtn" id="apCopy" data-i18n="copy"></button></div><pre class="wrapc" id="apCode"></pre></div>
-      </div>
+    <div class="s3-head"><h2 id="codeH" data-i18n="code.h"></h2></div>
+    <dl class="kstats" id="kStats">
+      <div><dt data-i18n="k3.free"></dt><dd data-v="10,000">10,000</dd></div>
+      <div><dt data-i18n="k3.lat"></dt><dd data-v="0.37 s">0.37 s</dd></div>
+      <div><dt data-i18n="k3.tok"></dt><dd data-v="8,000">8,000</dd></div>
+      <div><dt data-i18n="k3.out"></dt><dd data-i18n="k3.out.v"></dd></div>
+    </dl>
+    <div class="ac-main">
+      <div class="tabs" id="apTabs" role="tablist" data-i18n-aria="code.h"></div>
+      <div class="code" id="apPanel" role="tabpanel"><div class="code-head"><span id="apFile"></span><span class="run" id="apRun" hidden></span><button type="button" class="cbtn" id="apCopy" data-i18n="copy"></button></div><pre class="wrapc" id="apCode"></pre></div>
     </div>
+    <div class="trust"><ul class="chk"><li data-i18n="tr.1"></li><li data-i18n="tr.2"></li><li data-i18n="tr.3"></li></ul><a class="more" href="/api/endpoints.html"><span data-i18n="code.ref"></span> <span class="ar" aria-hidden="true">&rarr;</span></a></div>
   </section>
 
   <section id="use-cases" aria-labelledby="ucH">
     <span id="demos" class="sr-only"></span>
-    <div class="s3-head"><h2 id="ucH" data-i18n="uc.h"></h2><p data-i18n="uc3.p"></p></div>
+    <div class="s3-head"><h2 id="ucH" data-i18n="uc.h"></h2></div>
     <div class="uc3 uc3-feat" id="ucGrid"></div>
     <div class="dmore-row" id="ucMoreRow"><button type="button" class="pill soft dmore" id="ucMoreBtn" aria-expanded="false" aria-controls="ucMoreBody"><span data-i18n="uc.more"></span><span class="dmn">(<span id="ucMoreN"></span>)</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button></div>
     <div class="dmore-body" id="ucMoreBody" hidden><div class="uc3" id="ucMore"></div></div>
-  </section>
-
-  <section id="production" aria-labelledby="pdH">
-    <div class="s3-head"><h2 id="pdH" data-i18n="pd.h"></h2><p data-i18n="pd.p"></p></div>
-    <div class="prod">
-      <div><h3 data-i18n="pd.c1"></h3><ul class="chk"><li data-i18n="pd.c1.1"></li><li data-i18n="pd.c1.2"></li><li data-i18n="pd.c1.3"></li><li data-i18n="pd.c1.4"></li></ul></div>
-      <div><h3 data-i18n="pd.c2"></h3><ul class="chk"><li data-i18n="pd.c2.1"></li><li data-i18n="pd.c2.2"></li><li data-i18n="pd.c2.3"></li><li data-i18n="pd.c2.4"></li></ul></div>
-      <div><h3 data-i18n="pd.c3"></h3><ul class="chk"><li data-i18n="pd.c3.1"></li><li data-i18n="pd.c3.2"></li><li data-i18n="pd.c3.3"></li><li data-i18n="pd.c3.4"></li></ul></div>
-    </div>
   </section>
 
   <div class="half" id="modelsHalf">
@@ -1013,26 +1017,13 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
       <div>
         <p class="half-k m"><i aria-hidden="true"></i><span data-i18n="om.k"></span></p>
         <h2 id="omH" data-i18n="om3.h"></h2>
-        <p class="hh-p" data-i18n="om3.p"></p>
+        <p class="om-stats" id="omStats"></p>
         <div class="hh-acts"><a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="#developers" data-i18n="chip.qs"></a></div>
       </div>
     </section>
 
-    <section id="spotlight" class="spot" aria-labelledby="spTitle">
-      <div class="spot-mediawrap" id="spMedia"></div>
-      <div class="spot-body">
-        <p class="eyebrow" id="spEyebrow"></p>
-        <h2 class="spot-title" id="spTitle"></h2>
-        <p class="spot-tag" data-i18n="sp.tag"></p>
-        <div class="st-acts"><button type="button" class="pill dark" id="spOpen" data-open="v3"><span data-i18n="details"></span> <span class="ar" aria-hidden="true">→</span></button><a class="pill soft" id="spHF" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" id="spDemo" hidden></a></div>
-        <div class="spot-cmp" id="spCmp"></div>
-      </div>
-      <dl class="spot-stats" id="spStats"></dl>
-      <p class="spot-note" id="spNote"></p>
-    </section>
-
-    <section id="switcher" data-i18n-aria="sec.models">
-      <div class="tabs mtabs" id="mTabs" role="tablist" data-i18n-aria="sec.models"></div>
+    <section id="switcher" data-i18n-aria="sec.models" data-sx="enter">
+      <div class="tabs mtabs" id="mTabs" role="tablist" data-i18n-aria="sec.models" hidden></div>
       <div class="stage">
         <div class="fx-wrap" id="fxWrap">
           <canvas id="fx" aria-hidden="true"></canvas>
@@ -1040,7 +1031,7 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
           <div class="fx-cap" id="fxCap" aria-hidden="true"></div>
           <button type="button" class="fx-pause" id="fxPause" aria-pressed="false"></button>
         </div>
-        <div class="stage-info" id="stInfo" role="tabpanel">
+        <div class="stage-info" id="stInfo" role="tabpanel" hidden>
           <div>
             <h3 class="st-name" id="stName"></h3>
             <p class="st-one" id="stOne"></p>
@@ -1063,13 +1054,8 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
     </section>
 
     <section id="benchmarks" class="car">
-      <div class="sec-head"><h2 data-i18n="sec.bench"></h2>
-        <div class="sec-aside">
-          <button type="button" class="circ" id="carPrev" data-i18n-aria="prev"><svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg></button>
-          <button type="button" class="circ" id="carNext" data-i18n-aria="next"><svg class="ring" id="ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" pathLength="100"/></svg><svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l5 5-5 5"/></svg></button>
-        </div>
-      </div>
-      <div class="car-track" id="carTrack"></div>
+      <div class="sec-head"><h2 data-i18n="sec.bench"></h2></div>
+      <div class="car-track bench3" id="carTrack"></div>
     </section>
 
     <section id="developers">
@@ -1083,21 +1069,17 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
       </div>
     </section>
 
-    <section id="timeline">
-      <div class="sec-head"><h2 data-i18n="sec.tl"></h2></div>
-      <ol class="tl" id="tlList"></ol>
-    </section>
   </div>
 
   <section class="duo3" id="start" aria-label="Get started" data-i18n-aria="res.h">
     <article class="cta3">
       <h2 data-i18n="fc.api.h"></h2>
-      <ul class="chk"><li data-i18n="fc.api.1"></li><li data-i18n="fc.api.2"></li><li data-i18n="fc.api.3"></li><li data-i18n="fc.api.4"></li></ul>
+      <ul class="chk"><li data-i18n="fc.api.1"></li><li data-i18n="fc.api.2"></li></ul>
       <div class="acts"><a class="pill dark" href="/register/" data-i18n="h3.cta"></a><a class="pill soft" href="/api/" data-i18n="duo.api.docs"></a></div>
     </article>
     <article class="cta3">
       <h2 data-i18n="fc.os.h"></h2>
-      <ul class="chk"><li data-i18n="fc.os.1"></li><li data-i18n="fc.os.2"></li><li data-i18n="fc.os.3"></li><li data-i18n="fc.os.4"></li></ul>
+      <ul class="chk"><li data-i18n="fc.os.1"></li><li data-i18n="fc.os.2"></li></ul>
       <div class="snip"><pre id="pipCode">pip install jev-style</pre><button type="button" class="cbtn" id="pipCopy" data-i18n="copy"></button></div>
       <div class="acts"><a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="#developers" data-i18n="chip.qs"></a></div>
     </article>
@@ -1107,7 +1089,7 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
     <div class="about">
       <div class="ab-left">
         <h2 class="ab-h" data-i18n="sec.about"></h2>
-        <p class="ab-lead"><span data-i18n="ab.lead"></span><span class="ab-sig" data-i18n="ab.sig"></span></p>
+        <p class="ab-lead" data-sx="scrub"><span data-i18n="ab.lead" class="scrub"></span><span class="ab-sig" data-i18n="ab.sig"></span></p>
       </div>
       <div class="ab-contact" id="contact">
         <h3 class="typein" id="ctaH" data-i18n="ab.ch"></h3>
@@ -1125,15 +1107,13 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
 <footer class="wrap foot">
   <div class="fcols">
     <div class="fcol"><p class="fh" data-i18n="f.models"></p><button type="button" data-open="9b-unc">9B Uncensored</button><button type="button" data-open="v3-2b">Jev-Style 2B v3</button><button type="button" data-open="cascade-9b">Jev-Style Cascade 9B</button><button type="button" data-open="v3">Jev-Style 0.8B v3</button><button type="button" data-open="macjev">MacJev 322M</button><button type="button" data-open="v2">Decision 2B v2</button><button type="button" data-open="v1">Decision 2B v1</button></div>
-    <div class="fcol"><p class="fh" data-i18n="f.formats"></p><a data-repo="chaoliangUNSW/Jev-Style-0.8B-Decision-v3" href="#" target="_blank" rel="noopener">PyTorch <span aria-hidden="true">↗</span></a><a data-repo="chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX" href="#" target="_blank" rel="noopener">MLX <span aria-hidden="true">↗</span></a><a data-repo="chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF" href="#" target="_blank" rel="noopener">GGUF <span aria-hidden="true">↗</span></a></div>
-    <div class="fcol"><p class="fh" data-i18n="f.research"></p><a href="#benchmarks" data-i18n="nav.bench"></a><button type="button" data-open="v2" data-i18n="f.calib"></button><a href="#models" data-i18n="sec.models"></a></div>
-    <div class="fcol"><p class="fh" data-i18n="ng.api"></p><a href="#api" data-i18n="nav.overview"></a><a href="/api/" data-i18n="nav.docs"></a><a href="/register/" data-i18n="nav.getkey"></a><a href="/console/" data-i18n="nav.console"></a><a href="/console/#playground" data-i18n="nav.play"></a><a href="/api/limits.html" data-i18n="nav.limits"></a><a href="#use-cases" data-i18n="n3.uc"></a></div>
-    <div class="fcol"><p class="fh" data-i18n="f.dev"></p><a href="#developers" data-i18n="chip.qs"></a><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener">PyPI <span aria-hidden="true">↗</span></a><a data-fam="9b-unc" href="https://huggingface.co/spaces/chaoliangUNSW/JevStyle-9B-Decision-Uncensored-v1-demo" target="_blank" rel="noopener">9B Space <span aria-hidden="true">↗</span></a><a data-fam="9b-unc" href="https://huggingface.co/chaoliangUNSW/JevStyle-9B-Decision-Uncensored-v1" target="_blank" rel="noopener">9B model <span aria-hidden="true">↗</span></a><a data-fam="v3-2b" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b" target="_blank" rel="noopener"><span data-i18n="f.demo"></span> <span aria-hidden="true">↗</span></a><a data-fam="v3" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-v3" target="_blank" rel="noopener"><span data-i18n="f.demo08"></span> <span aria-hidden="true">↗</span></a><a class="hf" href="#" target="_blank" rel="noopener">Hugging Face <span aria-hidden="true">↗</span></a></div>
+    <div class="fcol"><p class="fh" data-i18n="ng.api"></p><a href="#try" data-i18n="nav.overview"></a><a href="/api/" data-i18n="nav.docs"></a><a href="/register/" data-i18n="nav.getkey"></a><a href="/console/" data-i18n="nav.console"></a><a href="/console/#playground" data-i18n="nav.play"></a><a href="/api/limits.html" data-i18n="nav.limits"></a><a href="#use-cases" data-i18n="n3.uc"></a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.dev"></p><a href="#developers" data-i18n="chip.qs"></a><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener">PyPI <span aria-hidden="true">↗</span></a><a class="hf" href="#" target="_blank" rel="noopener">Hugging Face <span aria-hidden="true">↗</span></a></div>
     <div class="fcol"><p class="fh" data-i18n="f.comm"></p><a class="dc" href="#" target="_blank" rel="noopener">Discord <span aria-hidden="true">↗</span></a><a href="#about" data-i18n="nav.about"></a><a href="#contact" data-i18n="f.contact"></a></div>
   </div>
   <div class="fbot">
     <p class="fnote" data-i18n="foot"></p>
-    <span class="fcopy"><span class="bn"></span> © 2026 · <span id="snap"></span></span>
+    <span class="fcopy"><span class="bn"></span> © 2026</span>
     <button type="button" class="pill soft" id="langBtn2"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3c2.2 2.4 2.2 11.6 0 14M10 3c-2.2 2.4-2.2 11.6 0 14"/></svg><span></span></button>
   </div>
 </footer>
@@ -1210,7 +1190,7 @@ en:{
  "feat.macjev":"MacJev 322M: decisions on your own Mac","feat.v2":"Decision 2B v2: calibrated English classification","feat.eval":"v2 evaluated on held-out tasks","feat.v1":"Decision 2B v1: the first release","tasks":"held-out tasks",
  "sec.releases":"Recent releases","sec.bench":"Benchmarks","sec.dev":"Quickstart","sec.road":"Roadmap",
  "viewall":"View all","dl30":"downloads · 30 days","dev.repo":"Open repository",
- "cta.h":"Get started with JevStyle","cta.p":"I welcome internship, employment, and research collaboration opportunities. Please contact me at ","cta.end":".","final.mail":"Copy email",
+ "cta.h":"Get started with JevStyle","cta.p":"Open to internships, jobs and research collaborations: ","cta.end":".","final.mail":"Copy email",
  "f.models":"Models","f.formats":"Formats","f.research":"Research","f.dev":"Developers","f.comm":"Community","f.calib":"Calibration","f.contact":"Contact","f.demo":"Live demo",
  "prev":"Previous","next":"Next","lang.name":"English",
  "one.macjev":"Decisions for local Mac agents.","one.v2":"Calibrated English classification.","one.v1":"First release. Superseded by v3 (0.8B and 2B).",
@@ -1221,7 +1201,7 @@ en:{
  "m3":"v1 calibration error (ECE)","m3s":"Qwen3.5-2B-Base 0.065",
  "m4":"v2 decisions that flip when options are reordered","m4s":"English Laya 12.0%",
  "copy":"Copy","copied":"Copied",
- "foot":"Independent · non-TypeSafe. Not affiliated with TypeSafe AI (Jev) or the Laya authors. Weights: Apache-2.0. Free API: sign up → create a key in Console.","snap":"Stats as of ",
+ "foot":"Independent project, not affiliated with TypeSafe AI (Jev) or the Laya authors. Weights: Apache-2.0.","snap":"Stats as of ",
  "up":"higher is better","down":"lower is better","hf":"Open on Hugging Face","newer":"See 2B v3",
  "close":"Close","vs":"vs","formats":"Formats","code":"Quickstart",
  "k.params":"Parameters","k.ctx":"input tokens",
@@ -1250,7 +1230,7 @@ en:{
  "ex.h":"One request, every option scored","ex.aside":"Real production response · Oct 8, 2026","ex.p":"A real support ticket with three questions, sent in one call from Sydney: about 0.42 s end-to-end.","ex.req":"request","ex.res":"Response","ex.res.meta":"29.7 ms on the GPU",
  "q.yes":"yes","q.no":"no","q.conf":"confidence","q.py":"probability of yes","q.exp":"expected level, 0–2",
  "q.d.noul":" — a yes/no question. You get the probability that the answer is yes.","q.d.choice":" — pick one of your named options. Every option gets a probability; descriptions are optional.","q.d.score":" — an ordered scale with 2–10 levels. You get the expected level and a probability for each level.",
- "code.h":"Call it from your code","code.p":"One POST with a Bearer key. The same JSON body works from any language.","code.ep":"Endpoint","code.auth":"Auth","code.body":"Body","code.bodyv":"state + up to 64 questions","code.cap":"Input","code.capv":"up to 8,000 tokens per request","code.ref":"Full API reference",
+ "code.h":"Call it from your code","code.p":"One POST with your key, from any language.","code.ep":"Endpoint","code.auth":"Auth","code.body":"Body","code.bodyv":"state + up to 64 questions","code.cap":"Input","code.capv":"up to 8,000 tokens per request","code.ref":"Full API reference",
  "pf.h":"Fast and calibrated","pf.when":"Measured Oct 8, 2026","pf.1":"Median end-to-end for a short request, Sydney to API over the public internet","pf.2":"Model compute for a short request","pf.3":"Model compute at 7.9k input tokens","pf.4":"GPU replicas serving requests","pf.5":"Top answers identical to FP32 (BF16 serving, JevBench + sample tickets)","pf.same":"The API serves the same Jev-Style 2B v3 weights you can download.","pf.model":"See the model",
  "uc.h":"Use cases","uc.sub":"Demos recorded with the open Jev-Style v3 models","uc.t1":"Ticket routing","uc.p1":"Send each ticket to the right team and flag refunds and urgency, all in one call.","uc.t2":"Moderation","uc.p2":"Check posts against your own policy, then threshold the probability: allow, review or remove.","uc.t3":"LLM routing","uc.p3":"Decide whether a small model or a frontier model should answer, before you spend the tokens.",
  "lim.h":"Free tier","lim.full":"Full limits","lim.1":"request at a time","lim.2":"requests per minute","lim.3":"successful requests per day (UTC)","lim.4":"input tokens per request","lim.5":"API keys per account","lim.note":"Limits are per account and shared by all of its keys. Failed, rejected and timed-out requests are not charged. Fair use, best effort.",
@@ -1265,7 +1245,7 @@ en:{
  "n3.models":"Open models",
  "n3.login":"Log in",
  "h3.title":"Build calibrated decisions into your product",
- "h3.sub":"Free hosted Jev-Style 2B v3. One POST, a calibrated probability for every option.",
+ "h3.sub":"One POST. A probability for every option. Free.",
  "h3.cta":"Get a free API key",
  "dd.qs":"Quickstart",
  "dd.qs.d":"Your first request in a few minutes",
@@ -1311,22 +1291,22 @@ en:{
  "res.lim.p":"Quotas, rate limits, error codes and when to retry.","res.om.h":"Open-source models","res.om.p":"Download the same weights and run them on your own machine with Transformers, GGUF or MLX.","res.om.a":"Browse models",
  "res.lim.a":"Limits",
  "res.err.a":"Error codes",
- "try.p":"A real support ticket with three questions, sent in one call. This is the live production response from Oct 8, 2026, about 0.42 s end-to-end from Sydney.",
+ "try.p":"One support ticket, three questions, one call.",
  "ty.noul":"Yes / no",
  "ty.choice":"Pick one",
  "ty.score":"Scale",
  "ty.noul.h":"Yes or no, with a probability",
- "ty.noul.p":"Ask anything with a yes/no answer. You get the probability that it is yes, so you choose the threshold.",
+ "ty.noul.p":"Ask a yes/no question. Get the probability of yes.",
  "ty.choice.h":"Pick one of your options",
- "ty.choice.p":"Name the options and describe them if you like. Every option gets a probability, and the top one comes back with a confidence.",
+ "ty.choice.p":"List your options. Each gets a probability; the top one comes back with a confidence.",
  "ty.score.h":"Place it on a scale",
- "ty.score.p":"Give 2–10 ordered levels. You get the expected level and a probability for each level.",
+ "ty.score.p":"Give 2–10 ordered levels. Get the expected level and a probability for each.",
  "ty.reqh":"In the request",
  "ty.resh":"In the response",
  "ty.state":"One state for all three questions",
- "ty.meta":"144 input tokens · 29.7 ms on the GPU",
+ "ty.meta":"real production response · 0.42 s end-to-end · 144 input tokens",
  "code.res":"Response",
- "uc3.p":"Each one is a few typed questions in a single call. The demos were recorded with the open Jev-Style v3 models.","uc.more":"More use cases",
+ "uc3.p":"A few typed questions, one call.","uc.more":"More use cases",
  "uc.tk.h":"Ticket routing",
  "uc.tk.p":"Route each ticket to a team and flag refunds and urgency in the same call.",
  "uc.ag.h":"Agent action approval",
@@ -1359,17 +1339,29 @@ en:{
  "pd.c3.3":"Up to 3 named keys, revocable at any time.",
  "pd.c3.4":"/v1/systemone-compatible requests: a state plus typed questions.",
  "om3.h":"Or run it yourself",
- "om3.p":"Apache-2.0 decision models on Hugging Face in Transformers, GGUF and MLX, plus the jev-style package that serves them on your own machine.",
+ "om3.p":"The same models, Apache-2.0. Run them with Transformers, GGUF or MLX.",
  "fc.api.h":"Use the hosted API",
- "fc.api.1":"Jev-Style 2B v3 on GPUs, nothing to install",
- "fc.api.2":"Free tier: 10,000 successful requests a day",
+ "fc.api.1":"Nothing to install",
+ "fc.api.2":"10,000 free requests a day",
  "fc.api.3":"Playground and usage charts in Console",
  "fc.api.4":"Docs for auth, limits and error codes",
  "fc.os.h":"Run it yourself",
- "fc.os.1":"Apache-2.0 weights on Hugging Face",
- "fc.os.2":"Transformers, GGUF and MLX formats",
+ "fc.os.1":"Apache-2.0 weights",
+ "fc.os.2":"CPU, CUDA and Apple silicon",
  "fc.os.3":"Runs on CPU, CUDA and Apple silicon",
- "fc.os.4":"Up to 25,600 input tokens with 2B v3"
+ "fc.os.4":"Up to 25,600 input tokens with 2B v3",
+ "k3.free":"free requests a day",
+ "k3.lat":"median, short request",
+ "k3.tok":"input tokens per request",
+ "k3.out.v":"Probabilities",
+ "k3.out":"for every option, nothing to parse",
+ "tr.1":"Request text isn't stored",
+ "tr.2":"Failed requests don't count",
+ "tr.3":"3 GPU replicas",
+ "om.stats":"{dl} downloads · {m} models · Apache-2.0",
+ "run.send":"Sending",
+ "run.ok":"200 OK · {s} s end-to-end",
+ "run.see":"See response"
 },
 zh:{
  "nav.models":"模型","nav.api":"免费 API","nav.getkey":"获取 API key","nav.console":"控制台","api.lead":"免费托管 2B Decision API — typed noul / choice / score。","api.docs":"API 文档","api.create":"创建 key","api.badge":"Independent · non-TypeSafe","api.strip.h":"免费 Decision API","api.strip.p":"公平使用免费额度。注册后在 Console 建 key，调用 api.jevstyle.com。认证、限额与错误见文档。","nav.tl":"时间线","sec.tl":"发布时间线","tl.next.when":"下一步",
@@ -1406,7 +1398,7 @@ zh:{
  "feat.macjev":"MacJev 322M：在你自己的 Mac 上做决定","feat.v2":"Decision 2B v2：概率校准的英文分类","feat.eval":"v2 在留出任务上的评测","feat.v1":"Decision 2B v1：首个版本","tasks":"个留出任务",
  "sec.releases":"最新发布","sec.bench":"评测","sec.dev":"快速开始","sec.road":"路线图",
  "viewall":"查看全部","dl30":"次下载 · 近 30 天","dev.repo":"打开仓库",
- "cta.h":"开始使用 JevStyle","cta.p":"欢迎提供实习、工作及科研合作机会，请邮件联系：","cta.end":"。","final.mail":"复制邮箱",
+ "cta.h":"开始使用 JevStyle","cta.p":"欢迎实习、工作和科研合作机会：","cta.end":"。","final.mail":"复制邮箱",
  "f.models":"模型","f.formats":"格式","f.research":"研究","f.dev":"开发者","f.comm":"社区","f.calib":"校准","f.contact":"联系","f.demo":"在线试用",
  "prev":"上一个","next":"下一个","lang.name":"简体中文",
  "one.macjev":"本地 Mac agent 的决策模型。","one.v2":"概率校准的英文分类模型。","one.v1":"首个版本，已由 v3（0.8B 和 2B）取代。",
@@ -1417,7 +1409,7 @@ zh:{
  "m3":"v1 校准误差 ECE","m3s":"Qwen3.5-2B-Base 0.065",
  "m4":"v2 打乱选项顺序后改判的比例","m4s":"英文 Laya 12.0%",
  "copy":"复制","copied":"已复制",
- "foot":"Independent · non-TypeSafe。与 TypeSafe AI（Jev）及 Laya 作者无关。权重 Apache-2.0。免费 API：注册后在 Console 建 key。","snap":"数据更新于 ",
+ "foot":"独立项目，与 TypeSafe AI（Jev）及 Laya 作者无关。权重 Apache-2.0。","snap":"数据更新于 ",
  "up":"越高越好","down":"越低越好","hf":"在 Hugging Face 打开","newer":"查看 2B v3",
  "close":"关闭","vs":"对比","formats":"格式","code":"快速开始",
  "k.params":"参数量","k.ctx":"token 输入",
@@ -1446,7 +1438,7 @@ zh:{
  "ex.h":"一次请求，每个选项都有分数","ex.aside":"线上真实响应 · 2026 年 10 月 8 日","ex.p":"一张真实的客服工单，三个问题，从悉尼一次调用，端到端约 0.42 秒。","ex.req":"请求","ex.res":"响应","ex.res.meta":"GPU 计算 29.7 毫秒",
  "q.yes":"是","q.no":"否","q.conf":"置信度","q.py":"答案为“是”的概率","q.exp":"期望等级（0–2）",
  "q.d.noul":"：是非题，返回答案为“是”的概率。","q.d.choice":"：从你给出的选项里选一个，每个选项都有概率；选项说明可以留空。","q.d.score":"：2–10 级的有序刻度，返回期望等级和每一级的概率。",
- "code.h":"在代码里调用","code.p":"一个 POST 请求，带上 Bearer key。任何语言都用同一份 JSON。","code.ep":"接口","code.auth":"认证","code.body":"请求体","code.bodyv":"state + 最多 64 个问题","code.cap":"输入","code.capv":"每次请求最多 8,000 个 token","code.ref":"完整接口文档",
+ "code.h":"在代码里调用","code.p":"带上 key 发一个 POST，任何语言都行。","code.ep":"接口","code.auth":"认证","code.body":"请求体","code.bodyv":"state + 最多 64 个问题","code.cap":"输入","code.capv":"每次请求最多 8,000 个 token","code.ref":"完整接口文档",
  "pf.h":"速度快，概率准","pf.when":"2026 年 10 月 8 日实测","pf.1":"短请求端到端耗时中位数，从悉尼经公网访问","pf.2":"短请求的模型计算时间","pf.3":"输入 7.9k token 时的模型计算时间","pf.4":"同时提供服务的 GPU 副本","pf.5":"首选答案与 FP32 一致（BF16 线上推理，JevBench + 示例工单）","pf.same":"API 用的就是你可以下载的同一份 Jev-Style 2B v3 权重。","pf.model":"查看模型",
  "uc.h":"应用场景","uc.sub":"演示录制自开源的 Jev-Style v3 模型","uc.t1":"工单分派","uc.p1":"一次调用把工单分给对应团队，同时标出是否退款、有多紧急。","uc.t2":"内容审核","uc.p2":"按你自己的规则检查内容，再按概率设阈值：放行、人工复核或删除。","uc.t3":"LLM 路由","uc.p3":"在花 token 之前，先判断该由小模型还是前沿大模型来回答。",
  "lim.h":"免费额度","lim.full":"完整限额说明","lim.1":"同时进行的请求","lim.2":"每分钟请求数","lim.3":"每天成功请求数（UTC）","lim.4":"单次请求输入 token","lim.5":"每个账号的 API key","lim.note":"限额按账号计算，账号下所有 key 共用。失败、被拒绝和超时的请求不扣额度。公平使用，尽力而为。",
@@ -1461,7 +1453,7 @@ zh:{
  "n3.models":"开源模型",
  "n3.login":"登录",
  "h3.title":"把校准过的决策，接入你的产品",
- "h3.sub":"免费托管的 Jev-Style 2B v3。一个 POST 请求，每个选项都得到一个校准过的概率。",
+ "h3.sub":"一次 POST，每个选项都有概率。免费。",
  "h3.cta":"免费获取 API key",
  "dd.qs":"快速开始",
  "dd.qs.d":"几分钟发出第一个请求",
@@ -1507,22 +1499,22 @@ zh:{
  "res.lim.p":"额度、速率限制、错误码，以及什么时候该重试。","res.om.h":"开源模型","res.om.p":"下载同样的权重，在自己的机器上运行，支持 Transformers、GGUF 和 MLX。","res.om.a":"浏览模型",
  "res.lim.a":"限额",
  "res.err.a":"错误码",
- "try.p":"一张真实的客服工单，三个问题，一次调用。下面是 2026 年 10 月 8 日的线上响应，从悉尼发起，端到端约 0.42 秒。",
+ "try.p":"一张客服工单，三个问题，一次调用。",
  "ty.noul":"是 / 否",
  "ty.choice":"单选",
  "ty.score":"打分",
  "ty.noul.h":"是非题，附带概率",
- "ty.noul.p":"任何能用是或否回答的问题都可以。返回答案为“是”的概率，阈值由你决定。",
+ "ty.noul.p":"问一个是非题，返回答案为“是”的概率。",
  "ty.choice.h":"从你的选项里选一个",
- "ty.choice.p":"列出选项，愿意的话附上说明。每个选项都有概率，最可能的那个会连同置信度一起返回。",
+ "ty.choice.p":"列出选项，每个都有概率，最可能的那个附带置信度。",
  "ty.score.h":"放到刻度上",
- "ty.score.p":"给出 2–10 个有序等级，返回期望等级和每一级的概率。",
+ "ty.score.p":"给出 2–10 个有序等级，返回期望等级和每级概率。",
  "ty.reqh":"请求里",
  "ty.resh":"响应里",
  "ty.state":"三个问题共用一段 state",
- "ty.meta":"144 个输入 token · GPU 计算 29.7 毫秒",
+ "ty.meta":"线上真实响应 · 端到端 0.42 秒 · 144 个输入 token",
  "code.res":"响应",
- "uc3.p":"每个场景都只是一次调用里的几个带类型的问题。演示视频录制自开源的 Jev-Style v3 模型。","uc.more":"更多场景",
+ "uc3.p":"几个带类型的问题，一次调用。","uc.more":"更多场景",
  "uc.tk.h":"工单分派",
  "uc.tk.p":"一次调用把工单分给对应团队，同时标出是否退款、有多紧急。",
  "uc.ag.h":"Agent 操作审批",
@@ -1555,17 +1547,29 @@ zh:{
  "pd.c3.3":"最多 3 个可命名的 key，随时可以吊销。",
  "pd.c3.4":"兼容 /v1/systemone 的请求格式：一段 state 加上带类型的问题。",
  "om3.h":"也可以自己运行",
- "om3.p":"Apache-2.0 许可的决策模型，在 Hugging Face 上提供 Transformers、GGUF 和 MLX 格式，另有 jev-style 包可以在你自己的机器上运行。",
+ "om3.p":"同样的模型，Apache-2.0 许可，可用 Transformers、GGUF 或 MLX 运行。",
  "fc.api.h":"使用托管 API",
- "fc.api.1":"Jev-Style 2B v3 跑在 GPU 上，无需安装",
- "fc.api.2":"免费额度：每天 10,000 次成功请求",
+ "fc.api.1":"无需安装",
+ "fc.api.2":"每天 10,000 次免费请求",
  "fc.api.3":"控制台里有 Playground 和用量图表",
  "fc.api.4":"认证、限额、错误码都有文档",
  "fc.os.h":"自己运行",
- "fc.os.1":"Hugging Face 上的 Apache-2.0 权重",
- "fc.os.2":"提供 Transformers、GGUF 和 MLX 格式",
+ "fc.os.1":"Apache-2.0 权重",
+ "fc.os.2":"支持 CPU、CUDA 和 Apple silicon",
  "fc.os.3":"支持 CPU、CUDA 和 Apple silicon",
- "fc.os.4":"2B v3 最多支持 25,600 个输入 token"
+ "fc.os.4":"2B v3 最多支持 25,600 个输入 token",
+ "k3.free":"每天免费请求",
+ "k3.lat":"短请求中位延迟",
+ "k3.tok":"每次输入 token",
+ "k3.out.v":"概率",
+ "k3.out":"每个选项一个，无需解析文本",
+ "tr.1":"不存储请求内容",
+ "tr.2":"失败请求不计次",
+ "tr.3":"3 份 GPU 副本",
+ "om.stats":"{dl} 次下载 · {m} 个模型 · Apache-2.0",
+ "run.send":"发送中",
+ "run.ok":"200 OK · 端到端 {s} 秒",
+ "run.see":"查看响应"
 }};
 
 let lang;
@@ -1674,9 +1678,8 @@ function renderHeroTabs(){
   heroArm();
 }
 function heroArm(){
-  $('mTabs').querySelectorAll('.tab.run').forEach(b => b.classList.remove('run'));
-  const b = $('mTabs').querySelector('[aria-selected="true"]');
-  if (b && HERO.auto && HERO.vis){ void b.offsetWidth; b.classList.add('run'); }
+  clearTimeout(HERO.tm);
+  if (HERO.auto && HERO.vis && !FX.paused && VIS().length > 1) HERO.tm = setTimeout(() => { HERO.i = (HERO.i + 1) % VIS().length; renderHeroTabs(); heroStage(true); }, 6000);
 }
 function countUp(el, text){
   const m = String(text).match(/^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/);
@@ -1823,69 +1826,14 @@ function renderModels(){
     const chips = planned ? '' : `<div class="fchips">${m.repos.filter(repoVis).map(r => `<a href="${HF+r.repo}" target="_blank" rel="noopener">${esc(r.chip || r.format.split(' ')[0])} <span aria-hidden="true">↗</span></a>`).join('')}</div>`;
     const meta = planned ? ''
       : `<p class="meta"><b>${t('cat.model')}</b><span>${relDate(m)}</span>${m.repos.some(onHub) ? `<span class="num">↓ ${famDl(m).toLocaleString('en-US')}<span class="sr-only"> ${t('dl.unit')}</span></span>` : `<span>${t('dl.soon')}</span>`}</p>`;
-    return `<article class="mcard hov${planned ? ' plan' : ''}${mAnim ? ' in' : ''}" style="--i:${i}">${media('model-'+m.id, planned ? 'plan' : m.id, 'wide', ov)}<div class="mbody"><h3 class="card-t">${planned ? esc(name) : `<button type="button" class="mt" data-open="${m.id}">${esc(name)}</button>`}</h3><p class="rsub">${t('one.'+m.id)}</p>${chips}${meta}</div></article>`;
+    return `<article class="mcard hov${planned ? ' plan' : ''}${mAnim ? ' in' : ''}" style="--i:${i}">${media('model-'+m.id, planned ? 'plan' : m.id, 'wide', ov)}<div class="mbody"><h3 class="card-t">${planned ? esc(name) : `<button type="button" class="mt" data-open="${m.id}">${esc(name)}</button>`}</h3>${chips}${meta}</div></article>`;
   }).join('');
   paintArt($('mGrid'));
 }
 
-/* ---------- spotlight: the newest model, pushed hard ---------- */
-let spotShown = false;
-const SPOT_ID = 'v3-2b';   // the pushed model (patch_2b.py); falls back to the 0.8B v3 if that family is missing
+const SPOT_ID = 'v3-2b';
 const jbRef = (f, k) => f.bench.jevbench.board.find(b => b.key === k).acc;
 const BENCH_NAME = {'v3-2b':'Jev-Style 2B v3', v3:'Jev-Style 0.8B v3'};   // JevBench labels: never "Decision 2B" (FlyMy.AI's model)
-function renderSpot(){
-  const f = [fam(SPOT_ID), fam('v3')].find(famVis), e3 = DATA.eval.v3; $('spotlight').hidden = !f; if (!f || (!f.bench && !e3)) return;
-  const ov = `<div class="ov"><span class="ovtag">${t('an.tag')}</span><span><b class="big">${esc(f.spot_big || f.short)}</b><span class="ov-sub">${esc(f.spot_sub || f.params)} · ${esc(f.context)} ${t('k.ctx')}</span></span></div>`;
-  $('spMedia').innerHTML = `<a href="#${f.id}" data-open="${f.id}" class="hov" aria-label="${esc(display(f))}">${media('spot-' + f.id, f.id, '', ov)}</a>`;
-  paintArt($('spMedia'));
-  $('spEyebrow').textContent = `${t('sp.new')} · ${relDate(f)}`;
-  $('spTitle').textContent = display(f);
-  $('spOpen').dataset.open = f.id; $('spHF').href = HF + f.repos[0].repo;
-  const d = $('spDemo');
-  if (!f.space) d.hidden = true;
-  else if (f.release_planned){ d.hidden = false; d.removeAttribute('href'); d.removeAttribute('target'); d.setAttribute('aria-disabled', 'true'); d.className = 'pill soon'; d.textContent = t('demo.soon'); }
-  else { d.hidden = false; d.href = HF + 'spaces/' + f.space; d.target = '_blank'; d.rel = 'noopener'; d.removeAttribute('aria-disabled'); d.className = 'pill soft'; d.innerHTML = `${esc(t('demo.try'))} <span class="ne" aria-hidden="true">↗</span>`; }
-  let rows, who, note;
-  if (f.bench){
-    const jb = f.bench.jevbench, tt = f.bench.tweet_topic;
-    who = BENCH_NAME[f.id] || f.short; note = t('sp2.note');
-    rows = [
-      {lab:t('sp2.c1'), me:jb.acc, base:jbRef(f, 'decider-2b'), vs:'decider-2b', fmt:v => pct(v), up:true},
-      {lab:t('sp2.c2'), me:jb.acc, base:jbRef(f, 'v3'), vs:BENCH_NAME.v3, fmt:v => pct(v), up:true},
-      {lab:t('sp2.c3'), me:tt.acc, base:tt.jev_acc, vs:'Jev', fmt:v => pct(v), up:true, sub:`${t('sp2.f1')}: ${who} ${tt.macro_f1.toFixed(3)} · Jev ${tt.jev_macro_f1.toFixed(3)}`},
-    ];
-  } else {
-    const typed = f.metrics.find(m => m.key === 'typed');
-    who = 'v3'; note = t('sp.note');
-    rows = [
-      {lab:t('sp.c1'), me:typed.model, base:typed.base, vs:lbl('Laya typed'), fmt:v => pct(v), up:true},
-      {lab:t('sp.c2'), me:e3.massive.macro_v3, base:e3.massive.macro_laya_multilingual, vs:lbl('Laya multi'), fmt:v => pct(v), up:true},
-      {lab:t('sp.c3'), me:e3.calib.ECE.v3, base:e3.calib.ECE.best_laya, vs:lbl('Best Laya'), fmt:v => v.toFixed(3), up:false},
-    ];
-  }
-  $('spCmp').innerHTML = rows.map(r => { const mx = Math.max(r.me, r.base);
-    return `<div class="sc-row"><p><span>${esc(r.lab)}</span><span>${t(r.up ? 'up' : 'down')}</span></p><div class="sc-bars" aria-hidden="true"><i style="--w:${(r.me/mx*100).toFixed(1)}%"></i><i class="b" style="--w:${(r.base/mx*100).toFixed(1)}%"></i></div><p class="sc-vals"><span><b>${esc(who)}</b> ${r.fmt(r.me)}</span><span>${esc(r.vs)} ${r.fmt(r.base)}</span></p>${r.sub ? `<p class="sc-sub">${esc(r.sub)}</p>` : ''}</div>`; }).join('');
-  $('spStats').innerHTML = f.headline.map(([v,k]) => `<div><dt>${esc(t(k))}</dt><dd data-v="${esc(v)}">${esc(v)}</dd></div>`).join('');
-  $('spNote').textContent = note;
-}
-function showSpot(){
-  if (spotShown) return; spotShown = true;
-  $('spotlight').classList.remove('pre');
-  $('spStats').querySelectorAll('dd').forEach(dd => countUp(dd, dd.dataset.v));
-}
-
-/* ---------- release timeline, oldest to newest, then what's next ---------- */
-function renderTimeline(){
-  const first = f => f.repos.map(r => r.createdAt || '').filter(Boolean).sort()[0] || f.released || '';
-  const rel = [...VIS()].sort((a,b) => (a.released || '').localeCompare(b.released || '') || first(a).localeCompare(first(b)));
-  const newest = rel[rel.length-1], next = DATA.planned.length > 0;
-  const tag = f => ({macjev:'MacJev', 'v3-2b':'v3'})[f.id] || f.short;
-  const fmts = f => [...new Set(f.repos.map(r => r.chip || r.format.split(' ')[0]))].join(' · ');
-  let html = rel.map((f,i) => `<li class="tl-item${f === newest ? ' is-latest' : ''}${f === newest && next ? ' to-next' : ''}" style="--i:${i}"><span class="tl-dot" aria-hidden="true"></span><time datetime="${esc(f.released)}">${relDate(f)}</time><a class="tl-card" href="#${f.id}" data-open="${f.id}"><span class="v">${esc(tag(f))} · ${esc(f.params)}</span><b>${esc(display(f))}</b><span class="d">${t('tl.' + f.id)}</span><span class="c">${[f.context ? `${f.context} ${t('k.ctx')}` : '', fmts(f)].filter(Boolean).map(x => `<span>${esc(x)}</span>`).join('')}</span></a></li>`).join('');
-  if (next) html += `<li class="tl-item is-next" style="--i:${rel.length}"><span class="tl-dot" aria-hidden="true"></span><time>${t('tl.next.when')}</time><div class="tl-card"><span class="v">${t('cat.plan')}</span><b>${DATA.planned.map(x => esc(x.name)).join(' · ')}</b><span class="d">${t('tl.next')}</span><span class="c">${DATA.planned.map(x => `<span>${esc(x.params)}</span>`).join('')}</span></div></li>`;
-  $('tlList').style.setProperty('--n', rel.length + (next ? 1 : 0));
-  $('tlList').innerHTML = html;
-}
 
 /* ---------- demos: featured tiles (autoplay while on screen), "More demos" expander with cards (hover preview), lightbox ---------- */
 let DLIST = null, moreOpen = false, featIO = null;
@@ -1982,18 +1930,16 @@ function renderDownloads(){
   const tot = hub.reduce((s,r) => s + dlAll(r), 0), t30 = hub.reduce((s,r) => s + dl30(r), 0), likes = hub.reduce((s,r) => s + (r.likes || 0), 0);
   const published = DATA.families.filter(f => f.repos.some(onHub)).length;
   const max = Math.max(1, ...repos.map(dlAll));
-  $('dlTiles').innerHTML = [[t('dl.all'), tot], [t('dl.30'), t30], [t('dl.likes'), likes], [t('dl.models'), published, `${hub.length} ${t('dl.reposSub')}`]]
-    .map(([k,v,sub]) => `<div><span>${esc(k)}</span><b data-v="${v.toLocaleString('en-US')}">${v.toLocaleString('en-US')}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</div>`).join('');
+  $('omStats').innerHTML = esc(t('om.stats')).replace('{dl}', `<b data-v="${tot.toLocaleString('en-US')}">${tot.toLocaleString('en-US')}</b>`).replace('{m}', `<b>${published}</b>`);
   $('dlList').innerHTML = repos.map((r,i) => `<a class="dl-row" href="${HF+r.repo}" target="_blank" rel="noopener" style="--i:${i}"><span class="dl-name"><b>${esc(r.repo.split('/')[1])}</b><small>${esc(r.format)} · ${esc(fams[r.fid] || t('new'))}${r.createdAt ? ' · ' + fmtDate(r.createdAt) : ''}</small></span><span class="dl-bar"><i style="--w:${dlAll(r) ? Math.max(2, dlAll(r)/max*100).toFixed(1) : 0}%"></i></span><span class="dl-num"><b>${dlAll(r).toLocaleString('en-US')}<span class="sr-only"> ${t('dl.unit')}</span></b><small>${t('dl.30s')} · ${dl30(r).toLocaleString('en-US')}</small></span></a>`).join('');
   $('repoSum').textContent = t('dl.allrepos').replace('{n}', repos.length);
   $('proofDl').textContent = t('pr.hf').replace('{n}', tot.toLocaleString('en-US'));
-  const b = $('liveBadge'), loc = lang==='zh' ? 'zh-CN' : 'en-US'; b.classList.toggle('on', LIVE.src === 'hf');
-  b.innerHTML = `<i aria-hidden="true"></i>${LIVE.src === 'hf' ? `${t('dl.live')} · ${LIVE.at.toLocaleTimeString(loc, {hour:'2-digit', minute:'2-digit'})}` : LIVE.src === 'site' ? `${t('dl.upd')} ${LIVE.at.toLocaleString(loc, {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}` : `${t('dl.snap')} ${fmtDate(DATA.snapshot)}`}`;
+
 }
 function showDownloads(){
   if (dlShown) return; dlShown = true;
   $('dlList').classList.remove('pre');
-  $('dlTiles').querySelectorAll('b').forEach(el => countUp(el, el.dataset.v));
+  const n = $('omStats').querySelector('b[data-v]'); if (n) countUp(n, n.dataset.v);
 }
 const guessFormat = id => /gguf/i.test(id) ? 'GGUF' : /mlx/i.test(id) ? 'MLX' : 'HF';
 function applyStats(list, src, at){
@@ -2008,7 +1954,7 @@ function applyStats(list, src, at){
     const keepAnim = mAnim; mAnim = false;
     if (visKey() !== HERO.vk){
       HERO.vk = visKey(); const j = VIS().findIndex(f => f.id === HERO.id); HERO.i = j >= 0 ? j : heroDefault();
-      renderHeroTabs(); heroStage(false); renderTimeline(); renderBench(); renderQS(false); applyVisibility();
+      renderHeroTabs(); heroStage(false); renderBench(); renderQS(false); applyVisibility();
       if (!$('srch').hidden) renderSearch();
     }
     renderModels(); renderSpecs(VIS()[HERO.i]); drawDrawer();
@@ -2057,16 +2003,17 @@ function renderBench(){
     {me:v2.permutation.v2.semantic_flip_rate, base:v2.permutation.laya.semantic_flip_rate, fmt:v => pct(v), who:'v2', vs:lbl('Laya EN'), lab:'m4', up:false, open:'v2', pal:'b4', model:'Decision 2B v2'},
   ];
   items.unshift(...c9i);   // patch_9b.py
-  $('carTrack').innerHTML = items.filter(it => famVis(fam(it.open)) && !(it.open === 'v3-2b' && fam('v3-2b') && famVis(fam('v3-2b')))).map((it,i) => {
+  const HOME = ['b.2bjb', 'b.v3massive', 'b.v3ece'];   // three cards on the home page; the rest live in each model's drawer
+  $('carTrack').innerHTML = items.filter(it => famVis(fam(it.open)) && HOME.includes(it.lab)).sort((a,b) => HOME.indexOf(a.lab) - HOME.indexOf(b.lab)).map((it,i) => {
     const mx = Math.max(it.me, it.base);
     const row = (cls, name, v) => `<div class="${cls}"><span>${esc(name)}</span><span class="tk"><i style="width:${(v/mx*100).toFixed(1)}%"></i></span><span>${it.fmt(v)}</span></div>`;
-    const ov = `<div class="ov"><b class="big">${it.fmt(it.me)}</b><div class="cmp${it.wide ? ' wide' : ''}">${row('a', it.who, it.me)}${row('b', it.vs, it.base)}<p>${t(it.up ? 'up' : 'down')}${it.note ? ' · ' + esc(it.note) : ''}</p></div></div>`;
-    return `<a class="bcard" href="#${it.open}" data-open="${it.open}">${media('bench-'+i, it.pal, '', ov)}<h3 class="card-t">${esc(t(it.lab))}</h3><p class="meta"><b>${t('cat.bench')}</b><span>${it.model}</span></p></a>`;
+    const ov = `<div class="ov"><b class="big" data-cu="${it.fmt(it.me)}">${it.fmt(it.me)}</b><div class="cmp${it.wide ? ' wide' : ''}">${row('a', it.who, it.me)}${row('b', it.vs, it.base)}<p>${t(it.up ? 'up' : 'down')}</p></div></div>`;
+    return `<a class="bcard" href="#${it.open}" data-open="${it.open}">${media('bench-'+i, it.pal, '', ov)}<h3 class="card-t">${esc(t(it.lab))}</h3><p class="meta"><span>${it.model}</span></p></a>`;
   }).join('');
   paintArt($('carTrack'));
 }
 /* ---------- carousel with progress ring ---------- */
-const CAR = {i:0, auto:!REDUCED, vis:false};
+const CAR = {i:0, auto:false, vis:false};
 function carPer(){ const tr = $('carTrack'), it = tr.firstElementChild; return it ? Math.max(1, Math.round((tr.clientWidth + 24) / (it.offsetWidth + 24))) : 1; }
 function carGo(i){
   const tr = $('carTrack'), n = tr.children.length, max = Math.max(0, n - carPer());
@@ -2074,7 +2021,7 @@ function carGo(i){
   tr.scrollTo({left: tr.children[CAR.i].offsetLeft - tr.firstElementChild.offsetLeft, behavior: REDUCED ? 'auto' : 'smooth'});
   carArm();
 }
-function carArm(){ const r = $('ring'); r.classList.remove('run'); void r.getBoundingClientRect(); if (CAR.auto && CAR.vis) r.classList.add('run'); }
+function carArm(){ const r = $('ring'); if (!r) return; r.classList.remove('run'); void r.getBoundingClientRect(); if (CAR.auto && CAR.vis) r.classList.add('run'); }
 function carStop(){ if (!CAR.auto) return; CAR.auto = false; carArm(); }
 
 /* ---------- quickstart tabs with countdown ---------- */
@@ -2339,7 +2286,7 @@ function searchItems(){
     ...VIS().map(f => ({label:display(f), sub:t('cat.model'), open:f.id})),
     ...VIS().flatMap(f => f.repos).filter(repoVis).map(r => ({label:r.repo.split('/')[1], sub:r.format, href:HF+r.repo})),
     ...DATA.planned.map(x => ({label:x.name, sub:t('cat.plan'), hash:'#models'})),
-    ...[['#api','pm.h'],['#resources','res.h'],['#try','ex.h'],['#api-code','code.h'],['#use-cases','uc.h'],['#production','pd.h'],['#open-models','om.k'],['#models','sec.models'],['#downloads','nav.dl'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#timeline','sec.tl'],['#start','fc.api.h'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
+    ...[['#try','ex.h'],['#api-code','code.h'],['#use-cases','uc.h'],['#open-models','om.k'],['#models','sec.models'],['#downloads','nav.dl'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#start','fc.api.h'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
   ];
 }
 function renderSearch(){
@@ -2373,10 +2320,10 @@ function setMenu(open){
 let revIO, sweepSet = false;
 function setupReveal(){
   if (REDUCED || !('IntersectionObserver' in window)) return;
-  revIO = revIO || new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.remove('pre'); revIO.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
-  ['.mcard','.bcard','.dev-body','.ab-lead','.fcol','.res','.uc3-card','.prod > div','.cta3','.mc','.feat','.ac-side','.ac-main','.half-head > div','.s3-head'].forEach(sel => document.querySelectorAll(sel).forEach((el,i) => {
+  revIO = revIO || new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.remove('pre'); e.target.querySelectorAll('dd[data-v]').forEach(d => countUp(d, d.dataset.v)); e.target.querySelectorAll('[data-cu]').forEach(d => countUp(d, d.dataset.cu)); revIO.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
+  ['.mcard','.bcard','.dev-body','.ab-lead','.fcol','.uc3-card','.cta3','.feat','.ac-main','.half-head > div','.s3-head','.kstats > div','.trust'].forEach(sel => document.querySelectorAll(sel).forEach((el,i) => {
     if (el.classList.contains('rv') || el.getBoundingClientRect().top < innerHeight) return;
-    el.classList.add('rv','pre'); el.style.transitionDelay = (i%3)*80 + 'ms'; revIO.observe(el);
+    el.classList.add('rv','pre'); el.style.transitionDelay = (el.parentElement && el.parentElement.id === 'kStats' ? i%4 * 110 : (i%3)*80) + 'ms'; revIO.observe(el);
   }));
   if (sweepSet) return; sweepSet = true;
   const tio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('go'); tio.unobserve(e.target); } }), {rootMargin:'0px 0px -15% 0px'});
@@ -2488,15 +2435,37 @@ function hlLine(s, re, json){
   }
   return out + esc(s.slice(last));
 }
-const codeLines = (code, re, json) => code.split('\n').map(l => `<span class="ln" style="--h:${(l.match(/^ */)[0].length + 4)}ch">${hlLine(l, re, json) || ' '}</span>`).join('');
+const codeLines = (code, re, json) => code.split('\n').map((l, i) => `<span class="ln" style="--h:${(l.match(/^ */)[0].length + 4)}ch;--i:${i}">${hlLine(l, re, json) || ' '}</span>`).join('');
 const p3 = v => (+v).toFixed(3);
 function renderApiCode(swap){
   const q = API_CODE.find(x => x.id === apActive);
   keepFocus($('apTabs'), () => $('apTabs').innerHTML = API_CODE.map(x => `<button type="button" role="tab" class="tab" id="ap-${x.id}" data-ap="${x.id}" aria-controls="apPanel" aria-selected="${x.id===apActive}" tabindex="${x.id===apActive ? 0 : -1}">${esc(x.lk ? t(x.lk) : x.label)}</button>`).join(''));
   $('apPanel').setAttribute('aria-labelledby', 'ap-' + apActive);
   $('apFile').textContent = q.file;
+  $('apCode').classList.remove('typing');
   $('apCode').innerHTML = q.json ? codeLines(q.code, RE_JSON, true) : codeLines(q.code, RE_CODE[q.cm], false);
-  if (swap){ $('apCode').classList.remove('swap'); void $('apCode').offsetWidth; $('apCode').classList.add('swap'); }
+  if (swap){ $('apCode').classList.remove('typing', 'swap'); void $('apCode').offsetWidth; $('apCode').classList.add('swap'); }
+  const run = $('apRun'); run.hidden = !apPlayed || apActive === 'res';
+  if (apPlayed && !APRUN.busy) run.innerHTML = runDone();
+}
+/* the request types in once when the code first comes into view, then a 200 comes back in 0.42 s (the real round trip) */
+let apPlayed = false;
+const APRUN = {busy:false};
+const runDone = () => `<i class="ok" aria-hidden="true"></i><span>${esc(t('run.ok').replace('{s}', '0.42'))}</span><button type="button" class="run-see" data-ap="res">${esc(t('run.see'))} <span aria-hidden="true">&rarr;</span></button>`;
+function apPlay(){
+  if (apPlayed) return; apPlayed = true;
+  const pre = $('apCode'), run = $('apRun');
+  if (REDUCED){ renderApiCode(false); return; }
+  pre.classList.remove('swap', 'typing'); void pre.offsetWidth; pre.classList.add('typing');
+  const n = pre.querySelectorAll('.ln').length;
+  APRUN.busy = true;
+  setTimeout(() => {
+    if (apActive === 'res'){ APRUN.busy = false; return; }
+    run.hidden = false; run.innerHTML = `<i aria-hidden="true"></i><span>${esc(t('run.send'))}</span><b>0.00 s</b>`;
+    const b = run.querySelector('b'), t0 = performance.now();
+    const step = now => { const k = Math.min(1, (now - t0) / 420); b.textContent = (0.42 * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(step); else { APRUN.busy = false; renderApiCode(false); } };
+    requestAnimationFrame(step);
+  }, n * 45 + 380);
 }
 // live status: inference_ready:true -> "API operational"; any other answer -> "Inference unavailable"; no answer (network, CORS, timeout) -> no pill
 const API_UP = {s:null};
@@ -2542,16 +2511,70 @@ function ansCard(id){
   if (x.type === 'noul'){ big = p3(x.noul); sub = t('q.py'); bars = [[t('q.yes'), x.noul, true], [t('q.no'), 1 - x.noul, false]]; }
   else if (x.type === 'choice'){ big = x.choice; sub = `${t('q.conf')} ${p3(x.confidence)}`; bars = Object.keys(x.probabilities).map(k => [k, x.probabilities[k], k === x.choice]); }
   else { const P = x.probabilities, top = Object.keys(P).reduce((m,k) => P[k] > P[m] ? k : m); big = x.score.toFixed(2); sub = `${t('q.exp')} · ${t('q.conf')} ${p3(x.confidence)}`; bars = Object.keys(P).map(k => [`${k} · ${x.legend[k]}`, P[k], k === top]); }
-  return `<article class="ans-card"><div class="ans-top"><span class="ans-q">"${id}"</span><span class="ans-type">${x.type}</span></div><p class="ans-i">${esc(q[id].instructions)}</p><p class="ans-big"><b>${esc(big)}</b><span>${esc(sub)}</span></p><div class="pbars" role="img" aria-label="${esc(bars.map(b => b[0] + ' ' + p3(b[1])).join(', '))}">${bars.map(b => bar(...b)).join('')}</div><p class="ans-def"><b>${x.type}</b>${esc(t('q.d.' + x.type))}</p></article>`;
+  return `<article class="ans-card"><div class="ans-top"><span class="ans-q">"${id}"</span><span class="ans-type">${x.type}</span></div><p class="ans-i">${esc(q[id].instructions)}</p><p class="ans-big"><b>${esc(big)}</b><span>${esc(sub)}</span></p><div class="pbars" role="img" aria-label="${esc(bars.map(b => b[0] + ' ' + p3(b[1])).join(', '))}">${bars.map(b => bar(...b)).join('')}</div></article>`;
 }
 function renderTypes(swap){
   const a = JSON.parse(EX_RES).answers, type = a[tyActive].type;
-  keepFocus($('tyTabs'), () => $('tyTabs').innerHTML = TY.map(id => `<button type="button" role="tab" class="tab" id="ty-${id}" data-ty="${id}" aria-controls="tyPanel" aria-selected="${id===tyActive}" tabindex="${id===tyActive ? 0 : -1}">${esc(t('ty.' + a[id].type))}<code>${a[id].type}</code></button>`).join(''));
+  keepFocus($('tyTabs'), () => $('tyTabs').innerHTML = TY.map(id => `<button type="button" role="tab" class="tab" id="ty-${id}" data-ty="${id}" aria-controls="tyPanel" aria-selected="${id===tyActive}" tabindex="${id===tyActive ? 0 : -1}"><span class="cd" aria-hidden="true"></span>${esc(t('ty.' + a[id].type))}<code>${a[id].type}</code></button>`).join(''));
+  tyArm();
   $('tyPanel').setAttribute('aria-labelledby', 'ty-' + tyActive);
   const code = (head, txt) => `<div class="code"><div class="code-head"><span>${esc(head)}</span></div><pre class="wrapc">${codeLines(txt, RE_JSON, true)}</pre></div>`;
-  $('tyPanel').innerHTML = `<div class="feat-text"><h3>${esc(t('ty.' + type + '.h'))}</h3><p>${esc(t('ty.' + type + '.p'))}</p><div class="feat-code">${code(t('ty.reqh'), fragment(EX_REQ, tyActive))}${code(t('ty.resh'), fragment(EX_RES, tyActive))}</div></div><div class="feat-media"><div class="band-art" aria-hidden="true"><canvas class="art" data-seed="feat-${type}" data-pal="${{noul:'b5', choice:'b8', score:'b6'}[type]}"></canvas></div><div class="ans${swap && !REDUCED ? ' pre' : ''}" id="tyAns">${ansCard(tyActive)}</div></div>`;
+  $('tyPanel').innerHTML = `<div class="feat-text"><h3>${esc(t('ty.' + type + '.h'))}</h3><div class="feat-code">${code(t('ty.reqh'), fragment(EX_REQ, tyActive))}${code(t('ty.resh'), fragment(EX_RES, tyActive))}</div></div><div class="feat-media"><div class="band-art" aria-hidden="true"><canvas class="art" data-seed="feat-${type}" data-pal="${{noul:'b5', choice:'b8', score:'b6'}[type]}"></canvas></div><div class="ans${swap && !REDUCED ? ' pre' : ''}" id="tyAns">${ansCard(tyActive)}</div></div>`;
   paintArt($('tyPanel'));
   if (swap){ const p = $('tyPanel'); p.classList.remove('swap-in'); void p.offsetWidth; p.classList.add('swap-in'); requestAnimationFrame(() => requestAnimationFrame(() => $('tyAns') && $('tyAns').classList.remove('pre'))); }
+}
+
+let tyAuto = !REDUCED, tyVis = false;
+function tyArm(){
+  $('tyTabs').querySelectorAll('.tab.run').forEach(b => b.classList.remove('run'));
+  const b = $('tyTabs').querySelector('[aria-selected="true"]');
+  if (b && tyAuto && tyVis){ void b.offsetWidth; b.classList.add('run'); }
+}
+
+/* ---------- hero: a live decision, typed out from the real production request/response ---------- */
+const TICK = {run:0, vis:true, tm:null};
+function tickBuild(){
+  const a = JSON.parse(EX_RES).answers, P = a.urgency.probabilities, top = Object.keys(P).reduce((m,k) => P[k] > P[m] ? k : m);
+  const rows = [
+    ['refund', 'noul', a.refund.noul, `${t('q.yes')} ${p3(a.refund.noul)}`],
+    ['team', 'choice', a.team.probabilities[a.team.choice], `${a.team.choice} ${p3(a.team.probabilities[a.team.choice])}`],
+    ['urgency', 'score', P[top], `${a.urgency.legend[top]} ${p3(P[top])}`],
+  ];
+  $('tick').innerHTML = `<div class="tk-head"><span>POST /v1/systemone</span><span class="tk-t" id="tkT"></span></div><p class="tk-state"><span class="tk-k">state</span><span id="tkTxt"></span><span class="tk-caret"></span></p><div class="tk-rows">${rows.map((r,i) => `<div class="tk-row" style="--i:${i}"><code>${r[0]}</code><span class="tk-ty">${r[1]}</span><span class="tk-bar"><i style="--w:${(r[2]*100).toFixed(1)}%"></i></span><span class="tk-v">${esc(r[3])}</span></div>`).join('')}</div>`;
+}
+function tickPlay(){
+  const el = $('tick'), txt = $('tkTxt'), clock = $('tkT'), st = JSON.parse(EX_REQ).state, run = ++TICK.run;
+  clearTimeout(TICK.tm);
+  if (REDUCED){ txt.textContent = st; clock.textContent = '0.42 s'; el.classList.add('done'); return; }
+  el.classList.remove('done', 'out'); txt.textContent = ''; clock.textContent = '';
+  const live = () => run === TICK.run;
+  const later = (fn, ms) => { TICK.tm = setTimeout(() => { if (!live()) return; if (!TICK.vis || document.hidden || FX.paused){ later(fn, 400); return; } fn(); }, ms); };
+  let i = 0;
+  const type = () => { i = Math.min(st.length, i + 2); txt.textContent = st.slice(0, i); if (i < st.length) later(type, 26); else later(answer, 260); };
+  const answer = () => {
+    el.classList.add('done');
+    const t0 = performance.now(), tickClock = now => { if (!live()) return; const k = Math.min(1, (now - t0) / 420); clock.textContent = (0.42 * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(tickClock); };
+    requestAnimationFrame(tickClock);
+    later(() => { el.classList.add('out'); later(tickPlay, 520); }, 4600);
+  };
+  later(type, 700);
+}
+
+/* ---------- use cases: the first demo plays (muted) while it is on screen ---------- */
+let ucIO = null;
+function ucWatch(){
+  if (ucIO) ucIO.disconnect();
+  const box = $('ucGrid').querySelector('[data-demo-media]');
+  if (!box || !('IntersectionObserver' in window)) return;
+  const d = DEMOS()[+box.dataset.demoMedia];
+  ucIO = new IntersectionObserver(es => {
+    const on = es[es.length-1].isIntersecting;
+    let v = box.querySelector('video');
+    if (!on || quiet() || document.hidden || !$('vbox').hidden){ if (v) v.pause(); return; }
+    if (!v){ v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute('aria-hidden', 'true'); v.tabIndex = -1; box.querySelector('.mi').append(v); vidSources(v, d); }
+    const p = v.play(); if (p) p.then(() => box.classList.add('playing'), () => {});
+  }, {threshold:.4});
+  ucIO.observe(box);
 }
 
 /* ---------- v3: models with no downloads stay off the page until they have some (data-driven, re-checked when stats load) ---------- */
@@ -2560,7 +2583,8 @@ const famVis = f => !!f && f.repos.some(repoVis);
 const VIS = () => DATA.families.filter(famVis);
 const repoOf = id => DATA.families.flatMap(f => f.repos).find(r => r.repo === id);
 const qsFam = q => q.repo ? DATA.families.find(f => f.repos.some(r => r.repo === q.repo)) : fam('v3-2b');
-const QSV = () => QS.filter(q => { const r = q.repo && repoOf(q.repo); return famVis(qsFam(q)) && (!r || repoVis(r)); });
+const QS_HOME = ['pip', 'b2t', 'b2g'];   // home page tabs; every model's own snippet is still in its drawer
+const QSV = () => QS.filter(q => { const r = q.repo && repoOf(q.repo); return QS_HOME.includes(q.id) && famVis(qsFam(q)) && (!r || repoVis(r)); });
 const visKey = () => VIS().map(f => f.id).join() + '|' + DATA.families.flatMap(f => f.repos).filter(repoVis).map(r => r.repo).join();
 function applyVisibility(){
   document.querySelectorAll('footer [data-open], [data-fam]').forEach(el => { const f = fam(el.dataset.fam || el.dataset.open); if (f) el.hidden = !famVis(f); });
@@ -2603,13 +2627,6 @@ $('ucMoreBtn').addEventListener('click', () => {
   $('ucMoreBtn').setAttribute('aria-expanded', String(open));
   if (open) paintArt($('ucMore'));
 });
-function renderProof(){
-  const f = fam('v3-2b'), jb = f && f.bench ? pct(f.bench.jevbench.acc) : '';
-  $('proofJb').textContent = jb ? `${jb} · 2B v3` : '';
-  $('pmJb').textContent = jb;
-  $('pmHF').href = HF + (f ? f.repos[0].repo : DATA.author);
-  paintArt(document.querySelector('.band')); paintArt($('resGrid'));
-}
 function setDocs(open){ $('docsBtn').setAttribute('aria-expanded', String(open)); $('docsMenu').hidden = !open; }
 /* ---------- wiring ---------- */
 function applyText(){
@@ -2622,15 +2639,15 @@ function applyText(){
   $('langBtn').lang = lang==='zh' ? 'en' : 'zh-CN';
   $('langBtn2').lastElementChild.textContent = t('lang.name');
   $('langBtn2').setAttribute('aria-label', $('langBtn').getAttribute('aria-label'));
-  $('snap').textContent = t('snap') + fmtDate(DATA.snapshot);
   document.title = t('title3');
   const pb = $('fxPause'); pb.innerHTML = FX.paused ? ICON_PLAY : ICON_PAUSE; pb.setAttribute('aria-label', t(FX.paused ? 'play' : 'pause'));
 }
 function renderAll(){
   applyText(); words($('heroTitle'), t('h3.title'));
-  renderHeroTabs(); heroStage(false); renderSpot(); renderUseCases(); renderTimeline(); renderModels(); renderDownloads(); renderBench(); renderQS(false); renderTypes(false); renderApiCode(false); renderStatus(); renderProof(); applyVisibility(); drawDrawer();
+  renderHeroTabs(); heroStage(false); renderUseCases(); renderModels(); renderDownloads(); renderBench(); renderQS(false); renderTypes(false); renderApiCode(false); renderStatus(); applyVisibility(); drawDrawer(); tickBuild(); tickPlay(); ucWatch();
   if (!$('srch').hidden) renderSearch();
   if (!$('vbox').hidden) vbFill();
+  scrubWords(); sxCollect(); sxFrame();
 }
 function copy(text, btn, selEl){
   const fallback = () => { if (!selEl) return; const s = getSelection(), r = document.createRange(); r.selectNodeContents(selEl); s.removeAllRanges(); s.addRange(r); };
@@ -2685,9 +2702,9 @@ $('vbNext').addEventListener('click', () => stepDemo(1));
 document.addEventListener('visibilitychange', featArm);
 $('copyBtn').addEventListener('click', e => copy(QS.find(x => x.id===qsActive).code, e.currentTarget, $('qsCode')));
 $('copyEmail').addEventListener('click', e => copy(DATA.email, e.currentTarget, $('email')));
-$('ring').addEventListener('animationend', e => { if (e.animationName === 'ring') carGo(CAR.i + 1); });
-$('carNext').addEventListener('click', () => { carStop(); carGo(CAR.i + 1); });
-$('carPrev').addEventListener('click', () => { carStop(); carGo(CAR.i - 1); });
+$('ring')?.addEventListener('animationend', e => { if (e.animationName === 'ring') carGo(CAR.i + 1); });
+$('carNext')?.addEventListener('click', () => { carStop(); carGo(CAR.i + 1); });
+$('carPrev')?.addEventListener('click', () => { carStop(); carGo(CAR.i - 1); });
 ['pointerdown','wheel','focusin'].forEach(ev => $('carTrack').addEventListener(ev, carStop, {passive:true}));
 $('fxPause').addEventListener('click', e => { e.preventDefault(); setPaused(!FX.paused); });
 $('switcher').addEventListener('focusin', e => { if (HERO.auto && e.target !== $('fxPause')){ HERO.auto = false; heroArm(); } });
@@ -2710,6 +2727,12 @@ $('mTabs').addEventListener('animationend', e => {
   if (!e.target.classList.contains('cd')) return;
   HERO.i = (HERO.i + 1) % VIS().length; renderHeroTabs(); heroStage(true);
 });
+$('tyTabs').addEventListener('animationend', e => {
+  if (!e.target.classList.contains('cd')) return;
+  tyActive = TY[(TY.indexOf(tyActive) + 1) % TY.length]; renderTypes(true);
+});
+$('try').addEventListener('focusin', () => { if (tyAuto){ tyAuto = false; tyArm(); } });
+$('try').addEventListener('pointerdown', () => { if (tyAuto){ tyAuto = false; tyArm(); } });
 $('qsTabs').addEventListener('animationend', e => {
   if (!e.target.classList.contains('cd')) return;
   const V = QSV(), i = V.findIndex(x => x.id===qsActive); qsActive = V[(i+1) % V.length].id; renderQS(true);
@@ -2725,6 +2748,7 @@ if ('ResizeObserver' in window){
   new ResizeObserver(() => { if (document.body.clientWidth === lastW) return; lastW = document.body.clientWidth; clearTimeout(rz); rz = setTimeout(() => { drawDrawer(); if (innerWidth > 1023) setMenu(false); }, 100); }).observe(document.body);
 }
 
+const SX = {els:[], cards:[]};   // filled by sxCollect() in renderAll()
 HERO.i = heroDefault(); HERO.vk = visKey();
 renderAll();
 if ('IntersectionObserver' in window){
@@ -2732,17 +2756,51 @@ if ('IntersectionObserver' in window){
   new IntersectionObserver(es => { if (es[0].isIntersecting){ $('fxWrap').classList.add('go'); } }, {rootMargin:'0px 0px -10% 0px'}).observe($('fxWrap'));
   new IntersectionObserver(es => { CAR.vis = es[es.length-1].isIntersecting; carArm(); }, {threshold:.35}).observe($('benchmarks'));
   new IntersectionObserver(es => { qsVis = es[es.length-1].isIntersecting; qsArm(); }, {threshold:.35}).observe($('developers'));
-  const sio = new IntersectionObserver(es => { if (es[es.length-1].isIntersecting){ showSpot(); sio.disconnect(); } }, {rootMargin:'0px 0px -15% 0px'});
-  if (!REDUCED && $('spotlight').getBoundingClientRect().top > innerHeight){ $('spotlight').classList.add('pre'); sio.observe($('spotlight')); }
-  const tlio = new IntersectionObserver(es => { if (es[es.length-1].isIntersecting){ $('tlList').classList.remove('pre'); $('tlList').classList.add('go'); tlio.disconnect(); } }, {rootMargin:'0px 0px -15% 0px'});
-  if (!REDUCED && $('timeline').getBoundingClientRect().top > innerHeight){ $('tlList').classList.add('pre'); tlio.observe($('timeline')); }
   const dio = new IntersectionObserver(es => { if (es[0].isIntersecting){ showDownloads(); dio.disconnect(); } }, {rootMargin:'0px 0px -12% 0px'});
-  if (!REDUCED && $('dlTiles').getBoundingClientRect().top > innerHeight) dio.observe($('dlTiles'));
-} else $('fxWrap').classList.add('go');
+  if (!REDUCED && $('omStats').getBoundingClientRect().top > innerHeight) dio.observe($('omStats'));
+  new IntersectionObserver(es => { TICK.vis = es[es.length-1].isIntersecting; }).observe($('tick'));
+  new IntersectionObserver(es => { tyVis = es[es.length-1].isIntersecting; tyArm(); }, {threshold:.35}).observe($('try'));
+  const aio = new IntersectionObserver(es => { if (es[es.length-1].isIntersecting){ apPlay(); aio.disconnect(); } }, {threshold:.35});
+  aio.observe($('apPanel'));
+} else { $('fxWrap').classList.add('go'); apPlayed = true; renderApiCode(false); }
 if (!REDUCED) $('fxWrap').classList.add('anim');
 
+/* Apple-style scroll motion: each [data-sx] element gets --p in 0..1 from its place in the viewport.
+   exit  - the hero sinks and fades as it scrolls away; enter - the model banner grows to full size;
+   scrub - the About sentence lights up word by word; use-case media grow in as they arrive. */
+function sxCollect(){ SX.els = [...document.querySelectorAll('[data-sx]')]; SX.cards = [...document.querySelectorAll('.uc3-card')]; }
+function scrubWords(){
+  document.querySelectorAll('.scrub').forEach(el => {
+    const text = el.textContent; el.textContent = '';
+    const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = text;
+    const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
+    (lang === 'zh' && window.Intl && Intl.Segmenter ? [...new Intl.Segmenter('zh', {granularity:'word'}).segment(text)].map(x => x.segment) : text.split(/(\s+)/)).forEach(w => {
+      if (!w) return; if (/^\s+$/.test(w)){ vis.append(w); return; }
+      const sp = document.createElement('span'); sp.className = 'sw'; sp.textContent = w; vis.append(sp);
+    });
+    el.append(sr, vis); el._k = -1;
+  });
+}
+function sxFrame(){
+  if (REDUCED) return;
+  const H = innerHeight, clamp = v => Math.max(0, Math.min(1, v));
+  SX.els.forEach(el => {
+    const r = el.getBoundingClientRect(), kind = el.dataset.sx;
+    if (r.bottom < -H || r.top > H * 2) return;
+    let p;
+    if (kind === 'exit') p = clamp(-r.top / Math.max(1, r.height * .85));
+    else if (kind === 'enter') p = clamp((H - r.top) / (H * .7));
+    else {
+      p = clamp((H * .82 - r.top) / (r.height + H * .3));
+      el.querySelectorAll('.scrub').forEach(sc => { const w = sc.querySelectorAll('.sw'), k = Math.round(p * w.length); if (k === sc._k) return; sc._k = k; w.forEach((x, i) => x.classList.toggle('lit', i < k)); });
+    }
+    el.style.setProperty('--p', p.toFixed(3));
+  });
+  SX.cards.forEach(c => { const r = c.getBoundingClientRect(); if (r.top > H * 1.5 || r.bottom < 0) return; c.style.setProperty('--p', clamp((H - r.top) / (H * .55)).toFixed(3)); });
+}
 let ticking = false;
-addEventListener('scroll', () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; fxScroll(); $('hdr').classList.toggle('scrolled', scrollY > 4); }); }, {passive:true});
+addEventListener('scroll', () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; fxScroll(); sxFrame(); $('hdr').classList.toggle('scrolled', scrollY > 4); }); }, {passive:true});
+addEventListener('resize', () => requestAnimationFrame(sxFrame), {passive:true});
 
 fxStart();
 setTimeout(() => $('stSpecs').querySelectorAll('dd').forEach(dd => countUp(dd, dd.dataset.v)), REDUCED ? 0 : 450);
@@ -2755,7 +2813,8 @@ if ('IntersectionObserver' in window && !REDUCED && $('tyAns').getBoundingClient
 }
 liveStats();
 apiHealth();
-const h = location.hash.slice(1); if (fam(h)) openDrawer(h); else reposFromHash(h);
+const h = location.hash.slice(1), OLD = {api:'try', resources:'start', production:'api-code', spotlight:'models', timeline:'models'};
+if (fam(h)) openDrawer(h); else if (OLD[h]) requestAnimationFrame(() => $(OLD[h]).scrollIntoView()); else reposFromHash(h);
 })();
 </script>
 
