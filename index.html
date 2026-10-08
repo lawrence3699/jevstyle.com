@@ -1372,7 +1372,7 @@ en:{
  "om.stats":"{dl} downloads · {m} models · Apache-2.0",
  "om.s.dl":"downloads",
  "om.s.m":"models",
- "om.s.lic":"license",
+ "om.s.likes":"likes",
  "run.send":"Sending",
  "run.ok":"200 OK · {s} s end-to-end",
  "run.see":"See response"
@@ -1583,7 +1583,7 @@ zh:{
  "om.stats":"{dl} 次下载 · {m} 个模型 · Apache-2.0",
  "om.s.dl":"次下载",
  "om.s.m":"个模型",
- "om.s.lic":"许可证",
+ "om.s.likes":"个赞",
  "run.send":"发送中",
  "run.ok":"200 OK · 端到端 {s} 秒",
  "run.see":"查看响应"
@@ -1947,7 +1947,7 @@ function renderDownloads(){
   const tot = hub.reduce((s,r) => s + dlAll(r), 0), t30 = hub.reduce((s,r) => s + dl30(r), 0), likes = hub.reduce((s,r) => s + (r.likes || 0), 0);
   const published = DATA.families.filter(f => f.repos.some(onHub)).length;
   const max = Math.max(1, ...repos.map(dlAll));
-  $('omStats').innerHTML = [[tot.toLocaleString('en-US'), t('om.s.dl')], [String(published), t('om.s.m')], ['Apache-2.0', t('om.s.lic')]].map(([v, k], i) => `<div><dt>${esc(k)}</dt><dd${i < 2 ? ` data-v="${v}"` : ''}>${esc(v)}</dd></div>`).join('');
+  $('omStats').innerHTML = [[tot, t('om.s.dl')], [likes, t('om.s.likes')], [published, t('om.s.m')]].map(([v, k]) => `<div><dt>${esc(k)}</dt><dd data-v="${v.toLocaleString('en-US')}">${v.toLocaleString('en-US')}</dd></div>`).join('');
   $('dlList').innerHTML = repos.map((r,i) => `<a class="dl-row" href="${HF+r.repo}" target="_blank" rel="noopener" style="--i:${i}"><span class="dl-name"><b>${esc(r.repo.split('/')[1])}</b><small>${esc(r.format)} · ${esc(fams[r.fid] || t('new'))}${r.createdAt ? ' · ' + fmtDate(r.createdAt) : ''}</small></span><span class="dl-bar"><i style="--w:${dlAll(r) ? Math.max(2, dlAll(r)/max*100).toFixed(1) : 0}%"></i></span><span class="dl-num"><b>${dlAll(r).toLocaleString('en-US')}<span class="sr-only"> ${t('dl.unit')}</span></b><small>${t('dl.30s')} · ${dl30(r).toLocaleString('en-US')}</small></span></a>`).join('');
   $('repoSum').textContent = t('dl.allrepos').replace('{n}', repos.length);
   $('proofDl').textContent = t('pr.hf').replace('{n}', tot.toLocaleString('en-US'));
