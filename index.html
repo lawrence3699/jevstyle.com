@@ -1007,7 +1007,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
     <div class="s3-head"><h2 id="codeH" data-i18n="code.h"></h2></div>
     <dl class="kstats" id="kStats">
       <div><dt data-i18n="k3.free"></dt><dd data-v="10,000">10,000</dd></div>
-      <div><dt data-i18n="k3.lat"></dt><dd data-v="0.37 s">0.37 s</dd></div>
+      <div><dt data-i18n="k3.lat"></dt><dd data-v="0.04 s">0.04 s</dd></div>
       <div><dt data-i18n="k3.tok"></dt><dd data-v="8,000">8,000</dd></div>
       <div><dt data-i18n="k3.out"></dt><dd data-i18n="k3.out.v"></dd></div>
     </dl>
@@ -1365,7 +1365,7 @@ en:{
  "fc.os.3":"Runs on CPU, CUDA and Apple silicon",
  "fc.os.4":"Up to 25,600 input tokens with 2B v3",
  "k3.free":"free requests a day",
- "k3.lat":"median, short request",
+ "k3.lat":"GPU time, short request",
  "k3.tok":"input tokens per request",
  "k3.out.v":"Probabilities",
  "k3.out":"for every option, nothing to parse",
@@ -1377,7 +1377,7 @@ en:{
  "om.s.m":"models",
  "om.s.likes":"likes",
  "run.send":"Sending",
- "run.ok":"200 OK · {s} s end-to-end",
+ "run.ok":"200 OK · {s} s on the GPU",
  "run.see":"See response"
 },
 zh:{
@@ -1576,7 +1576,7 @@ zh:{
  "fc.os.3":"支持 CPU、CUDA 和 Apple silicon",
  "fc.os.4":"2B v3 最多支持 25,600 个输入 token",
  "k3.free":"每天免费请求",
- "k3.lat":"短请求中位延迟",
+ "k3.lat":"短请求的 GPU 计算时间",
  "k3.tok":"每次输入 token",
  "k3.out.v":"概率",
  "k3.out":"每个选项一个，无需解析文本",
@@ -1588,7 +1588,7 @@ zh:{
  "om.s.m":"个模型",
  "om.s.likes":"个赞",
  "run.send":"发送中",
- "run.ok":"200 OK · 端到端 {s} 秒",
+ "run.ok":"200 OK · GPU 计算 {s} 秒",
  "run.see":"查看响应"
 }};
 
@@ -2468,10 +2468,10 @@ function renderApiCode(swap){
   const run = $('apRun'); run.hidden = !apPlayed || apActive === 'res';
   if (apPlayed && !APRUN.busy) run.innerHTML = runDone();
 }
-/* the request types in once when the code first comes into view, then a 200 comes back in 0.42 s (the real round trip) */
+/* the request types in once when the code first comes into view, then the 200 shows the response's own GPU time (latency_ms 29.7) */
 let apPlayed = false;
 const APRUN = {busy:false};
-const runDone = () => `<i class="ok" aria-hidden="true"></i><span>${esc(t('run.ok').replace('{s}', '0.42'))}</span><button type="button" class="run-see" data-ap="res">${esc(t('run.see'))} <span aria-hidden="true">&rarr;</span></button>`;
+const runDone = () => `<i class="ok" aria-hidden="true"></i><span>${esc(t('run.ok').replace('{s}', '0.03'))}</span><button type="button" class="run-see" data-ap="res">${esc(t('run.see'))} <span aria-hidden="true">&rarr;</span></button>`;
 function apPlay(){
   if (apPlayed) return; apPlayed = true;
   const pre = $('apCode'), run = $('apRun');
@@ -2483,7 +2483,7 @@ function apPlay(){
     if (apActive === 'res'){ APRUN.busy = false; return; }
     run.hidden = false; run.innerHTML = `<i aria-hidden="true"></i><span>${esc(t('run.send'))}</span><b>0.00 s</b>`;
     const b = run.querySelector('b'), t0 = performance.now();
-    const step = now => { const k = Math.min(1, (now - t0) / 420); b.textContent = (0.42 * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(step); else { APRUN.busy = false; renderApiCode(false); } };
+    const step = now => { const k = Math.min(1, (now - t0) / 300); b.textContent = (0.03 * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(step); else { APRUN.busy = false; renderApiCode(false); } };
     requestAnimationFrame(step);
   }, n * 45 + 380);
 }
@@ -2555,15 +2555,15 @@ function tyArm(){
 // #1 is the billing ticket below (EX_REQ/EX_RES); #2 and #3 were real calls on 2026-10-08 from a synthetic account
 // (evidence: Desktop/Jev免费API落地/gpu-release-20261008/evidence/homepage-sample-calls-2.json). Probabilities rounded to 3 places.
 const TICK_MORE = [
-  {state:'A coding agent wants to run: git push --force origin main. The user only asked it to tidy the commits on a feature branch.', s:'0.43',
+  {state:'A coding agent wants to run: git push --force origin main. The user only asked it to tidy the commits on a feature branch.', s:'0.04',
    answers:{safe:{type:'noul', noul:0.074}, action:{type:'choice', choice:'deny', probabilities:{allow:0.016, ask:0.303, deny:0.681}},
             risk:{type:'score', legend:{0:'low', 1:'medium', 2:'high'}, probabilities:{0:0.022, 1:0.253, 2:0.725}}}},
-  {state:"Review: The blender arrived cracked and support hasn't answered my emails in a week. Never again.", s:'0.42',
+  {state:"Review: The blender arrived cracked and support hasn't answered my emails in a week. Never again.", s:'0.04',
    answers:{reply:{type:'noul', noul:0.891}, topic:{type:'choice', choice:'support', probabilities:{product:0.103, delivery:0.306, support:0.591}},
             mood:{type:'score', legend:{0:'calm', 1:'annoyed', 2:'furious'}, probabilities:{0:0.010, 1:0.201, 2:0.790}}}},
 ];
 const TICK = {run:0, vis:true, tm:null, done:false};
-const tickExamples = () => [{state:JSON.parse(EX_REQ).state, answers:JSON.parse(EX_RES).answers, s:'0.42'}, ...TICK_MORE];
+const tickExamples = () => [{state:JSON.parse(EX_REQ).state, answers:JSON.parse(EX_RES).answers, s:'0.03'}, ...TICK_MORE];   // s = the response's latency_ms on the GPU (29.7 / 36.4 / 39.0 ms)
 function tickRows(ans){
   return Object.keys(ans).map(k => {
     const a = ans[k];
@@ -2582,7 +2582,7 @@ function tickPlay(){
   clearTimeout(TICK.tm);
   el.classList.remove('done', 'out');
   if (REDUCED || TICK.done){   // finished (or no motion): rest on the last example
-    const ex = tickBuild(); $('tkTxt').textContent = ex.state; $('tkT').textContent = ex.s + ' s'; el.classList.add('done'); return;
+    const ex = tickBuild(); $('tkTxt').textContent = ex.state; $('tkT').textContent = 'GPU ' + ex.s + ' s'; el.classList.add('done'); return;
   }
   const live = () => run === TICK.run;
   const later = (fn, ms) => { TICK.tm = setTimeout(() => { if (!live()) return; if (!TICK.vis || document.hidden || FX.paused){ later(fn, 400); return; } fn(); }, ms); };
@@ -2593,7 +2593,7 @@ function tickPlay(){
     const type = () => { c = Math.min(ex.state.length, c + 2); txt.textContent = ex.state.slice(0, c); if (c < ex.state.length) later(type, 24); else later(answer, 260); };
     const answer = () => {
       el.classList.add('done');
-      const t0 = performance.now(), end = +ex.s, tickClock = now => { if (!live()) return; const k = Math.min(1, (now - t0) / 420); clock.textContent = (end * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(tickClock); };
+      const t0 = performance.now(), end = +ex.s, tickClock = now => { if (!live()) return; const k = Math.min(1, (now - t0) / 300); clock.textContent = 'GPU ' + (end * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(tickClock); };
       requestAnimationFrame(tickClock);
       if (i === EX.length - 1){ TICK.done = true; return; }   // three examples, then it stays put
       later(() => { el.classList.add('out'); later(() => playOne(i + 1), 480); }, 3400);
