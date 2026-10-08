@@ -50,7 +50,7 @@
         <tr><td>Input cap / request</td><td><strong>8,000</strong> model tokens (state + all questions), max 32,000 UTF-8 bytes</td><td><code>413</code></td></tr>
         <tr><td>API keys / account</td><td><strong>3</strong></td><td>Create disabled in Console</td></tr>
       </table>
-      <p>Limits are per account and shared by all of its keys (up to 3, for rotation). Daily quota counts successful inference only; rejected, failed or timed-out requests are not charged. Global guards across all accounts: 240 RPM, 20,000 successful requests/day, 8 requests in flight. Several requests are computed in parallel; the rest wait briefly in a queue.</p>
+      <p>Limits are per account and shared by all of its keys (up to 3, for rotation). Daily quota counts successful inference only; rejected, failed or timed-out requests are not charged. Global guards across all accounts: 240 RPM, 200,000 successful requests/day, 8 requests in flight. Several requests are computed in parallel; the rest wait briefly in a queue.</p>
       <h2>Best practices</h2>
       <ul style="margin:0;padding-left:1.2em;color:var(--ink2)">
         <li style="margin-bottom:8px">Backoff on <code>429</code> / <code>504</code> / <code>5xx</code>.</li>
