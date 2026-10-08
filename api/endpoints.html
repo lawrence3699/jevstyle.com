@@ -34,7 +34,7 @@
       <a href="./limits.html">Limits</a>
       <a href="./errors.html">Errors</a>
       <div class="side-label" style="margin-top:16px">Guides</div>
-      <a href="./index.html#examples">SDKs / examples</a>
+      <a href="./index.html#examples">Code examples</a>
       <a href="/register/">Create account</a>
       <a href="/console/">Console</a>
     </aside>
@@ -46,6 +46,7 @@
       <table>
         <tr><th>Method</th><th>Path</th><th>Auth</th><th>Notes</th></tr>
         <tr><td><code>POST</code></td><td><code>/v1/systemone</code></td><td>API key</td><td>Decision API: calibrated probabilities for noul / choice / score questions</td></tr>
+        <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td>API key</td><td>Lists the hosted model (<code>jev-style-2b-decision-v3</code>) with its context and input limits; also a quick way to check that a key works</td></tr>
       </table>
       <h3>Request body</h3>
       <p style="color:var(--ink2)"><code>state</code> (string) + <code>questions</code> (map of id → question). Each question has <code>type</code>, <code>instructions</code>, and optional/required <code>criteria</code>.</p>
