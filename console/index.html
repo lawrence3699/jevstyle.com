@@ -4,269 +4,382 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Console · JevStyle Free API</title>
-  <meta name="description" content="Create and revoke API keys, view usage." />
+  <meta name="description" content="Manage API keys, try requests in the Playground and view usage for the JevStyle Free API." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" />
   <link rel="stylesheet" href="./styles.css" />
   <script>(function(){try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 </head>
 <body>
-  <header class="hdr">
-    <div class="hdr-in">
-      <a class="brand" href="/">
-        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        JevStyle
-      </a>
-      <nav class="nav">
-        <a href="/api/">Docs</a>
-        <a href="./index.html" aria-current="page">Console</a>
-      </nav>
-      <div class="sp"></div>
-      <span class="user-chip" id="user-chip">…</span>
-      <button type="button" class="icon-btn" id="theme-btn" aria-label="Toggle theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg></button>
-      <button type="button" class="pill soft" id="logout-btn">Log out</button>
-    </div>
-  </header>
-
-  <main class="page">
-    <div class="banner"><strong>Free tier:</strong> per account, 1 request at a time, 20/min and 500 successful requests/day (UTC), shared by up to <strong>3 keys</strong>.</div>
-    <h1>Console</h1>
-    <p class="lead">Create and revoke API keys. Plaintext keys are shown only once at creation.</p>
-    <div id="gate" class="msg" hidden></div>
-
-    <h2>API keys</h2>
-    <div class="actions">
-      <button type="button" class="pill dark" id="create-btn">Create API key</button>
-    </div>
-    <div id="keys-msg" class="msg" hidden style="margin-top:12px"></div>
-    <div class="panel" id="keys-list" style="margin-top:12px">
-      <div class="row"><span class="meta">Loading…</span></div>
-    </div>
-
-    <h2>Usage</h2>
-    <p class="lead">Usage is per account: all your keys share 500 successful requests/day. Failed requests do not consume quota.</p>
-    <div id="usage-msg" class="msg" hidden></div>
-    <div class="stat-grid" id="usage-grid">
-      <div class="stat"><div class="lbl">Daily used</div><div class="val" id="u-used">—</div></div>
-      <div class="stat"><div class="lbl">Remaining</div><div class="val" id="u-rem">—</div></div>
-      <div class="stat"><div class="lbl">RPM limit</div><div class="val" id="u-rpm">20</div></div>
-      <div class="stat"><div class="lbl">Resets (UTC)</div><div class="val" id="u-reset" style="font-size:1rem">—</div></div>
-    </div>
-
-    <footer class="site-foot">
-      <span>Independent · not TypeSafe</span>
-      <span>·</span>
-      <span>Session cookie · CORS: jevstyle.com only · ≤3 keys</span>
-      <span>·</span>
-      <a href="/api/">API docs</a>
-    </footer>
-  </main>
-
-  <div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal">
-      <h3 id="modal-title">API key created</h3>
-      <p>Copy this key now. You will not see the full value again.</p>
-      <div class="secret" id="modal-secret"></div>
-      <div class="actions">
-        <button type="button" class="pill dark" id="copy-btn">Copy</button>
-        <button type="button" class="pill soft" id="modal-close">Done</button>
+  <div class="app">
+    <aside class="sidebar" aria-label="Console">
+      <div class="sb-brand">
+        <a class="brand" href="/">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          JevStyle
+        </a>
+        <span class="brand-sub">Free API</span>
       </div>
-    </div>
+      <nav class="sb-nav" id="nav" aria-label="Console sections">
+        <a href="#overview" data-page="overview"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.2 10 3.8l6.5 5.4V16a.7.7 0 0 1-.7.7h-3.6v-4.4H7.8v4.4H4.2a.7.7 0 0 1-.7-.7z"/></svg><span>Overview</span></a>
+        <a href="#playground" data-page="playground"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5.2v9.6l7.4-4.8z"/></svg><span>Playground</span></a>
+        <a href="#keys" data-page="keys"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="7" cy="10" r="3.3"/><path d="M10.3 10H17M14.5 10v2.6M16.8 10v1.8"/></svg><span>API keys</span></a>
+        <a href="#usage" data-page="usage"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16.5V11M8 16.5V6.5M12 16.5V9M16 16.5V4"/></svg><span>Usage</span></a>
+        <a href="#limits" data-page="limits"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="M10 6.4V10l2.4 1.6"/></svg><span class="lbl-long">Limits &amp; models</span><span class="lbl-short">Limits</span></a>
+        <a href="/api/" class="ext"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4M7.8 11h4.4M7.8 13.6h4.4"/></svg><span>Docs</span><span class="ext-arrow" aria-hidden="true">↗</span></a>
+      </nav>
+      <div class="sb-status">
+        <span class="status-pill" id="status-pill" data-state="checking" role="status"><i aria-hidden="true"></i><span id="status-text">Checking status…</span></span>
+      </div>
+      <div class="sb-account">
+        <div class="acct-email" id="user-chip">…</div>
+        <div class="acct-actions">
+          <button type="button" class="icon-btn" id="theme-btn" aria-label="Toggle theme" title="Theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg></button>
+          <button type="button" class="btn ghost sm" id="logout-btn" aria-label="Log out"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4.5H4.8v11H8M11.5 6.8 14.7 10l-3.2 3.2M14.5 10H7.8"/></svg><span>Log out</span></button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content" id="content">
+      <div id="gate" class="gate" hidden></div>
+      <div id="verify-banner" class="notice warn" hidden>
+        <strong>Verify your email to create and use API keys.</strong>
+        Verifying signs you out elsewhere and replaces old keys. <a id="verify-link" href="/verify-email/">Send verification email</a>
+      </div>
+
+      <!-- Overview -->
+      <section class="view" data-view="overview" hidden>
+        <header class="page-head">
+          <div>
+            <h1>Overview</h1>
+            <p class="page-sub">Signed in as <span id="ov-email">…</span></p>
+          </div>
+          <div class="head-actions">
+            <a class="btn" href="#playground">Open Playground</a>
+            <button type="button" class="btn primary" data-action="create"><span aria-hidden="true">+</span> Create new secret key</button>
+          </div>
+        </header>
+        <div class="cards3">
+          <div class="card stat">
+            <div class="card-label">Requests today</div>
+            <div class="big"><span id="ov-used">—</span><span class="of"> / <span id="ov-limit">500</span></span></div>
+            <div class="meter" aria-hidden="true"><span id="ov-meter"></span></div>
+            <div class="card-foot" id="ov-reset">Resets at 00:00 UTC</div>
+          </div>
+          <div class="card stat">
+            <div class="card-label">Service status</div>
+            <div class="status-line"><span class="status-dot" id="ov-status-dot" data-state="checking" aria-hidden="true"></span><span id="ov-status">Checking…</span></div>
+            <div class="card-foot">Model <code>jev-style-2b-decision-v3</code></div>
+          </div>
+          <div class="card stat">
+            <div class="card-label">API keys</div>
+            <div class="big"><span id="ov-keys">—</span><span class="of"> of <span id="ov-max">3</span> active</span></div>
+            <div class="card-foot"><a href="#keys">Manage API keys</a></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Quick start</h2>
+            <div class="seg" role="group" aria-label="Snippet language">
+              <button type="button" data-qs="curl" aria-pressed="true">curl</button>
+              <button type="button" data-qs="python" aria-pressed="false">Python</button>
+            </div>
+          </div>
+          <ol class="steps">
+            <li>Create a secret key on the <a href="#keys">API keys</a> page and store it somewhere safe.</li>
+            <li>Make it available to your code: <code>export JEV_API_KEY="jev_…"</code></li>
+            <li>Send your first request:</li>
+          </ol>
+          <div class="code-block">
+            <button type="button" class="copy-btn" data-copy="qs">Copy</button>
+<pre id="qs-curl" data-qs-pane="curl">curl https://api.jevstyle.com/v1/systemone \
+  -H "Authorization: Bearer $JEV_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "state": "I was billed twice. Please refund one charge.",
+    "questions": {
+      "refund": {"type": "noul", "instructions": "The customer asks for money back."}
+    }
+  }'</pre>
+<pre id="qs-python" data-qs-pane="python" hidden>import os
+import requests
+
+response = requests.post(
+    "https://api.jevstyle.com/v1/systemone",
+    headers={"Authorization": f"Bearer {os.environ['JEV_API_KEY']}"},
+    json={
+        "state": "I was billed twice. Please refund one charge.",
+        "questions": {
+            "refund": {"type": "noul", "instructions": "The customer asks for money back."},
+        },
+    },
+    timeout=70,
+)
+response.raise_for_status()
+print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Resources</h2>
+          <ul class="link-list">
+            <li><a href="/api/">Documentation</a><span>Request format, question types and examples</span></li>
+            <li><a href="/api/endpoints.html">Endpoints</a><span>Every route, with request and response fields</span></li>
+            <li><a href="/api/errors.html">Errors</a><span>Status codes and how to handle them</span></li>
+            <li><a href="#limits">Limits &amp; models</a><span>Rate limits, daily quota and model details</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Playground -->
+      <section class="view" data-view="playground" hidden>
+        <header class="page-head">
+          <div>
+            <h1>Playground</h1>
+            <p class="page-sub">Try <code>POST /v1/systemone</code> without writing code. Requests use your API key and count toward your daily quota when they succeed.</p>
+          </div>
+        </header>
+        <div class="pg-grid">
+          <div class="card pg-req">
+            <div class="field">
+              <label for="pg-example">Example</label>
+              <select id="pg-example">
+                <option value="support">Support ticket (noul + choice + score)</option>
+                <option value="noul">Yes / no (noul)</option>
+                <option value="choice">Pick one option (choice)</option>
+                <option value="score">Rate on a scale (score)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="pg-key">API key</label>
+              <div class="input-row">
+                <input id="pg-key" type="password" autocomplete="off" spellcheck="false" placeholder="jev_…" />
+                <button type="button" class="btn sm" id="pg-key-toggle" aria-pressed="false">Show</button>
+              </div>
+              <p class="hint">Kept in this tab's memory only — never saved. Sent only to the JevStyle API.</p>
+            </div>
+            <div class="field">
+              <label for="pg-body">Request body</label>
+              <textarea id="pg-body" spellcheck="false" autocomplete="off" rows="18"></textarea>
+            </div>
+            <div class="pg-actions">
+              <button type="button" class="btn primary" id="pg-run">Run</button>
+              <button type="button" class="btn" id="pg-format">Format JSON</button>
+              <span class="hint kbd-hint">Ctrl / ⌘ + Enter to run</span>
+            </div>
+          </div>
+          <div class="card pg-res" aria-live="polite">
+            <div class="res-head">
+              <h2>Response</h2>
+              <span class="badge" id="pg-status" hidden></span>
+              <span class="muted" id="pg-time"></span>
+            </div>
+            <div id="pg-msg" class="notice" hidden></div>
+            <div id="pg-empty" class="empty sm">Choose an example, paste your API key and press <strong>Run</strong>. The model's answer appears here.</div>
+            <div id="pg-raw-wrap" hidden>
+              <div class="code-block">
+                <button type="button" class="copy-btn" data-copy="pg-raw">Copy</button>
+                <pre id="pg-raw"></pre>
+              </div>
+            </div>
+            <div id="pg-answers" class="answers"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- API keys -->
+      <section class="view" data-view="keys" hidden>
+        <header class="page-head">
+          <div>
+            <h1>API keys</h1>
+            <p class="page-sub">Your secret API keys are listed below. A key is shown only once, when you create it, so store it somewhere safe. Do not share your keys or put them in browser or other client-side code.</p>
+            <p class="page-sub">All keys in your account share the same limits. <a href="#limits">View limits</a></p>
+          </div>
+        </header>
+        <div class="toolbar">
+          <span class="muted" id="key-count">— of 3 keys used</span>
+          <button type="button" class="btn primary" id="create-btn" data-action="create"><span aria-hidden="true">+</span> Create new secret key</button>
+        </div>
+        <div id="keys-msg" class="notice" hidden></div>
+        <div class="table-card" id="keys-wrap">
+          <table class="data-table keys-table" id="keys-table">
+            <thead>
+              <tr><th scope="col">Name</th><th scope="col">Secret key</th><th scope="col">Created</th><th scope="col">Last used</th><th scope="col" class="num">Requests today</th><th scope="col"><span class="sr-only">Actions</span></th></tr>
+            </thead>
+            <tbody id="keys-body"><tr><td colspan="6" class="muted">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="empty" id="keys-empty" hidden>
+          <strong>No API keys yet</strong>
+          <span>Create a secret key to start calling the API. You can have up to <span id="keys-empty-max">3</span> active keys.</span>
+        </div>
+      </section>
+
+      <!-- Usage -->
+      <section class="view" data-view="usage" hidden>
+        <header class="page-head">
+          <div>
+            <h1>Usage</h1>
+            <p class="page-sub">Successful requests across all keys in your account. Days follow UTC.</p>
+          </div>
+          <div class="seg" role="group" aria-label="Date range" id="range-seg">
+            <button type="button" data-days="14" aria-pressed="false">14 days</button>
+            <button type="button" data-days="30" aria-pressed="true">30 days</button>
+          </div>
+        </header>
+        <div id="usage-msg" class="notice err" hidden></div>
+        <div class="card today-card">
+          <div class="today-top">
+            <div>
+              <div class="card-label">Today</div>
+              <div class="big"><span id="u-used">—</span><span class="of"> / <span id="u-limit">500</span> requests</span></div>
+            </div>
+            <div class="today-side">
+              <div class="card-label">Remaining</div>
+              <div class="mid" id="u-rem">—</div>
+            </div>
+          </div>
+          <div class="meter lg" id="u-meter-wrap" role="meter" aria-label="Requests used today" aria-valuemin="0" aria-valuemax="500" aria-valuenow="0"><span id="u-meter"></span></div>
+          <div class="card-foot" id="u-reset">Resets at 00:00 UTC</div>
+        </div>
+        <div class="card chart-card" id="chart-card">
+          <div class="card-head">
+            <div>
+              <h2>Successful requests</h2>
+              <p class="muted" id="chart-sub">Last 30 days · UTC</p>
+            </div>
+            <div class="chart-total"><span id="chart-total">—</span><span class="muted"> total</span></div>
+          </div>
+          <div class="legend" id="chart-legend" hidden></div>
+          <div class="chart" id="chart" hidden></div>
+          <div class="chart-tip" id="chart-tip" role="tooltip" hidden></div>
+          <div class="empty" id="chart-empty" hidden>
+            <strong>No usage yet</strong>
+            <span>There are no successful requests in this period. Try one in the <a href="#playground">Playground</a> or follow the <a href="#overview">quick start</a>.</span>
+          </div>
+          <details class="table-view" id="chart-table-wrap" hidden>
+            <summary>Show as table</summary>
+            <table class="data-table compact">
+              <thead><tr><th scope="col">Day (UTC)</th><th scope="col" class="num">Requests</th><th scope="col">By key</th></tr></thead>
+              <tbody id="chart-table"></tbody>
+            </table>
+          </details>
+        </div>
+        <p class="note">Only successful requests count. Failed, rejected or timed-out requests are not charged. Requests made with keys you have since revoked still count toward today's total.</p>
+      </section>
+
+      <!-- Limits & models -->
+      <section class="view" data-view="limits" hidden>
+        <header class="page-head">
+          <div>
+            <h1>Limits &amp; models</h1>
+            <p class="page-sub">Free tier, best effort and without an SLA. Limits may change.</p>
+          </div>
+        </header>
+        <div class="card">
+          <h2>Rate limits</h2>
+          <p class="muted">Limits apply to your whole account and are shared by all of its keys. Extra keys are for rotation, not extra capacity.</p>
+          <div class="table-scroll">
+            <table class="data-table" id="limits-table">
+              <thead><tr><th scope="col">Limit</th><th scope="col">Value</th><th scope="col">When exceeded</th></tr></thead>
+              <tbody>
+                <tr><td>Concurrent requests</td><td><strong id="l-conc">1</strong> per account</td><td><code>429</code></td></tr>
+                <tr><td>Requests per minute</td><td><strong id="l-rpm">20</strong> per account</td><td><code>429</code> with Retry-After</td></tr>
+                <tr><td>Successful requests per day</td><td><strong id="l-daily">500</strong> per account, resets 00:00 UTC</td><td><code>429</code></td></tr>
+                <tr><td>Input per request</td><td><strong id="l-tokens">8,000</strong> tokens (state + all questions)</td><td><code>413</code></td></tr>
+                <tr><td>API keys</td><td><strong id="l-keys">3</strong> active per account</td><td>Create is disabled</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fine">Failed, rejected and timed-out requests are not charged against your daily quota.</p>
+        </div>
+        <div class="card">
+          <h2>Models</h2>
+          <div class="model">
+            <div class="model-head">
+              <code class="model-id">jev-style-2b-decision-v3</code>
+              <span class="tag">Free tier</span>
+            </div>
+            <p class="muted">Jev-Style 2B Decision v3 reads a state and answers typed decision questions in a single pass, returning calibrated probabilities instead of generated text.</p>
+            <dl class="specs">
+              <div><dt>Context window</dt><dd>25,600 tokens</dd></div>
+              <div><dt>Free-tier input cap</dt><dd>8,000 tokens per request</dd></div>
+              <div><dt>Question types</dt><dd class="types"><span><code>noul</code>yes / no</span><span><code>choice</code>pick one option</span><span><code>score</code>ordered scale</span></dd></div>
+              <div><dt>Output</dt><dd>Probabilities per question, no generated text</dd></div>
+              <div><dt>Endpoint</dt><dd><code>POST /v1/systemone</code></dd></div>
+            </dl>
+            <a class="ext-link" href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3" target="_blank" rel="noopener noreferrer">Model card on Hugging Face <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span>JevStyle Free API</span><span aria-hidden="true">·</span>
+        <span>An independent project, not affiliated with TypeSafe</span><span aria-hidden="true">·</span>
+        <a href="/api/">Docs</a><span aria-hidden="true">·</span>
+        <a href="/api/terms.html">Terms</a>
+      </footer>
+    </main>
   </div>
 
-  <script>
-    (function () {
-      var CONTROL = "https://api.jevstyle.com/control/v1";
-      var KEY = "jev-api-theme";
-      var order = ["system", "light", "dark"];
-      function currentTheme() { try { return localStorage.getItem(KEY) || "system"; } catch (e) { return "system"; } }
-      function applyTheme(t) {
-        var root = document.documentElement;
-        if (!t || t === "system") root.removeAttribute("data-theme");
-        else root.setAttribute("data-theme", t);
-        try { localStorage.setItem(KEY, t || "system"); } catch (e) {}
-      }
-      applyTheme(currentTheme());
-      document.getElementById("theme-btn").onclick = function () {
-        var i = order.indexOf(currentTheme());
-        applyTheme(order[(i + 1) % order.length]);
-      };
+  <dialog class="dlg" id="create-dialog" aria-labelledby="create-title">
+    <form id="create-form" novalidate>
+      <div id="create-step">
+        <h3 id="create-title">Create new secret key</h3>
+        <label for="key-name">Name <span class="muted">Optional</span></label>
+        <input id="key-name" type="text" maxlength="64" placeholder="My test key" autocomplete="off" spellcheck="false" />
+        <p class="hint">Helps you tell keys apart. Up to 64 characters.</p>
+        <div id="create-msg" class="notice err" hidden></div>
+        <div class="dlg-actions">
+          <button type="button" class="btn" data-close>Cancel</button>
+          <button type="submit" class="btn primary" id="create-submit">Create secret key</button>
+        </div>
+      </div>
+    </form>
+    <div id="created-step" hidden>
+      <h3 id="created-title">Save your key</h3>
+      <p>Please save this secret key somewhere safe and accessible. For security reasons, <strong>you won't be able to view it again</strong> through your account. If you lose it, you'll need to create a new one.</p>
+      <div class="secret-row">
+        <input id="new-key" class="mono" type="text" readonly aria-label="New secret key" spellcheck="false" />
+        <button type="button" class="btn primary" id="copy-key">Copy</button>
+      </div>
+      <p class="hint" id="created-name"></p>
+      <div class="field-label">Try it with curl</div>
+      <div class="code-block">
+        <button type="button" class="copy-btn" id="copy-curl">Copy</button>
+        <pre id="new-key-curl"></pre>
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn" id="use-in-pg">Use in Playground</button>
+        <button type="button" class="btn primary" id="created-done">Done</button>
+      </div>
+    </div>
+  </dialog>
 
-      var gate = document.getElementById("gate");
-      var keysList = document.getElementById("keys-list");
-      var keysMsg = document.getElementById("keys-msg");
-      var usageMsg = document.getElementById("usage-msg");
-      var createBtn = document.getElementById("create-btn");
-      var userChip = document.getElementById("user-chip");
-      var modal = document.getElementById("modal");
-      var activeCount = 0;
-      var maxKeys = 3;
-      var creating = false;
-      var accountVerified = false;
+  <dialog class="dlg" id="rename-dialog" aria-labelledby="rename-title">
+    <form id="rename-form" novalidate>
+      <h3 id="rename-title">Rename secret key</h3>
+      <label for="rename-input">Name</label>
+      <input id="rename-input" type="text" maxlength="64" autocomplete="off" spellcheck="false" />
+      <div id="rename-msg" class="notice err" hidden></div>
+      <div class="dlg-actions">
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn primary" id="rename-save">Save</button>
+      </div>
+    </form>
+  </dialog>
 
-      function showMsg(el, text, cls) {
-        el.textContent = text;
-        el.className = "msg" + (cls ? " " + cls : "");
-        el.hidden = !text;
-      }
+  <dialog class="dlg" id="revoke-dialog" aria-labelledby="revoke-title">
+    <h3 id="revoke-title">Revoke secret key</h3>
+    <p>This API key will be disabled immediately. Requests that use it will be rejected, and you will not be able to view or change it again.</p>
+    <div class="revoke-key"><span id="revoke-name"></span><code id="revoke-mask"></code></div>
+    <div id="revoke-msg" class="notice err" hidden></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn" data-close>Cancel</button>
+      <button type="button" class="btn danger" id="revoke-confirm">Revoke key</button>
+    </div>
+  </dialog>
 
-      async function api(path, opts) {
-        opts = opts || {};
-        var res = await fetch(CONTROL + path, Object.assign({
-          credentials: "include",
-          headers: Object.assign({ "Content-Type": "application/json" }, opts.headers || {})
-        }, opts));
-        return res;
-      }
-
-      async function loadMe() {
-        try {
-          var res = await api("/auth/me");
-          if (res.status === 401) {
-            userChip.textContent = "Not signed in";
-            showMsg(gate, "Sign in to manage keys.", "err");
-            gate.innerHTML = 'Sign in to manage keys. <a href="/login/">Log in</a> · <a href="/register/">Register</a>';
-            gate.className = "msg err"; gate.hidden = false;
-            createBtn.disabled = true;
-            keysList.innerHTML = '<div class="row"><span class="meta">Sign in required</span></div>';
-            return null;
-          }
-          if (!res.ok) throw new Error("me " + res.status);
-          var payload = await res.json();
-          var me = payload.user;
-          if (!me) throw new Error("Invalid account response");
-          userChip.textContent = me.email || me.name || "Signed in";
-          accountVerified = me.email_verified === true;
-          gate.hidden = accountVerified;
-          if (!accountVerified) {
-            gate.innerHTML = 'Verify your email before creating or using API keys. Verification revokes old sessions and keys. <a id="verify-link" href="/verify-email/">Send verification email</a>';
-            gate.className = "msg err";
-            try { sessionStorage.setItem("jev-verification-email", me.email); } catch (e) {}
-          }
-          return me;
-        } catch (e) {
-          userChip.textContent = "Offline";
-          showMsg(gate, "Can't reach the control plane (api.jevstyle.com). Auth may not be live yet — UI still previews locally.", "err");
-          createBtn.disabled = true;
-          keysList.innerHTML = '<div class="row"><span class="meta">Control plane unreachable</span></div>';
-          return null;
-        }
-      }
-
-      function renderKeys(keys) {
-        if (!Array.isArray(keys)) throw new Error("Invalid keys response");
-        activeCount = keys.filter(function (k) { return k.status === "active"; }).length;
-        createBtn.disabled = !accountVerified || creating || activeCount >= maxKeys;
-        createBtn.title = activeCount >= maxKeys ? "You've reached the 3-key limit. Revoke a key to create another." : "";
-        if (!keys.length) {
-          keysList.innerHTML = '<div class="row"><span class="meta">No keys yet — create one to call the API.</span></div>';
-          return;
-        }
-        keysList.innerHTML = keys.map(function (k) {
-          var st = k.status || "active";
-          return '<div class="row">' +
-            '<span class="prefix">' + (k.key_prefix || k.prefix || "jev_…") + '</span>' +
-            '<span class="status ' + st + '">' + st + '</span>' +
-            '<span class="meta">' + (k.created_at || "") + '</span>' +
-            (st === "active"
-              ? '<button type="button" class="pill danger" data-revoke="' + k.id + '">Revoke</button>'
-              : "") +
-            '</div>';
-        }).join("");
-        keysList.querySelectorAll("[data-revoke]").forEach(function (btn) {
-          btn.onclick = function () { revokeKey(btn.getAttribute("data-revoke")); };
-        });
-      }
-
-      async function loadKeys() {
-        try {
-          var res = await api("/keys");
-          if (res.status === 401) throw new Error("Session expired — sign in again");
-          if (!res.ok) throw new Error("keys " + res.status);
-          var data = await res.json();
-          maxKeys = data.max_keys;
-          renderKeys(data.items);
-        } catch (e) {
-          showMsg(keysMsg, "Couldn't load keys. Refresh or sign in again.", "err");
-          createBtn.disabled = true;
-        }
-      }
-
-      async function loadUsage() {
-        try {
-          var res = await api("/usage");
-          if (res.status === 401) throw new Error("Session expired — sign in again");
-          if (!res.ok) throw new Error("usage " + res.status);
-          var u = await res.json();
-          document.getElementById("u-used").textContent = u.daily_used != null ? u.daily_used : "—";
-          document.getElementById("u-rem").textContent = u.daily_remaining != null ? u.daily_remaining : "—";
-          document.getElementById("u-rpm").textContent = u.rpm_limit != null ? u.rpm_limit : 20;
-          document.getElementById("u-reset").textContent = u.reset_at || "UTC midnight";
-        } catch (e) {
-          showMsg(usageMsg, "Couldn't load usage. Refresh or sign in again.", "err");
-        }
-      }
-
-      async function createKey() {
-        if (!accountVerified) { showMsg(keysMsg, "Verify your email before creating API keys.", "err"); return; }
-        if (creating) return;
-        showMsg(keysMsg, "");
-        if (activeCount >= maxKeys) {
-          showMsg(keysMsg, "You've reached the 3-key limit. Revoke a key to create another.", "err");
-          return;
-        }
-        try {
-          creating = true; createBtn.disabled = true;
-          var res = await api("/keys", { method: "POST", body: "{}" });
-          if (!res.ok) {
-            var t = "Create failed.";
-            try { var j = await res.json(); if (j.message) t = j.message; } catch (e) {}
-            showMsg(keysMsg, t, "err"); return;
-          }
-          var data = await res.json();
-          var secret = data.api_key || data.key || "";
-          document.getElementById("modal-secret").textContent = secret;
-          modal.classList.add("open");
-          await loadKeys();
-          await loadUsage();
-        } catch (e) {
-          showMsg(keysMsg, "Can't reach the control plane.", "err");
-        } finally {
-          creating = false; createBtn.disabled = !accountVerified || activeCount >= maxKeys;
-        }
-      }
-
-      async function revokeKey(id) {
-        if (!confirm("Revoke this key? Calls with it will fail.")) return;
-        try {
-          var res = await api("/keys/" + encodeURIComponent(id) + "/revoke", { method: "POST", body: "{}" });
-          if (!res.ok) { showMsg(keysMsg, "Revoke failed.", "err"); return; }
-          showMsg(keysMsg, "Key revoked.", "ok");
-          await loadKeys();
-          await loadUsage();
-        } catch (e) {
-          showMsg(keysMsg, "Can't reach the control plane.", "err");
-        }
-      }
-
-      document.getElementById("create-btn").onclick = createKey;
-      document.getElementById("modal-close").onclick = function () { modal.classList.remove("open"); document.getElementById("modal-secret").textContent = ""; };
-      document.getElementById("copy-btn").onclick = function () {
-        var t = document.getElementById("modal-secret").textContent;
-        if (navigator.clipboard) navigator.clipboard.writeText(t);
-      };
-      document.getElementById("logout-btn").onclick = async function () {
-        try { await api("/auth/logout", { method: "POST", body: "{}" }); } catch (e) {}
-        location.href = "/login/";
-      };
-
-      (async function init() {
-        var me = await loadMe();
-        if (me) { await loadKeys(); await loadUsage(); }
-      })();
-    })();
-  </script>
+  <script src="./console.js"></script>
 </body>
 </html>
