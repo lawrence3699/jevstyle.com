@@ -1,7 +1,42 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow"><title>Check your email · JevStyle</title>
-<script>(function(){var p=new URLSearchParams(location.hash.slice(1));window.__jevEmailToken=p.get("token")||"";history.replaceState(null,"",location.pathname);try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow"><title>Verify email · JevStyle</title>
+<script>(function(){var p=new URLSearchParams(location.hash.slice(1));window.__jevEmailToken=p.get("token")||"";if(window.__jevEmailToken)document.documentElement.setAttribute("data-token","");history.replaceState(null,"",location.pathname);try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <link rel="stylesheet" href="/assets/auth.css"><script src="/assets/auth-flows.js" defer></script></head>
-<body data-auth-flow="verify-email"><a class="top-brand" href="/">JevStyle</a><main class="card"><h1 id="heading">Check your email</h1><p id="intro" class="sub">Request a new verification link for your email/password account.</p>
-<form id="request-form"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required placeholder="you@example.com"><button type="submit" class="btn primary">Send email</button></form><form id="proof-form" hidden><label for="password">New password</label><input id="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><label for="password-confirm">Confirm password</label><input id="password-confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><p class="sub">All old sessions and API keys will be revoked. Sign in again and create new keys afterwards.</p><button type="submit" class="btn primary">Confirm password</button></form>
-<div id="msg" class="msg" role="status" aria-live="polite" hidden></div><p id="signin-next" class="swap" hidden><a href="/login/">Sign in with your new password</a></p><p class="swap"><a href="/login/">Log in</a> · <a href="/forgot-password/">Forgot password</a> · <a href="/verify-email/">Verify email</a></p></main><p class="foot">Independent · not TypeSafe</p></body></html>
+<body data-auth-flow="verify-email"><a class="top-brand" href="/"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>JevStyle</a><main class="card">
+    <section class="stage" id="stage-request">
+      <h1 tabindex="-1">Verify your email</h1>
+      <p class="sub">We'll send a link to finish setting up your email/password account.</p>
+      <form id="request-form" novalidate><label for="email">Email</label><input id="email" type="email" autocomplete="email" required placeholder="you@example.com"><button type="submit" class="btn primary">Send link</button></form>
+      <div id="msg" class="msg" role="status" aria-live="polite" hidden></div>
+      <p class="swap"><a href="/login/">Log in</a> · <a href="/register/">Create account</a></p>
+    </section>
+    <section class="stage center" id="stage-sent" hidden>
+      <div class="art" aria-hidden="true"><svg viewBox="0 0 44 44"><g class="float"><rect class="env" x="6" y="11" width="32" height="23" rx="5"/><path class="flap" d="M8 14l14 10 14-10"/><circle class="badge" cx="37" cy="11" r="4.5"/></g></svg></div>
+      <h1 tabindex="-1">Check your inbox</h1>
+      <p class="sub">We sent a link to <strong id="sent-to" class="addr"></strong>Open it to choose your password, and you'll go straight to Console.</p>
+      <a id="open-mail" class="btn primary" target="_blank" rel="noopener noreferrer" hidden><span id="open-mail-label">Open your inbox</span></a>
+      <button type="button" id="resend" class="btn ghost" disabled>Resend email</button>
+      <div id="sent-msg" class="msg" role="status" aria-live="polite" hidden></div>
+      <p class="after">Nothing yet? Check spam. Wrong address? <button type="button" class="link-btn" id="change-email" style="margin:0">Use a different email</button></p>
+    </section>
+    <section class="stage" id="stage-password" hidden>
+      <h1 tabindex="-1">Choose your password</h1>
+      <p class="sub">Last step. Your email is confirmed as soon as you continue.</p>
+      <form id="proof-form" novalidate>
+        <label for="password">Password</label>
+        <div class="pw"><input id="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><button type="button" class="pw-toggle" id="pw-toggle" aria-label="Show password" aria-pressed="false"><svg class="eye" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 10S4.8 4.5 10 4.5 18.2 10 18.2 10 15.2 15.5 10 15.5 1.8 10 1.8 10z"/><circle cx="10" cy="10" r="2.6"/></svg><svg class="eye-off" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l14 14"/><path d="M8.2 4.8A8.6 8.6 0 0 1 10 4.5c5.2 0 8.2 5.5 8.2 5.5a14 14 0 0 1-2.4 3.1M5.6 6.4A14 14 0 0 0 1.8 10s3 5.5 8.2 5.5a8 8 0 0 0 3.6-.9"/><path d="M8.2 8.3a2.6 2.6 0 0 0 3.5 3.5"/></svg></button></div>
+        <div class="meter" id="meter" data-score="0" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <p class="meter-text" id="meter-text">Use at least 8 characters.</p>
+        <button type="submit" class="btn primary">Create account</button>
+      </form>
+      <div id="proof-msg" class="msg" role="status" aria-live="polite" hidden></div>
+      <p class="after" id="new-link" hidden><a href="/verify-email/">Send a new link</a></p>
+    </section>
+    <section class="stage center" id="stage-done" hidden>
+      <div class="art ok" aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="ring" cx="22" cy="22" r="18"/><path class="tick" d="M14 22.5l5.5 5.5 11-11.5"/></svg></div>
+      <h1 tabindex="-1" id="done-heading">You're all set</h1>
+      <p class="sub" id="done-text">Taking you to Console…</p>
+      <div class="progress" id="progress"><i></i></div>
+      <a class="btn primary" id="done-link" href="/console/">Go to Console</a>
+    </section>
+</main><p class="foot">Independent · not TypeSafe</p></body></html>

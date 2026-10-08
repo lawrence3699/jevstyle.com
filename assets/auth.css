@@ -3,10 +3,12 @@
   --line: #ECECEF; --soft: #F3F3F5; --soft2: #E4E4E8; --cell: #FFFFFF;
   --acc: #3456F0; --acc-ink: #2340D0; --muted: #D6D6DC;
   --shadow: 0 0 0 1px rgba(13, 13, 15, .06), 0 10px 44px -14px rgba(13, 13, 15, .16);
-  --danger: #C0392B;
+  --danger: #C0392B; --ok: #15803D; --warn: #B45309;
   --sans: "Figtree", system-ui, -apple-system, sans-serif;
   --mono: "Geist Mono", ui-monospace, Menlo, monospace;
   --ease: cubic-bezier(.4, 0, .2, 1);
+  --out: cubic-bezier(.16, 1, .3, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -15,7 +17,7 @@
     --line: #232327; --soft: #18181B; --soft2: #27272C; --cell: #111113;
     --acc: #8198FF; --acc-ink: #A5B5FF; --muted: #3A3A40;
     --shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 10px 44px -14px rgba(0, 0, 0, .7);
-    --danger: #FCA5A5;
+    --danger: #FCA5A5; --ok: #4ADE80; --warn: #FBBF24;
   }
 }
 :root[data-theme="dark"] {
@@ -24,9 +26,12 @@
   --line: #232327; --soft: #18181B; --soft2: #27272C; --cell: #111113;
   --acc: #8198FF; --acc-ink: #A5B5FF; --muted: #3A3A40;
   --shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 10px 44px -14px rgba(0, 0, 0, .7);
-  --danger: #FCA5A5;
+  --danger: #FCA5A5; --ok: #4ADE80; --warn: #FBBF24;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
+/* Opened from an email link: show nothing until the script picks the right stage. */
+[data-token] #stage-request { display: none; }
 body {
   margin: 0; min-height: 100vh;
   background: var(--bg); color: var(--ink);
@@ -66,6 +71,7 @@ input[type="email"], input[type="password"], input[type="text"] {
   width: 100%; background: var(--soft); color: var(--ink);
   border: 1px solid transparent; border-radius: 12px;
   padding: 11px 14px; font: inherit;
+  transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .25s var(--ease);
 }
 input:focus {
   outline: none; border-color: var(--acc); background: var(--bg);
@@ -75,10 +81,29 @@ input:focus {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   width: 100%; height: 44px; border-radius: 12px; border: 0;
   font-size: 15px; font-weight: 500; margin-top: 8px;
-  transition: opacity .15s var(--ease), background .15s var(--ease);
+  position: relative; text-decoration: none;
+  transition: opacity .15s var(--ease), background .15s var(--ease), transform .18s var(--out), color .15s var(--ease);
 }
+.btn:hover { text-decoration: none; }
+.btn:active:not(:disabled) { transform: scale(.98); }
+.btn:disabled { opacity: .5; cursor: default; }
 .btn.primary { background: var(--ink); color: var(--bg); }
-.btn.primary:hover { opacity: .88; }
+.btn.primary:hover:not(:disabled) { opacity: .88; }
+.btn.ghost {
+  background: transparent; color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line); font-variant-numeric: tabular-nums;
+}
+.btn.ghost:hover:not(:disabled) { background: var(--soft); }
+/* Busy: the label fades out, a spinner takes its place. */
+.btn.loading, .btn.loading:disabled { color: transparent !important; opacity: 1; pointer-events: none; }
+.btn.loading > * { opacity: 0; }
+.btn.loading::after {
+  content: ""; position: absolute; inset: 0; margin: auto;
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--bg); border-right-color: transparent;
+  animation: spin .7s linear infinite;
+}
+.btn.ghost.loading::after, .btn.google.loading::after { border-color: var(--ink); border-right-color: transparent; }
 .btn.google {
   background: var(--soft); color: var(--ink); margin-top: 10px;
 }
@@ -100,6 +125,7 @@ input:focus {
   margin: 4px 0 12px; color: var(--ink2); font-size: .88rem;
 }
 .check input { margin-top: 3px; accent-color: var(--acc); }
+.msg:not([hidden]) { animation: msg-in .35s var(--out); }
 .msg {
   margin-top: 12px; padding: 10px 12px; border-radius: 10px;
   background: var(--soft); color: var(--ink2); font-size: .9rem;
@@ -128,4 +154,113 @@ input:focus {
 .google-note {
   margin: 8px 0 0; text-align: center;
   font-size: .82rem; color: var(--ink3); line-height: 1.4;
+}
+
+/* ---- Motion ---------------------------------------------------------- */
+@keyframes card-in { from { opacity: 0; transform: translateY(16px) scale(.985); } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes msg-in { from { opacity: 0; transform: translateY(-6px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+@keyframes ripple { 0% { transform: scale(1); opacity: .8; } 70%, 100% { transform: scale(1.5); opacity: 0; } }
+@keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.top-brand { animation: fade .6s var(--out) both; }
+.card { animation: card-in .7s var(--out) both; }
+/* Children rise one after another; a stage replays this each time it is shown. */
+.card > :not(.stage), .stage > * { animation: rise .6s var(--out) both; }
+.card > :nth-child(2), .stage > :nth-child(2) { animation-delay: 45ms; }
+.card > :nth-child(3), .stage > :nth-child(3) { animation-delay: 90ms; }
+.card > :nth-child(4), .stage > :nth-child(4) { animation-delay: 135ms; }
+.card > :nth-child(5), .stage > :nth-child(5) { animation-delay: 180ms; }
+.card > :nth-child(6), .stage > :nth-child(6) { animation-delay: 225ms; }
+.card > :nth-child(n+7), .stage > :nth-child(n+7) { animation-delay: 270ms; }
+.foot { animation: fade .8s var(--out) .35s both; }
+.stage h1:focus { outline: none; }
+.stage.center { text-align: center; }
+.stage.center .sub { margin-bottom: 18px; }
+.sub strong { color: var(--ink); font-weight: 600; overflow-wrap: anywhere; }
+.sub .addr { display: block; margin: 2px 0 6px; }
+.theme-float svg { transition: transform .5s var(--spring); }
+.theme-float:hover svg { transform: rotate(40deg); }
+
+/* Envelope and tick illustrations: drawn stroke by stroke, then a gentle ripple. */
+.art {
+  position: relative; width: 84px; height: 84px; margin: 6px auto 18px;
+  display: grid; place-items: center; border-radius: 50%;
+  background: color-mix(in srgb, var(--acc) 10%, var(--soft));
+}
+.art::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--acc) 40%, transparent);
+  opacity: 0; animation: ripple 2.6s var(--out) 1.2s infinite;
+}
+.art svg { width: 44px; height: 44px; overflow: visible; }
+.art .float { animation: float 3.4s ease-in-out 1.4s infinite; }
+.art .env, .art .flap, .art .ring, .art .tick {
+  fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+.art .env { stroke: var(--ink); stroke-width: 2; stroke-dasharray: 110; stroke-dashoffset: 110; animation: draw .8s var(--out) .15s forwards; }
+.art .flap { stroke: var(--ink); stroke-width: 2; stroke-dasharray: 36; stroke-dashoffset: 36; animation: draw .5s var(--out) .6s forwards; }
+.art .badge { fill: var(--acc); transform-box: fill-box; transform-origin: center; transform: scale(0); animation: pop .55s var(--spring) .95s forwards; }
+.art.ok { background: color-mix(in srgb, var(--ok) 13%, var(--soft)); }
+.art.ok::before { border-color: color-mix(in srgb, var(--ok) 45%, transparent); animation: ripple 1.4s var(--out) .75s 2; }
+.art .ring { stroke: var(--ok); stroke-width: 2.5; stroke-dasharray: 116; stroke-dashoffset: 116; transform: rotate(-90deg); transform-box: fill-box; transform-origin: center; animation: draw .65s var(--out) .1s forwards; }
+.art .tick { stroke: var(--ok); stroke-width: 3; stroke-dasharray: 26; stroke-dashoffset: 26; animation: draw .4s var(--out) .55s forwards; }
+
+/* Password: show/hide toggle and a strength meter that fills segment by segment. */
+.pw { position: relative; margin-bottom: 10px; }
+.pw input { padding-right: 46px; }
+.pw-toggle {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  width: 34px; height: 34px; border: 0; border-radius: 9px;
+  background: transparent; color: var(--ink3);
+  display: grid; place-items: center;
+  transition: color .15s var(--ease), background .15s var(--ease);
+}
+.pw-toggle:hover { color: var(--ink); background: var(--soft2); }
+.pw-toggle svg { width: 18px; height: 18px; transition: transform .3s var(--spring); }
+.pw-toggle:active svg { transform: scale(.85); }
+.pw-toggle .eye-off, .pw-toggle[aria-pressed="true"] .eye { display: none; }
+.pw-toggle[aria-pressed="true"] .eye-off { display: block; }
+.meter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 2px 0 6px; --meter: var(--danger); }
+.meter i { position: relative; height: 4px; border-radius: 99px; background: var(--soft2); overflow: hidden; }
+.meter i::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: var(--meter); transform: scaleX(0); transform-origin: left;
+  transition: transform .4s var(--out), background .3s var(--ease);
+}
+.meter i:nth-child(2)::after { transition-delay: 40ms; }
+.meter i:nth-child(3)::after { transition-delay: 80ms; }
+.meter i:nth-child(4)::after { transition-delay: 120ms; }
+.meter[data-score="1"] i:nth-child(-n+1)::after,
+.meter[data-score="2"] i:nth-child(-n+2)::after,
+.meter[data-score="3"] i:nth-child(-n+3)::after,
+.meter[data-score="4"] i::after { transform: scaleX(1); }
+.meter[data-score="2"] { --meter: var(--warn); }
+.meter[data-score="3"] { --meter: var(--acc); }
+.meter[data-score="4"] { --meter: var(--ok); }
+.meter-text { margin: 0 0 12px; min-height: 1.4em; font-size: .84rem; color: var(--ink3); transition: color .2s var(--ease); }
+.meter-text.good { color: var(--ok); }
+
+/* Countdown to Console after sign-up. */
+.progress { height: 3px; margin: 4px 0 2px; border-radius: 99px; background: var(--soft2); overflow: hidden; }
+.progress i { display: block; height: 100%; background: var(--acc); transform: scaleX(0); transform-origin: left; }
+.progress.run i { animation: fill var(--dur, 1.8s) linear forwards; }
+.link-btn {
+  margin-top: 16px; padding: 0; border: 0; background: none;
+  color: var(--acc-ink); font-size: .92rem;
+}
+.link-btn:hover { text-decoration: underline; text-underline-offset: 2px; }
+.after { margin: 16px 0 0; text-align: center; font-size: .92rem; color: var(--ink2); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-delay: 0s !important;
+    animation-iteration-count: 1 !important; transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
 }

@@ -60,17 +60,26 @@
       var CONTROL = "https://api.jevstyle.com/control/v1";
       var form = document.getElementById("form");
       var msg = document.getElementById("msg");
+      var button = form.querySelector("button[type=submit]");
+      var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      function fail(text) {
+        msg.hidden = true; void msg.offsetWidth;
+        msg.textContent = text; msg.className = "msg err"; msg.hidden = false;
+        if (!calm && form.animate) form.animate([{transform: "translateX(0)"}, {transform: "translateX(-7px)"}, {transform: "translateX(6px)"}, {transform: "translateX(-4px)"}, {transform: "translateX(2px)"}, {transform: "translateX(0)"}], {duration: 420, easing: "ease-out"});
+      }
+      // Coming back from Console via the back button restores this page as it was left.
+      window.addEventListener("pageshow", function () { button.classList.remove("loading"); button.disabled = false; });
       form.addEventListener("submit", async function (ev) {
         ev.preventDefault();
         msg.hidden = true;
         var email = document.getElementById("email").value.trim();
         var password = document.getElementById("password").value;
         if (!email || password.length < 8) {
-          msg.textContent = "Enter a valid email and password (min 8 characters).";
-          msg.className = "msg err"; msg.hidden = false; return;
+          fail("Enter a valid email and password (min 8 characters)."); return;
         }
         var path = "login" === "login" ? "/auth/login" : "/auth/register";
         var body = { email: email, password: password };
+        button.classList.add("loading"); button.disabled = true;
         try {
           var res = await fetch(CONTROL + path, {
             method: "POST",
@@ -82,14 +91,14 @@
             var errText = "Could not login.";
             try { var j = await res.json(); if (j.message) errText = j.message; } catch (e) {}
             if (res.status === 0 || res.type === "opaque") errText = "Can't reach the control plane.";
-            msg.textContent = errText;
-            msg.className = "msg err"; msg.hidden = false; return;
+            fail(errText); button.classList.remove("loading"); button.disabled = false; return;
           }
           location.href = "/console/";
+          return;
         } catch (e) {
-          msg.textContent = "Can't reach the control plane. Auth routes may not be live yet — try again later.";
-          msg.className = "msg err"; msg.hidden = false;
+          fail("Can't reach the control plane. Auth routes may not be live yet — try again later.");
         }
+        button.classList.remove("loading"); button.disabled = false;
       });
     })();
   </script>
