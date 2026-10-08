@@ -1,18 +1,23 @@
 /* JevStyle Console. Same-origin script; talks only to the configured API origin.
-   Secrets (new keys, the Playground key) live in this page's memory/DOM only — never in storage. */
+   Secrets (new keys, the Playground key) live in this page's memory/DOM only — never in storage.
+   Storage holds only view preferences: theme, collapsed sidebar, hidden "Get started" card. */
 (function () {
   "use strict";
   var ORIGIN = "https://api.jevstyle.com";
   var CONTROL = ORIGIN + "/control/v1";
   var INFERENCE = ORIGIN + "/v1/systemone";
   var THEME_KEY = "jev-api-theme";
+  var SIDEBAR_KEY = "jev-console-sidebar";
+  var START_KEY = "jev-console-start";
   var PAGES = ["overview", "playground", "keys", "usage", "limits"];
   var TITLES = { overview: "Overview", playground: "Playground", keys: "API keys", usage: "Usage", limits: "Limits & models" };
   var SERIES = ["var(--s1)", "var(--s2)", "var(--s3)"];
   var REVOKED_SERIES = "var(--s0)";
+  var MAX_QUESTIONS = 64;
 
   var state = {
-    me: null, verified: false, keys: [], maxKeys: 3, usage: null, daily: null, days: 30,
+    me: null, verified: false, keys: [], allKeys: [], keysLoaded: false, maxKeys: 3, showRevoked: false,
+    usage: null, daily: null, days: 30, usageKey: "", history: null, historyLoaded: false,
     creating: false, renameId: null, revokeId: null, running: false, signedOut: false
   };
 
@@ -23,26 +28,67 @@
     if (text !== undefined && text !== null) node.textContent = text;
     return node;
   }
-  function show(node, visible) { node.hidden = !visible; }
   function notice(node, text, kind) {
     node.textContent = text || "";
     node.className = "notice" + (kind ? " " + kind : "");
     node.hidden = !text;
   }
+  function clone(value) { return JSON.parse(JSON.stringify(value)); }
+  var root = document.documentElement;
 
-  /* ---------- Theme (only the theme preference is stored) ---------- */
-  var THEMES = ["system", "light", "dark"];
+  /* ---------- Theme (stored: the theme preference) ---------- */
   function currentTheme() { try { return localStorage.getItem(THEME_KEY) || "system"; } catch (e) { return "system"; } }
   function applyTheme(t) {
-    var root = document.documentElement;
-    if (!t || t === "system") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", t);
-    try { localStorage.setItem(THEME_KEY, t || "system"); } catch (e) {}
+    t = t === "light" || t === "dark" ? t : "system";
+    if (t === "system") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", t);
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+    document.querySelectorAll("[data-theme-set]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-set") === t));
+    });
   }
   applyTheme(currentTheme());
-  $("theme-btn").onclick = function () {
-    var i = THEMES.indexOf(currentTheme());
-    applyTheme(THEMES[(i + 1) % THEMES.length]);
+  document.querySelectorAll("[data-theme-set]").forEach(function (b) {
+    b.addEventListener("click", function () { applyTheme(b.getAttribute("data-theme-set")); });
+  });
+
+  /* ---------- Sidebar (stored: collapsed or not) ---------- */
+  function applySidebar(collapsed) {
+    if (collapsed) root.setAttribute("data-sidebar", "collapsed"); else root.removeAttribute("data-sidebar");
+    var btn = $("sb-toggle");
+    var label = collapsed ? "Expand sidebar" : "Collapse sidebar";
+    btn.setAttribute("aria-expanded", String(!collapsed));
+    btn.setAttribute("aria-label", label);
+    btn.title = label;
+  }
+  applySidebar(root.getAttribute("data-sidebar") === "collapsed");
+  $("sb-toggle").onclick = function () {
+    var collapsed = root.getAttribute("data-sidebar") !== "collapsed";
+    applySidebar(collapsed);
+    try { localStorage.setItem(SIDEBAR_KEY, collapsed ? "collapsed" : "expanded"); } catch (e) {}
+    requestAnimationFrame(function () { if (state.daily && !$("chart").hidden) renderChart(); });
   };
+
+  /* ---------- Account menu ---------- */
+  var acctBtn = $("acct-btn");
+  var acctMenu = $("acct-menu");
+  function setMenu(open) {
+    acctMenu.hidden = !open;
+    acctBtn.setAttribute("aria-expanded", String(open));
+    if (open) {
+      var first = acctMenu.querySelector("button:not([hidden]), a");
+      if (first) first.focus();
+    }
+  }
+  acctBtn.addEventListener("click", function (ev) { ev.stopPropagation(); setMenu(acctMenu.hidden); });
+  document.addEventListener("click", function (ev) {
+    if (!acctMenu.hidden && !acctMenu.contains(ev.target)) setMenu(false);
+  });
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape" && !acctMenu.hidden) { setMenu(false); acctBtn.focus(); }
+  });
+  acctMenu.addEventListener("focusout", function (ev) {
+    if (ev.relatedTarget && !acctMenu.contains(ev.relatedTarget) && ev.relatedTarget !== acctBtn) setMenu(false);
+  });
 
   /* ---------- Formatting ---------- */
   var numberFmt = new Intl.NumberFormat("en-US");
@@ -138,7 +184,7 @@
     gate.hidden = false;
     $("verify-banner").hidden = true;
     document.querySelectorAll("[data-view]").forEach(function (v) { v.hidden = true; });
-    $("user-chip").textContent = kind === "offline" ? "Offline" : "Not signed in";
+    setAccount(kind === "offline" ? "Offline" : "Not signed in", "");
     $("logout-btn").hidden = kind !== "expired";
     closeDialogs();
   }
@@ -162,14 +208,22 @@
   window.addEventListener("hashchange", function () { showPage(true); });
 
   function refreshFor(page) {
-    if (page === "overview") { loadKeys(); loadUsage(); }
+    if (page === "overview") { loadKeys(); loadUsage(); loadHistory(); }
     else if (page === "keys") { loadKeys(); }
-    else if (page === "usage") { loadUsage(); loadDaily(); }
+    else if (page === "usage") { loadUsage(); loadDaily(); loadKeys(); }
     else if (page === "limits") { loadUsage(); loadKeys(); }
     else if (page === "playground") { loadUsage(); }
   }
 
   /* ---------- Account ---------- */
+  function setAccount(label, email) {
+    $("user-chip").textContent = label;
+    $("user-chip").title = email || "";
+    $("menu-email").textContent = email || label;
+    var initial = (email || "").trim().charAt(0).toUpperCase();
+    $("acct-avatar").textContent = initial || "·";
+    acctBtn.setAttribute("aria-label", "Account menu" + (email ? " for " + email : ""));
+  }
   async function loadMe() {
     var r;
     try { r = await api("/auth/me"); } catch (e) { showGate("offline"); return null; }
@@ -178,8 +232,8 @@
     var me = r.data.user;
     state.me = me;
     state.verified = me.email_verified === true;
-    $("user-chip").textContent = me.email || me.name || "Signed in";
-    $("user-chip").title = me.email || "";
+    setAccount(me.email || me.name || "Signed in", me.email || "");
+    $("logout-btn").hidden = false;
     $("ov-email").textContent = me.email || me.name || "your account";
     $("verify-banner").hidden = state.verified;
     if (!state.verified) {
@@ -213,8 +267,12 @@
         return;
       }
       state.maxKeys = r.data.max_keys || 3;
+      state.allKeys = r.data.items;
       state.keys = r.data.items.filter(function (k) { return k.status === "active"; });
+      state.keysLoaded = true;
       renderKeys();
+      renderStart();
+      if (state.daily) renderKeyFilter();
     } catch (e) {
       notice($("keys-msg"), "Can't reach JevStyle. Check your connection and refresh.", "err");
     }
@@ -231,34 +289,51 @@
     });
   }
 
-  function iconButton(kind, label, id) {
+  var ICONS = {
+    revoke: '<path d="M4 6h12M8.5 6V4.5h3V6M5.5 6l.7 9.6a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9L14.5 6M8.6 9v4.6M11.4 9v4.6"/>',
+    rename: '<path d="M12.8 4.2l3 3L7.6 15.4l-3.7.7.7-3.7z"/><path d="M11.2 5.8l3 3"/>',
+    usage: '<path d="M3.5 14.5 8 9.8l3 3 5.5-6.3"/><path d="M13 6.5h3.5V10"/>',
+    remove: '<path d="M6 6l8 8M14 6l-8 8"/>',
+    grip: '<circle cx="7.5" cy="5.5" r="1.1"/><circle cx="12.5" cy="5.5" r="1.1"/><circle cx="7.5" cy="10" r="1.1"/><circle cx="12.5" cy="10" r="1.1"/><circle cx="7.5" cy="14.5" r="1.1"/><circle cx="12.5" cy="14.5" r="1.1"/>'
+  };
+  function svgIcon(name) {
+    return '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[name] + "</svg>";
+  }
+  function iconButton(kind, label, value) {
     var b = el("button", "icon-btn" + (kind === "revoke" ? " danger" : ""));
     b.type = "button";
-    b.setAttribute("data-" + kind, id);
+    b.setAttribute("data-" + kind, value);
     b.setAttribute("aria-label", label);
-    b.title = kind === "revoke" ? "Revoke" : "Rename";
-    b.innerHTML = kind === "revoke"
-      ? '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h12M8.5 6V4.5h3V6M5.5 6l.7 9.6a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9L14.5 6M8.6 9v4.6M11.4 9v4.6"/></svg>'
-      : '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.8 4.2l3 3L7.6 15.4l-3.7.7.7-3.7z"/><path d="M11.2 5.8l3 3"/></svg>';
+    b.title = { revoke: "Revoke", rename: "Rename", usage: "View usage" }[kind];
+    b.innerHTML = svgIcon(kind);
     return b;
   }
 
   function renderKeys() {
     var body = $("keys-body");
     var keys = state.keys;
+    var revoked = state.allKeys.filter(function (k) { return k.status !== "active"; });
+    var rows = keys.concat(state.showRevoked ? revoked : []);
     body.textContent = "";
     $("key-count").textContent = keys.length + " of " + state.maxKeys + " keys used";
     $("keys-empty-max").textContent = state.maxKeys;
     $("ov-keys").textContent = keys.length;
     $("ov-max").textContent = state.maxKeys;
     $("l-keys").textContent = state.maxKeys;
-    $("keys-wrap").hidden = !keys.length;
+    $("show-revoked").closest(".switch").hidden = !revoked.length;
+    $("keys-wrap").hidden = !rows.length;
     $("keys-empty").hidden = !!keys.length;
-    keys.forEach(function (k) {
-      var tr = el("tr", k.id === state.freshKeyId ? "fresh" : null);
+    rows.forEach(function (k) {
+      var active = k.status === "active";
+      var tr = el("tr", k.id === state.freshKeyId ? "fresh" : active ? null : "revoked");
       tr.setAttribute("data-key-id", k.id);
       var name = el("td", "k-name", keyName(k));
       name.setAttribute("data-label", "Name");
+      if (!active) {
+        var tag = el("span", "tag", "Revoked");
+        if (k.revoked_at) tag.title = "Revoked " + fmtFull(k.revoked_at);
+        name.appendChild(tag);
+      }
       var secret = el("td");
       secret.setAttribute("data-label", "Secret key");
       var code = el("code", "mask", maskKey(k.key_prefix));
@@ -274,21 +349,33 @@
       var today = el("td", "num", fmtInt(k.daily_used || 0));
       today.setAttribute("data-label", "Requests today");
       var actions = el("td", "k-actions");
-      actions.appendChild(iconButton("rename", "Rename " + keyName(k), k.id));
-      actions.appendChild(iconButton("revoke", "Revoke " + keyName(k), k.id));
+      actions.appendChild(iconButton("usage", "View usage for " + keyName(k), k.key_prefix));
+      if (active) {
+        actions.appendChild(iconButton("rename", "Rename " + keyName(k), k.id));
+        actions.appendChild(iconButton("revoke", "Revoke " + keyName(k), k.id));
+      }
       [name, secret, created, last, today, actions].forEach(function (c) { tr.appendChild(c); });
       body.appendChild(tr);
     });
     updateCreateButtons();
   }
 
+  $("show-revoked").addEventListener("change", function () {
+    state.showRevoked = this.checked;
+    renderKeys();
+  });
   $("keys-body").addEventListener("click", function (ev) {
     var btn = ev.target.closest("button");
     if (!btn) return;
     if (btn.hasAttribute("data-rename")) openRename(btn.getAttribute("data-rename"));
     if (btn.hasAttribute("data-revoke")) openRevoke(btn.getAttribute("data-revoke"));
+    if (btn.hasAttribute("data-usage")) {
+      state.usageKey = btn.getAttribute("data-usage");
+      location.hash = "#usage";
+    }
   });
   function findKey(id) { return state.keys.filter(function (k) { return k.id === id; })[0]; }
+  function keyByPrefix(prefix) { return state.allKeys.filter(function (k) { return k.key_prefix === prefix; })[0]; }
 
   /* ---------- Dialogs ---------- */
   function closeDialogs() {
@@ -474,14 +561,83 @@
     });
   });
 
-  /* ---------- Quick start ---------- */
-  document.querySelectorAll("[data-qs]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      var lang = b.getAttribute("data-qs");
-      document.querySelectorAll("[data-qs]").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
-      document.querySelectorAll("[data-qs-pane]").forEach(function (p) { p.hidden = p.getAttribute("data-qs-pane") !== lang; });
+  /* ---------- Tabs ---------- */
+  function selectTab(tabs, active) {
+    tabs.forEach(function (t) { t.setAttribute("aria-selected", String(t === active)); t.tabIndex = t === active ? 0 : -1; });
+  }
+  function tabKeys(tabs, onPick) {
+    tabs.forEach(function (t, i) {
+      t.addEventListener("keydown", function (ev) {
+        if (ev.key !== "ArrowRight" && ev.key !== "ArrowLeft") return;
+        ev.preventDefault();
+        var next = tabs[(i + (ev.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+        next.focus();
+        onPick(next);
+      });
     });
-  });
+  }
+
+  /* ---------- Overview: Get started + quick start ---------- */
+  var qsTabs = Array.prototype.slice.call(document.querySelectorAll("[data-qs]"));
+  function pickQs(b) {
+    var lang = b.getAttribute("data-qs");
+    selectTab(qsTabs, b);
+    document.querySelectorAll("[data-qs-pane]").forEach(function (p) { p.hidden = p.getAttribute("data-qs-pane") !== lang; });
+  }
+  qsTabs.forEach(function (b) { b.addEventListener("click", function () { pickQs(b); }); });
+  tabKeys(qsTabs, pickQs);
+  selectTab(qsTabs, qsTabs[0]);
+
+  function startHidden() { try { return localStorage.getItem(START_KEY) === "hidden"; } catch (e) { return false; } }
+  function setStep(id, done) {
+    var li = $(id);
+    li.setAttribute("data-done", String(done));
+    li.querySelector(".step-state").textContent = done ? "(done)" : "(not done)";
+  }
+  function renderStart() {
+    if (!state.keysLoaded || !state.historyLoaded) return;
+    var hasKey = state.allKeys.length > 0;
+    var called = state.allKeys.some(function (k) { return !!k.last_used_at; }) ||
+      !!(state.usage && Number(state.usage.daily_used) > 0) || !!(state.history && state.history.total > 0);
+    setStep("step-key", hasKey);
+    setStep("step-call", called);
+    var done = (hasKey ? 1 : 0) + (called ? 1 : 0);
+    $("start-progress").textContent = done === 2 ? "All done. You're ready to build." : done + " of 2 done";
+    $("start-hide").hidden = done < 2;
+    $("start-card").hidden = done === 2 && startHidden();
+  }
+  $("start-hide").onclick = function () {
+    try { localStorage.setItem(START_KEY, "hidden"); } catch (e) {}
+    $("start-card").hidden = true;
+  };
+
+  async function loadHistory() {
+    try {
+      var r = await api("/usage/daily?days=90");
+      if (r.ok && r.data && Array.isArray(r.data.items)) state.history = r.data;
+    } catch (e) {}
+    state.historyLoaded = true;
+    renderSpark();
+    renderStart();
+  }
+  function renderSpark() {
+    var svg = $("ov-spark");
+    var h = state.history;
+    if (!h || !h.items.length) { svg.innerHTML = ""; $("ov-week").textContent = ""; return; }
+    var items = h.items.slice(-7);
+    var total = 0;
+    var max = 1;
+    items.forEach(function (it) { total += it.count; max = Math.max(max, it.count); });
+    $("ov-week").textContent = fmtInt(total) + " in the last 7 days";
+    var n = items.length;
+    var pts = items.map(function (it, i) {
+      var x = n > 1 ? 2 + (i / (n - 1)) * 116 : 60;
+      var y = 25 - (it.count / max) * 21;
+      return x.toFixed(1) + "," + y.toFixed(1);
+    });
+    svg.innerHTML = '<path class="spark-area" d="M' + pts[0].split(",")[0] + ",27 L" + pts.join(" L") + " L" + pts[n - 1].split(",")[0] + ',27 Z"/>' +
+      '<polyline class="spark-line" vector-effect="non-scaling-stroke" points="' + pts.join(" ") + '"/>';
+  }
 
   /* ---------- Usage ---------- */
   async function loadUsage() {
@@ -495,6 +651,7 @@
       notice($("usage-msg"), "");
       renderToday();
       renderLimits();
+      renderStart();
     } catch (e) {
       notice($("usage-msg"), "Can't reach JevStyle. Check your connection and refresh.", "err");
     }
@@ -545,23 +702,74 @@
       loadDaily();
     });
   });
+  $("u-key").addEventListener("change", function () {
+    state.usageKey = this.value;
+    renderChart();
+  });
+  $("u-refresh").onclick = function () { loadUsage(); loadDaily(); loadKeys(); };
 
+  var dailySeq = 0;
   async function loadDaily() {
     var chart = $("chart");
+    var seq = ++dailySeq;
     chart.style.opacity = state.daily ? "0.5" : "";
     try {
       var r = await api("/usage/daily?days=" + state.days);
+      if (seq !== dailySeq) return;
       if (!r.ok || !r.data || !Array.isArray(r.data.items)) {
         if (r.status !== 401) notice($("usage-msg"), "Couldn't load usage history. Refresh the page to try again.", "err");
         return;
       }
       state.daily = r.data;
+      renderKeyFilter();
       renderChart();
     } catch (e) {
       notice($("usage-msg"), "Can't reach JevStyle. Check your connection and refresh.", "err");
     } finally {
-      chart.style.opacity = "";
+      if (seq === dailySeq) chart.style.opacity = "";
     }
+  }
+
+  // Keys offered in the filter: every key in this period's legend plus every key on the account.
+  function filterKeys() {
+    var seen = {};
+    var list = [];
+    function add(k) {
+      if (!k || !k.key_prefix || seen[k.key_prefix]) return;
+      seen[k.key_prefix] = true;
+      list.push({ key_prefix: k.key_prefix, name: k.name, status: k.status });
+    }
+    state.allKeys.forEach(add);
+    (state.daily ? state.daily.keys || [] : []).forEach(add);
+    list.sort(function (a, b) { return (a.status === "active" ? 0 : 1) - (b.status === "active" ? 0 : 1); });
+    return list;
+  }
+  function keyLabel(k) {
+    return (k.name || "Secret key") + " (" + maskKey(k.key_prefix) + ")" + (k.status === "active" ? "" : " · revoked");
+  }
+  function renderKeyFilter() {
+    var select = $("u-key");
+    var keys = filterKeys();
+    if (state.usageKey && !keys.some(function (k) { return k.key_prefix === state.usageKey; })) state.usageKey = "";
+    select.textContent = "";
+    select.appendChild(new Option("All API keys", ""));
+    keys.forEach(function (k) { select.appendChild(new Option(keyLabel(k), k.key_prefix)); });
+    select.value = state.usageKey;
+  }
+
+  // The chart's data for the current key filter (all keys, or one key's share of each day).
+  function viewDaily() {
+    var d = state.daily;
+    var p = state.usageKey;
+    if (!p) return d;
+    var items = d.items.map(function (it) {
+      var n = (it.by_key || {})[p] || 0;
+      var byKey = {};
+      if (n) byKey[p] = n;
+      return { day: it.day, count: n, by_key: byKey };
+    });
+    var total = items.reduce(function (s, it) { return s + it.count; }, 0);
+    return { days: d.days, items: items, total: total, keys: d.keys, only: p };
   }
 
   function seriesFor(daily) {
@@ -591,6 +799,13 @@
       if (byPrefix[p] === revoked) revoked.total += used[p];
     });
     if (revoked && revoked.total) list.push(revoked);
+    if (daily.only && byPrefix[daily.only] === revoked) {
+      // A single revoked key is shown under its own name, not the shared "Revoked keys" bucket.
+      var k = keyByPrefix(daily.only) || { key_prefix: daily.only, status: "revoked" };
+      var own = { id: daily.only, label: keyLabel(k), color: REVOKED_SERIES, total: used[daily.only] || 0 };
+      byPrefix[daily.only] = own;
+      list = own.total ? [own] : [];
+    }
     return { list: list, byPrefix: byPrefix };
   }
 
@@ -606,13 +821,21 @@
   }
 
   function renderChart() {
-    var d = state.daily;
-    if (!d) return;
+    if (!state.daily) return;
+    var d = viewDaily();
     var chart = $("chart");
     var tip = $("chart-tip");
     tip.hidden = true;
-    $("chart-sub").textContent = "Last " + d.days + " days · UTC";
+    var period = "Last " + d.days + " days";
+    var filtered = d.only ? filterKeys().filter(function (k) { return k.key_prefix === d.only; })[0] : null;
+    $("chart-sub").textContent = period + " · UTC";
     $("chart-total").textContent = fmtInt(d.total);
+    $("u-period-label").textContent = period;
+    $("u-period").textContent = plural(d.total, "request").replace(/^\d+/, fmtInt(d.total));
+    $("u-period-foot").textContent = d.only ? keyLabel(filtered || { key_prefix: d.only, status: "revoked" }) : "All API keys";
+    $("chart-empty-text").textContent = d.only
+      ? "This key has no successful requests in this period."
+      : "There are no successful requests in this period.";
     var empty = !d.total;
     $("chart-empty").hidden = !empty;
     chart.hidden = empty;
@@ -622,7 +845,7 @@
     if (empty) { legend.hidden = true; return; }
     var series = seriesFor(d);
     legend.hidden = series.list.length < 2;
-    if (series.list.length === 1) $("chart-sub").textContent += " · all from " + series.list[0].label;
+    if (series.list.length === 1 && !d.only) $("chart-sub").textContent += " · all from " + series.list[0].label;
     series.list.forEach(function (s) {
       var item = el("span");
       var sw = el("i");
@@ -655,7 +878,7 @@
     bars.setAttribute("aria-label", "Successful requests per day");
     var xAxis = el("div", "chart-x");
     xAxis.style.gridTemplateColumns = cols;
-    d.items.forEach(function (it, idx) {
+    d.items.forEach(function (it) {
       var col = el("div", "col");
       col.setAttribute("role", "listitem");
       col.tabIndex = 0;
@@ -773,8 +996,8 @@
     resizeTimer = setTimeout(function () { if (state.daily && !$("chart").hidden) renderChart(); }, 150);
   });
 
-  /* ---------- Playground ---------- */
-  var EXAMPLES = {
+  /* ---------- Playground: templates ---------- */
+  var TEMPLATES = {
     support: {
       state: "Customer: I was billed twice for my Pro plan this month, and the app also logged me out twice today. Please refund one of the charges.",
       questions: {
@@ -798,13 +1021,590 @@
       questions: { urgency: { type: "score", instructions: "How urgent is this ticket?", criteria: ["low", "medium", "high", "critical"] } }
     }
   };
-  function loadExample(name) { $("pg-body").value = JSON.stringify(EXAMPLES[name] || EXAMPLES.support, null, 2); }
-  loadExample("support");
-  $("pg-example").addEventListener("change", function () { loadExample(this.value); });
+  var TYPE_HELP = {
+    noul: "Returns the probability that the answer is yes, from 0% to 100%.",
+    choice: "Picks one option and returns a probability for each option.",
+    score: "Rates the state on your ordered levels and returns a score from the lowest to the highest level."
+  };
+
+  var pg = { mode: "form", form: null, template: null, dirty: false };
+  function announce(text) {
+    var live = $("pg-announce");
+    live.textContent = "";
+    setTimeout(function () { live.textContent = text; }, 50);
+  }
+
+  /* ---------- Playground: form model <-> systemone body ---------- */
+  function FormError(message, qi, field, i) { this.message = message; this.qi = qi; this.field = field; this.i = i; }
+  function blankQuestion(type) {
+    return {
+      name: "", type: type || "noul", instructions: "", yes: "", no: "",
+      options: [{ name: "", desc: "" }, { name: "", desc: "" }],
+      levels: [{ label: "", desc: "" }, { label: "", desc: "" }, { label: "", desc: "" }]
+    };
+  }
+  function isText(v) { return v === undefined || v === null || typeof v === "string"; }
+  function isObject(v) { return v instanceof Ordered || (!!v && typeof v === "object" && !Array.isArray(v)); }
+  function keysOf(v) { return entries(v).map(function (e) { return e[0]; }); }
+  // Last value wins for a repeated key, as with JSON.parse.
+  function get(v, key) {
+    var hit;
+    entries(v).forEach(function (e) { if (e[0] === key) hit = e; });
+    return hit ? hit[1] : undefined;
+  }
+
+  // Throws FormError when the body uses something the form can't show (structured instructions or criteria).
+  // Accepts plain data or Ordered data from parseOrdered, so key order survives JSON -> Form.
+  function fromBody(body) {
+    if (!isObject(body)) throw new FormError("The request body must be a JSON object.");
+    var qs = get(body, "questions");
+    if (!isObject(qs)) throw new FormError("The request needs a \"questions\" object.");
+    var form = { state: "", stateRaw: undefined, questions: [], extra: [] };
+    entries(body).forEach(function (e) { if (e[0] !== "state" && e[0] !== "questions") form.extra.push(e); });
+    var state = get(body, "state");
+    if (typeof state === "string") form.state = state;
+    else if (state !== undefined && state !== null) form.stateRaw = state;
+    entries(qs).forEach(function (pair) {
+      var name = pair[0];
+      var q = pair[1];
+      var jsonOnly = new FormError("Question \"" + name + "\" uses structured fields the form can't edit. Keep editing it in JSON.");
+      var type = isObject(q) ? get(q, "type") : undefined;
+      if (["noul", "choice", "score"].indexOf(type) < 0) {
+        throw new FormError("Question \"" + name + "\" needs a type of noul, choice or score. Fix it in JSON first.");
+      }
+      var instructions = get(q, "instructions");
+      if (!isText(instructions)) throw jsonOnly;
+      var item = blankQuestion(type);
+      item.name = name;
+      item.instructions = instructions || "";
+      var c = get(q, "criteria");
+      if (c === undefined || c === null) return form.questions.push(item);
+      if (type === "noul") {
+        if (!isObject(c) || keysOf(c).some(function (k) { return k !== "true" && k !== "false"; }) ||
+            !isText(get(c, "true")) || !isText(get(c, "false"))) throw jsonOnly;
+        item.yes = get(c, "true") || "";
+        item.no = get(c, "false") || "";
+      } else if (type === "choice") {
+        if (!isObject(c)) throw jsonOnly;
+        item.options = entries(c).map(function (e) {
+          if (!isText(e[1])) throw jsonOnly;
+          return { name: e[0], desc: e[1] || "" };
+        });
+      } else {
+        if (!Array.isArray(c)) throw jsonOnly;
+        item.levels = c.map(function (l) {
+          if (typeof l === "string") return { label: l, desc: "" };
+          if (isObject(l) && typeof get(l, "label") === "string" && isText(get(l, "description")) &&
+              keysOf(l).every(function (k) { return k === "label" || k === "description"; })) {
+            return { label: get(l, "label"), desc: get(l, "description") || "" };
+          }
+          throw jsonOnly;
+        });
+      }
+      form.questions.push(item);
+    });
+    return form;
+  }
+
+  // Bodies are built as ordered pairs so names keep the order typed (plain objects move
+  // integer-like keys such as "10" first) and names like "__proto__" stay ordinary keys.
+  function Ordered(pairs) { this.pairs = pairs; }
+  function entries(v) { return v instanceof Ordered ? v.pairs : Object.keys(v).map(function (k) { return [k, v[k]]; }); }
+  // JSON text; step "  " pretty-prints like JSON.stringify(v, null, 2), step "" is compact.
+  function jsonText(v, step, pad) {
+    pad = pad || "";
+    if (v === null || v === undefined || typeof v !== "object") return JSON.stringify(v === undefined ? null : v);
+    var inner = pad + step;
+    var nl = step ? "\n" : "";
+    if (Array.isArray(v)) {
+      if (!v.length) return "[]";
+      return "[" + nl + v.map(function (x) { return inner + jsonText(x, step, inner); }).join("," + nl) + nl + pad + "]";
+    }
+    var list = entries(v);
+    if (!list.length) return "{}";
+    return "{" + nl + list.map(function (e) {
+      return inner + JSON.stringify(e[0]) + (step ? ": " : ":") + jsonText(e[1], step, inner);
+    }).join("," + nl) + nl + pad + "}";
+  }
+
+  // Parses text that JSON.parse already accepted, keeping object key order (as Ordered).
+  var JSON_ATOM = /-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|null/y;
+  function parseOrdered(text) {
+    var i = 0;
+    function ws() { while (i < text.length && " \t\n\r".indexOf(text[i]) >= 0) i++; }
+    function str() {
+      var start = i++;
+      while (text[i] !== '"') i += text[i] === "\\" ? 2 : 1;
+      i++;
+      return JSON.parse(text.slice(start, i));
+    }
+    function value() {
+      ws();
+      var c = text[i];
+      if (c === "{") {
+        i++;
+        var pairs = [];
+        ws();
+        if (text[i] === "}") { i++; return new Ordered(pairs); }
+        for (;;) {
+          ws();
+          var key = str();
+          ws();
+          i++;
+          pairs.push([key, value()]);
+          ws();
+          if (text[i++] === "}") return new Ordered(pairs);
+        }
+      }
+      if (c === "[") {
+        i++;
+        var list = [];
+        ws();
+        if (text[i] === "]") { i++; return list; }
+        for (;;) {
+          list.push(value());
+          ws();
+          if (text[i++] === "]") return list;
+        }
+      }
+      if (c === '"') return str();
+      JSON_ATOM.lastIndex = i;
+      var m = JSON_ATOM.exec(text);
+      i += m[0].length;
+      return JSON.parse(m[0]);
+    }
+    return value();
+  }
+
+  // level "run": every problem stops the build (nothing is sent).
+  // level "keep": only problems that would drop or overwrite something stop it (Form to JSON, Code).
+  function buildBody(form, level) {
+    function fail(message, qi, field, i, lossy) {
+      if (level === "run" || (level === "keep" && lossy)) throw new FormError(message, qi, field, i);
+    }
+    var state = form.stateRaw !== undefined ? form.stateRaw : form.state;
+    if (form.stateRaw === undefined && !form.state.trim()) fail("Enter a state: the situation to decide on.", -1, "state");
+    if (!form.questions.length) fail("Add at least one question.", -1, "add");
+    if (form.questions.length > MAX_QUESTIONS) fail("Use at most " + MAX_QUESTIONS + " questions per request.", -1, "add");
+    var names = Object.create(null);
+    var questions = form.questions.map(function (q, i) {
+      var name = q.name;
+      var label = name.trim() ? "Question \"" + name + "\"" : "Question " + (i + 1);
+      if (!name.trim()) fail("Give question " + (i + 1) + " a name.", i, "name", undefined, true);
+      else if (names[name]) fail("Question names must be unique: \"" + name + "\" is used twice.", i, "name", undefined, true);
+      names[name] = true;
+      if (!q.instructions.trim()) fail(label + " needs instructions.", i, "instructions");
+      var out = [["type", q.type], ["instructions", q.instructions]];
+      if (q.type === "noul") {
+        var crit = [];
+        if (q.yes.trim()) crit.push(["true", q.yes]);
+        if (q.no.trim()) crit.push(["false", q.no]);
+        if (crit.length) out.push(["criteria", new Ordered(crit)]);
+      } else if (q.type === "choice") {
+        var seen = Object.create(null);
+        var opts = [];
+        q.options.forEach(function (o, k) {
+          if (!o.name.trim() && !o.desc.trim()) return;
+          if (!o.name.trim()) fail(label + ": every option needs a name.", i, "opt-name", k, true);
+          else if (seen[o.name]) fail(label + ": option \"" + o.name + "\" is listed twice.", i, "opt-name", k, true);
+          seen[o.name] = true;
+          opts.push([o.name, o.desc.trim() ? o.desc : null]);
+        });
+        if (!opts.length) fail(label + " needs at least one option.", i, "opt-name", 0);
+        if (opts.length > 255) fail(label + " can have at most 255 options.", i, "opt-name", 255);
+        out.push(["criteria", new Ordered(opts)]);
+      } else {
+        var levels = [];
+        q.levels.forEach(function (l, k) {
+          if (!l.label.trim() && !l.desc.trim()) return;
+          if (!l.label.trim()) fail(label + ": every level needs a label.", i, "lvl-label", k);
+          levels.push(l.desc.trim() ? new Ordered([["label", l.label], ["description", l.desc]]) : l.label);
+        });
+        if (levels.length < 2) fail(label + " needs at least two levels.", i, "lvl-label", levels.length);
+        if (levels.length > 10) fail(label + " can have at most ten levels.", i, "lvl-label", 10);
+        out.push(["criteria", levels]);
+      }
+      return [name.trim() ? name : "question_" + (i + 1), new Ordered(out)];
+    });
+    var body = [["state", state], ["questions", new Ordered(questions)]];
+    form.extra.forEach(function (e) { body.push(e); });
+    return new Ordered(body);
+  }
+
+  /* ---------- Playground: form rendering ---------- */
+  function input(cls, field, value, placeholder, label) {
+    var node = el("input", cls);
+    node.type = "text";
+    node.value = value;
+    node.placeholder = placeholder;
+    node.spellcheck = false;
+    node.autocomplete = "off";
+    node.setAttribute("data-f", field);
+    node.setAttribute("aria-label", label);
+    return node;
+  }
+  function smallButton(act, text, label) {
+    var b = el("button", "btn sm ghost add-row");
+    b.type = "button";
+    b.setAttribute("data-act", act);
+    b.innerHTML = '<span aria-hidden="true">+</span> ';
+    b.appendChild(document.createTextNode(text));
+    if (label) b.setAttribute("aria-label", label);
+    return b;
+  }
+  function removeButton(act, label, disabled) {
+    var b = el("button", "icon-btn sm");
+    b.type = "button";
+    b.setAttribute("data-act", act);
+    b.setAttribute("aria-label", label);
+    b.title = "Remove";
+    b.innerHTML = svgIcon("remove");
+    b.disabled = !!disabled;
+    return b;
+  }
+  function subHead(title, aside) {
+    var head = el("div", "sub-head");
+    head.appendChild(el("span", null, title));
+    head.appendChild(el("span", "muted", aside));
+    return head;
+  }
+
+  function questionNode(q, qi) {
+    var title = q.name.trim() || "question " + (qi + 1);
+    var box = el("div", "q");
+    box.setAttribute("data-qi", qi);
+    var head = el("div", "q-head");
+    head.appendChild(input("q-name", "name", q.name, "question_name", "Question " + (qi + 1) + " name"));
+    var type = el("select", "q-type");
+    type.setAttribute("data-f", "type");
+    type.setAttribute("aria-label", "Type of " + title);
+    [["noul", "Yes / No"], ["choice", "Choice"], ["score", "Score"]].forEach(function (t) {
+      type.appendChild(new Option(t[1], t[0], false, q.type === t[0]));
+    });
+    head.appendChild(type);
+    head.appendChild(removeButton("del-q", "Remove " + title));
+    box.appendChild(head);
+
+    var insId = "q" + qi + "-ins";
+    var insLabel = el("label", "q-lbl", "Instructions");
+    insLabel.htmlFor = insId;
+    box.appendChild(insLabel);
+    var ins = el("textarea", "q-ins");
+    ins.id = insId;
+    ins.rows = 2;
+    ins.value = q.instructions;
+    ins.placeholder = q.type === "noul" ? "A yes/no question or statement about the state" : q.type === "choice" ? "What to choose" : "What to rate";
+    ins.setAttribute("data-f", "instructions");
+    box.appendChild(ins);
+    box.appendChild(el("p", "q-help", TYPE_HELP[q.type]));
+
+    if (q.type === "noul") {
+      box.appendChild(subHead("What yes and no mean", "Optional"));
+      var yn = el("div", "rows");
+      yn.appendChild(input("", "yes", q.yes, "Yes means…", "What yes means for " + title));
+      yn.appendChild(input("", "no", q.no, "No means…", "What no means for " + title));
+      box.appendChild(yn);
+    } else if (q.type === "choice") {
+      box.appendChild(subHead("Options", "Choose one"));
+      var opts = el("div", "rows");
+      q.options.forEach(function (o, i) {
+        var row = el("div", "row-item");
+        row.setAttribute("data-i", i);
+        var fields = el("div", "row-fields");
+        fields.appendChild(input("opt-name", "opt-name", o.name, "Option " + (i + 1), "Option " + (i + 1) + " name"));
+        fields.appendChild(input("desc", "opt-desc", o.desc, "When it applies (optional)", "Option " + (i + 1) + " description"));
+        row.appendChild(fields);
+        row.appendChild(removeButton("del-opt", "Remove option " + (i + 1), q.options.length <= 1));
+        opts.appendChild(row);
+      });
+      box.appendChild(opts);
+      if (q.options.length < 255) box.appendChild(smallButton("add-opt", "Add option", "Add option to " + title));
+    } else {
+      box.appendChild(subHead("Levels", "Lowest to highest"));
+      var levels = el("div", "rows levels");
+      q.levels.forEach(function (l, i) {
+        var row = el("div", "row-item lvl");
+        row.setAttribute("data-i", i);
+        var grip = el("button", "grip");
+        grip.type = "button";
+        grip.setAttribute("data-act", "grip");
+        grip.setAttribute("aria-label", "Level " + i + ". Drag, or use the arrow keys, to reorder.");
+        grip.title = "Drag to reorder";
+        grip.innerHTML = svgIcon("grip");
+        row.appendChild(grip);
+        row.appendChild(el("span", "idx", String(i)));
+        var fields = el("div", "row-fields");
+        fields.appendChild(input("lvl-label", "lvl-label", l.label, "Label", "Level " + i + " label"));
+        fields.appendChild(input("desc", "lvl-desc", l.desc, "Description (optional)", "Level " + i + " description"));
+        row.appendChild(fields);
+        row.appendChild(removeButton("del-lvl", "Remove level " + i, q.levels.length <= 2));
+        levels.appendChild(row);
+      });
+      box.appendChild(levels);
+      if (q.levels.length < 10) box.appendChild(smallButton("add-lvl", "Add level", "Add level to " + title));
+    }
+    return box;
+  }
+
+  function renderForm(focus) {
+    var list = $("q-list");
+    list.textContent = "";
+    pg.form.questions.forEach(function (q, qi) { list.appendChild(questionNode(q, qi)); });
+    var n = pg.form.questions.length;
+    $("q-count").textContent = n + " of " + MAX_QUESTIONS;
+    $("q-add").disabled = n >= MAX_QUESTIONS;
+    renderStateBox();
+    if (focus) focusField(focus.qi, focus.field, focus.i);
+  }
+  function focusField(qi, field, i) {
+    var target = null;
+    if (field === "state") target = $("pg-state");
+    else if (field === "add") target = $("q-add");
+    else if (qi >= 0) {
+      var box = $("q-list").querySelector('.q[data-qi="' + qi + '"]');
+      if (box) {
+        var scope = i !== undefined ? box.querySelector('.row-item[data-i="' + i + '"]') || box : box;
+        target = scope.querySelector('[data-f="' + field + '"], [data-act="' + field + '"]') || box.querySelector('[data-f="' + field + '"]');
+      }
+    }
+    if (target) { target.focus(); if (target.scrollIntoView) target.scrollIntoView({ block: "nearest" }); }
+  }
+  function renderStateBox() {
+    if (!pg.form) return;
+    var box = $("pg-state");
+    var note = $("pg-state-note");
+    if (pg.mode === "json") {
+      box.hidden = true;
+      note.hidden = false;
+      note.textContent = "Editing the full request as JSON. The state is part of the body.";
+      return;
+    }
+    box.hidden = false;
+    if (pg.form.stateRaw !== undefined) {
+      box.value = jsonText(pg.form.stateRaw, "  ");
+      box.readOnly = true;
+      note.hidden = false;
+      note.textContent = "This state is structured JSON. Switch to JSON to edit it.";
+    } else {
+      box.value = pg.form.state;
+      box.readOnly = false;
+      note.hidden = true;
+    }
+  }
+
+  function setTemplate(name) {
+    pg.template = name;
+    document.querySelectorAll(".tpl").forEach(function (t) {
+      t.setAttribute("aria-pressed", String(t.getAttribute("data-template") === name));
+    });
+  }
+  function loadTemplate(name) {
+    pg.form = fromBody(clone(TEMPLATES[name]));
+    if (pg.mode === "json") $("pg-body").value = jsonText(buildBody(pg.form, "draft"), "  ");
+    renderForm();
+    setTemplate(name);
+    pg.dirty = false;
+    notice($("pg-msg"), "");
+    showEmpty();
+  }
+  function showEmpty() {
+    $("pg-result").hidden = true;
+    $("pg-empty").hidden = false;
+  }
+  document.querySelectorAll(".tpl").forEach(function (t) {
+    t.addEventListener("click", function () {
+      if (pg.dirty && !window.confirm("Replace your current questions and state with this template?")) return;
+      loadTemplate(t.getAttribute("data-template"));
+    });
+  });
+  $("pg-templates-btn").onclick = function () {
+    notice($("pg-msg"), "");
+    showEmpty();
+    var first = document.querySelector(".tpl[aria-pressed=true]") || document.querySelector(".tpl");
+    if (first) { first.focus(); first.scrollIntoView({ block: "nearest" }); }
+  };
+
+  /* ---------- Playground: editing ---------- */
+  function edited() { pg.dirty = true; if (pg.template) setTemplate(null); }
+  var qList = $("q-list");
+  qList.addEventListener("input", function (ev) {
+    var t = ev.target;
+    var f = t.getAttribute("data-f");
+    var box = t.closest(".q");
+    if (!f || !box || f === "type") return;
+    var q = pg.form.questions[Number(box.getAttribute("data-qi"))];
+    var row = t.closest(".row-item");
+    var i = row ? Number(row.getAttribute("data-i")) : -1;
+    if (f === "name" || f === "instructions" || f === "yes" || f === "no") q[f] = t.value;
+    else if (f === "opt-name") q.options[i].name = t.value;
+    else if (f === "opt-desc") q.options[i].desc = t.value;
+    else if (f === "lvl-label") q.levels[i].label = t.value;
+    else if (f === "lvl-desc") q.levels[i].desc = t.value;
+    edited();
+  });
+  qList.addEventListener("change", function (ev) {
+    var t = ev.target;
+    if (t.getAttribute("data-f") !== "type") return;
+    var qi = Number(t.closest(".q").getAttribute("data-qi"));
+    pg.form.questions[qi].type = t.value;
+    edited();
+    renderForm({ qi: qi, field: "type" });
+  });
+  qList.addEventListener("click", function (ev) {
+    var b = ev.target.closest("button[data-act]");
+    if (!b || b.getAttribute("data-act") === "grip") return;
+    var qi = Number(b.closest(".q").getAttribute("data-qi"));
+    var q = pg.form.questions[qi];
+    var row = b.closest(".row-item");
+    var i = row ? Number(row.getAttribute("data-i")) : -1;
+    var act = b.getAttribute("data-act");
+    var focus = null;
+    if (act === "del-q") {
+      pg.form.questions.splice(qi, 1);
+      focus = pg.form.questions.length ? { qi: Math.min(qi, pg.form.questions.length - 1), field: "name" } : { qi: -1, field: "add" };
+    } else if (act === "add-opt") {
+      q.options.push({ name: "", desc: "" });
+      focus = { qi: qi, field: "opt-name", i: q.options.length - 1 };
+    } else if (act === "del-opt") {
+      q.options.splice(i, 1);
+      focus = { qi: qi, field: "opt-name", i: Math.min(i, q.options.length - 1) };
+    } else if (act === "add-lvl") {
+      q.levels.push({ label: "", desc: "" });
+      focus = { qi: qi, field: "lvl-label", i: q.levels.length - 1 };
+    } else if (act === "del-lvl") {
+      q.levels.splice(i, 1);
+      focus = { qi: qi, field: "lvl-label", i: Math.min(i, q.levels.length - 1) };
+    } else return;
+    edited();
+    renderForm(focus);
+  });
+  $("q-add").onclick = function () {
+    if (pg.form.questions.length >= MAX_QUESTIONS) return;
+    var q = blankQuestion("noul");
+    var taken = {};
+    pg.form.questions.forEach(function (x) { taken[x.name.trim()] = true; });
+    var n = pg.form.questions.length + 1;
+    while (taken["question_" + n]) n += 1;
+    q.name = "question_" + n;
+    pg.form.questions.push(q);
+    edited();
+    renderForm({ qi: pg.form.questions.length - 1, field: "instructions" });
+  };
+
+  // Levels: keyboard reorder on the grip (arrow keys) and pointer drag.
+  function moveLevel(qi, from, to) {
+    var levels = pg.form.questions[qi].levels;
+    if (to < 0 || to >= levels.length || to === from) return false;
+    levels.splice(to, 0, levels.splice(from, 1)[0]);
+    edited();
+    return true;
+  }
+  qList.addEventListener("keydown", function (ev) {
+    var grip = ev.target.closest && ev.target.closest('[data-act="grip"]');
+    if (!grip || (ev.key !== "ArrowUp" && ev.key !== "ArrowDown")) return;
+    ev.preventDefault();
+    var qi = Number(grip.closest(".q").getAttribute("data-qi"));
+    var from = Number(grip.closest(".row-item").getAttribute("data-i"));
+    var to = from + (ev.key === "ArrowUp" ? -1 : 1);
+    if (moveLevel(qi, from, to)) {
+      renderForm({ qi: qi, field: "grip", i: to });
+      announce("Moved to position " + (to + 1) + " of " + pg.form.questions[qi].levels.length + ", level " + to + ".");
+    }
+  });
+  qList.addEventListener("pointerdown", function (ev) {
+    var grip = ev.target.closest('[data-act="grip"]');
+    if (!grip || ev.button !== 0) return;
+    ev.preventDefault();
+    var row = grip.closest(".row-item");
+    var rows = row.parentNode;
+    var qi = Number(grip.closest(".q").getAttribute("data-qi"));
+    var from = Number(row.getAttribute("data-i"));
+    var pointer = ev.pointerId;
+    row.classList.add("dragging");
+    // Listeners live on the document: moving the row in the DOM must not end the drag.
+    function onMove(e) {
+      if (e.pointerId !== pointer) return;
+      var siblings = Array.prototype.slice.call(rows.children);
+      for (var k = 0; k < siblings.length; k++) {
+        var s = siblings[k];
+        if (s === row) continue;
+        var box = s.getBoundingClientRect();
+        if (e.clientY > box.top && e.clientY < box.bottom) {
+          var target = e.clientY > box.top + box.height / 2 ? s.nextSibling : s;
+          if (target !== row && target !== row.nextSibling) rows.insertBefore(row, target);
+          break;
+        }
+      }
+    }
+    function onUp(e) {
+      if (e.pointerId !== pointer) return;
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      document.removeEventListener("pointercancel", onUp);
+      row.classList.remove("dragging");
+      var to = Array.prototype.indexOf.call(rows.children, row);
+      if (moveLevel(qi, from, to)) renderForm({ qi: qi, field: "grip", i: to });
+      else renderForm({ qi: qi, field: "grip", i: from });
+    }
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerup", onUp);
+    document.addEventListener("pointercancel", onUp);
+  });
+
+  $("pg-state").addEventListener("input", function () {
+    if (pg.form.stateRaw !== undefined) return;
+    pg.form.state = this.value;
+    edited();
+  });
+  $("pg-body").addEventListener("input", edited);
+
+  /* ---------- Playground: Form / JSON ---------- */
+  function setMode(mode) {
+    pg.mode = mode;
+    document.querySelectorAll("[data-mode]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === mode));
+    });
+    $("pg-form").hidden = mode !== "form";
+    $("pg-json").hidden = mode !== "json";
+    renderStateBox();
+  }
+  function switchMode(mode) {
+    if (mode === pg.mode) return;
+    var msg = $("pg-msg");
+    if (mode === "json") {
+      var built;
+      try { built = buildBody(pg.form, "keep"); } catch (e) {
+        if (!(e instanceof FormError)) throw e;
+        notice(msg, e.message + " Fix it before switching to JSON, so nothing is lost.", "err");
+        focusField(e.qi, e.field, e.i);
+        return;
+      }
+      $("pg-body").value = jsonText(built, "  ");
+      notice(msg, "");
+      setMode("json");
+      return;
+    }
+    var text = $("pg-body").value;
+    try { JSON.parse(text); } catch (e) {
+      notice(msg, "The request body isn't valid JSON: " + e.message, "err");
+      return;
+    }
+    try { pg.form = fromBody(parseOrdered(text)); } catch (e) {
+      if (!(e instanceof FormError)) throw e;
+      notice(msg, e.message, "err");
+      return;
+    }
+    notice(msg, "");
+    setMode("form");
+    renderForm();
+  }
+  document.querySelectorAll("[data-mode]").forEach(function (b) {
+    b.addEventListener("click", function () { switchMode(b.getAttribute("data-mode")); });
+  });
   $("pg-key-toggle").onclick = function () {
-    var input = $("pg-key");
-    var visible = input.type === "password";
-    input.type = visible ? "text" : "password";
+    var field = $("pg-key");
+    var visible = field.type === "password";
+    field.type = visible ? "text" : "password";
     this.textContent = visible ? "Hide" : "Show";
     this.setAttribute("aria-pressed", String(visible));
   };
@@ -816,11 +1616,91 @@
       notice($("pg-msg"), "The request body isn't valid JSON: " + e.message, "err");
     }
   };
-  $("pg-body").addEventListener("keydown", function (ev) {
-    if (ev.key === "Enter" && (ev.metaKey || ev.ctrlKey)) { ev.preventDefault(); runPlayground(); }
+  document.querySelector("[data-view=playground]").addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter" && (ev.metaKey || ev.ctrlKey) && ev.target.matches("input, textarea, select")) {
+      ev.preventDefault();
+      runPlayground();
+    }
   });
-  $("pg-run").onclick = runPlayground;
+  $("pg-composer").addEventListener("submit", function (ev) { ev.preventDefault(); runPlayground(); });
 
+  /* ---------- Playground: response tabs ---------- */
+  var resTabs = [$("tab-answers"), $("tab-raw")];
+  function pickRes(tab) {
+    selectTab(resTabs, tab);
+    var raw = tab.getAttribute("data-res") === "raw";
+    $("pg-answers").hidden = raw;
+    $("pg-raw-wrap").hidden = !raw;
+  }
+  resTabs.forEach(function (t) { t.addEventListener("click", function () { pickRes(t); }); });
+  tabKeys(resTabs, pickRes);
+  selectTab(resTabs, resTabs[0]);
+
+  /* ---------- Playground: code ---------- */
+  function pyRepr(v, indent) {
+    if (v === null || v === undefined) return "None";
+    if (v === true) return "True";
+    if (v === false) return "False";
+    if (typeof v === "number") return String(v);
+    if (typeof v === "string") return JSON.stringify(v);
+    var inner = indent + "    ";
+    if (Array.isArray(v)) {
+      if (!v.length) return "[]";
+      return "[\n" + v.map(function (x) { return inner + pyRepr(x, inner) + ","; }).join("\n") + "\n" + indent + "]";
+    }
+    var list = entries(v);
+    if (!list.length) return "{}";
+    return "{\n" + list.map(function (e) { return inner + JSON.stringify(e[0]) + ": " + pyRepr(e[1], inner) + ","; }).join("\n") + "\n" + indent + "}";
+  }
+  // body: the request as Ordered/plain data; text: its exact JSON text for curl.
+  function codeFor(lang, body, text) {
+    if (lang === "python") {
+      return "import os\nimport requests\n\nresponse = requests.post(\n" +
+        "    " + JSON.stringify(INFERENCE) + ",\n" +
+        "    headers={\"Authorization\": f\"Bearer {os.environ['JEV_API_KEY']}\"},\n" +
+        "    json=" + pyRepr(body, "    ") + ",\n" +
+        "    timeout=70,\n)\nresponse.raise_for_status()\n" +
+        "for name, answer in response.json()[\"answers\"].items():\n    print(name, answer)";
+    }
+    return "curl " + INFERENCE + " \\\n" +
+      "  -H \"Authorization: Bearer $JEV_API_KEY\" \\\n" +
+      "  -H \"Content-Type: application/json\" \\\n" +
+      "  --data-binary @- <<'JSON'\n" + text + "\nJSON";
+  }
+  var codeDialog = $("code-dialog");
+  function renderCode() {
+    var body = null;
+    var text = "";
+    var msg = $("code-msg");
+    if (pg.mode === "json") {
+      text = $("pg-body").value.trim();
+      try { JSON.parse(text); body = parseOrdered(text); } catch (e) {
+        notice(msg, "The request body isn't valid JSON yet: " + e.message, "err");
+      }
+    } else {
+      try {
+        body = buildBody(pg.form, "keep");
+        text = jsonText(body, "  ");
+      } catch (e) {
+        if (!(e instanceof FormError)) throw e;
+        notice(msg, e.message, "err");
+      }
+    }
+    if (body !== null) notice(msg, "");
+    $("code-out").textContent = body === null ? "" : codeFor($("code-lang").value, body, text);
+    $("code-copy").disabled = body === null;
+  }
+  $("pg-code-btn").onclick = function () {
+    renderCode();
+    codeDialog.showModal();
+    $("code-lang").focus();
+  };
+  $("code-lang").addEventListener("change", renderCode);
+  $("code-copy").onclick = function () { copyText($("code-out").textContent, this); };
+  $("code-keys-link").addEventListener("click", function () { codeDialog.close(); });
+  codeDialog.addEventListener("close", function () { resetCopyLabels(codeDialog); });
+
+  /* ---------- Playground: run ---------- */
   function friendly(status, data) {
     var error = data && data.error;
     var limit = data && data.limit;
@@ -838,7 +1718,7 @@
         (where.length ? " Problem at: " + where.join("; ") + "." : "");
     }
     if (status === 429) {
-      var retry = wait ? " Try again in " + plural(wait, "second") + "." : " Try again shortly.";
+      var retry = wait ? " Try again in " + (wait < 120 ? plural(wait, "second") : countdown(wait * 1000)) + "." : " Try again shortly.";
       if (limit === "concurrency") return "Only " + (u.concurrency_limit || 1) + " request can run at a time per account. Wait for the current request to finish.";
       if (limit === "rpm") return "You've reached " + (u.rpm_limit || 20) + " requests per minute." + retry;
       if (limit === "daily") return "You've used today's " + fmtInt(u.daily_limit || 10000) + " successful requests. " + resetText(u.reset_at) + ".";
@@ -849,6 +1729,10 @@
     return (data && data.message) || "The request failed with status " + status + ".";
   }
 
+  function showResult() {
+    $("pg-empty").hidden = true;
+    $("pg-result").hidden = false;
+  }
   async function runPlayground() {
     if (state.running) return;
     var key = $("pg-key").value.trim();
@@ -856,9 +1740,28 @@
     if (!key) { notice(msg, "Paste an API key first. You can create one on the API keys page.", "err"); $("pg-key").focus(); return; }
     if (key.indexOf("jev_") !== 0) { notice(msg, "API keys start with jev_. Check that you pasted the whole key.", "err"); return; }
     var body;
-    try { body = JSON.parse($("pg-body").value); } catch (e) {
-      notice(msg, "The request body isn't valid JSON: " + e.message, "err");
-      return;
+    var text;
+    var order;
+    if (pg.mode === "json") {
+      text = $("pg-body").value;
+      try { body = JSON.parse(text); } catch (e) {
+        notice(msg, "The request body isn't valid JSON: " + e.message, "err");
+        return;
+      }
+      var parsed = parseOrdered(text);
+      order = isObject(parsed) && isObject(get(parsed, "questions")) ? keysOf(get(parsed, "questions")) : [];
+    } else {
+      try {
+        var built = buildBody(pg.form, "run");
+        text = jsonText(built, "");
+        body = JSON.parse(text);
+        order = entries(built.pairs[1][1]).map(function (e) { return e[0]; });
+      } catch (e) {
+        if (!(e instanceof FormError)) throw e;
+        notice(msg, e.message, "err");
+        focusField(e.qi, e.field, e.i);
+        return;
+      }
     }
     state.running = true;
     var run = $("pg-run");
@@ -872,7 +1775,7 @@
       var res = await fetch(INFERENCE, {
         method: "POST", credentials: "omit", cache: "no-store",
         headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+        body: text
       });
       var text = await res.text();
       var elapsed = Math.round(performance.now() - started);
@@ -883,17 +1786,27 @@
       badge.className = "badge " + (res.ok ? "ok" : "err");
       badge.hidden = false;
       $("pg-time").textContent = fmtInt(elapsed) + " ms";
-      $("pg-empty").hidden = true;
+      showResult();
       $("pg-raw").textContent = data ? JSON.stringify(data, null, 2) : text;
-      $("pg-raw-wrap").hidden = false;
       $("pg-answers").textContent = "";
-      if (res.ok && data) { renderAnswers(body, data); loadUsage(); }
-      else notice(msg, friendly(res.status, data), "err");
+      $("pg-meta").textContent = "";
+      if (res.ok && data) {
+        renderAnswers(body, data, order);
+        pickRes(resTabs[0]);
+        loadUsage();
+      } else {
+        pickRes(resTabs[1]);
+        notice(msg, friendly(res.status, data), "err");
+      }
     } catch (e) {
+      showResult();
       $("pg-status").textContent = "Network error";
       $("pg-status").className = "badge err";
       $("pg-status").hidden = false;
       $("pg-time").textContent = "";
+      $("pg-answers").textContent = "";
+      $("pg-raw").textContent = "";
+      $("pg-meta").textContent = "";
       notice(msg, "Couldn't reach the API. Check your connection and try again.", "err");
     } finally {
       state.running = false;
@@ -920,16 +1833,17 @@
     row.appendChild(el("span", "val", pct(p)));
     return row;
   }
-  function renderAnswers(request, result) {
+  function own(obj, key) { return obj && Object.prototype.hasOwnProperty.call(obj, key) ? obj[key] : undefined; }
+  function renderAnswers(request, result, order) {
     var box = $("pg-answers");
     box.textContent = "";
     var answers = (result && result.answers) || {};
     var questions = (request && request.questions) || {};
-    var ids = Object.keys(questions).filter(function (q) { return answers[q]; });
+    var ids = (order || Object.keys(questions)).filter(function (q) { return own(answers, q); });
     Object.keys(answers).forEach(function (q) { if (ids.indexOf(q) < 0) ids.push(q); });
     ids.forEach(function (id) {
-      var a = answers[id] || {};
-      var q = questions[id] || {};
+      var a = own(answers, id) || {};
+      var q = own(questions, id) || {};
       var card = el("div", "answer");
       var head = el("div", "answer-head");
       head.appendChild(el("span", "answer-id", id));
@@ -962,9 +1876,12 @@
       box.appendChild(card);
     });
     if (result && result.usage && typeof result.usage.input_tokens === "number") {
-      box.appendChild(el("p", "hint", fmtInt(result.usage.input_tokens) + " input tokens · model " + (result.model || "")));
+      $("pg-meta").textContent = fmtInt(result.usage.input_tokens) + " input tokens · model " + (result.model || "");
     }
   }
+
+  setMode("form");
+  loadTemplate("support");
 
   /* ---------- Log out ---------- */
   $("logout-btn").onclick = async function () {
@@ -975,7 +1892,7 @@
   /* ---------- Timers ---------- */
   setInterval(function () {
     if (state.usage) renderReset();
-    if (state.keys.length && !document.querySelector("dialog[open]")) renderKeys();
+    if (state.keys.length && !document.querySelector("dialog[open]") && !$("keys-body").contains(document.activeElement)) renderKeys();
   }, 30000);
   setInterval(loadHealth, 60000);
 

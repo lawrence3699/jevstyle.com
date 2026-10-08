@@ -7,7 +7,7 @@
   <meta name="description" content="Manage API keys, try requests in the Playground and view usage for the JevStyle Free API." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="./styles.css" />
-  <script>(function(){try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <script>(function(){try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("jev-console-sidebar")==="collapsed")document.documentElement.setAttribute("data-sidebar","collapsed");}catch(e){}})();</script>
 </head>
 <body>
   <div class="app">
@@ -15,26 +15,38 @@
       <div class="sb-brand">
         <a class="brand" href="/">
           <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          JevStyle
+          <span>JevStyle</span>
         </a>
         <span class="brand-sub">Free API</span>
+        <button type="button" class="icon-btn sb-toggle" id="sb-toggle" aria-label="Collapse sidebar" aria-expanded="true" title="Collapse sidebar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.2" y="4" width="13.6" height="12" rx="2.2"/><path d="M8 4v12"/></svg></button>
       </div>
       <nav class="sb-nav" id="nav" aria-label="Console sections">
-        <a href="#overview" data-page="overview"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.2 10 3.8l6.5 5.4V16a.7.7 0 0 1-.7.7h-3.6v-4.4H7.8v4.4H4.2a.7.7 0 0 1-.7-.7z"/></svg><span>Overview</span></a>
-        <a href="#playground" data-page="playground"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5.2v9.6l7.4-4.8z"/></svg><span>Playground</span></a>
-        <a href="#keys" data-page="keys"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="7" cy="10" r="3.3"/><path d="M10.3 10H17M14.5 10v2.6M16.8 10v1.8"/></svg><span>API keys</span></a>
-        <a href="#usage" data-page="usage"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16.5V11M8 16.5V6.5M12 16.5V9M16 16.5V4"/></svg><span>Usage</span></a>
-        <a href="#limits" data-page="limits"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="M10 6.4V10l2.4 1.6"/></svg><span class="lbl-long">Limits &amp; models</span><span class="lbl-short">Limits</span></a>
-        <a href="/api/" class="ext"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4M7.8 11h4.4M7.8 13.6h4.4"/></svg><span>Docs</span><span class="ext-arrow" aria-hidden="true">↗</span></a>
+        <a href="#overview" data-page="overview" title="Overview"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.2 10 3.8l6.5 5.4V16a.7.7 0 0 1-.7.7h-3.6v-4.4H7.8v4.4H4.2a.7.7 0 0 1-.7-.7z"/></svg><span class="lbl">Overview</span></a>
+        <a href="#playground" data-page="playground" title="Playground"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="5.2" cy="5" r="1.8"/><circle cx="5.2" cy="15" r="1.8"/><circle cx="14.8" cy="7.4" r="1.8"/><path d="M5.2 6.8v6.4M14.8 9.2c0 2.8-3.2 2.8-6.4 3.6-1.6.4-3.2 1-3.2 2.2"/></svg><span class="lbl">Playground</span></a>
+        <a href="#keys" data-page="keys" title="API keys"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="7" cy="10" r="3.3"/><path d="M10.3 10H17M14.5 10v2.6M16.8 10v1.8"/></svg><span class="lbl">API keys</span></a>
+        <a href="#usage" data-page="usage" title="Usage"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 14.5 8 9.8l3 3 5.5-6.3"/><path d="M13 6.5h3.5V10"/></svg><span class="lbl">Usage</span></a>
+        <a href="#limits" data-page="limits" title="Limits &amp; models"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="M10 6.4V10l2.4 1.6"/></svg><span class="lbl lbl-long">Limits &amp; models</span><span class="lbl lbl-short">Limits</span></a>
+        <a href="/api/" class="ext" title="Docs"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4M7.8 11h4.4M7.8 13.6h4.4"/></svg><span class="lbl">Docs</span><span class="ext-arrow" aria-hidden="true">↗</span></a>
       </nav>
       <div class="sb-status">
         <span class="status-pill" id="status-pill" data-state="checking" role="status"><i aria-hidden="true"></i><span id="status-text">Checking status…</span></span>
       </div>
       <div class="sb-account">
-        <div class="acct-email" id="user-chip">…</div>
-        <div class="acct-actions">
-          <button type="button" class="icon-btn" id="theme-btn" aria-label="Toggle theme" title="Theme"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path stroke-linecap="round" d="M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4M4.6 4.6l1 1M14.4 14.4l1 1M4.6 15.4l1-1M14.4 5.6l1-1"/></svg></button>
-          <button type="button" class="btn ghost sm" id="logout-btn" aria-label="Log out"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4.5H4.8v11H8M11.5 6.8 14.7 10l-3.2 3.2M14.5 10H7.8"/></svg><span>Log out</span></button>
+        <button type="button" class="acct-btn" id="acct-btn" aria-expanded="false" aria-controls="acct-menu">
+          <span class="avatar" id="acct-avatar" aria-hidden="true">·</span>
+          <span class="acct-email" id="user-chip">…</span>
+          <svg class="acct-caret" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8l3-3 3 3M7 12l3 3 3-3"/></svg>
+        </button>
+        <div class="acct-menu" id="acct-menu" hidden>
+          <div class="menu-head" id="menu-email">…</div>
+          <div class="menu-label" id="theme-label">Theme</div>
+          <div class="seg theme-seg" role="group" aria-labelledby="theme-label">
+            <button type="button" data-theme-set="system" aria-pressed="true">System</button>
+            <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
+            <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
+          </div>
+          <a class="menu-item" href="/api/"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Documentation</a>
+          <button type="button" class="menu-item" id="logout-btn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4.5H4.8v11H8M11.5 6.8 14.7 10l-3.2 3.2M14.5 10H7.8"/></svg>Log out</button>
         </div>
       </div>
     </aside>
@@ -54,44 +66,42 @@
             <p class="page-sub">Signed in as <span id="ov-email">…</span></p>
           </div>
           <div class="head-actions">
-            <a class="btn" href="#playground">Open Playground</a>
+            <a class="btn" href="/api/"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Docs</a>
             <button type="button" class="btn primary" data-action="create"><span aria-hidden="true">+</span> Create new secret key</button>
           </div>
         </header>
-        <div class="cards3">
-          <div class="card stat">
-            <div class="card-label">Requests today</div>
-            <div class="big"><span id="ov-used">—</span><span class="of"> / <span id="ov-limit">10,000</span></span></div>
-            <div class="meter" aria-hidden="true"><span id="ov-meter"></span></div>
-            <div class="card-foot" id="ov-reset">Resets at 00:00 UTC</div>
-          </div>
-          <div class="card stat">
-            <div class="card-label">Service status</div>
-            <div class="status-line"><span class="status-dot" id="ov-status-dot" data-state="checking" aria-hidden="true"></span><span id="ov-status">Checking…</span></div>
-            <div class="card-foot">Model <code>jev-style-2b-decision-v3</code></div>
-          </div>
-          <div class="card stat">
-            <div class="card-label">API keys</div>
-            <div class="big"><span id="ov-keys">—</span><span class="of"> of <span id="ov-max">3</span> active</span></div>
-            <div class="card-foot"><a href="#keys">Manage API keys</a></div>
-          </div>
-        </div>
 
-        <div class="card">
+        <div class="card start-card" id="start-card" hidden>
           <div class="card-head">
-            <h2>Quick start</h2>
-            <div class="seg" role="group" aria-label="Snippet language">
-              <button type="button" data-qs="curl" aria-pressed="true">curl</button>
-              <button type="button" data-qs="python" aria-pressed="false">Python</button>
+            <div>
+              <h2>Get started</h2>
+              <p class="muted" id="start-progress">0 of 2 done</p>
             </div>
+            <button type="button" class="btn ghost sm" id="start-hide" hidden>Hide</button>
           </div>
-          <ol class="steps">
-            <li>Create a secret key on the <a href="#keys">API keys</a> page and store it somewhere safe.</li>
-            <li>Make it available to your code: <code>export JEV_API_KEY="jev_…"</code></li>
-            <li>Send your first request:</li>
-          </ol>
-          <div class="code-block">
-            <button type="button" class="copy-btn" data-copy="qs">Copy</button>
+          <ol class="start-steps">
+            <li class="start-step" id="step-key" data-done="false">
+              <span class="check" aria-hidden="true"></span>
+              <div class="step-body">
+                <div class="step-title">Create an API key <span class="sr-only step-state">(not done)</span></div>
+                <p>A key is shown only once, so store it somewhere safe.</p>
+              </div>
+              <button type="button" class="btn sm step-act" data-action="create">Create key</button>
+            </li>
+            <li class="start-step" id="step-call" data-done="false">
+              <span class="check" aria-hidden="true"></span>
+              <div class="step-body">
+                <div class="step-title">Make your first successful request <span class="sr-only step-state">(not done)</span></div>
+                <p>Try it in the Playground, or call the API from your code.</p>
+                <details class="qs" id="qs-details">
+                  <summary>Show code</summary>
+                  <div class="tabs" role="tablist" aria-label="Snippet language">
+                    <button type="button" role="tab" data-qs="curl" aria-selected="true">curl</button>
+                    <button type="button" role="tab" data-qs="python" aria-selected="false">Python</button>
+                  </div>
+                  <p class="hint">Keep your key in an environment variable: <code>export JEV_API_KEY="jev_…"</code></p>
+                  <div class="code-block">
+                    <button type="button" class="copy-btn" data-copy="qs">Copy</button>
 <pre id="qs-curl" data-qs-pane="curl">curl https://api.jevstyle.com/v1/systemone \
   -H "Authorization: Bearer $JEV_API_KEY" \
   -H "Content-Type: application/json" \
@@ -117,6 +127,34 @@ response = requests.post(
 )
 response.raise_for_status()
 print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre>
+                  </div>
+                </details>
+              </div>
+              <a class="btn sm step-act" href="#playground">Open Playground</a>
+            </li>
+          </ol>
+        </div>
+
+        <div class="cards3">
+          <div class="card stat">
+            <div class="card-label">Requests today</div>
+            <div class="big"><span id="ov-used">—</span><span class="of"> / <span id="ov-limit">10,000</span></span></div>
+            <div class="meter" aria-hidden="true"><span id="ov-meter"></span></div>
+            <div class="card-foot" id="ov-reset">Resets at 00:00 UTC</div>
+            <div class="spark-row">
+              <svg class="spark" id="ov-spark" viewBox="0 0 120 28" preserveAspectRatio="none" aria-hidden="true"></svg>
+              <span class="spark-label" id="ov-week">— in the last 7 days</span>
+            </div>
+          </div>
+          <div class="card stat">
+            <div class="card-label">Service status</div>
+            <div class="status-line"><span class="status-dot" id="ov-status-dot" data-state="checking" aria-hidden="true"></span><span id="ov-status">Checking…</span></div>
+            <div class="card-foot">Model <code>jev-style-2b-decision-v3</code></div>
+          </div>
+          <div class="card stat">
+            <div class="card-label">API keys</div>
+            <div class="big"><span id="ov-keys">—</span><span class="of"> of <span id="ov-max">3</span> active</span></div>
+            <div class="card-foot"><a href="#keys">Manage API keys</a></div>
           </div>
         </div>
 
@@ -136,19 +174,21 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
         <header class="page-head">
           <div>
             <h1>Playground</h1>
-            <p class="page-sub">Try <code>POST /v1/systemone</code> without writing code. Requests use your API key and count toward your daily quota when they succeed.</p>
+            <p class="page-sub">Build decision questions and run them against <code>POST /v1/systemone</code>. Successful runs count toward your daily quota.</p>
+          </div>
+          <div class="head-actions">
+            <a class="btn" href="/api/#examples"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Docs</a>
+            <button type="button" class="btn primary" id="pg-code-btn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.4 6 3.5 10l3.9 4M12.6 6l3.9 4-3.9 4"/></svg>Code</button>
           </div>
         </header>
-        <div class="pg-grid">
-          <div class="card pg-req">
-            <div class="field">
-              <label for="pg-example">Example</label>
-              <select id="pg-example">
-                <option value="support">Support ticket (noul + choice + score)</option>
-                <option value="noul">Yes / no (noul)</option>
-                <option value="choice">Pick one option (choice)</option>
-                <option value="score">Rate on a scale (score)</option>
-              </select>
+        <div class="pg">
+          <div class="card pg-side">
+            <div class="pg-side-top">
+              <button type="button" class="btn sm" id="pg-templates-btn">Templates</button>
+              <div class="seg" role="group" aria-label="Editor">
+                <button type="button" data-mode="form" aria-pressed="true">Form</button>
+                <button type="button" data-mode="json" aria-pressed="false">JSON</button>
+              </div>
             </div>
             <div class="field">
               <label for="pg-key">API key</label>
@@ -158,31 +198,67 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
               </div>
               <p class="hint">Kept in this tab's memory only — never saved. Sent only to the JevStyle API.</p>
             </div>
-            <div class="field">
-              <label for="pg-body">Request body</label>
-              <textarea id="pg-body" spellcheck="false" autocomplete="off" rows="18"></textarea>
+            <div id="pg-form">
+              <div class="sec-head">
+                <h2>Questions</h2>
+                <span class="muted" id="q-count"></span>
+              </div>
+              <div id="q-list" class="q-list"></div>
+              <button type="button" class="btn sm add-btn" id="q-add"><span aria-hidden="true">+</span> Add question</button>
             </div>
-            <div class="pg-actions">
-              <button type="button" class="btn primary" id="pg-run">Run</button>
-              <button type="button" class="btn" id="pg-format">Format JSON</button>
-              <span class="hint kbd-hint">Ctrl / ⌘ + Enter to run</span>
+            <div id="pg-json" hidden>
+              <div class="sec-head">
+                <h2><label for="pg-body">Request body</label></h2>
+                <button type="button" class="btn sm" id="pg-format">Format JSON</button>
+              </div>
+              <textarea id="pg-body" spellcheck="false" autocomplete="off" rows="22"></textarea>
+              <p class="hint">The full <code>systemone</code> request, including <code>state</code>.</p>
             </div>
           </div>
-          <div class="card pg-res" aria-live="polite">
-            <div class="res-head">
-              <h2>Response</h2>
-              <span class="badge" id="pg-status" hidden></span>
-              <span class="muted" id="pg-time"></span>
-            </div>
-            <div id="pg-msg" class="notice" hidden></div>
-            <div id="pg-empty" class="empty sm">Choose an example, paste your API key and press <strong>Run</strong>. The model's answer appears here.</div>
-            <div id="pg-raw-wrap" hidden>
-              <div class="code-block">
-                <button type="button" class="copy-btn" data-copy="pg-raw">Copy</button>
-                <pre id="pg-raw"></pre>
+
+          <div class="card pg-main">
+            <div id="pg-msg" class="notice" role="status" aria-live="polite" hidden></div>
+            <p id="pg-announce" class="sr-only" aria-live="polite"></p>
+            <div class="pg-out">
+              <div id="pg-empty" class="pg-empty">
+                <span class="empty-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="5.2" cy="5" r="1.8"/><circle cx="5.2" cy="15" r="1.8"/><circle cx="14.8" cy="7.4" r="1.8"/><path d="M5.2 6.8v6.4M14.8 9.2c0 2.8-3.2 2.8-6.4 3.6-1.6.4-3.2 1-3.2 2.2"/></svg></span>
+                <strong>Your decision will appear here</strong>
+                <span>Choose a template or build your own questions, then press Run.</span>
+                <div class="tpl-grid" id="tpl-grid">
+                  <button type="button" class="tpl" data-template="support" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Multiple · Support ticket</span><span class="tpl-desc">Refund, routing and urgency for one ticket.</span></button>
+                  <button type="button" class="tpl" data-template="noul" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Yes / No · Refund request</span><span class="tpl-desc">How likely is it that the customer wants money back?</span></button>
+                  <button type="button" class="tpl" data-template="choice" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Choice · Route a ticket</span><span class="tpl-desc">Pick the team best suited to handle a bug report.</span></button>
+                  <button type="button" class="tpl" data-template="score" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Score · Ticket urgency</span><span class="tpl-desc">Rate urgency on an ordered four-level scale.</span></button>
+                </div>
+              </div>
+              <div id="pg-result" hidden>
+                <div class="res-head">
+                  <div class="tabs" role="tablist" aria-label="Response view">
+                    <button type="button" role="tab" id="tab-answers" data-res="answers" aria-selected="true">Answers</button>
+                    <button type="button" role="tab" id="tab-raw" data-res="raw" aria-selected="false">Raw JSON</button>
+                  </div>
+                  <span class="badge" id="pg-status" aria-live="polite" hidden></span>
+                  <span class="muted" id="pg-time"></span>
+                </div>
+                <div id="pg-answers" class="answers" role="tabpanel" aria-labelledby="tab-answers"></div>
+                <div id="pg-raw-wrap" role="tabpanel" aria-labelledby="tab-raw" hidden>
+                  <div class="code-block">
+                    <button type="button" class="copy-btn" data-copy="pg-raw">Copy</button>
+                    <pre id="pg-raw"></pre>
+                  </div>
+                </div>
+                <p class="hint" id="pg-meta"></p>
               </div>
             </div>
-            <div id="pg-answers" class="answers"></div>
+            <form class="composer" id="pg-composer" novalidate>
+              <label for="pg-state" class="composer-label">State</label>
+              <textarea id="pg-state" rows="3" spellcheck="false" placeholder="Describe the situation to decide on…"></textarea>
+              <p class="composer-note" id="pg-state-note" hidden></p>
+              <div class="composer-bar">
+                <span class="hint kbd-hint">Ctrl / ⌘ + Enter to run</span>
+                <button type="submit" class="btn primary" id="pg-run">Run</button>
+              </div>
+            </form>
           </div>
         </div>
       </section>
@@ -192,26 +268,31 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
         <header class="page-head">
           <div>
             <h1>API keys</h1>
-            <p class="page-sub">Your secret API keys are listed below. A key is shown only once, when you create it, so store it somewhere safe. Do not share your keys or put them in browser or other client-side code.</p>
-            <p class="page-sub">All keys in your account share the same limits. <a href="#limits">View limits</a></p>
+            <p class="page-sub">A key is shown only once, when you create it, so store it somewhere safe. Do not share your keys or put them in browser or other client-side code. All keys in your account share the same <a href="#limits">limits</a>.</p>
+          </div>
+          <div class="head-actions">
+            <a class="btn" href="/api/auth.html"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Docs</a>
+            <button type="button" class="btn primary" id="create-btn" data-action="create"><span aria-hidden="true">+</span> Create new secret key</button>
           </div>
         </header>
         <div class="toolbar">
           <span class="muted" id="key-count">— of 3 keys used</span>
-          <button type="button" class="btn primary" id="create-btn" data-action="create"><span aria-hidden="true">+</span> Create new secret key</button>
+          <label class="switch"><input type="checkbox" id="show-revoked" /><span class="switch-ui" aria-hidden="true"></span><span>Show revoked keys</span></label>
         </div>
         <div id="keys-msg" class="notice" hidden></div>
-        <div class="table-card" id="keys-wrap">
+        <div class="empty" id="keys-empty" hidden>
+          <span class="empty-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="4.5" y="8.6" width="11" height="8" rx="1.6"/><path d="M7 8.6V6.8a3 3 0 0 1 6 0v1.8"/></svg></span>
+          <strong>Create an API key to access the JevStyle API</strong>
+          <span>You can have up to <span id="keys-empty-max">3</span> active keys.</span>
+          <button type="button" class="btn primary" data-action="create"><span aria-hidden="true">+</span> Create new secret key</button>
+        </div>
+        <div class="table-card" id="keys-wrap" hidden>
           <table class="data-table keys-table" id="keys-table">
             <thead>
               <tr><th scope="col">Name</th><th scope="col">Secret key</th><th scope="col">Created</th><th scope="col">Last used</th><th scope="col" class="num">Requests today</th><th scope="col"><span class="sr-only">Actions</span></th></tr>
             </thead>
             <tbody id="keys-body"><tr><td colspan="6" class="muted">Loading…</td></tr></tbody>
           </table>
-        </div>
-        <div class="empty" id="keys-empty" hidden>
-          <strong>No API keys yet</strong>
-          <span>Create a secret key to start calling the API. You can have up to <span id="keys-empty-max">3</span> active keys.</span>
         </div>
       </section>
 
@@ -220,50 +301,65 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
         <header class="page-head">
           <div>
             <h1>Usage</h1>
-            <p class="page-sub">Successful requests across all keys in your account. Days follow UTC.</p>
+            <p class="page-sub">Successful requests across your API keys. Days follow UTC.</p>
           </div>
-          <div class="seg" role="group" aria-label="Date range" id="range-seg">
-            <button type="button" data-days="14" aria-pressed="false">14 days</button>
-            <button type="button" data-days="30" aria-pressed="true">30 days</button>
+          <div class="head-actions">
+            <a class="btn" href="/api/limits.html"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Docs</a>
           </div>
         </header>
-        <div id="usage-msg" class="notice err" hidden></div>
-        <div class="card today-card">
-          <div class="today-top">
-            <div>
-              <div class="card-label">Today</div>
-              <div class="big"><span id="u-used">—</span><span class="of"> / <span id="u-limit">10,000</span> requests</span></div>
-            </div>
-            <div class="today-side">
-              <div class="card-label">Remaining</div>
-              <div class="mid" id="u-rem">—</div>
-            </div>
+        <div class="filters">
+          <select id="u-key" aria-label="API key"><option value="">All API keys</option></select>
+          <div class="seg" role="group" aria-label="Date range" id="range-seg">
+            <button type="button" data-days="7" aria-pressed="false">7 days</button>
+            <button type="button" data-days="14" aria-pressed="false">14 days</button>
+            <button type="button" data-days="30" aria-pressed="true">30 days</button>
+            <button type="button" data-days="90" aria-pressed="false">90 days</button>
           </div>
-          <div class="meter lg" id="u-meter-wrap" role="meter" aria-label="Requests used today" aria-valuemin="0" aria-valuemax="10000" aria-valuenow="0"><span id="u-meter"></span></div>
-          <div class="card-foot" id="u-reset">Resets at 00:00 UTC</div>
+          <button type="button" class="icon-btn bordered" id="u-refresh" aria-label="Refresh usage" title="Refresh"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.6 10a5.6 5.6 0 1 1-1.7-4M14.4 3.4v3h-3"/></svg></button>
         </div>
-        <div class="card chart-card" id="chart-card">
-          <div class="card-head">
-            <div>
-              <h2>Successful requests</h2>
-              <p class="muted" id="chart-sub">Last 30 days · UTC</p>
+        <div id="usage-msg" class="notice err" hidden></div>
+        <div class="usage-grid">
+          <div class="card chart-card" id="chart-card">
+            <div class="card-head">
+              <div>
+                <h2>Successful requests</h2>
+                <p class="muted" id="chart-sub">Last 30 days · UTC</p>
+              </div>
+              <div class="chart-total"><span id="chart-total">—</span><span class="muted"> total</span></div>
             </div>
-            <div class="chart-total"><span id="chart-total">—</span><span class="muted"> total</span></div>
+            <div class="legend" id="chart-legend" hidden></div>
+            <div class="chart" id="chart" hidden></div>
+            <div class="chart-tip" id="chart-tip" role="tooltip" hidden></div>
+            <div class="empty" id="chart-empty" hidden>
+              <span class="empty-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3.5 14.5 8 9.8l3 3 5.5-6.3"/><path d="M13 6.5h3.5V10"/></svg></span>
+              <strong>No usage yet</strong>
+              <span id="chart-empty-text">There are no successful requests in this period.</span>
+              <a class="btn" href="#playground">Open Playground</a>
+            </div>
+            <details class="table-view" id="chart-table-wrap" hidden>
+              <summary>Show as table</summary>
+              <table class="data-table compact">
+                <thead><tr><th scope="col">Day (UTC)</th><th scope="col" class="num">Requests</th><th scope="col">By key</th></tr></thead>
+                <tbody id="chart-table"></tbody>
+              </table>
+            </details>
           </div>
-          <div class="legend" id="chart-legend" hidden></div>
-          <div class="chart" id="chart" hidden></div>
-          <div class="chart-tip" id="chart-tip" role="tooltip" hidden></div>
-          <div class="empty" id="chart-empty" hidden>
-            <strong>No usage yet</strong>
-            <span>There are no successful requests in this period. Try one in the <a href="#playground">Playground</a> or follow the <a href="#overview">quick start</a>.</span>
+          <div class="usage-rail">
+            <div class="card rail-card">
+              <div class="card-label">Today · whole account</div>
+              <div class="big"><span id="u-used">—</span><span class="of"> / <span id="u-limit">10,000</span></span></div>
+              <div class="meter" id="u-meter-wrap" role="meter" aria-label="Requests used today" aria-valuemin="0" aria-valuemax="10000" aria-valuenow="0"><span id="u-meter"></span></div>
+              <dl class="rail-dl">
+                <div><dt>Remaining</dt><dd id="u-rem">—</dd></div>
+              </dl>
+              <div class="card-foot" id="u-reset">Resets at 00:00 UTC</div>
+            </div>
+            <div class="card rail-card">
+              <div class="card-label" id="u-period-label">Last 30 days</div>
+              <div class="mid" id="u-period">—</div>
+              <div class="card-foot" id="u-period-foot">All API keys</div>
+            </div>
           </div>
-          <details class="table-view" id="chart-table-wrap" hidden>
-            <summary>Show as table</summary>
-            <table class="data-table compact">
-              <thead><tr><th scope="col">Day (UTC)</th><th scope="col" class="num">Requests</th><th scope="col">By key</th></tr></thead>
-              <tbody id="chart-table"></tbody>
-            </table>
-          </details>
         </div>
         <p class="note">Only successful requests count. Failed, rejected or timed-out requests are not charged. Requests made with keys you have since revoked still count toward today's total.</p>
       </section>
@@ -275,23 +371,32 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
             <h1>Limits &amp; models</h1>
             <p class="page-sub">Free tier, best effort and without an SLA. Limits may change.</p>
           </div>
+          <div class="head-actions">
+            <a class="btn" href="/api/limits.html"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Docs</a>
+          </div>
         </header>
         <div class="card">
           <h2>Rate limits</h2>
-          <p class="muted">Limits apply to your whole account and are shared by all of its keys. Extra keys are for rotation, not extra capacity.</p>
+          <p class="muted">Limits apply to your whole account and are shared by all of its keys.</p>
           <div class="table-scroll">
-            <table class="data-table" id="limits-table">
-              <thead><tr><th scope="col">Limit</th><th scope="col">Value</th><th scope="col">When exceeded</th></tr></thead>
+            <table class="data-table limits-table" id="limits-table">
+              <thead><tr><th scope="col">Model</th><th scope="col" class="num">Concurrent</th><th scope="col" class="num">Requests per minute</th><th scope="col" class="num">Requests per day</th><th scope="col" class="num">Input per request</th></tr></thead>
               <tbody>
-                <tr><td>Concurrent requests</td><td><strong id="l-conc">1</strong> per account</td><td><code>429</code></td></tr>
-                <tr><td>Requests per minute</td><td><strong id="l-rpm">20</strong> per account</td><td><code>429</code> with Retry-After</td></tr>
-                <tr><td>Successful requests per day</td><td><strong id="l-daily">10,000</strong> per account, resets 00:00 UTC</td><td><code>429</code></td></tr>
-                <tr><td>Input per request</td><td><strong id="l-tokens">8,000</strong> tokens (state + all questions)</td><td><code>413</code></td></tr>
-                <tr><td>API keys</td><td><strong id="l-keys">3</strong> active per account</td><td>Create is disabled</td></tr>
+                <tr>
+                  <td><code class="model-id">jev-style-2b-decision-v3</code></td>
+                  <td class="num"><span id="l-conc">1</span></td>
+                  <td class="num"><span id="l-rpm">20</span> RPM</td>
+                  <td class="num"><span id="l-daily">10,000</span> RPD</td>
+                  <td class="num"><span id="l-tokens">8,000</span> tokens</td>
+                </tr>
               </tbody>
             </table>
           </div>
-          <p class="fine">Failed, rejected and timed-out requests are not charged against your daily quota.</p>
+          <ul class="fine-list">
+            <li>The daily quota resets at 00:00 UTC. Only successful requests count; failed, rejected and timed-out requests are free.</li>
+            <li>Over a limit, requests get <code>429</code> (with <code>Retry-After</code> for the per-minute limit). Input over the token cap gets <code>413</code>.</li>
+            <li>Up to <strong id="l-keys">3</strong> active API keys per account. Extra keys are for rotation, not extra capacity.</li>
+          </ul>
         </div>
         <div class="card">
           <h2>Models</h2>
@@ -306,7 +411,7 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
               <div><dt>Free-tier input cap</dt><dd>8,000 tokens per request</dd></div>
               <div><dt>Question types</dt><dd class="types"><span><code>noul</code>yes / no</span><span><code>choice</code>pick one option</span><span><code>score</code>ordered scale</span></dd></div>
               <div><dt>Output</dt><dd>Probabilities per question, no generated text</dd></div>
-              <div><dt>Endpoint</dt><dd><code>POST /v1/systemone</code></dd></div>
+              <div><dt>Endpoints</dt><dd><code>POST /v1/systemone</code><br /><code>GET /v1/models</code></dd></div>
             </dl>
             <a class="ext-link" href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3" target="_blank" rel="noopener noreferrer">Model card on Hugging Face <span aria-hidden="true">↗</span></a>
           </div>
@@ -377,6 +482,27 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
     <div class="dlg-actions">
       <button type="button" class="btn" data-close>Cancel</button>
       <button type="button" class="btn danger" id="revoke-confirm">Revoke key</button>
+    </div>
+  </dialog>
+
+  <dialog class="dlg dlg-wide" id="code-dialog" aria-labelledby="code-title">
+    <h3 id="code-title">View code</h3>
+    <p>Use this code to send your current questions from your own application.</p>
+    <p>Create a key on the <a href="#keys" id="code-keys-link">API keys</a> page. Keep it in an environment variable or a secret manager, never in browser code.</p>
+    <div class="code-panel">
+      <div class="code-panel-head">
+        <code>POST /v1/systemone</code>
+        <select id="code-lang" aria-label="Language">
+          <option value="curl">curl</option>
+          <option value="python">Python</option>
+        </select>
+        <button type="button" class="copy-btn inline" id="code-copy">Copy</button>
+      </div>
+      <pre id="code-out"></pre>
+    </div>
+    <div id="code-msg" class="notice err" hidden></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn" data-close>Close</button>
     </div>
   </dialog>
 
