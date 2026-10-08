@@ -61,7 +61,7 @@
         <div class="cards3">
           <div class="card stat">
             <div class="card-label">Requests today</div>
-            <div class="big"><span id="ov-used">—</span><span class="of"> / <span id="ov-limit">500</span></span></div>
+            <div class="big"><span id="ov-used">—</span><span class="of"> / <span id="ov-limit">10,000</span></span></div>
             <div class="meter" aria-hidden="true"><span id="ov-meter"></span></div>
             <div class="card-foot" id="ov-reset">Resets at 00:00 UTC</div>
           </div>
@@ -232,14 +232,14 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
           <div class="today-top">
             <div>
               <div class="card-label">Today</div>
-              <div class="big"><span id="u-used">—</span><span class="of"> / <span id="u-limit">500</span> requests</span></div>
+              <div class="big"><span id="u-used">—</span><span class="of"> / <span id="u-limit">10,000</span> requests</span></div>
             </div>
             <div class="today-side">
               <div class="card-label">Remaining</div>
               <div class="mid" id="u-rem">—</div>
             </div>
           </div>
-          <div class="meter lg" id="u-meter-wrap" role="meter" aria-label="Requests used today" aria-valuemin="0" aria-valuemax="500" aria-valuenow="0"><span id="u-meter"></span></div>
+          <div class="meter lg" id="u-meter-wrap" role="meter" aria-label="Requests used today" aria-valuemin="0" aria-valuemax="10000" aria-valuenow="0"><span id="u-meter"></span></div>
           <div class="card-foot" id="u-reset">Resets at 00:00 UTC</div>
         </div>
         <div class="card chart-card" id="chart-card">
@@ -285,7 +285,7 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
               <tbody>
                 <tr><td>Concurrent requests</td><td><strong id="l-conc">1</strong> per account</td><td><code>429</code></td></tr>
                 <tr><td>Requests per minute</td><td><strong id="l-rpm">20</strong> per account</td><td><code>429</code> with Retry-After</td></tr>
-                <tr><td>Successful requests per day</td><td><strong id="l-daily">500</strong> per account, resets 00:00 UTC</td><td><code>429</code></td></tr>
+                <tr><td>Successful requests per day</td><td><strong id="l-daily">10,000</strong> per account, resets 00:00 UTC</td><td><code>429</code></td></tr>
                 <tr><td>Input per request</td><td><strong id="l-tokens">8,000</strong> tokens (state + all questions)</td><td><code>413</code></td></tr>
                 <tr><td>API keys</td><td><strong id="l-keys">3</strong> active per account</td><td>Create is disabled</td></tr>
               </tbody>

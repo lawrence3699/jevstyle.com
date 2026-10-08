@@ -509,7 +509,7 @@
     var u = state.usage;
     if (!u) return;
     var used = Number(u.daily_used) || 0;
-    var limit = Number(u.daily_limit) || 500;
+    var limit = Number(u.daily_limit) || 10000;
     var remaining = u.daily_remaining != null ? Number(u.daily_remaining) : Math.max(0, limit - used);
     $("u-used").textContent = fmtInt(used);
     $("u-rem").textContent = fmtInt(remaining);
@@ -841,7 +841,7 @@
       var retry = wait ? " Try again in " + plural(wait, "second") + "." : " Try again shortly.";
       if (limit === "concurrency") return "Only " + (u.concurrency_limit || 1) + " request can run at a time per account. Wait for the current request to finish.";
       if (limit === "rpm") return "You've reached " + (u.rpm_limit || 20) + " requests per minute." + retry;
-      if (limit === "daily") return "You've used today's " + fmtInt(u.daily_limit || 500) + " successful requests. " + resetText(u.reset_at) + ".";
+      if (limit === "daily") return "You've used today's " + fmtInt(u.daily_limit || 10000) + " successful requests. " + resetText(u.reset_at) + ".";
       return "The free tier is busy right now." + retry;
     }
     if (status === 503) return "Inference is temporarily unavailable. Failed requests are not charged, so you can try again shortly.";
