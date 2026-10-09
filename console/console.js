@@ -244,19 +244,108 @@
   }
 
   /* ---------- Service status ---------- */
+  var HEALTH_TEXT = {
+    operational: "All systems operational", degraded: "Degraded performance",
+    down: "Inference unavailable", unreachable: "Can't reach the API"
+  };
+  var HEALTH_TITLE = {
+    operational: "The API is accepting requests.",
+    degraded: "The API is working, but inference was unavailable at least once in the last 10 minutes.",
+    down: "Requests may fail with 503 and are not charged.",
+    unreachable: "Your browser couldn't reach api.jevstyle.com."
+  };
+  var COMPONENT_TEXT = { operational: "Operational", degraded: "Degraded", down: "Unavailable" };
+  function pct(x) {
+    if (typeof x !== "number") return null;
+    return x >= 1 ? "100%" : (Math.floor(x * 10000) / 100).toFixed(2) + "%";
+  }
+  function dayLevel(d) {
+    if (typeof d.uptime !== "number") return "none";
+    if (!d.down_minutes) return "ok";
+    var down = 1 - d.uptime;
+    return down < 0.01 ? "minor" : down <= 0.05 ? "major" : "out";
+  }
+  function setOverall(name) {
+    var dot = name === "operational" ? "up" : name === "degraded" ? "degraded" : "down";
+    var short = name === "operational" ? "API operational" : HEALTH_TEXT[name];
+    $("status-pill").setAttribute("data-state", dot);
+    $("status-text").textContent = short;
+    $("status-pill").title = HEALTH_TITLE[name];
+    $("ov-status").textContent = short;
+    $("ov-status-dot").setAttribute("data-state", dot);
+    $("hl-overall").setAttribute("data-state", name);
+    $("hl-overall-text").textContent = HEALTH_TEXT[name];
+    $("hl-overall").title = HEALTH_TITLE[name];
+  }
+  function renderComponents(items) {
+    var list = $("hl-components");
+    list.textContent = "";
+    items.forEach(function (c) {
+      var li = el("li");
+      li.appendChild(el("span", "", c.name));
+      var st = el("span", "hc-state", COMPONENT_TEXT[c.status] || "Unknown");
+      st.setAttribute("data-state", c.status);
+      li.appendChild(st);
+      list.appendChild(li);
+    });
+  }
+  function renderHistory(data) {
+    var bars = $("hl-bars");
+    bars.textContent = "";
+    var days = data && Array.isArray(data.days) ? data.days : [];
+    days.forEach(function (d) {
+      var bar = el("span");
+      var level = dayLevel(d);
+      bar.setAttribute("data-level", level);
+      var label = dayLongFmt.format(new Date(d.day + "T00:00:00Z")) + " · ";
+      label += level === "none" ? "No data" : pct(d.uptime) + " uptime" +
+        (d.down_minutes ? " · " + plural(d.down_minutes, "minute") + " down" : "");
+      bar.title = label;
+      bars.appendChild(bar);
+    });
+    var up = data && data.uptime ? data.uptime : {};
+    var u90 = pct(up["90d"]), u30 = pct(up["30d"]);
+    var box = $("hl-uptime");
+    box.textContent = "";
+    box.appendChild(el("span", "hu-90", u90 ? u90 + " uptime" : "No data yet"));
+    box.appendChild(el("span", "hu-30", u30 ? u30 + " uptime" : "No data yet"));
+    bars.setAttribute("aria-label", u90 ? "Daily uptime for the last 90 days, " + u90 + " overall" : "Daily uptime: no data yet");
+    var since = data && data.tracking_since ? new Date(data.tracking_since) : null;
+    var oldest = days.length ? new Date(days[0].day + "T00:00:00Z") : null;
+    $("hl-since").textContent = !data ? "History unavailable" :
+      since && oldest && since > oldest ? "Tracking since " + dayFmt.format(since) : "";
+  }
   async function loadHealth() {
-    var up = false;
-    try {
-      var res = await fetch(ORIGIN + "/healthz", { credentials: "omit", cache: "no-store" });
-      var data = await res.json();
-      up = res.ok && data && data.inference_ready === true;
-    } catch (e) { up = false; }
-    var text = up ? "API operational" : "Inference unavailable";
-    $("status-pill").setAttribute("data-state", up ? "up" : "down");
-    $("status-text").textContent = text;
-    $("status-pill").title = up ? "The API is accepting requests." : "Requests may fail with 503 and are not charged.";
-    $("ov-status").textContent = text;
-    $("ov-status-dot").setAttribute("data-state", up ? "up" : "down");
+    if (document.hidden) return;
+    var data = null, name = null, started = performance.now();
+    if (state.me) {
+      try {
+        var r = await api("/status");
+        if (r.ok && r.data && Array.isArray(r.data.days)) data = r.data;
+        else if (r.status === 401) return;
+      } catch (e) { name = "unreachable"; }
+    }
+    if (data) {
+      name = data.status in HEALTH_TEXT ? data.status : "down";
+    } else if (!name) {
+      // Signed out, or a control plane without /status: the public health check only.
+      started = performance.now();
+      try {
+        var res = await fetch(ORIGIN + "/healthz", { credentials: "omit", cache: "no-store" });
+        var h = await res.json();
+        name = res.ok && h && h.inference_ready === true ? "operational" : "down";
+      } catch (e) { name = "unreachable"; }
+    }
+    var ms = Math.round(performance.now() - started);
+    setOverall(name);
+    if (!state.me) return;
+    renderComponents(data ? data.components : name === "unreachable"
+      ? [{ name: "API", status: "down" }, { name: "Inference", status: "down" }]
+      : [{ name: "API", status: "operational" }, { name: "Inference", status: name }]);
+    renderHistory(data);
+    $("hl-foot").textContent = (name === "unreachable" ? "" : "Response time from your browser: " +
+      (ms < 1000 ? ms + " ms" : (ms / 1000).toFixed(2) + " s") + " · ") +
+      "Checked at " + timeFmt.format(new Date()) + " · refreshes every 30 s. Checks run every minute; days are in UTC.";
   }
 
   /* ---------- Keys ---------- */
@@ -1895,7 +1984,8 @@
     if (state.usage) renderReset();
     if (state.keys.length && !document.querySelector("dialog[open]") && !$("keys-body").contains(document.activeElement)) renderKeys();
   }, 30000);
-  setInterval(loadHealth, 60000);
+  setInterval(loadHealth, 30000);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) loadHealth(); });
 
   /* ---------- Start ---------- */
   showPage(false);
@@ -1906,5 +1996,6 @@
     state.signedOut = false;
     $("gate").hidden = true;
     showPage(false);
+    loadHealth();
   })();
 })();
