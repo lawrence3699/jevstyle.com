@@ -47,6 +47,13 @@
       <div id="sent-msg" class="msg" role="status" aria-live="polite" hidden></div>
       <p class="after">Nothing yet? Check spam. Wrong address? <button type="button" class="link-btn" id="change-email" style="margin:0">Use a different email</button></p>
     </section>
+    <section class="stage center" id="stage-done" hidden>
+      <div class="art ok" aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="ring" cx="22" cy="22" r="18"/><path class="tick" d="M14 22.5l5.5 5.5 11-11.5"/></svg></div>
+      <h1 tabindex="-1" id="done-heading">You're all set</h1>
+      <p class="sub" id="done-text">Taking you to Console…</p>
+      <div class="progress" id="progress"><i></i></div>
+      <a class="btn primary" id="done-link" href="/console/">Go to Console</a>
+    </section>
   </div>
   <p class="foot">Independent · not TypeSafe</p>
   <script>

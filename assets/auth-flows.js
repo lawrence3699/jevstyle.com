@@ -61,6 +61,38 @@
   }
   var OFFLINE = "Can't reach the service. Please try again later.";
 
+  function finish() {
+    clearInterval(timer);
+    stage("stage-done");
+    $("progress").classList.add("run");
+    setTimeout(function () { location.href = "/console/"; }, reduce ? 600 : 1800);
+  }
+
+  // ---- Sign-up finished in another tab of this browser ----
+  // The tab that opens the email link announces it, so a waiting "Check your inbox" tab
+  // moves on by itself; it also checks when it comes back to the front. Same browser only:
+  // finishing sign-up must never sign in whoever started it on another device.
+  var channel = null, waiting = "";
+  try { channel = new BroadcastChannel("jev-auth"); } catch (e) {}
+  function arrived(email) {
+    if (!waiting || String(email || "").toLowerCase() !== waiting) return;
+    waiting = "";
+    $("done-text").textContent = "Email verified. Taking you to Console…";
+    finish();
+  }
+  if (channel) channel.onmessage = function (event) {
+    if (event.data && event.data.type === "signed-in") arrived(event.data.email);
+  };
+  document.addEventListener("visibilitychange", async function () {
+    if (document.hidden || !waiting) return;
+    try {
+      var response = await fetch(CONTROL + "/me", {credentials: "include"});
+      if (!response.ok) return;
+      var me = ((await response.json()) || {}).user;
+      if (me && me.email_verified) arrived(me.email);
+    } catch (e) {}
+  });
+
   // ---- "Check your inbox" (register and verify-email) ----
   var MAIL = [
     [/^(gmail|googlemail)\.com$/, "Gmail", "https://mail.google.com/mail/u/0/#search/in%3Aanywhere+JevStyle"],
@@ -83,6 +115,7 @@
   }
   function sent(address) {
     lastEmail = address;
+    waiting = address.toLowerCase();
     $("sent-to").textContent = address;
     $("sent-msg").hidden = true;
     var domain = address.split("@").pop().toLowerCase();
@@ -107,6 +140,7 @@
     });
     $("change-email").addEventListener("click", function () {
       clearInterval(timer);
+      waiting = "";
       stage(back, input);
       input.select();
     });
@@ -222,9 +256,8 @@
         token = ""; validToken = false; proofForm.reset();
         try { sessionStorage.removeItem("jev-verification-email"); } catch (e) {}
         if (r.data.signed_in) {
-          stage("stage-done");
-          $("progress").classList.add("run");
-          setTimeout(function () { location.href = "/console/"; }, reduce ? 600 : 1800);
+          if (channel && r.data.user) channel.postMessage({type: "signed-in", email: r.data.user.email});
+          finish();
         } else {
           $("done-heading").textContent = "Account ready";
           $("done-text").textContent = r.data.message || "Sign in with your new password.";
