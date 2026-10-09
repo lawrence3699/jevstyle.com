@@ -1,0 +1,108 @@
+name: API uptime check
+
+# Probes the public API from outside every 5 minutes. On an outage it opens one
+# "uptime-alert" issue and fails the run (GitHub emails/pushes the owner); on recovery
+# it comments with the downtime and closes the issue.
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      simulate_down:
+        description: "Treat every probe as failed (tests the alert path)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: uptime
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe and alert
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SIMULATE_DOWN: ${{ inputs.simulate_down && 'true' || 'false' }}
+        run: |
+          python3 - <<'EOF'
+          import datetime, json, os, subprocess, sys, time, urllib.request
+
+          OWNER = "lawrence3699"
+          LABEL = "uptime-alert"
+          CHECKS = [
+              ("api.jevstyle.com", "https://api.jevstyle.com/healthz"),
+              ("api-edge.jevstyle.com", "https://api-edge.jevstyle.com/healthz"),
+          ]
+          simulate = os.environ.get("SIMULATE_DOWN") == "true"
+
+          def probe():
+              reasons = []
+              for name, url in CHECKS:
+                  try:
+                      req = urllib.request.Request(url, headers={"User-Agent": "jevstyle-uptime/1"})
+                      with urllib.request.urlopen(req, timeout=20) as r:
+                          body = json.loads(r.read().decode())
+                  except Exception as e:
+                      reasons.append(f"{name}: unreachable ({type(e).__name__}: {str(e)[:120]})")
+                      continue
+                  if body.get("ok") is not True:
+                      reasons.append(f"{name}: ok={body.get('ok')}")
+                  if body.get("inference_ready") is not True:
+                      reasons.append(f"{name}: inference_ready={body.get('inference_ready')}")
+                  if body.get("edge_sync") == "stale":
+                      reasons.append(f"{name}: edge_sync=stale (Windows to Pod forward likely down)")
+              if simulate:
+                  reasons.append("simulated failure (workflow_dispatch test)")
+              return reasons
+
+          # Three probes 20 s apart; down only if at least two fail, so one blip doesn't page.
+          results = []
+          for i in range(3):
+              if i:
+                  time.sleep(20)
+              results.append(probe())
+              print(f"probe {i + 1}:", results[-1] or "healthy")
+          bad = [r for r in results if r]
+          down = len(bad) >= 2
+          reasons = sorted({x for r in bad for x in r})
+
+          def gh(*args):
+              return subprocess.run(["gh", *args], check=True, capture_output=True, text=True).stdout
+
+          open_issues = json.loads(gh("issue", "list", "--label", LABEL, "--state", "open",
+                                      "--json", "number,createdAt", "--limit", "5"))
+          now = datetime.datetime.now(datetime.timezone.utc)
+          stamp = now.strftime("%Y-%m-%d %H:%M UTC")
+
+          if down and not open_issues:
+              title = ("[test] " if simulate else "") + "API outage: " + reasons[0][:90]
+              body = (f"@{OWNER} the external uptime check failed at {stamp}.\n\n"
+                      + "\n".join(f"- {x}" for x in reasons)
+                      + "\n\nFirst things to check (see 00-HANDOFF-FOR-AI.md): the Windows tasks "
+                        "JevGpuForward / JevControlPlane, ports 28718-28720, and the Pod.\n"
+                        "This issue is closed automatically when the API recovers.")
+              gh("issue", "create", "--title", title, "--body", body, "--label", LABEL)
+              print("opened alert issue")
+              sys.exit(1)  # failed run -> GitHub notifies the owner
+          elif down:
+              print(f"still down; alert issue #{open_issues[0]['number']} already open")
+          elif open_issues:
+              for issue in open_issues:
+                  since = datetime.datetime.fromisoformat(issue["createdAt"].replace("Z", "+00:00"))
+                  minutes = int((now - since).total_seconds() // 60)
+                  gh("issue", "comment", str(issue["number"]), "--body",
+                     f"Recovered at {stamp} (about {minutes} min after this alert opened). All probes healthy.")
+                  gh("issue", "close", str(issue["number"]))
+                  print(f"closed alert issue #{issue['number']}")
+          else:
+              print("healthy")
+          EOF
