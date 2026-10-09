@@ -316,7 +316,6 @@
       since && oldest && since > oldest ? "Tracking since " + dayFmt.format(since) : "";
   }
   async function loadHealth() {
-    if (document.hidden) return;
     var data = null, name = null, started = performance.now();
     if (state.me) {
       try {
@@ -1984,7 +1983,7 @@
     if (state.usage) renderReset();
     if (state.keys.length && !document.querySelector("dialog[open]") && !$("keys-body").contains(document.activeElement)) renderKeys();
   }, 30000);
-  setInterval(loadHealth, 30000);
+  setInterval(function () { if (!document.hidden) loadHealth(); }, 30000);  // background tabs skip refreshes
   document.addEventListener("visibilitychange", function () { if (!document.hidden) loadHealth(); });
 
   /* ---------- Start ---------- */
