@@ -395,14 +395,14 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
         </header>
         <div class="card">
           <h2>Rate limits</h2>
-          <p class="muted">No fixed per-account requests-per-minute cap. Calls use available shared capacity; daily and concurrent limits are shared by all of your keys.</p>
+          <p class="muted">Elastic request rate and concurrency use available shared capacity. Concurrency shrinks as more accounts are active. Daily quota and concurrent capacity are shared by all of your keys.</p>
           <div class="table-scroll">
             <table class="data-table limits-table" id="limits-table">
               <thead><tr><th scope="col">Model</th><th scope="col" class="num">Concurrent</th><th scope="col" class="num">Requests per minute</th><th scope="col" class="num">Requests per day</th><th scope="col" class="num">Input per request</th></tr></thead>
               <tbody>
                 <tr>
                   <td><code class="model-id">jev-style-decision-v3</code></td>
-                  <td class="num"><span id="l-conc">1</span></td>
+                  <td class="num"><span id="l-conc">Elastic</span></td>
                   <td class="num"><span id="l-rpm">Elastic</span></td>
                   <td class="num"><span id="l-daily">10,000</span> RPD</td>
                   <td class="num"><span id="l-tokens">8,000</span> tokens</td>

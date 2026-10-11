@@ -46,7 +46,7 @@
         <tr><th>Dimension</th><th>Value</th><th>On exceed</th></tr>
         <tr><td>Requests / minute</td><td><strong>Elastic</strong> — no fixed per-account RPM cap</td><td><code>429</code> + <code>Retry-After</code></td></tr>
         <tr><td>Requests / day</td><td><strong>10,000</strong> successful / account (UTC)</td><td><code>429</code></td></tr>
-        <tr><td>Concurrent in-flight</td><td><strong>1</strong> / account</td><td><code>429</code></td></tr>
+        <tr><td>Concurrent in-flight</td><td><strong>Elastic</strong> — up to 3 while idle; reduced as demand increases</td><td><code>429</code></td></tr>
         <tr><td>Input cap / request</td><td><strong>8,000</strong> model tokens (state + all questions), max 32,000 UTF-8 bytes</td><td><code>413</code></td></tr>
         <tr><td>API keys / account</td><td><strong>3</strong></td><td>Create disabled in Console</td></tr>
       </table>
@@ -55,7 +55,7 @@
       <ul style="margin:0;padding-left:1.2em;color:var(--ink2)">
         <li style="margin-bottom:8px">Backoff on <code>429</code> / <code>504</code> / <code>5xx</code>.</li>
         <li style="margin-bottom:8px">Keep <code>state</code> + questions under the soft cap.</li>
-        <li style="margin-bottom:8px">One in-flight request per account. Extra keys do not add capacity.</li>
+        <li style="margin-bottom:8px">Concurrency is shared by all keys of an account. Idle capacity allows up to 3 concurrent requests; competing accounts and busier capacity reduce that share to 2 or 1. Existing requests finish normally. Retry on 429 with backoff.</li>
         <li>Do not resell quota or scrape the free tier.</li>
       </ul>
 
