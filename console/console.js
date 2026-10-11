@@ -779,7 +779,8 @@
     var u = state.usage;
     if (!u) return;
     if (u.concurrency_limit) $("l-conc").textContent = fmtInt(u.concurrency_limit);
-    if (u.rpm_limit) $("l-rpm").textContent = fmtInt(u.rpm_limit);
+    if (u.rpm_mode === "elastic" || u.rpm_limit === 0) $("l-rpm").textContent = "Elastic";
+    else if (u.rpm_limit) $("l-rpm").textContent = fmtInt(u.rpm_limit) + " RPM";
     if (u.daily_limit) $("l-daily").textContent = fmtInt(u.daily_limit);
     if (u.input_token_soft_limit) $("l-tokens").textContent = fmtInt(u.input_token_soft_limit);
   }
@@ -1809,7 +1810,7 @@
     if (status === 429) {
       var retry = wait ? " Try again in " + (wait < 120 ? plural(wait, "second") : countdown(wait * 1000)) + "." : " Try again shortly.";
       if (limit === "concurrency") return "Only " + (u.concurrency_limit || 1) + " request can run at a time per account. Wait for the current request to finish.";
-      if (limit === "rpm") return "You've reached " + (u.rpm_limit || 20) + " requests per minute." + retry;
+      if (limit === "rpm") return (u.rpm_limit > 0 ? "You've reached " + u.rpm_limit + " requests per minute." : "The service is busy right now.") + retry;
       if (limit === "daily") return "You've used today's " + fmtInt(u.daily_limit || 10000) + " successful requests. " + resetText(u.reset_at) + ".";
       return "The free tier is busy right now." + retry;
     }

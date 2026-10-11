@@ -47,7 +47,7 @@
         <tr><td><code>401</code></td><td>Missing or invalid API key</td></tr>
         <tr><td><code>413</code></td><td>Payload / token cap exceeded</td></tr>
         <tr><td><code>422</code></td><td>JSON or schema validation failed</td></tr>
-        <tr><td><code>429</code></td><td>Account RPM, daily or concurrency limit, or global capacity — see <code>limit</code> and <code>Retry-After</code></td></tr>
+        <tr><td><code>429</code></td><td>Account daily or concurrency limit, or shared service capacity — see <code>limit</code> and <code>Retry-After</code></td></tr>
         <tr><td><code>503</code></td><td><code>inference_unavailable</code> / <code>inference_not_ready</code> — GPU temporarily unavailable; not charged</td></tr>
         <tr><td><code>504</code></td><td><code>inference_timeout</code> — exceeded the 60 s deadline; not charged</td></tr>
         <tr><td><code>5xx</code></td><td>Server error — retry with backoff</td></tr>
@@ -58,7 +58,7 @@
   "message": "GPU worker is temporarily unavailable."
 }</pre>
       <h2>Rate limit example</h2>
-<pre>{ "error": "rate_limited", "limit": "rpm", "reset_at": "…" }</pre>
+<pre>{ "error": "rate_limited", "limit": "inference-global", "retry_after_seconds": 5 }</pre>
       <p style="margin-top:14px;color:var(--ink2)">Full table: project file <code>api-errors-v1.md</code>.</p>
 
       <div class="foot-note">
