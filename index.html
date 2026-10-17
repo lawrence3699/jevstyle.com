@@ -499,6 +499,7 @@ details[id],#contact{scroll-margin-top:calc(var(--hdr) + env(safe-area-inset-top
 
 
 
+.maint{background:rgba(217,119,6,.12);border-bottom:1px solid rgba(217,119,6,.35);color:var(--ink);text-align:center;font-size:13.5px;line-height:1.45;padding:9px 16px}
 /* live status pill (api.jevstyle.com/healthz) */
 .api-status{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 11px;border-radius:999px;background:var(--bg);font-size:12.5px;font-weight:500;color:var(--ink);white-space:nowrap}
 .api-status[hidden]{display:none}
@@ -940,6 +941,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 <body>
 
 
+<div class="maint" role="status"><span data-i18n="mt.note"></span></div>
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
     <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn"></span></a>
@@ -1239,7 +1241,7 @@ en:{
  // 2026-10-08 50/50 homepage: hosted API half + open models half
  "ng.api":"API","ng.models":"Models","nav.overview":"Overview","nav.play":"Playground","nav.limits":"Limits","nav.docs":"Docs",
  "duo.api.go":"Create free key","duo.api.docs":"API docs",
- "st.up":"API operational","st.down":"Inference unavailable",
+ "st.up":"API operational","st.down":"Under maintenance","mt.note":"The hosted API is temporarily down for maintenance, so API calls will fail for now. The open models are still available on Hugging Face.",
  "api.k":"Hosted API","api.h":"The same 2B v3, hosted for free","api.p":"Don't want to run it yourself? Call Jev-Style 2B v3 on our GPUs: send text and typed questions to one endpoint and get a calibrated probability for every option.","api.indep":"Independent project · not affiliated with TypeSafe",
  "ex.h":"One request, every option scored","ex.aside":"Real production response · Oct 8, 2026","ex.p":"A real support ticket with three questions, sent in one call from Sydney: about 0.42 s end-to-end.","ex.req":"request","ex.res":"Response","ex.res.meta":"29.7 ms on the GPU",
  "q.yes":"yes","q.no":"no","q.conf":"confidence","q.py":"probability of yes","q.exp":"expected level, 0–2",
@@ -1450,7 +1452,7 @@ zh:{
  // 2026-10-08 首页对半：托管 API + 开源模型
  "ng.api":"API","ng.models":"开源模型","nav.overview":"概览","nav.play":"在线试用","nav.limits":"限额","nav.docs":"文档",
  "duo.api.go":"免费创建 key","duo.api.docs":"API 文档",
- "st.up":"API 运行正常","st.down":"推理暂不可用",
+ "st.up":"API 运行正常","st.down":"维护中","mt.note":"API 服务暂时维护中，期间无法调用。开源模型仍可在 Hugging Face 下载使用。",
  "api.k":"托管 API","api.h":"同一个 2B v3，免费托管","api.p":"不想自己部署？直接调用跑在我们 GPU 上的 Jev-Style 2B v3：把文本和带类型的问题发到同一个接口，每个选项都会得到一个校准过的概率。","api.indep":"独立项目 · 与 TypeSafe 无关",
  "ex.h":"一次请求，每个选项都有分数","ex.aside":"线上真实响应 · 2026 年 10 月 8 日","ex.p":"一张真实的客服工单，三个问题，从悉尼一次调用，端到端约 0.42 秒。","ex.req":"请求","ex.res":"响应","ex.res.meta":"GPU 计算 29.7 毫秒",
  "q.yes":"是","q.no":"否","q.conf":"置信度","q.py":"答案为“是”的概率","q.exp":"期望等级（0–2）",
