@@ -238,7 +238,7 @@
           return counts(row, ["signups", "requests"]) && typeof row.day === "string" && /^\d{4}-\d{2}-\d{2}$/.test(row.day);
         }) && Array.isArray(d.users) && d.users.every(function (user) {
           return counts(user, ["active_keys", "requests_today", "requests_total"]) && typeof user.email === "string" &&
-            (!user.created_at || (typeof user.created_at === "string" && /^\d{4}-\d{2}-\d{2}T/.test(user.created_at)));
+            (!user.created_at || (typeof user.created_at === "string" && /^\d{4}-\d{2}-\d{2}/.test(user.created_at)));
         });
     }
     async function load() {
