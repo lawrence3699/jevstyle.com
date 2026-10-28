@@ -1,0 +1,18 @@
+{
+  "name": "JevStyle",
+  "alternateName": "Jev-Style",
+  "url": "https://jevstyle.com/",
+  "description": "Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.",
+  "maintainer": "Chaoliang Yan",
+  "github": "https://github.com/lawrence3699/jev-style",
+  "huggingface": "https://huggingface.co/chaoliangUNSW",
+  "pypi": "https://pypi.org/project/jev-style/",
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "reviewed": "2026-10-29",
+  "hostedApi": {
+    "status": "maintenance",
+    "model": "Jev-Style Decision 2B v3",
+    "dailyQuota": 10000,
+    "inputTokenLimit": 8000
+  }
+}

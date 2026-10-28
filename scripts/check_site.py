@@ -8,6 +8,8 @@ import json
 import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
+import re
+from build_discovery import public_pages
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -66,21 +68,31 @@ def destination(path):
 
 
 def main():
-    pages = [ROOT/'index.html', ROOT/'zh/index.html']
-    for folder in ('use-cases','guides','models'):
-        pages.extend(sorted((ROOT/folder).glob('*/index.html')))
+    pages = public_pages()
+    expected_urls = set()
+    titles = set()
     for path in pages:
+        source = path.read_text()
         page = Page()
-        page.feed(path.read_text())
+        page.feed(source)
         rel = path.relative_to(ROOT).as_posix()
         urlpath = '/' + rel.removesuffix('index.html')
         assert ''.join(page.h1).strip(), f'{rel}: empty h1'
+        assert len(re.findall(r'<h1\b', source)) == 1, f'{rel}: expected one main heading'
         assert page.canonical == 'https://jevstyle.com' + urlpath, (rel,page.canonical)
+        expected_urls.add(page.canonical)
+        title = re.search(r'<title>(.*?)</title>', source, re.S)[1]
+        assert title not in titles, f'{rel}: duplicate title'
+        titles.add(title)
         assert page.metas.get('description'), f'{rel}: description missing'
         assert page.metas.get('og:image') == 'https://jevstyle.com/assets/social-card.png', rel
         assert 'noindex' not in (page.metas.get('robots') or ''), rel
         for link in page.links:
             url = urlsplit(link)
+            if url.netloc == 'jevstyle.com':
+                target = destination(url.path)
+                assert target.exists(), f'{rel}: missing same-site destination {link}'
+                continue
             if url.scheme or url.netloc or not url.path:
                 continue
             target = destination(url.path) if url.path.startswith('/') else path.parent / unquote(url.path)
@@ -89,7 +101,11 @@ def main():
             assert target.exists(), f'{rel}: missing local link {link}'
         for kind,script in page.scripts:
             if kind in ('application/json','application/ld+json'):
-                json.loads(script)
+                parsed = json.loads(script)
+                if kind == 'application/ld+json':
+                    graph = parsed['@graph']
+                    assert any(n.get('url') == page.canonical and n['@type'] in ('WebPage','AboutPage') for n in graph), rel
+                    assert not any(n['@type'] in ('Review','AggregateRating') for n in graph), rel
             else:
                 with tempfile.NamedTemporaryFile(suffix='.js',mode='w') as f:
                     f.write(script); f.flush()
@@ -99,9 +115,19 @@ def main():
     sitemap = ET.parse(ROOT/'sitemap.xml')
     urls = [n.text for n in sitemap.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
     assert len(urls) == len(set(urls)), 'duplicate sitemap URLs'
+    assert set(urls) == expected_urls, 'sitemap and indexable pages disagree'
     for url in urls:
         assert destination(urlsplit(url).path).exists(), url
     assert 'Sitemap: https://jevstyle.com/sitemap.xml' in (ROOT/'robots.txt').read_text()
+    for path in ('console/index.html', 'login/index.html', 'register/index.html', 'admin/index.html', 'api/docs.html','api/apply.html','api/usage.html'):
+        assert 'noindex' in (ROOT/path).read_text(), f'{path}: utility page should not be indexed'
+    assert 'https://jevstyle.com/benchmarks/' in (ROOT/'llms.txt').read_text()
+    assert 'https://jevstyle.com/models/compare/' in (ROOT/'llms.txt').read_text()
+    assert 'Live:</strong>' not in (ROOT/'api/index.html').read_text()
+    for path in (ROOT/'index.html',ROOT/'zh/index.html'):
+        source = path.read_text()
+        assert 'data-v="0.04 s"' not in source
+        assert '<!--discovery:home-guide-->' in source
     subprocess.run(['node','--check',str(ROOT/'assets/journey.js')],check=True)
     subprocess.run(['node',str(ROOT/'scripts/check_journey.cjs')],check=True)
     print(f'Checked {len(pages)} public growth pages, {len(urls)} sitemap URLs, metadata, links, Python examples and JavaScript syntax.')

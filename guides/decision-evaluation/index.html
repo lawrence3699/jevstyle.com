@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Evaluate local decision models and choose a threshold | JevStyle</title>
 <meta name="description" content="Evaluate JevStyle on labeled examples from your workflow. Inspect accuracy, probability calibration, and the share of decisions you can automate at a chosen error budget.">
-<link rel="canonical" href="https://jevstyle.com/guides/decision-evaluation/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Evaluate local decision models and choose a threshold | JevStyle">
 <meta property="og:description" content="Evaluate JevStyle on labeled examples from your workflow. Inspect accuracy, probability calibration, and the share of decisions you can automate at a chosen error budget.">
@@ -18,7 +17,8 @@
 <meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
 <link rel="stylesheet" href="/assets/growth.css">
 <script src="/assets/journey.js" defer></script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Evaluate local decision models and choose a threshold", "description": "Evaluate JevStyle on labeled examples from your workflow. Inspect accuracy, probability calibration, and the share of decisions you can automate at a chosen error budget.", "url": "https://jevstyle.com/guides/decision-evaluation/", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "JevStyle", "url": "https://jevstyle.com/"}}</script>
+<link rel="canonical" href="https://jevstyle.com/guides/decision-evaluation/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/guides/decision-evaluation/#webpage", "url": "https://jevstyle.com/guides/decision-evaluation/", "name": "Evaluate local decision models and choose a threshold | JevStyle", "description": "Evaluate JevStyle on labeled examples from your workflow. Inspect accuracy, probability calibration, and the share of decisions you can automate at a chosen error budget.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Evaluate local decision models and choose a threshold", "item": "https://jevstyle.com/guides/decision-evaluation/"}]}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -44,6 +44,7 @@ jev-style serve --release 0.8b</code></pre><p>The first run downloads the model.
   --server candidate=http://127.0.0.1:8799 \
   --strict --json comparison.json</code></pre><p>The comparison scores common questions: if one engine rejects a row, that row is excluded for all engines and counted as failed. Report that count so an apparently good score does not hide unsupported inputs. Include cold start, warm request time, and fallback cost when deciding which model to deploy.</p></section><section class="related" aria-labelledby="next-heading"><h2 id="next-heading">Keep building</h2><div class="related-links"><a href="/use-cases/local-llm-routing/" data-track="guide_open">Apply the threshold<span>Route defined choices with a fallback.</span></a><a href="/guides/claude-code-guard/" data-track="guide_open">Evaluate tool-call review<span>Measure allow, ask, and deny separately.</span></a></div></section></article><aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#dataset">Start with representative labels</a><a href="#format">Use the request format, plus a label</a><a href="#quickstart">Run the model and evaluation</a><a href="#metrics">Read quality and coverage together</a><a href="#threshold">Freeze a threshold, then test it</a><a href="#compare">Compare builds on the same requests</a></aside></div>
 </main>
+<!--discovery:resource-links--><nav class="project-resource-nav" aria-label="Project resources"><a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav><!--/discovery:resource-links-->
 <footer class="site-footer"><div class="footer-wrap"><span>JevStyle · Open local decision models</span><div><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub</a><a href="https://huggingface.co/chaoliangUNSW/" data-track="model_open">Hugging Face</a><a href="/">Home</a></div></div></footer>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{&quot;token&quot;: &quot;7a7432d7d2fe40b4b52e41e711938ac0&quot;}'></script>
 </body></html>

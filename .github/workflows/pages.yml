@@ -30,6 +30,7 @@ jobs:
       - name: Prerender and validate public pages
         run: |
           python3 scripts/prerender_home.py
+          python3 scripts/build_discovery.py
           python3 scripts/check_site.py
       - name: Fetch Hugging Face stats into stats.json
         run: |

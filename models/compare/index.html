@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare JevStyle models: 0.8B v3 vs 2B v4 | JevStyle</title>
+<meta name="description" content="Compare JevStyle 0.8B v3 and 2B v4 by input type, backend, published weight size, token limit and evaluation evidence before running locally.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Compare JevStyle models: 0.8B v3 vs 2B v4 | JevStyle">
+<meta property="og:description" content="Compare JevStyle 0.8B v3 and 2B v4 by input type, backend, published weight size, token limit and evaluation evidence before running locally.">
+<meta property="og:url" content="https://jevstyle.com/models/compare/">
+<meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
+<meta property="og:image:alt" content="JevStyle — open local decision models">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Compare JevStyle models: 0.8B v3 vs 2B v4 | JevStyle">
+<meta name="twitter:description" content="Compare JevStyle 0.8B v3 and 2B v4 by input type, backend, published weight size, token limit and evaluation evidence before running locally.">
+<meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
+<link rel="stylesheet" href="/assets/growth.css">
+<script src="/assets/journey.js" defer></script>
+<link rel="canonical" href="https://jevstyle.com/models/compare/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/models/compare/#webpage", "url": "https://jevstyle.com/models/compare/", "name": "Compare JevStyle models: 0.8B v3 vs 2B v4 | JevStyle", "description": "Compare JevStyle 0.8B v3 and 2B v4 by input type, backend, published weight size, token limit and evaluation evidence before running locally.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Compare JevStyle models: 0.8B v3 vs 2B v4", "item": "https://jevstyle.com/models/compare/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-wrap">
+<a class="brand" href="/" aria-label="JevStyle home"><svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="9" cy="11" r="6" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="11" r="2" fill="currentColor"/><path d="M15 11h6" stroke="currentColor" stroke-width="2"/></svg>JevStyle</a>
+<nav aria-label="Main navigation"><a href="/#models">Models</a><a href="/use-cases/local-llm-routing/">Use cases</a><a href="/guides/decision-evaluation/">Evaluation</a><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub ↗</a></nav>
+</div></header>
+<main id="main" class="page">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Models / Compare</span></nav>
+<div class="eyebrow">Models / Compare</div>
+<h1>Compare JevStyle 0.8B v3 and 2B v4</h1><p class="lead">Choose a local decision model by the inputs and hardware you have, then validate its decisions on your own task.</p>
+<div class="actions"><a class="button" href="#comparison">Compare models</a><a class="button secondary" href="/guides/decision-evaluation/">Evaluate your data</a></div>
+<p class="hero-note">Source review: <time datetime="2026-10-29">29 October 2026</time> · Open weights · Apache-2.0</p>
+<div class="layout"><article class="article">
+<section id="choose" aria-labelledby="choose-heading"><h2 id="choose-heading">Which JevStyle model should I start with?</h2>
+<p>Start with <a href="/models/0-8b-v3/">0.8B v3</a> for a smaller text-only baseline. Choose <a href="/models/2b-v4/">2B v4 with PyTorch</a> when the input includes images, or evaluate it as a larger text model. Both score predefined options rather than generate free-form text. Neither choice guarantees accuracy on a new task.</p>
+<p>For ticket labels, workflow routes, yes/no checks, and ordered scores, first define the decisions you need. Then measure both releases on the same held-out requests. A larger model's published score alone does not determine its quality, memory use, or speed in your application.</p></section>
+<section id="comparison" aria-labelledby="comparison-heading"><h2 id="comparison-heading">0.8B v3 versus 2B v4</h2>
+<div class="table-wrap"><table><caption>Local open-weight releases. Hosted API settings are documented separately.</caption><thead><tr><th scope="col">Property</th><th scope="col">0.8B v3</th><th scope="col">2B v4</th></tr></thead><tbody>
+<tr><th scope="row">Package release selector</th><td><code>--release 0.8b</code>; package default</td><td><code>--release 2b</code></td></tr>
+<tr><th scope="row">Model size</th><td>0.8B class; 752M text-model parameters</td><td>2.2B including the vision tower</td></tr>
+<tr><th scope="row">Inputs</th><td>Text and JSON</td><td>Text and JSON; images with PyTorch only</td></tr>
+<tr><th scope="row">Whole-request token limit</th><td>25,600</td><td>32,768, including image tokens</td></tr>
+<tr><th scope="row">Output</th><td colspan="2">Probabilities for yes/no, predefined choices, or ordered score levels; no generated explanation</td></tr>
+<tr><th scope="row">Safetensors weights</th><td>1.50 GB</td><td>4.43 GB</td></tr>
+<tr><th scope="row">MLX bf16 / 8-bit weights</th><td>1.50 / 0.80 GB</td><td>3.76 / 2.00 GB; text only</td></tr>
+<tr><th scope="row">GGUF F16 / Q8_0 / Q4_K_M weights</th><td>1.52 / 0.81 / 0.53 GB</td><td>3.78 / 2.01 / 1.27 GB; text only</td></tr>
+<tr><th scope="row">Published JevBench public accuracy</th><td>64.1% (148 / 231)</td><td>74.9% (173 / 231)</td></tr>
+<tr><th scope="row">License</th><td colspan="2">Apache-2.0; consult the model repository's LICENSE and NOTICE</td></tr>
+</tbody></table></div>
+<p>Sizes are published weight-file totals in decimal GB, not peak RAM/VRAM, default downloads, or storage for every backend. Runtime state, inputs, framework overhead, and image processing need additional memory. The project recommends Q8_0 or F16 for long 2B text inputs; a smaller quantized file is not automatically equivalent in quality.</p>
+<p>Sources: <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3/blob/b023d1f9c7858fbf01504577a3bfc349ea5c7385/README.md">0.8B v3 card</a>, <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4/blob/9d97074a4cfb194a2dbe5bf33a0cbff06db232bb/README.md">2B v4 card</a>, and the <a href="https://github.com/lawrence3699/jev-style#models">package's build table</a>. Read <a href="/benchmarks/">the benchmark protocols and uncertainty</a> before treating the accuracy rows as a ranking.</p></section>
+<section id="hardware" aria-labelledby="hardware-heading"><h2 id="hardware-heading">Choose the backend for your hardware</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Environment</th><th scope="col">Starting point</th><th scope="col">What to check</th></tr></thead><tbody>
+<tr><th scope="row">Apple silicon, text</th><td><code>jev-style[mlx]</code>; MLX is selected automatically</td><td>Use 0.8B for a smaller baseline or compare 2B on your data. Image input is not available in the MLX builds.</td></tr>
+<tr><th scope="row">CUDA GPU, text or images</th><td><code>jev-style[torch]</code></td><td>Only 2B v4 reads images. Measure with the precision and concurrency you plan to deploy.</td></tr>
+<tr><th scope="row">CPU</th><td><code>jev-style[torch]</code> with <code>--device cpu</code></td><td>Measure latency on your machine; the published A100 results do not predict CPU speed.</td></tr>
+<tr><th scope="row">GGUF runtime</th><td>Follow the package's <a href="https://github.com/lawrence3699/jev-style#backends">backend setup</a></td><td>Use the matching decision scorer. Generic text-generation tools do not produce these decision probabilities.</td></tr>
+</tbody></table></div></section>
+<section id="start" aria-labelledby="start-heading"><h2 id="start-heading">Run a local baseline</h2>
+<p>Use Python 3.10 or newer in a virtual environment. For Apple silicon text input:</p>
+<div class="code-label"><span>bash</span></div><pre><code class="language-bash">python -m pip install "jev-style[mlx]"
+jev-style serve --release 0.8b</code></pre>
+<p>For the 2B v4 PyTorch build, including image input:</p>
+<div class="code-label"><span>bash</span></div><pre><code class="language-bash">python -m pip install "jev-style[torch]"
+jev-style serve --release 2b --backend torch</code></pre>
+<p>The first run downloads the model. Once the server is ready, open <a href="http://127.0.0.1:8765">the local Playground</a>. To compare releases, keep your input set and decision definitions fixed, use separate ports, and follow the <a href="/guides/decision-evaluation/">evaluation guide</a>.</p>
+<p>The hosted API is a separate service with its own available model, input cap, and service status. Do not apply these local limits to it; consult <a href="/api/">API documentation</a>.</p></section>
+<section id="questions" aria-labelledby="questions-heading"><h2 id="questions-heading">Model selection questions</h2>
+<h3>Can I use JevStyle offline?</h3><p>Local inference can run without sending decision inputs to a hosted model after the required package, weights, and runtime files have been downloaded. The browser demo and hosted API are separate online services.</p>
+<h3>Is a 0.53 GB file the total memory requirement?</h3><p>No. It is the 0.8B Q4_K_M GGUF weight file. Runtime memory is larger and depends on the backend and input. The default package setup does not necessarily choose that file.</p>
+<h3>Can the MLX or GGUF version of 2B v4 read images?</h3><p>No. Those distributions contain the language model only. Choose the 2B v4 PyTorch distribution and matching runtime for image input.</p>
+<h3>Should I always choose the larger model?</h3><p>No. Compare task accuracy, calibration, warm latency, memory, and review coverage on your own examples. Keep a person or existing LLM available for ambiguous cases and runtime failures.</p></section>
+<section class="related" aria-labelledby="next-heading"><h2 id="next-heading">Use the model in a workflow</h2><div class="related-links"><a href="/use-cases/local-llm-routing/">Local routing<span>Route defined choices with an explicit fallback.</span></a><a href="/use-cases/support-ticket-classification/">Support ticket classification<span>Answer several questions about one ticket.</span></a><a href="/benchmarks/">Benchmark evidence<span>Metrics, hardware, protocols, and source revisions.</span></a><a href="/about/">About JevStyle<span>Maintainer, project identity, and license.</span></a></div></section></article><aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#choose">Choose a starting point</a><a href="#comparison">Model comparison</a><a href="#hardware">Hardware and backends</a><a href="#start">Run locally</a><a href="#questions">Model selection questions</a></aside></div>
+</main>
+<!--discovery:resource-links--><nav class="project-resource-nav" aria-label="Project resources"><a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav><!--/discovery:resource-links-->
+<footer class="site-footer"><div class="footer-wrap"><span>JevStyle · Open local decision models</span><div><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub</a><a href="https://huggingface.co/chaoliangUNSW/" data-track="model_open">Hugging Face</a><a href="/about/">About</a><a href="/">Home</a></div></div></footer>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{&quot;token&quot;: &quot;7a7432d7d2fe40b4b52e41e711938ac0&quot;}'></script>
+</body></html>

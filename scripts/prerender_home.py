@@ -28,8 +28,19 @@ def fragment(doc, ident, content):
 
 def render(source, translations, data, lang):
     t = translations[lang]
+    facts = json.loads((ROOT / 'assets/project-facts.json').read_text())
     # Restrict substitution to markup, not JS strings that also contain HTML.
     markup, scripts = source.split('<script id="site-data"', 1)
+    api = facts['hostedApi']
+    summary = ('托管服务维护中。文档对应 2B v3；下列额度在服务恢复后适用。本地模型和在线 Demo 是独立入口。'
+               if lang == 'zh' else 'The hosted service is under maintenance. This reference describes 2B v3; quotas below apply after service resumes. Local models and the online demo are separate options.')
+    summary += ' ' + ('核对日期：' if lang == 'zh' else 'Reviewed: ') + facts['reviewed'] + '.'
+    markup = re.sub(r'<!--discovery:api-summary-->.*?<!--/discovery:api-summary-->',
+                    lambda _: '<!--discovery:api-summary--><p class="api-reference-note">'+html.escape(summary)+'</p><!--/discovery:api-summary-->', markup, flags=re.S)
+    markup = re.sub(r'(<dt data-i18n="k3.free">.*?</dt><dd)[^>]*>.*?</dd>',
+                    lambda m: m[1]+'>'+format(api['dailyQuota'], ',')+'</dd>', markup, flags=re.S)
+    markup = re.sub(r'(<dt data-i18n="k3.tok">.*?</dt><dd)[^>]*>.*?</dd>',
+                    lambda m: m[1]+'>'+format(api['inputTokenLimit'], ',')+'</dd>', markup, flags=re.S)
     pattern = r'(<(?P<tag>[\w-]+)\b[^>]*data-i18n="(?P<key>[^"]+)"[^>]*>)[^<]*(</(?P=tag)>)'
     markup = re.sub(pattern, lambda m: m[1] + html.escape(t.get(m['key'], m['key'])) + m[4], markup)
     markup = re.sub(r'<h1 id="heroTitle">.*?</h1>', '<h1 id="heroTitle">' + html.escape(t['h3.title']) + '</h1>', markup, flags=re.S)
@@ -46,6 +57,8 @@ def render(source, translations, data, lang):
     # Fill all navigational hrefs in the original response.
     markup = re.sub(r'(<a[^>]*id="qsRepo"[^>]*href=")#', r'\1https://github.com/lawrence3699/jev-style#quick-start', markup)
     markup = re.sub(r'(<a[^>]*id="stHF"[^>]*href=")#', r'\1https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4', markup)
+    if lang == 'zh':
+        markup = markup.replace('href="/about/"', 'href="/zh/about/"')
     # Public fallback works without JavaScript and is replaced by existing interactive views.
     model_routes = {'v4-2b':'/models/2b-v4/', 'v3':'/models/0-8b-v3/'}
     cards = []
@@ -80,7 +93,15 @@ def main():
     source = SOURCE.read_text()
     obj = re.search(r'const I18N = (.*?);\s*let lang', source, re.S).group(1)
     js = "const vm=require('node:vm');let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>process.stdout.write(JSON.stringify(vm.runInNewContext('('+s+')',Object.create(null),{timeout:1000}))));"
-    translations = json.loads(subprocess.check_output(['node','-e',js], input=obj.encode()))
+    try:
+        translations = json.loads(obj)
+    except json.JSONDecodeError:
+        translations = json.loads(subprocess.check_output(['node','-e',js], input=obj.encode('utf-8')))
+    facts = json.loads((ROOT / 'assets/project-facts.json').read_text())
+    assert facts['hostedApi']['status'] == 'maintenance', 'Review translated API copy before changing status.'
+    translations['en'].update({'k3.free':'daily quota after service resumes', 'k3.lat':'hosted API status', 'tr.3':'Open local models remain available', 'run.ok':'Recorded example · {s} s GPU time'})
+    translations['zh'].update({'k3.free':'服务恢复后的每日额度', 'k3.lat':'托管 API 状态', 'tr.3':'开源本地模型仍可使用', 'code.h':'托管 API 文档', 'run.ok':'已记录的示例 · GPU 计算 {s} 秒'})
+    source = re.sub(r'const I18N = .*?;\s*let lang', lambda _: 'const I18N = '+json.dumps(translations, ensure_ascii=False, indent=1)+';\nlet lang', source, count=1, flags=re.S)
     data = json.loads(re.search(r'<script id="site-data" type="application/json">(.*?)</script>', source, re.S).group(1))
     SOURCE.write_text(render(source, translations, data, 'en'))
     (ROOT / 'zh').mkdir(exist_ok=True)
