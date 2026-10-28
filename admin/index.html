@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Admin · JevStyle</title>
+  <link rel="stylesheet" href="/admin/discovery.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
   <style>
     /* Owner dashboard. Same tokens as the Console; no third-party requests. */
@@ -90,7 +91,8 @@
 
     <main id="dash" hidden>
       <h1>Dashboard</h1>
-      <p class="sub">Accounts, API keys and successful API requests. Days follow UTC.</p>
+      <p class="sub">Accounts, API usage, search performance and AI discovery. API statistics follow UTC.</p>
+      <nav class="admin-nav" aria-label="Dashboard sections"><a href="#api-stats">API usage</a><a href="#geo-monitor">GEO 复测</a><a href="#seo-monitor">SEO 搜索表现</a><a href="#data-sources">数据来源</a></nav>
       <div class="err" id="err" hidden></div>
       <div class="bar">
         <div class="seg" id="range" role="group" aria-label="Range">
@@ -102,7 +104,7 @@
         <span class="stamp" id="stamp"></span>
       </div>
 
-      <div class="grid">
+      <div class="grid" id="api-stats">
         <div class="card"><div class="k">Registered users</div><div class="v" id="m-users">–</div><div class="n" id="m-users-n"></div></div>
         <div class="card"><div class="k">API keys</div><div class="v" id="m-keys">–</div><div class="n" id="m-keys-n"></div></div>
         <div class="card"><div class="k">Requests today</div><div class="v" id="m-today">–</div><div class="n" id="m-today-n"></div></div>
@@ -117,10 +119,32 @@
       <div class="card traffic">
         <div>
           <div class="k">Website traffic</div>
-          <p>Page views and visitors for jevstyle.com are counted by Cloudflare Web Analytics (cookieless).</p>
+          <p>Cloudflare Web Analytics is configured for jevstyle.com. Open its dashboard to inspect page views, visitors and referrers; traffic data is not connected here.</p>
         </div>
         <a class="btn" href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank" rel="noopener">Open Web Analytics ↗</a>
       </div>
+
+      <section class="discovery" id="geo-monitor" aria-labelledby="geo-heading">
+        <h2 id="geo-heading">AI 自然发现 <span class="geo-badge">GEO · 人工复测快照</span></h2>
+        <p class="sub">用户不说 JevStyle 时，AI 会不会主动提到或引用？按平台、轮次和有效样本查看；这不是实时排名。</p>
+        <div id="geo-content"><p class="note">正在准备 GEO 面板；如未显示，请刷新页面。</p></div>
+      </section>
+
+      <section class="discovery" id="seo-monitor" aria-labelledby="seo-heading">
+        <h2 id="seo-heading">搜索表现 <span class="geo-badge">SEO · Search Console 导入</span></h2>
+        <p class="sub">通过 Google 搜索的真实展示、点击和查询观察变化。导入的数据只在当前浏览器处理，不上传到网站或 GitHub。</p>
+        <div id="search-content"><p class="note">正在准备搜索数据查看器；如未显示，请刷新页面。</p></div>
+      </section>
+
+      <section class="discovery" id="data-sources" aria-labelledby="sources-heading">
+        <h2 id="sources-heading">数据怎样检测</h2>
+        <div class="data-sources">
+          <div class="card"><h3>Google 搜索</h3><span class="pill">需导入导出文件 · 未接实时 API</span><p>在 Search Console 的「效果 → 搜索结果」选择相同日期、搜索类型和筛选条件，导出 CSV。导入 Dates（日期）查看趋势；导入 Queries（查询）查看品牌与非品牌查询。</p><p>查询表会省略匿名查询，不能当作全站总量。本面板导入普通 Web 搜索数据；如该资源提供生成式 AI 效果报告，可在 Search Console 中另行查看，它与 ChatGPT 等平台复测仍是不同数据。</p><a href="https://search.google.com/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fjevstyle.com%2F" target="_blank" rel="noopener">打开 Search Console ↗</a> · <a href="https://support.google.com/webmasters/answer/7576553" target="_blank" rel="noopener">指标说明 ↗</a> · <a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide#measure" target="_blank" rel="noopener">Google AI 搜索说明 ↗</a></div>
+          <div class="card"><h3>访问与 AI 引荐</h3><span class="pill">Cloudflare 独立报表</span><p>查看访问量、落地页和引荐来源。来自 AI 网站的可识别引荐只说明发生了点击，不能推断没有点击的提及或引用。</p><p>当前页面尚未接入 Cloudflare 私有统计 API；站内复制代码等事件也没有持久化收集，转化率仍为未测量。</p><a href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank" rel="noopener">打开 Cloudflare Web Analytics ↗</a></div>
+          <div class="card"><h3>AI 提及与事实准确性</h3><span class="pill">已载入两轮审核快照</span><p>用固定问题、独立会话记录真实 AI 回答。正文提及、官网引用、项目引用分别统计；拒答、失败、注册限制和未执行单列。</p><p>快照为公开且去隐私化的测量摘要，不包含账号、原始会话或私有流量。刷新仅重新读取快照，不会启动 AI 测试。</p></div>
+          <div class="card"><h3>收录与页面健康</h3><span class="pill">最近部署检查 · 2026-10-29</span><p>20 个公开页面通过访问、canonical 和页面检查；站点地图提交已接受。它们衡量页面可访问性，不能代替 Google 收录状态。</p><p>当时新分类指南仍未收录，索引请求已接受；模型选型指南尚未取得最终收录结果。</p><a href="/sitemap.xml">查看站点地图</a> · <a href="https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Fjevstyle.com%2F" target="_blank" rel="noopener">打开网址检查 ↗</a></div>
+        </div>
+      </section>
 
       <div class="card table">
         <h2>Users <span class="pill" id="u-count"></span></h2>
@@ -133,12 +157,15 @@
     </main>
   </div>
 
+  <script src="/admin/discovery.js"></script>
+  <script src="/admin/search-performance.js"></script>
   <script>
   (function () {
     "use strict";
     var API = "https://api.jevstyle.com/control/v1";
     var $ = function (id) { return document.getElementById(id); };
     var days = 30;
+    var discoveryMounted = false;
     var fmt = function (n) { return Number(n || 0).toLocaleString("en-US"); };
     var day = function (iso) { return iso ? iso.slice(0, 10) : "—"; };
     function ago(iso) {
@@ -198,6 +225,22 @@
       $("u-note").textContent = a.disabled ? fmt(a.disabled) + " disabled test accounts are not counted anywhere on this page." : "";
       $("stamp").textContent = "Updated " + new Date(d.generated_at).toLocaleTimeString();
     }
+    function validStats(d) {
+      function object(x) { return x !== null && typeof x === "object" && !Array.isArray(x); }
+      function count(n) { return Number.isSafeInteger(n) && n >= 0; }
+      function counts(x, keys) { return object(x) && keys.every(function (key) { return count(x[key]); }); }
+      return object(d) &&
+        counts(d.accounts, ["active", "new_today", "new_7d", "verified"]) &&
+        counts(d.keys, ["active", "users_with_key", "revoked"]) &&
+        counts(d.requests, ["today", "active_users_today", "last_7d", "all_time", "window"]) &&
+        count(d.days) && Number.isFinite(Date.parse(d.generated_at)) &&
+        Array.isArray(d.daily) && d.daily.every(function (row) {
+          return counts(row, ["signups", "requests"]) && typeof row.day === "string" && /^\d{4}-\d{2}-\d{2}$/.test(row.day);
+        }) && Array.isArray(d.users) && d.users.every(function (user) {
+          return counts(user, ["active_keys", "requests_today", "requests_total"]) && typeof user.email === "string" &&
+            (!user.created_at || (typeof user.created_at === "string" && /^\d{4}-\d{2}-\d{2}/.test(user.created_at)));
+        });
+    }
     async function load() {
       $("err").hidden = true;
       var res;
@@ -210,11 +253,22 @@
       }
       if (res.status === 401) return gate("Sign in", "Sign in with the admin account to see the dashboard.", "/login/", "Sign in");
       if (res.status === 403) return gate("Not an admin account", "This account can't open the dashboard. Sign out and sign in with the admin account.", "/console/", "Back to Console");
-      if (!res.ok) { $("err").textContent = "The dashboard couldn't load (HTTP " + res.status + "). Try again in a minute."; $("err").hidden = false; $("dash").hidden = false; return; }
-      var data = await res.json();
+      if (!res.ok) return gate("Dashboard unavailable", "The dashboard couldn't load (HTTP " + res.status + "). Try again in a minute.", location.href, "Reload");
+      var data;
+      try {
+        data = await res.json();
+        if (!validStats(data)) throw new Error("Invalid statistics");
+        render(data);
+      } catch (e) {
+        return gate("Dashboard unavailable", "The server returned an unreadable statistics response. Reload to try again.", location.href, "Reload");
+      }
       $("gate").hidden = true;
       $("dash").hidden = false;
-      render(data);
+      if (!discoveryMounted) {
+        discoveryMounted = true;
+        if (window.JevDiscovery) window.JevDiscovery.mount($("geo-content"));
+        if (window.JevSearchPerformance) window.JevSearchPerformance.mount($("search-content"));
+      }
     }
     async function loadMe() {
       try {

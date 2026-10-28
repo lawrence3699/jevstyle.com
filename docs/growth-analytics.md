@@ -74,9 +74,11 @@ query set. After deploying:
 5. Repeat the same exports after a comparable full window. Record release dates
    and known outages so a change is not automatically attributed to SEO.
 
-Search Console's ordinary Web report includes eligible AI-feature traffic;
-this is not a dedicated measurement of AI citations or all assistant referrals.
-See [Google's AI-feature guidance](https://developers.google.com/search/docs/appearance/ai-features)
+Search Console's ordinary Web report is not a dedicated measurement of all AI
+citations or assistant referrals. Google's current guidance also describes a
+separate Generative AI performance report, where available for the property.
+Keep Google Search data separate from consumer ChatGPT/Gemini/Perplexity probes.
+See [Google's current AI measurement guidance](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)
 and [Search Console setup guidance](https://developers.google.com/search/docs/monitor-debug/search-console-start).
 
 ## Campaign convention
@@ -117,3 +119,59 @@ pages need sitemap entries and links from relevant existing pages. Model facts,
 service availability and benchmark claims must remain consistent in the HTML,
 structured data and any optional `llms.txt` index. None guarantees search ranking
 or inclusion in an AI answer.
+
+
+## Admin SEO/GEO dashboard
+
+The owner dashboard at `/admin/` mounts discovery panels only after the existing
+`/admin/stats` authorization succeeds. Its 7/30/90-day controls apply only to API
+usage; GEO uses an explicit test-round selector, and SEO uses the imported export
+window. These are separate denominators.
+
+`admin/data/geo-observations.json` is an intentionally public, reviewed snapshot.
+It contains two rounds of fixed-question consumer-AI tests, source hashes,
+per-question statuses, sample denominators and environment caveats. It contains
+no account identifiers, raw answers, screenshots, private report links or
+conversation URLs. `noindex` does not make static files private. Refreshing the
+admin does not run another test or collect live AI rankings.
+
+To update the snapshot after collecting and reviewing a new supported evidence
+set, keep raw evidence outside the public repository and run:
+
+```sh
+python3 scripts/build_geo_snapshot.py --evidence-root /absolute/path/to/private/evidence
+python3 scripts/test_geo_snapshot.py
+```
+
+The current exporter validates the two preserved round formats. Extend and audit
+it for future rounds; do not silently replace prior results. Primary rates use
+substantive unbranded answers, with refusal/technical failure/registration walls
+and unexecuted questions reported separately. Null outcomes remain unmeasured.
+Paired comparisons use identical substantive question IDs in both rounds and
+cannot establish causal improvement when provider environments differ.
+
+Search Console performance is not connected to a private server API. The admin
+imports the owner's Dates or Queries CSV entirely in the browser. No file is
+uploaded. A snapshot is persisted only when the owner explicitly chooses
+“保存到此浏览器”; it can be cleared there. Imported query rows may omit anonymized
+queries or be truncated and are not a full-site total. CSV filters and export
+windows must be kept consistent for comparisons. Do not put these private
+exports in the public repository. See [Google's export documentation](https://support.google.com/webmasters/answer/12919797).
+
+The browser calculates CTR from imported clicks/impressions and labels its
+impression-weighted position as an estimate. Missing rank values remain unknown.
+The ordinary Web import does not identify all AI citations or measure separate
+assistant brands. If available for the property, Google's Generative AI
+performance report is a separate source; see [Google's current measurement guidance](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide).
+Cloudflare traffic remains in its own private dashboard, and the temporary
+journey event bridge is still not a persisted conversion collector.
+
+Run the dashboard contract checks before publishing:
+
+```sh
+python3 scripts/test_geo_snapshot.py
+node scripts/check_search_performance.cjs
+node scripts/check_admin_gate.cjs
+node --check admin/discovery.js
+node --check admin/search-performance.js
+```
