@@ -99,8 +99,8 @@ def main():
         translations = json.loads(subprocess.check_output(['node','-e',js], input=obj.encode('utf-8')))
     facts = json.loads((ROOT / 'assets/project-facts.json').read_text())
     assert facts['hostedApi']['status'] == 'maintenance', 'Review translated API copy before changing status.'
-    translations['en'].update({'k3.free':'daily quota after service resumes', 'k3.lat':'hosted API status', 'tr.3':'Open local models remain available'})
-    translations['zh'].update({'k3.free':'服务恢复后的每日额度', 'k3.lat':'托管 API 状态', 'tr.3':'开源本地模型仍可使用', 'code.h':'托管 API 文档'})
+    translations['en'].update({'k3.free':'daily quota after service resumes', 'k3.lat':'hosted API status', 'tr.3':'Open local models remain available', 'run.ok':'Recorded example · {s} s GPU time'})
+    translations['zh'].update({'k3.free':'服务恢复后的每日额度', 'k3.lat':'托管 API 状态', 'tr.3':'开源本地模型仍可使用', 'code.h':'托管 API 文档', 'run.ok':'已记录的示例 · GPU 计算 {s} 秒'})
     source = re.sub(r'const I18N = .*?;\s*let lang', lambda _: 'const I18N = '+json.dumps(translations, ensure_ascii=False, indent=1)+';\nlet lang', source, count=1, flags=re.S)
     data = json.loads(re.search(r'<script id="site-data" type="application/json">(.*?)</script>', source, re.S).group(1))
     SOURCE.write_text(render(source, translations, data, 'en'))
