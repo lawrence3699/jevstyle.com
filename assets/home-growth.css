@@ -1,0 +1,22 @@
+.h3-sub{max-width:760px;margin-left:auto;margin-right:auto;line-height:1.6}
+.h3-acts{flex-wrap:wrap}
+.growth-guides{padding:72px 0;border-top:1px solid var(--line)}
+.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:28px}
+.guide-grid>a{display:flex;flex-direction:column;gap:12px;padding:28px;border:1px solid var(--line);border-radius:18px;text-decoration:none;background:var(--soft);color:var(--ink)}
+.guide-grid>a:hover{border-color:var(--acc)}
+.guide-grid b{font-size:21px;line-height:1.3}
+.guide-grid span{line-height:1.6;color:var(--ink2)}
+.static-model{padding:26px;min-height:180px}
+.static-model p{line-height:1.6;color:var(--ink2);margin:12px 0}
+.static-model a{color:var(--acc-ink)}
+.static-model h3 a{color:var(--ink)}
+.static-quickstart{white-space:pre-wrap;padding:24px;line-height:1.6;overflow-wrap:anywhere}
+.static-example{padding:24px;line-height:1.7}
+.static-example pre{white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono)}
+.static-bench{padding:24px;border:1px solid var(--line);border-radius:16px;line-height:1.7}
+.static-bench a{color:var(--acc-ink)}
+.stats-note{font-size:13px;color:var(--ink2);line-height:1.6;margin-top:16px}
+.guide-grid a:focus-visible,.h3-acts a:focus-visible{outline:3px solid var(--acc);outline-offset:4px}
+@media(max-width:680px){.guide-grid{grid-template-columns:1fr}.growth-guides{padding:44px 0}.guide-grid>a{padding:22px}.h3-acts .dd{display:none}}
+/* The primary value proposition and actions should be readable on first paint. */
+.h3 h1 .w.go,.h3-sub,.h3-acts{animation:none!important;opacity:1;transform:none}

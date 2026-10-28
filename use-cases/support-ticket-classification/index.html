@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support ticket classification with local AI | JevStyle</title>
+<meta name="description" content="Classify the team, detect a refund request, and score urgency in one local call. JevStyle returns structured answers and option probabilities for your support workflow.">
+<link rel="canonical" href="https://jevstyle.com/use-cases/support-ticket-classification/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Support ticket classification with local AI | JevStyle">
+<meta property="og:description" content="Classify the team, detect a refund request, and score urgency in one local call. JevStyle returns structured answers and option probabilities for your support workflow.">
+<meta property="og:url" content="https://jevstyle.com/use-cases/support-ticket-classification/">
+<meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
+<meta property="og:image:alt" content="JevStyle — open local decision models">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Support ticket classification with local AI | JevStyle">
+<meta name="twitter:description" content="Classify the team, detect a refund request, and score urgency in one local call. JevStyle returns structured answers and option probabilities for your support workflow.">
+<meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
+<link rel="stylesheet" href="/assets/growth.css">
+<script src="/assets/journey.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Support ticket classification with local AI", "description": "Classify the team, detect a refund request, and score urgency in one local call. JevStyle returns structured answers and option probabilities for your support workflow.", "url": "https://jevstyle.com/use-cases/support-ticket-classification/", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "JevStyle", "url": "https://jevstyle.com/"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-wrap">
+<a class="brand" href="/" aria-label="JevStyle home"><svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="9" cy="11" r="6" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="11" r="2" fill="currentColor"/><path d="M15 11h6" stroke="currentColor" stroke-width="2"/></svg>JevStyle</a>
+<nav aria-label="Main navigation"><a href="/#models">Models</a><a href="/use-cases/local-llm-routing/">Use cases</a><a href="/guides/decision-evaluation/">Evaluation</a><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub ↗</a></nav>
+</div></header>
+<main id="main" class="page">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Use cases</span><span aria-hidden="true">/</span><span aria-current="page">Support tickets</span></nav>
+<div class="eyebrow">Use cases / Support tickets</div>
+<h1>Turn a ticket into a clear next step.</h1><p class="lead">Classify the team, detect a refund request, and score urgency in one local call. JevStyle returns structured answers and option probabilities for your support workflow.</p>
+<div class="actions"><a class="button" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-v3" data-track="demo_open">Try the HF demo ↗</a><a class="button secondary" href="#quickstart" data-track="quickstart_open">Run locally ↓</a><a class="button secondary" href="https://github.com/lawrence3699/jev-style" data-track="github_open">View on GitHub ↗</a></div>
+<p class="hero-note">Open weights · Apache-2.0 · Examples for jev-style 0.6.0</p>
+<div class="layout"><article class="article"><section id="questions" aria-labelledby="questions-heading"><h2 id="questions-heading">Three questions about the same ticket</h2><p>A support inbox needs more than a single category. You may need a team assignment, a factual yes/no check, and an ordered priority signal. JevStyle accepts these questions together and reads the shared ticket once.</p><div class="table-wrap"><table><thead><tr><th>Question</th><th>Type</th><th>Read from the response</th></tr></thead><tbody><tr><td>Which team?</td><td><code>choice</code></td><td>Selected label and probability for each option</td></tr><tr><td>Is a refund explicitly requested?</td><td><code>noul</code></td><td>Probability that the statement is true</td></tr><tr><td>How soon is action requested?</td><td><code>score</code></td><td>Expected position on the ordered scale and its distribution</td></tr></tbody></table></div></section><section id="quickstart" aria-labelledby="quickstart-heading"><h2 id="quickstart-heading">Run the small text model</h2><p>Use Python 3.10 or newer in a virtual environment. Install the backend for your machine, then keep the server running in this terminal.</p><div class="code-label"><span>bash</span></div><pre><code class="language-bash"># Apple silicon
+python -m pip install &quot;jev-style[mlx]&quot;
+
+# Linux, Windows, or an Intel Mac: use this instead
+# python -m pip install &quot;jev-style[torch]&quot;
+
+jev-style serve --release 0.8b</code></pre><p>The first run downloads the model. Once it is ready, open <a href="http://127.0.0.1:8765">the local Playground</a>. Run the Python examples in a second terminal with the same environment.</p></section><section id="classify" aria-labelledby="classify-heading"><h2 id="classify-heading">Classify your first ticket</h2><p>Save this as <code>ticket.py</code>, then run <code>python ticket.py</code>. The input is illustrative; the script prints the actual response from your running model.</p><div class="code-label"><span>python</span></div><pre><code class="language-python">import json
+from jev_style import JevStyle, choice, noul, score
+
+ticket = {
+    &quot;subject&quot;: &quot;Duplicate charge&quot;,
+    &quot;body&quot;: &quot;I was billed twice for my March plan. Please refund one charge today.&quot;,
+}
+with JevStyle(base_url=&quot;http://127.0.0.1:8765&quot;) as model:
+    result = model.decide(ticket, {
+        &quot;team&quot;: choice(&quot;Which team should handle this ticket?&quot;, {
+            &quot;billing&quot;: &quot;Charges, refunds, invoices, and payment methods&quot;,
+            &quot;shipping&quot;: &quot;Deliveries, tracking, and lost parcels&quot;,
+            &quot;account&quot;: &quot;Login, passwords, and account settings&quot;,
+            &quot;other&quot;: &quot;Anything outside those teams&quot;,
+        }),
+        &quot;refund_requested&quot;: noul(&quot;The customer explicitly requests a refund.&quot;),
+        &quot;urgency&quot;: score(&quot;How soon does the customer request action?&quot;, [
+            &quot;No deadline stated&quot;, &quot;This week&quot;, &quot;Today or immediately&quot;,
+        ]),
+    })
+print(json.dumps(result[&quot;answers&quot;], indent=2))</code></pre><p>A <code>score</code> is an expected zero-based level index, so the three levels above span 0 to 2 and the result may be fractional. It is not a probability. The <code>refund_requested.noul</code> value is P(true).</p></section><section id="policy" aria-labelledby="policy-heading"><h2 id="policy-heading">Keep your support policy explicit</h2><p>A refund request is different from refund eligibility. Use the model to recognize what a customer asks; use order records and your refund policy to decide what is permitted. For multi-issue tickets, add separate yes/no checks if more than one team can be involved, rather than assuming one <code>choice</code> describes every issue.</p><p>Send ambiguous assignments to your triage queue. Evaluate urgency against written labeling guidance, since customer tone, requested deadline, and business severity are different signals.</p></section><section id="evaluate" aria-labelledby="evaluate-heading"><h2 id="evaluate-heading">Evaluate the inbox you actually receive</h2><p>Start with human-reviewed tickets from your own languages and categories. Hold back a test split before adjusting question wording. Track routing accuracy per team, missed urgent cases, and how many tickets need review at your chosen threshold.</p><p>The repository includes 30 hand-written support tickets to demonstrate the evaluation file format. They are useful for a smoke test, not evidence of production accuracy.</p><div class="code-label"><span>bash</span></div><pre><code class="language-bash">git clone https://github.com/lawrence3699/jev-style.git
+cd jev-style
+jev-style eval examples/support_tickets.jsonl --url http://127.0.0.1:8765 --strict</code></pre><p>Follow the <a href="/guides/decision-evaluation/">evaluation guide</a> to replace the illustrative file with representative, independently labeled data.</p></section><section id="limits" aria-labelledby="limits-heading"><h2 id="limits-heading">Make multilingual performance measurable</h2><p>The 0.8B release has published evaluations across 51 languages. That does not establish accuracy for every support domain or language variety. Include your customers’ wording, mixed-language tickets, spelling errors, and rare classes in evaluation.</p><p>The 0.8B model accepts text and JSON. For decisions that require reading a receipt image, use the <a href="/models/2b-v4/">2B v4 PyTorch build</a>.</p></section><section class="related" aria-labelledby="next-heading"><h2 id="next-heading">Keep building</h2><div class="related-links"><a href="/guides/decision-evaluation/" data-track="guide_open">Evaluate your own data<span>Choose a threshold from measured results.</span></a><a href="/models/0-8b-v3/" data-track="model_open">Start with 0.8B<span>A small text model for local decisions.</span></a></div></section></article><aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#questions">Three questions about the same ticket</a><a href="#quickstart">Run the small text model</a><a href="#classify">Classify your first ticket</a><a href="#policy">Keep your support policy explicit</a><a href="#evaluate">Evaluate the inbox you actually receive</a><a href="#limits">Make multilingual performance measurable</a></aside></div>
+</main>
+<footer class="site-footer"><div class="footer-wrap"><span>JevStyle · Open local decision models</span><div><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub</a><a href="https://huggingface.co/chaoliangUNSW/" data-track="model_open">Hugging Face</a><a href="/">Home</a></div></div></footer>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{&quot;token&quot;: &quot;7a7432d7d2fe40b4b52e41e711938ac0&quot;}'></script>
+</body></html>
