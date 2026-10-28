@@ -1,0 +1,52 @@
+.discovery { margin-top: 38px; padding-top: 28px; border-top: 1px solid var(--line); scroll-margin-top: 20px; }
+.discovery h2 { font-size: 24px; letter-spacing: -.025em; margin: 0 0 6px; }
+.discovery h3 { font-size: 16px; margin: 0 0 10px; }
+.discovery p { overflow-wrap: anywhere; }
+.discovery .sub { max-width: 82ch; }
+.discovery .card { box-shadow: none; border: 1px solid var(--line); }
+.discovery .note { line-height: 1.65; }
+.discovery .geo-controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: end; margin: 18px 0; }
+.discovery label { display: grid; gap: 5px; font-size: 13px; color: var(--ink2); }
+.discovery select { border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink); padding: 9px 32px 9px 12px; font: inherit; }
+.discovery .geo-summary { border-left: 3px solid var(--acc); padding: 10px 14px; margin: 16px 0; background: var(--soft); font-size: 14px; }
+.discovery .geo-summary p { margin: 0; }
+.discovery .geo-metrics { margin-top: 14px; }
+.discovery .geo-metrics .v { font-size: 30px; }
+.discovery .geo-metrics .n { line-height: 1.65; }
+.discovery .geo-statusbar { display: flex; height: 18px; border-radius: 6px; overflow: hidden; background: var(--soft); margin: 18px 0 12px; }
+.discovery .geo-legend { display: flex; gap: 10px 18px; flex-wrap: wrap; font-size: 13px; color: var(--ink2); }
+.discovery .geo-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.discovery .geo-swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.geo-substantive { background: #3a78cf; }
+.geo-refusal { background: #b88629; }
+.geo-technical_error { background: #c25957; }
+.geo-blocked { background: #8a69ba; }
+.geo-not_run { background: #a7adb7; }
+.discovery .geo-readout { display: grid; gap: 12px; margin: 18px 0 0; }
+.discovery .geo-measure { display: grid; grid-template-columns: 130px minmax(50px, 1fr) 140px; gap: 12px; align-items: center; font-size: 13px; }
+.discovery .geo-track { background: var(--soft); height: 8px; border-radius: 20px; position: relative; }
+.discovery .geo-fill { display: block; min-width: 0; height: 100%; border-radius: 20px; background: var(--acc); }
+.discovery .geo-zero { position: absolute; width: 8px; height: 8px; left: 0; top: 0; border: 2px solid var(--acc); border-radius: 50%; background: var(--card); }
+.discovery .geo-unknown { background: repeating-linear-gradient(135deg, var(--soft), var(--soft) 5px, var(--line) 5px, var(--line) 9px); }
+.discovery .geo-value { font-variant-numeric: tabular-nums; text-align: right; }
+.discovery .geo-table { overflow-x: auto; margin-top: 16px; }
+.discovery .geo-table table { min-width: 620px; }
+.discovery .geo-question { white-space: normal; min-width: 210px; max-width: 450px; line-height: 1.6; }
+.discovery .geo-question small { display: block; color: var(--ink3); margin-top: 4px; }
+.discovery .geo-facts { margin-top: 18px; }
+.discovery details { border-top: 1px solid var(--line); padding: 12px 0; }
+.discovery summary { cursor: pointer; font-weight: 500; }
+.discovery details ul { padding-left: 20px; color: var(--ink2); line-height: 1.7; }
+.discovery .geo-method { margin-top: 16px; }
+.discovery .data-sources { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.discovery .data-sources p { font-size: 14px; color: var(--ink2); margin: 8px 0; }
+.discovery .geo-badge { display: inline-block; color: var(--ink2); background: var(--soft); padding: 3px 9px; border-radius: 999px; font-size: 12px; margin-left: 8px; vertical-align: middle; }
+.admin-nav { display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 18px 0 28px; font-size: 14px; }
+.admin-nav a { color: var(--ink2); }
+.discovery .geo-error { padding: 16px; border: 1px solid var(--line); border-radius: 10px; }
+@media (max-width: 620px) {
+  .discovery .geo-measure { grid-template-columns: 94px minmax(20px, 1fr) 116px; gap: 7px; font-size: 12px; }
+  .discovery .data-sources { grid-template-columns: 1fr; }
+  .discovery .geo-controls label { flex: 1; min-width: 130px; }
+  .discovery .geo-controls select { width: 100%; }
+}
