@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-28T19:29:10.763859+00:00",
+  "geo": {
+    "enabled": true,
+    "schedule_label": "每周一 09:00（Australia/Sydney）",
+    "next_due_at": "2026-11-01T22:00:00+00:00",
+    "execution": "local_scheduled_agent",
+    "requires": [
+      "computer_on",
+      "app_running",
+      "available_browser_sessions"
+    ],
+    "publication": "reviewed_summary_via_github_pages",
+    "raw_evidence_public": false
+  },
+  "seo": {
+    "execution": "private_backend",
+    "collection_interval_seconds": 86400,
+    "connection_status_source": "authenticated_admin_api"
+  }
+}

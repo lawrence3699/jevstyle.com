@@ -20,8 +20,13 @@ jobs:
           python3 scripts/build_discovery.py
           python3 scripts/check_site.py
           python3 scripts/test_geo_snapshot.py
+          python3 scripts/test_append_geo_run.py
+          python3 scripts/test_search_collector.py
           node scripts/check_search_performance.cjs
+          node scripts/check_search_performance_auto.cjs
+          node scripts/check_search_monitor.cjs
           node scripts/check_admin_gate.cjs
           node --check admin/discovery.js
           node --check admin/search-performance.js
+          node --check admin/search-monitor.js
           git diff --exit-code -- index.html zh/index.html about zh/about use-cases guides models benchmarks api sitemap.xml llms.txt

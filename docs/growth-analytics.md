@@ -121,57 +121,81 @@ structured data and any optional `llms.txt` index. None guarantees search rankin
 or inclusion in an AI answer.
 
 
-## Admin SEO/GEO dashboard
+## Automated admin SEO/GEO dashboard
 
-The owner dashboard at `/admin/` mounts discovery panels only after the existing
-`/admin/stats` authorization succeeds. Its 7/30/90-day controls apply only to API
-usage; GEO uses an explicit test-round selector, and SEO uses the imported export
-window. These are separate denominators.
+The owner dashboard `/admin/` mounts all measurement panels only after the
+existing `/admin/stats` authorization succeeds. API-usage 7/30/90-day controls,
+GSC's rolling 28-day final-data window and GEO test rounds remain separate.
 
-`admin/data/geo-observations.json` is an intentionally public, reviewed snapshot.
-It contains two rounds of fixed-question consumer-AI tests, source hashes,
-per-question statuses, sample denominators and environment caveats. It contains
-no account identifiers, raw answers, screenshots, private report links or
-conversation URLs. `noindex` does not make static files private. Refreshing the
-admin does not run another test or collect live AI rankings.
+### Private SEO collection
 
-To update the snapshot after collecting and reviewing a new supported evidence
-set, keep raw evidence outside the public repository and run:
+The existing control backend exposes owner-only
+`GET /control/v1/admin/search-performance`. The administrator connects Google
+once through a separate Search Console read-only/offline OAuth flow. Ordinary
+Google login remains `openid email profile`. No browser cookie or OAuth token is
+copied into the public site repository. Refresh tokens, verifiers and cached
+performance data are protected in the Windows service account's private DPAPI
+vault with a protected directory DACL. No new database or public storage is used.
+
+The backend checks due work on startup and every minute, calling Google only
+when connected and due (24 hours). It fetches the last 28 complete Pacific-time
+calendar days with `dataState=final`, independent property totals, date rows and
+query rows. Provisional diagnostics never enter final metrics. Empty responses
+are not evidence of zero traffic. Query rows are only the API's top rows and may
+omit anonymous/truncated queries; they are not a site-wide total.
+
+The admin automatically reads the private cache and polls status every minute
+while visible. It labels collection errors, last successful API responses and
+stale snapshots. Connection, refresh and disconnect POSTs require the existing
+admin session and configured same-site Origin. OAuth consent and Google API
+availability are required; a configured schedule alone is not successful data
+collection. See [collector contract](seo-collector.md) and
+[Google's Search Analytics API](https://developers.google.com/webmaster-tools/v1/searchanalytics/query).
+
+`search-performance.js` still supports the older browser-only CSV viewer as a
+separate component, but the admin uses its automatic API-data mode. That mode
+shows no upload or local-save controls and never reads/writes localStorage.
+
+### Scheduled consumer-web GEO probes
+
+The active chat task is scheduled for Monday 09:00 Australia/Sydney. It uses the
+normal consumer web UIs of ChatGPT, Gemini and Perplexity with the fixed
+`jevstyle-geo-web-v1` questions, independent conversations and documented modes.
+It is a local scheduled agent, so the computer, app and browser access must be
+available. It does not substitute API replies for consumer results or bypass
+provider access walls. Failures, refusals, incomplete citations and unexecuted
+questions retain their true status and null outcomes.
+
+Raw answers/screenshots stay outside this public repository. A reviewer checks
+body mentions, visible citations and current project facts. The append-only
+publisher validates exact prompts, evidence, attempts and explicit review before
+adding a sanitized round. It retains all prior rounds and source hashes. CI,
+PR merge and successful GitHub Pages deployment complete publication; a failed
+publish must not be described as an admin update. See
+[run protocol and publication commands](geo-live-runs.md).
+
+`admin/data/geo-observations.json` is intentionally public and sanitized.
+`admin/data/monitoring-status.json` contains only non-sensitive schedule metadata.
+`noindex` does not protect static files. No raw answers, screenshots, account
+identifiers, private conversation URLs or GSC query exports may be committed.
+The admin polls for changed GEO snapshots every five minutes while visible;
+refreshing a page never starts new AI requests. A record more than nine days old
+is visibly stale, even if the local schedule is enabled.
+
+Cloudflare traffic remains a separate private dashboard; the temporary journey
+event bridge is still not a historical conversion collector. Google Search
+metrics, assistant citations and AI referral clicks have different denominators.
+
+### Checks
 
 ```sh
-python3 scripts/build_geo_snapshot.py --evidence-root /absolute/path/to/private/evidence
 python3 scripts/test_geo_snapshot.py
-```
-
-The current exporter validates the two preserved round formats. Extend and audit
-it for future rounds; do not silently replace prior results. Primary rates use
-substantive unbranded answers, with refusal/technical failure/registration walls
-and unexecuted questions reported separately. Null outcomes remain unmeasured.
-Paired comparisons use identical substantive question IDs in both rounds and
-cannot establish causal improvement when provider environments differ.
-
-Search Console performance is not connected to a private server API. The admin
-imports the owner's Dates or Queries CSV entirely in the browser. No file is
-uploaded. A snapshot is persisted only when the owner explicitly chooses
-“保存到此浏览器”; it can be cleared there. Imported query rows may omit anonymized
-queries or be truncated and are not a full-site total. CSV filters and export
-windows must be kept consistent for comparisons. Do not put these private
-exports in the public repository. See [Google's export documentation](https://support.google.com/webmasters/answer/12919797).
-
-The browser calculates CTR from imported clicks/impressions and labels its
-impression-weighted position as an estimate. Missing rank values remain unknown.
-The ordinary Web import does not identify all AI citations or measure separate
-assistant brands. If available for the property, Google's Generative AI
-performance report is a separate source; see [Google's current measurement guidance](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide).
-Cloudflare traffic remains in its own private dashboard, and the temporary
-journey event bridge is still not a persisted conversion collector.
-
-Run the dashboard contract checks before publishing:
-
-```sh
-python3 scripts/test_geo_snapshot.py
+python3 scripts/test_append_geo_run.py
+python3 scripts/test_search_collector.py
 node scripts/check_search_performance.cjs
+node scripts/check_search_monitor.cjs
 node scripts/check_admin_gate.cjs
 node --check admin/discovery.js
 node --check admin/search-performance.js
+node --check admin/search-monitor.js
 ```
