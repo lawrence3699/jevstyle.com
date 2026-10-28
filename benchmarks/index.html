@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JevStyle benchmarks: accuracy, latency and evaluation protocols | JevStyle</title>
+<meta name="description" content="Published JevStyle JevBench and Decision Index results with sample counts, hardware, uncertainty, training overlap and pinned source references.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JevStyle benchmarks: accuracy, latency and evaluation protocols | JevStyle">
+<meta property="og:description" content="Published JevStyle JevBench and Decision Index results with sample counts, hardware, uncertainty, training overlap and pinned source references.">
+<meta property="og:url" content="https://jevstyle.com/benchmarks/">
+<meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
+<meta property="og:image:alt" content="JevStyle — open local decision models">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JevStyle benchmarks: accuracy, latency and evaluation protocols | JevStyle">
+<meta name="twitter:description" content="Published JevStyle JevBench and Decision Index results with sample counts, hardware, uncertainty, training overlap and pinned source references.">
+<meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
+<link rel="stylesheet" href="/assets/growth.css">
+<script src="/assets/journey.js" defer></script>
+<link rel="canonical" href="https://jevstyle.com/benchmarks/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/benchmarks/#webpage", "url": "https://jevstyle.com/benchmarks/", "name": "JevStyle benchmarks: accuracy, latency and evaluation protocols | JevStyle", "description": "Published JevStyle JevBench and Decision Index results with sample counts, hardware, uncertainty, training overlap and pinned source references.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "JevStyle benchmarks: accuracy, latency and evaluation protocols", "item": "https://jevstyle.com/benchmarks/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-wrap">
+<a class="brand" href="/" aria-label="JevStyle home"><svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="9" cy="11" r="6" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="11" r="2" fill="currentColor"/><path d="M15 11h6" stroke="currentColor" stroke-width="2"/></svg>JevStyle</a>
+<nav aria-label="Main navigation"><a href="/#models">Models</a><a href="/use-cases/local-llm-routing/">Use cases</a><a href="/guides/decision-evaluation/">Evaluation</a><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub ↗</a></nav>
+</div></header>
+<main id="main" class="page">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Benchmarks</span></nav>
+<div class="eyebrow">Benchmarks</div>
+<h1>JevStyle benchmarks and evaluation protocols</h1><p class="lead">Inspect the evidence behind published decision-model results, including what each score measures and where it stops.</p>
+<div class="actions"><a class="button" href="/models/compare/">Compare models</a><a class="button secondary" href="/guides/decision-evaluation/">Evaluate your data</a></div>
+<p class="hero-note">Source review: <time datetime="2026-10-29">29 October 2026</time> · Open weights · Apache-2.0</p>
+<div class="layout"><article class="article">
+<section id="summary" aria-labelledby="summary-heading"><h2 id="summary-heading">Published results, with their limits</h2>
+<p>JevStyle publishes decision-model results on JevBench and the Decision Index. The values below are project self-runs, not independent certifications or official leaderboard ranks. They describe particular model revisions, datasets, and runtimes.</p>
+<p>The latest 2B v4 reports 74.9% accuracy on 231 public JevBench v1.4.1 items, a 44.37 Decision Index 0.3 public score, and a 57.55 public Vision score. These are different metrics: only the first is a percentage accuracy. Sources: <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4/blob/9d97074a4cfb194a2dbe5bf33a0cbff06db232bb/README.md">2B v4 model card, pinned revision</a> and <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3/blob/b023d1f9c7858fbf01504577a3bfc349ea5c7385/README.md">0.8B v3 model card, pinned revision</a>.</p>
+<p>Model repository creation dates are 27 October 2026 for 2B v4 and 24 September 2026 for 0.8B v3. They are release metadata, not benchmark run timestamps. This page consolidates existing reports; it does not claim that a new evaluation was performed on the source-review date.</p></section>
+<section id="quality" aria-labelledby="quality-heading"><h2 id="quality-heading">Accuracy and benchmark scores</h2>
+<div class="table-wrap"><table><caption>Published self-runs; follow the model cards for complete protocols.</caption><thead><tr><th scope="col">Model / evaluation</th><th scope="col">Result</th><th scope="col">Sample and metric</th><th scope="col">Runtime and interpretation</th></tr></thead><tbody>
+<tr><th scope="row">2B v4 · JevBench v1.4.1</th><td>74.9%<br>173 / 231 correct</td><td>231 public items; accuracy; 95% Wilson interval 68.9–80.0%</td><td>Official harness via the local systemone server; float32, Apple MPS. One self-run; no official rank.</td></tr>
+<tr><th scope="row">0.8B v3 · JevBench v1.4.1</th><td>64.1%<br>148 / 231 correct</td><td>231 public items; accuracy; 95% Wilson interval 57.7–70.0%</td><td>Vendored official harness, commit <code>24b9b5c</code>. Card reports zero training-pool hits; device is not specified in this result's protocol note.</td></tr>
+<tr><th scope="row">2B v4 · Decision Index 0.3 public</th><td>44.37</td><td>140,178 scoreable requests; composite public index, not percentage accuracy</td><td>Kit <code>25c6ec7</code>, its runner and scorer; bfloat16, A100 80 GB, fast path enabled. All requests answered. Some benchmark train splits were used in training.</td></tr>
+<tr><th scope="row">2B v4 · Decision Index public Vision</th><td>57.55</td><td>12,210 rows; weighted, chance-corrected public index</td><td>Kit <code>25c6ec7</code>, vision runner; bfloat16, A100 80 GB. Up to 1,638,400 pixels / 1,600 image tokens per image. CORD training data was used, so KIE is not zero-shot.</td></tr>
+</tbody></table></div>
+<p>Decision Index Full scores include private tests run by the maintainers. A public self-run cannot establish that Full score or its board rank. The 0.8B and 2B JevBench rows also come from separate runs, so this table is a starting point for model selection, not a controlled head-to-head on your workload.</p></section>
+<section id="latency" aria-labelledby="latency-heading"><h2 id="latency-heading">Latency with hardware and measurement scope</h2>
+<p>The 2B v4 card reports a sample of 750 Decision Index 0.3 public requests, sampled uniformly with seed <code>20261027</code>, on one otherwise idle A100 80 GB in bfloat16, one request at a time.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Runtime</th><th scope="col">Median</th><th scope="col">Mean</th><th scope="col">p95</th></tr></thead><tbody>
+<tr><th scope="row">CUDA graphs + fast path</th><td>16.4 ms</td><td>58.8 ms</td><td>211 ms</td></tr>
+<tr><th scope="row">Fast path only</th><td>71.5 ms</td><td>104.0 ms</td><td>214 ms</td></tr></tbody></table></div>
+<p>These are in-process request wall times. Model loading and CUDA graph recording are excluded. They do not measure HTTP transport, client-side work, queueing, or fallback to another model, and are not an estimate for your CPU, Mac, or hosted endpoint. See the <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4/blob/9d97074a4cfb194a2dbe5bf33a0cbff06db232bb/README.md#speed-16-ms-median-per-request">pinned speed protocol</a>.</p>
+<p>For deployment decisions, time cold start, warm p50/p95, concurrent load, and the complete route including fallbacks on your own hardware. Compare quality and latency on the same input distribution.</p></section>
+<section id="reproduce" aria-labelledby="reproduce-heading"><h2 id="reproduce-heading">Sources and reproduction</h2>
+<ul><li><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4/blob/9d97074a4cfb194a2dbe5bf33a0cbff06db232bb/README.md">2B v4 protocol and training provenance</a>: pinned source for all 2B rows above.</li>
+<li><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4/blob/9d97074a4cfb194a2dbe5bf33a0cbff06db232bb/src/macjev/eval/di_v4.py">2B v4 published Decision Index evaluation adapter</a>: use with the kit version stated in the model card.</li>
+<li><a href="https://github.com/fstandhartinger/jevbench/tree/v1.4.1">JevBench v1.4.1 harness</a>: retain the public-item split and request format when comparing a new run.</li>
+<li><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3/resolve/b023d1f9c7858fbf01504577a3bfc349ea5c7385/figures/jevbench.data.json">0.8B v3 JevBench chart data</a> and <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3/blob/b023d1f9c7858fbf01504577a3bfc349ea5c7385/README.md">full source card</a>: published counts, uncertainty, and provenance.</li>
+<li><a href="/guides/decision-evaluation/">Evaluate your own labeled requests</a>: save the data version, model revision, backend, precision, hardware, and error/coverage counts with the report.</li></ul>
+<p>For a new run, pin both the model revision and the evaluation tool revision. Do not reuse the headline numbers for quantized weights, another backend, altered prompts, or a different dataset without checking them again. A model's published global calibration is not evidence that its probabilities remain calibrated in every domain.</p></section>
+<section id="questions" aria-labelledby="questions-heading"><h2 id="questions-heading">Benchmark questions</h2>
+<h3>Is 44.37 an accuracy percentage?</h3><p>No. It is the Decision Index 0.3 composite public score. Use the per-benchmark metric and protocol when interpreting an individual task.</p>
+<h3>Do these numbers prove 2B v4 will work better on my tickets?</h3><p>No. Evaluate the language, labels, ambiguous cases, and class mix you expect to see. Measure the error rate and the share of requests sent for review under a fixed threshold.</p>
+<h3>Was every task evaluated zero-shot?</h3><p>No. The source card marks training overlap and distinguishes held-out evaluation rows from whether a benchmark's training split was used. Consult each dataset's protocol before claiming zero-shot performance.</p>
+<h3>Where is the hosted API's response-time guarantee?</h3><p>These local model experiments provide no hosted API latency guarantee. Check <a href="/api/">current service information</a> separately.</p></section>
+<section class="related" aria-labelledby="next-heading"><h2 id="next-heading">Choose and evaluate a model</h2><div class="related-links"><a href="/models/compare/">Compare 0.8B and 2B<span>Inputs, backends, and published weight sizes.</span></a><a href="/about/">About JevStyle<span>Project identity, source code, and license.</span></a></div></section></article><aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#summary">Read the evidence</a><a href="#quality">Quality results</a><a href="#latency">Latency and hardware</a><a href="#reproduce">Sources and reproduction</a><a href="#questions">Benchmark questions</a></aside></div>
+</main>
+<!--discovery:resource-links--><nav class="project-resource-nav" aria-label="Project resources"><a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav><!--/discovery:resource-links-->
+<footer class="site-footer"><div class="footer-wrap"><span>JevStyle · Open local decision models</span><div><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub</a><a href="https://huggingface.co/chaoliangUNSW/" data-track="model_open">Hugging Face</a><a href="/about/">About</a><a href="/">Home</a></div></div></footer>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{&quot;token&quot;: &quot;7a7432d7d2fe40b4b52e41e711938ac0&quot;}'></script>
+</body></html>

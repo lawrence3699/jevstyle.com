@@ -17,5 +17,6 @@ jobs:
       - name: Verify reproducible pages and links
         run: |
           python3 scripts/prerender_home.py
+          python3 scripts/build_discovery.py
           python3 scripts/check_site.py
-          git diff --exit-code -- index.html zh/index.html
+          git diff --exit-code -- index.html zh/index.html about zh/about use-cases guides models benchmarks api sitemap.xml llms.txt

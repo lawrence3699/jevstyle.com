@@ -6,3 +6,7 @@
 .copy-code:focus-visible{outline:2px solid #5557de;outline-offset:3px}
 
 .copy-code{font:inherit;color:var(--accent);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer;white-space:nowrap}.copy-code:hover{border-color:var(--accent);background:var(--soft)}
+
+.project-resource-nav{max-width:1120px;margin:0 auto;padding:0 32px 28px;font-size:14px;line-height:1.8;display:flex;gap:18px;flex-wrap:wrap}
+@media(max-width:550px){.project-resource-nav{padding-inline:20px}}
+@media(max-width:880px){.toc strong{display:block;margin-bottom:6px}}
