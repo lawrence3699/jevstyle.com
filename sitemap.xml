@@ -34,6 +34,12 @@
     <loc>https://jevstyle.com/guides/decision-evaluation/</loc>
   </url>
   <url>
+    <loc>https://jevstyle.com/guides/local-decision-models/</loc>
+  </url>
+  <url>
+    <loc>https://jevstyle.com/guides/local-text-classification/</loc>
+  </url>
+  <url>
     <loc>https://jevstyle.com/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/" />

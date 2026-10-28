@@ -49,6 +49,25 @@ def home_content(zh):
     return '''<section id="project-guide" class="growth-guides" aria-labelledby="project-guide-heading"><div class="s3-head"><h2 id="project-guide-heading">Choose a model. Check the evidence.</h2><p>JevStyle is an open-source toolkit for local classification, routing, and scoring. Its small decision models return probabilities for predefined options.</p></div><div class="guide-grid"><a href="/models/compare/"><b>Compare local models</b><span>Choose 0.8B or 2B by input, backend, and weight size.</span></a><a href="/benchmarks/"><b>Benchmarks and reproduction</b><span>Read published self-runs with protocols, sources, and limitations.</span></a></div><div class="project-faq"><h3>Can JevStyle run offline?</h3><p>After installing dependencies and downloading the model, you can process inputs locally. The online demo and hosted API are separate services and receive inputs sent to them.</p><h3>Which model should I use?</h3><p>Start with 0.8B v3 for text and compare 2B v4 on your own examples. Image input requires the 2B v4 PyTorch backend; MLX and GGUF builds are text-only.</p><h3>Does it generate chat replies?</h3><p>It returns probabilities for yes/no, choice, and ordered-score questions, rather than free-form replies. Keep human or LLM fallback for uncertain decisions.</p><p><a href="/about/">About the project and maintainer</a> · <a href="/api/">Hosted API reference (under maintenance)</a></p></div></section>'''
 
 
+def task_entrypoints(zh):
+    """Visible task guidance and a dated source of frequently confused facts."""
+    version = html.escape(FACTS['packageVersion'])
+    maintainer = html.escape(FACTS['maintainer'])
+    date = html.escape(FACTS['reviewed'])
+    model_date = html.escape(FACTS['latest2bReleased'])
+    default_model = html.escape(FACTS['defaultTextModel'].replace('Jev-Style-', '').replace('-Decision-', ' '))
+    if zh:
+        title, intro = '从你的任务开始', '先按输入、标签和运行环境选择方法，再在自己的数据上比较结果。'
+        cards = [('/guides/local-text-classification/', 'Python 本地文本分类', '比较传统分类器与决策模型，保留低置信度回退。'), ('/guides/local-decision-models/', '本地决策模型与 Apple silicon', '按固定选项、后端和硬件选择运行方式。'), ('/use-cases/local-llm-routing/', '请求路由与大模型回退', '先在本地选择工作流，再处理需要升级的请求。')]
+        facts = f'''<h3>当前版本与服务状态</h3><p>Python 软件包为 <a href="https://pypi.org/project/jev-style/{version}/">jev-style {version}</a>。<a href="/models/2b-v4/">2B v4 已于 {model_date} 发布</a>：PyTorch 支持文本与图片，MLX 和 GGUF 仅支持文本。默认本地文本模型为 <a href="/models/0-8b-v3/">{default_model}</a>。</p><p><strong>托管 API 维护中，当前无法调用。</strong>本地模型与 Hugging Face Demo 是独立入口，托管服务的状态不代表本地模型不可用。</p><p>维护者：<a href="/zh/about/">{maintainer}（严超亮）</a>，GitHub：lawrence3699。项目与 TypeSafe 无隶属或背书关系。</p><p>训练出处：2B v4 部分训练使用 TypeSafe Jev 1.14 公共 API 生成的软标签。Python 软件包不附带教师的原始回答数据集。参见<a href="/models/2b-v4/#results">模型与训练来源</a>。</p>'''
+    else:
+        title, intro = 'Start with the task you need to run locally', 'Choose an approach for your inputs, labels, and hardware, then compare results on your own data.'
+        cards = [('/guides/local-text-classification/', 'Local text classification in Python', 'Compare a traditional classifier with typed decision models, and keep a review path.'), ('/guides/local-decision-models/', 'Local decision models on Apple silicon', 'Choose a method and backend for fixed choices and your available hardware.'), ('/use-cases/local-llm-routing/', 'Workflow routing with LLM fallback', 'Make the local routing decision before escalating uncertain requests.')]
+        facts = f'''<h3>Current releases and service availability</h3><p>The Python package is <a href="https://pypi.org/project/jev-style/{version}/">jev-style {version}</a>. <a href="/models/2b-v4/">2B v4 was released on {model_date}</a>: PyTorch supports text and images; MLX and GGUF builds are text-only. The default local text model is <a href="/models/0-8b-v3/">{default_model}</a>.</p><p><strong>The hosted API is under maintenance and is currently unavailable.</strong> Local models and the Hugging Face demo are separate entry points; hosted-service availability does not determine whether a local model works.</p><p>Maintainer: <a href="/about/">{maintainer}</a> (GitHub: lawrence3699). JevStyle is independent and is not affiliated with or endorsed by TypeSafe.</p><p>Training provenance: 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. The Python package does not bundle the raw teacher response datasets. See <a href="/models/2b-v4/#results">the model and training sources</a>.</p>'''
+    links = ''.join(f'<a href="{url}" data-track="guide_open"><b>{label}</b><span>{text}</span></a>' for url,label,text in cards)
+    return f'<section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">{title}</h2><p>{intro}</p></div><div class="guide-grid">{links}</div><div class="current-project-facts" id="current-facts">{facts}<p class="facts-date">{"核对日期" if zh else "Reviewed"}: <time datetime="{date}">{date}</time></p></div></section>'
+
+
 def main():
     assert FACTS['hostedApi']['status'] == 'maintenance', 'Update maintenance copy before changing service state.'
     pages = public_pages()
@@ -69,7 +88,7 @@ def main():
         page = {'@type':'AboutPage' if '/about/' in url else 'WebPage','@id':url+'#webpage','url':url,'name':title,'description':desc,'inLanguage':lang,'isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#software'}}
         graph = [website, page]
         if url in (BASE+'/',BASE+'/zh/',BASE+'/about/',BASE+'/zh/about/'):
-            graph += [{'@type':'Person','@id':BASE+'/about/#maintainer','name':FACTS['maintainer'],'url':BASE+'/about/','sameAs':['https://github.com/lawrence3699',FACTS['huggingface']]}, {'@type':'SoftwareSourceCode','@id':BASE+'/#software','name':FACTS['name'],'alternateName':FACTS['alternateName'],'url':FACTS['url'],'description':FACTS['description'],'codeRepository':FACTS['github'],'license':FACTS['license'],'programmingLanguage':'Python','author':{'@id':BASE+'/about/#maintainer'},'sameAs':[FACTS['github'],FACTS['huggingface'],FACTS['pypi']]}]
+            graph += [{'@type':'Person','@id':BASE+'/about/#maintainer','name':FACTS['maintainer'],'url':BASE+'/about/','sameAs':['https://github.com/lawrence3699',FACTS['huggingface']]}, {'@type':'SoftwareSourceCode','@id':BASE+'/#software','name':FACTS['name'],'alternateName':FACTS['alternateName'],'url':FACTS['url'],'description':FACTS['description'],'codeRepository':FACTS['github'],'license':FACTS['license'],'programmingLanguage':'Python','version':FACTS['packageVersion'],'author':{'@id':BASE+'/about/#maintainer'},'sameAs':[FACTS['github'],FACTS['huggingface'],FACTS['pypi']]}]
         if url not in (BASE+'/',BASE+'/zh/'):
             graph.append({'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'首页' if zh else 'Home','item':BASE+'/zh/' if zh else FACTS['url']},{'@type':'ListItem','position':2,'name':title.split(' | ')[0],'item':url}]})
             # The breadcrumb is visible as well as machine readable.
@@ -83,9 +102,10 @@ def main():
         if zh and '/about/' in url:
             doc = re.sub(r'<nav class="breadcrumb" aria-label="Breadcrumb">.*?</nav>', lambda _: '<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/zh/">首页</a> / <span aria-current="page">关于 JevStyle</span></nav>', doc, count=1, flags=re.S)
         if path in (ROOT/'index.html',ROOT/'zh/index.html'):
+            doc = slot(doc, 'task-entrypoints', task_entrypoints(zh), before='  <section id="try"')
             doc = slot(doc, 'home-guide', home_content(zh), before='  <section id="about">')
         if 'class="site-footer"' in doc and '/about/' not in url:
-            nav = '<nav class="project-resource-nav" aria-label="Project resources"><a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav>'
+            nav = '<nav class="project-resource-nav" aria-label="Project resources"><a href="/guides/local-text-classification/">Local text classification</a> · <a href="/guides/local-decision-models/">Decision models</a> · <a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav>'
             doc = slot(doc, 'resource-links', nav, before='<footer class="site-footer">')
         path.write_text(doc)
     ns, xh = 'http://www.sitemaps.org/schemas/sitemap/0.9', 'http://www.w3.org/1999/xhtml'
@@ -101,7 +121,7 @@ def main():
                 ET.SubElement(item,'{'+xh+'}link',rel='alternate',hreflang=language,href=dest)
     ET.indent(root)
     ET.ElementTree(root).write(ROOT/'sitemap.xml',encoding='utf-8',xml_declaration=True)
-    lines = ['# JevStyle','', '> '+FACTS['description'], '', 'Maintainer: '+FACTS['maintainer']+'. Code and weights: Apache-2.0.', 'Hosted API: under maintenance as of '+FACTS['reviewed']+'. Local models and hosted demos are separate.', '', '## Official pages','']
+    lines = ['# JevStyle','', '> '+FACTS['description'], '', 'Maintainer: '+FACTS['maintainer']+'. Code and weights: Apache-2.0.', 'Hosted API: under maintenance as of '+FACTS['reviewed']+'. Local models and hosted demos are separate.', 'Current Python package: '+FACTS['packageVersion']+'. Local default: 0.8B v3; --release 2b selects 2B v4 (released '+FACTS['latest2bReleased']+').', '2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.', FACTS['trainingProvenance'], '', '## Official pages','']
     for path in pages:
         if '/api/' in str(path) or path == ROOT/'zh/index.html':
             continue

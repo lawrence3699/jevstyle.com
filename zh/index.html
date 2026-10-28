@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
-<title>JevStyle：AI Agent 本地分类与路由模型</title>
+<title>Python 本地文本分类与 AI 路由模型 | JevStyle</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="用小型开源模型完成分类、请求路由和评分。在本地运行，将不确定的情况交给大模型。">
-<meta property="og:title" content="JevStyle：AI Agent 本地分类与路由模型">
-<meta property="og:description" content="用小型开源模型完成分类、请求路由和评分。在本地运行，将不确定的情况交给大模型。">
+<meta name="description" content="在 Python 中完成文本分类、请求路由和固定选项评分。小型开源模型支持 CPU、CUDA 与 Apple silicon，可保留大模型或人工回退。">
+<meta property="og:title" content="Python 本地文本分类与 AI 路由模型 | JevStyle">
+<meta property="og:description" content="在 Python 中完成文本分类、请求路由和固定选项评分。小型开源模型支持 CPU、CUDA 与 Apple silicon，可保留大模型或人工回退。">
 <meta property="og:url" content="https://jevstyle.com/zh/">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -937,6 +937,10 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 @media (prefers-reduced-motion:reduce){#hero[data-sx],#switcher[data-sx] .stage,.uc3-card .media{transform:none !important;opacity:1 !important}.scrub .sw{color:inherit}}
 
 .api-reference-note{color:var(--ink2);line-height:1.6;max-width:850px;margin:-12px 0 24px}.project-faq{max-width:850px;line-height:1.7;margin-top:28px}.project-faq h3{font-size:20px;margin:24px 0 8px}.project-faq p{color:var(--ink2);margin-bottom:14px}.project-faq a{text-decoration:underline;text-underline-offset:3px}
+
+.current-project-facts{margin-top:28px;padding:24px;border:1px solid var(--line);border-radius:14px;max-width:1050px;font-size:15px;line-height:1.65}.current-project-facts h3{font-size:20px;margin-bottom:12px}.current-project-facts p+p{margin-top:12px}.current-project-facts a{text-decoration:underline;text-underline-offset:3px}.current-project-facts .facts-date{font-size:12px;color:var(--ink2)}
+
+@media(max-width:1023px){.cta3.rv.pre,.cta3.rv.pre:last-child{transform:translateY(24px)}}
 </style>
 <link rel="alternate" hreflang="en" href="https://jevstyle.com/">
 <link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/">
@@ -948,11 +952,11 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/home-growth.css">
 <script src="/assets/journey.js" defer></script>
-<meta name="twitter:title" content="JevStyle：AI Agent 本地分类与路由模型">
-<meta name="twitter:description" content="用小型开源模型完成分类、请求路由和评分。在本地运行，将不确定的情况交给大模型。">
+<meta name="twitter:title" content="Python 本地文本分类与 AI 路由模型 | JevStyle">
+<meta name="twitter:description" content="在 Python 中完成文本分类、请求路由和固定选项评分。小型开源模型支持 CPU、CUDA 与 Apple silicon，可保留大模型或人工回退。">
 <meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
 <link rel="canonical" href="https://jevstyle.com/zh/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/zh/#webpage", "url": "https://jevstyle.com/zh/", "name": "JevStyle：AI Agent 本地分类与路由模型", "description": "用小型开源模型完成分类、请求路由和评分。在本地运行，将不确定的情况交给大模型。", "inLanguage": "zh-CN", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "Person", "@id": "https://jevstyle.com/about/#maintainer", "name": "Chaoliang Yan", "url": "https://jevstyle.com/about/", "sameAs": ["https://github.com/lawrence3699", "https://huggingface.co/chaoliangUNSW"]}, {"@type": "SoftwareSourceCode", "@id": "https://jevstyle.com/#software", "name": "JevStyle", "alternateName": "Jev-Style", "url": "https://jevstyle.com/", "description": "Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.", "codeRepository": "https://github.com/lawrence3699/jev-style", "license": "https://www.apache.org/licenses/LICENSE-2.0", "programmingLanguage": "Python", "author": {"@id": "https://jevstyle.com/about/#maintainer"}, "sameAs": ["https://github.com/lawrence3699/jev-style", "https://huggingface.co/chaoliangUNSW", "https://pypi.org/project/jev-style/"]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/zh/#webpage", "url": "https://jevstyle.com/zh/", "name": "Python 本地文本分类与 AI 路由模型 | JevStyle", "description": "在 Python 中完成文本分类、请求路由和固定选项评分。小型开源模型支持 CPU、CUDA 与 Apple silicon，可保留大模型或人工回退。", "inLanguage": "zh-CN", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "Person", "@id": "https://jevstyle.com/about/#maintainer", "name": "Chaoliang Yan", "url": "https://jevstyle.com/about/", "sameAs": ["https://github.com/lawrence3699", "https://huggingface.co/chaoliangUNSW"]}, {"@type": "SoftwareSourceCode", "@id": "https://jevstyle.com/#software", "name": "JevStyle", "alternateName": "Jev-Style", "url": "https://jevstyle.com/", "description": "Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.", "codeRepository": "https://github.com/lawrence3699/jev-style", "license": "https://www.apache.org/licenses/LICENSE-2.0", "programmingLanguage": "Python", "version": "0.6.2", "author": {"@id": "https://jevstyle.com/about/#maintainer"}, "sameAs": ["https://github.com/lawrence3699/jev-style", "https://huggingface.co/chaoliangUNSW", "https://pypi.org/project/jev-style/"]}]}</script>
 </head>
 <body>
 
@@ -991,8 +995,8 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 
 <main id="top" class="wrap v3">
   <section class="h3" id="hero" aria-labelledby="heroTitle" data-sx="exit">
-    <h1 id="heroTitle">让 AI Agent 在本地做出决策</h1>
-    <p class="h3-sub" data-i18n="h3.sub">用小型开源模型完成分类、请求路由和评分。在本地运行，将不确定的情况交给大模型。</p>
+    <h1 id="heroTitle">AI Agent 的本地分类与路由</h1>
+    <p class="h3-sub" data-i18n="h3.sub">在 Python 中完成文本分类、请求路由和固定选项评分。小型开源模型支持 CPU、CUDA 与 Apple silicon，可保留大模型或人工回退。</p>
     <div class="h3-acts">
       <a class="pill dark lg" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="h3.cta">直接体验 Demo</a>
       <a class="pill soft lg" href="#developers" data-track="quickstart_open" data-i18n="start.local">本地运行</a>
@@ -1015,6 +1019,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
     </ul>
   </section>
 
+<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">从你的任务开始</h2><p>先按输入、标签和运行环境选择方法，再在自己的数据上比较结果。</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Python 本地文本分类</b><span>比较传统分类器与决策模型，保留低置信度回退。</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>本地决策模型与 Apple silicon</b><span>按固定选项、后端和硬件选择运行方式。</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>请求路由与大模型回退</b><span>先在本地选择工作流，再处理需要升级的请求。</span></a></div><div class="current-project-facts" id="current-facts"><h3>当前版本与服务状态</h3><p>Python 软件包为 <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>。<a href="/models/2b-v4/">2B v4 已于 2026-10-27 发布</a>：PyTorch 支持文本与图片，MLX 和 GGUF 仅支持文本。默认本地文本模型为 <a href="/models/0-8b-v3/">0.8B v3</a>。</p><p><strong>托管 API 维护中，当前无法调用。</strong>本地模型与 Hugging Face Demo 是独立入口，托管服务的状态不代表本地模型不可用。</p><p>维护者：<a href="/zh/about/">Chaoliang Yan（严超亮）</a>，GitHub：lawrence3699。项目与 TypeSafe 无隶属或背书关系。</p><p>训练出处：2B v4 部分训练使用 TypeSafe Jev 1.14 公共 API 生成的软标签。Python 软件包不附带教师的原始回答数据集。参见<a href="/models/2b-v4/#results">模型与训练来源</a>。</p><p class="facts-date">核对日期: <time datetime="2026-10-29">2026-10-29</time></p></div></section><!--/discovery:task-entrypoints-->
   <section id="try" aria-labelledby="tryH">
     <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">一次请求，每个选项都有分数</h2><p data-i18n="try.p">一张客服工单，三个问题，一次调用。</p></div>
     <div class="tabs ftabs" id="tyTabs" role="tablist" data-i18n-aria="ex.h"></div>
@@ -1579,13 +1584,13 @@ const I18N = {
   "om.p": "Apache-2.0 decision models on Hugging Face in Transformers, GGUF and MLX formats, plus a pip package that serves them on your own machine.",
   "dl.allrepos": "All {n} repositories",
   "ab.ch": "Get in touch",
-  "title3": "JevStyle: Local Classification and Routing for AI Agents",
+  "title3": "Local Text Classification and AI Routing in Python | JevStyle",
   "n3.api": "How it works",
   "n3.uc": "Use cases",
   "n3.models": "Open models",
   "n3.login": "Log in",
-  "h3.title": "Local decisions for your AI agents",
-  "h3.sub": "Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.",
+  "h3.title": "Local classification and routing for AI agents",
+  "h3.sub": "Classify text, route requests, and score fixed choices in Python. Run small open models on CPU, CUDA, or Apple silicon; keep an LLM or human fallback.",
   "h3.cta": "Try the live demo",
   "start.local": "Run locally",
   "start.demo": "Try demo",
@@ -2090,13 +2095,13 @@ const I18N = {
   "om.p": "Apache-2.0 许可的决策模型，在 Hugging Face 上提供 Transformers、GGUF 和 MLX 格式，另有 pip 包可以在你自己的机器上运行。",
   "dl.allrepos": "全部 {n} 个仓库",
   "ab.ch": "联系我",
-  "title3": "JevStyle：AI Agent 本地分类与路由模型",
+  "title3": "Python 本地文本分类与 AI 路由模型 | JevStyle",
   "n3.api": "工作原理",
   "n3.uc": "应用场景",
   "n3.models": "开源模型",
   "n3.login": "登录",
-  "h3.title": "让 AI Agent 在本地做出决策",
-  "h3.sub": "用小型开源模型完成分类、请求路由和评分。在本地运行，将不确定的情况交给大模型。",
+  "h3.title": "AI Agent 的本地分类与路由",
+  "h3.sub": "在 Python 中完成文本分类、请求路由和固定选项评分。小型开源模型支持 CPU、CUDA 与 Apple silicon，可保留大模型或人工回退。",
   "h3.cta": "直接体验 Demo",
   "start.local": "本地运行",
   "start.demo": "体验 Demo",

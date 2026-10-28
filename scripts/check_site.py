@@ -128,6 +128,10 @@ def main():
         source = path.read_text()
         assert 'data-v="0.04 s"' not in source
         assert '<!--discovery:home-guide-->' in source
+        assert 'id="current-facts"' in source
+        assert '/guides/local-text-classification/' in source
+        assert '/guides/local-decision-models/' in source
+        assert '1.14' in source and '0.6.2' in source
     subprocess.run(['node','--check',str(ROOT/'assets/journey.js')],check=True)
     subprocess.run(['node',str(ROOT/'scripts/check_journey.cjs')],check=True)
     print(f'Checked {len(pages)} public growth pages, {len(urls)} sitemap URLs, metadata, links, Python examples and JavaScript syntax.')

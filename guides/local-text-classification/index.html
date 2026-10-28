@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local text classification in Python: baselines, decisions and review | JevStyle</title>
+<meta name="description" content="Build a local Python text classifier with labeled data or described choices. Compare TF-IDF, embeddings and JevStyle, with runnable code and review handling.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Local text classification in Python: baselines, decisions and review | JevStyle">
+<meta property="og:description" content="Build a local Python text classifier with labeled data or described choices. Compare TF-IDF, embeddings and JevStyle, with runnable code and review handling.">
+<meta property="og:url" content="https://jevstyle.com/guides/local-text-classification/">
+<meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
+<meta property="og:image:alt" content="JevStyle local text classification guide">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Local text classification in Python: baselines, decisions and review | JevStyle">
+<meta name="twitter:description" content="Build a local Python text classifier with labeled data or described choices. Compare TF-IDF, embeddings and JevStyle, with runnable code and review handling.">
+<meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
+<link rel="stylesheet" href="/assets/growth.css">
+<script src="/assets/journey.js" defer></script>
+<link rel="canonical" href="https://jevstyle.com/guides/local-text-classification/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/guides/local-text-classification/#webpage", "url": "https://jevstyle.com/guides/local-text-classification/", "name": "Local text classification in Python: baselines, decisions and review | JevStyle", "description": "Build a local Python text classifier with labeled data or described choices. Compare TF-IDF, embeddings and JevStyle, with runnable code and review handling.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Local text classification in Python: baselines, decisions and review", "item": "https://jevstyle.com/guides/local-text-classification/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-wrap">
+<a class="brand" href="/" aria-label="JevStyle home"><svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="9" cy="11" r="6" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="11" r="2" fill="currentColor"/><path d="M15 11h6" stroke="currentColor" stroke-width="2"/></svg>JevStyle</a>
+<nav aria-label="Main navigation"><a href="/guides/local-decision-models/">Local models</a><a href="/use-cases/local-llm-routing/">Routing</a><a href="/guides/decision-evaluation/">Evaluation</a><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub ↗</a></nav>
+</div></header>
+<main id="main" class="page">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Guides</span><span aria-hidden="true">/</span><span aria-current="page">Local text classification</span></nav>
+<div class="eyebrow">Guides / Python classification</div>
+<h1>Local text classification in Python</h1>
+<p class="lead">Turn text into labels without a hosted inference call. Start with a supervised baseline when you have labels; evaluate embeddings or a small decision model when categories are described in words.</p>
+<div class="actions"><a class="button" href="#decision-model">Run a local decision model</a><a class="button secondary" href="#supervised">Try a TF-IDF baseline</a></div>
+<p class="hero-note">Examples use jev-style 0.6.2 · Reviewed 29 October 2026 · Local execution after dependencies and weights are downloaded</p>
+<div class="layout"><article class="article">
+<section id="choose" aria-labelledby="choose-heading"><h2 id="choose-heading">Choose the classifier from the data you have</h2>
+<p>Local text classification is a workflow: define labels, run a model on your machine, and decide which results need review. A support message can become a team label; a document can become a topic; a request can become a workflow destination. You still need representative labeled examples to measure quality, even if the model can score categories without task-specific training.</p><p>The described-choice example below uses JevStyle’s 0.8B v3 text model through a local Python server. The supervised example uses scikit-learn. Both are starting points for evaluating your own labels, not claims that one approach will win on every dataset.</p>
+<div class="table-wrap"><table><caption>Starting points to evaluate on the same held-out requests. This table is not a performance ranking.</caption><thead><tr><th scope="col">Approach</th><th scope="col">Useful starting situation</th><th scope="col">What you get</th><th scope="col">What to check</th></tr></thead><tbody>
+<tr><th scope="row">TF-IDF + logistic regression</th><td>Stable categories and representative labeled text.</td><td>A fitted classifier and per-class probability estimates.</td><td>Vocabulary drift, rare classes, calibration, and mistakes on an untouched test set.</td></tr>
+<tr><th scope="row">Local text embeddings</th><td>Category descriptions or examples that can be compared by semantic similarity.</td><td>Similarity to label descriptions or a classifier fitted on embeddings.</td><td>A cosine-similarity score is not a calibrated class probability. Evaluate label wording and ambiguous matches.</td></tr>
+<tr><th scope="row">JevStyle typed decision model</th><td>Choices described in words, or several yes/no, choice and ordered-score questions about one input.</td><td>Probabilities for your defined options in one forward pass.</td><td>Task-specific accuracy, probability calibration, rejection/fallback behavior, and hardware requirements.</td></tr>
+</tbody></table></div>
+<p>For embedding similarity, the <a href="https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html">Sentence Transformers documentation</a> explains how to encode text and compare vectors. For supervised baselines, see scikit-learn's <a href="https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction">text feature extraction</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">logistic regression</a> references. JevStyle is another candidate to test; changing the model does not remove the need for labeled evaluation.</p>
+</section>
+<section id="supervised" aria-labelledby="supervised-heading"><h2 id="supervised-heading">A small supervised baseline</h2>
+<p>Install <code>scikit-learn</code> in a virtual environment. This example fits a text vectorizer and classifier together, then prints predictions for new messages. All six training messages below are invented to demonstrate the code path.</p>
+<div class="code-label"><span>bash</span></div><pre><code class="language-bash">python -m pip install scikit-learn</code></pre>
+<div class="code-label"><span>python</span></div><pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+
+# Toy examples for the API demonstration, not an evaluation dataset.
+train_texts = [
+    &quot;My invoice has two charges for the same month.&quot;,
+    &quot;Please refund the duplicate payment on my bill.&quot;,
+    &quot;The parcel has not arrived at the delivery address.&quot;,
+    &quot;Where can I track the package that was shipped?&quot;,
+    &quot;I cannot sign in after resetting my password.&quot;,
+    &quot;My account login no longer accepts my password.&quot;,
+]
+train_labels = [&quot;billing&quot;, &quot;billing&quot;, &quot;shipping&quot;, &quot;shipping&quot;, &quot;account&quot;, &quot;account&quot;]
+
+classifier = make_pipeline(
+    TfidfVectorizer(ngram_range=(1, 2)),
+    LogisticRegression(max_iter=1000, random_state=0),
+)
+classifier.fit(train_texts, train_labels)
+
+messages = [&quot;Please check a charge on my invoice.&quot;, &quot;I need help tracking my parcel.&quot;]
+for message, label, probabilities in zip(
+    messages, classifier.predict(messages), classifier.predict_proba(messages)
+):
+    scores = dict(zip(classifier.classes_, probabilities.tolist()))
+    print({&quot;label&quot;: label, &quot;probabilities&quot;: scores})</code></pre>
+
+<p>Do not report accuracy from these toy rows. In a real project, fit the pipeline on the training split, choose settings on development data, and evaluate once on a held-out test split. Keep related messages in the same split. Compare class-level errors as well as overall accuracy.</p>
+</section>
+<section id="decision-model" aria-labelledby="decision-model-heading"><h2 id="decision-model-heading">Use described choices with a local decision model</h2>
+<p>JevStyle scores named options from your instructions. You do not need to train a classifier on these example messages just to run the request, but you do need labels from your intended task before deciding how much to automate. The <code>0.8b</code> release is a text-only starting point. <a href="/models/compare/">Compare its backends and weight sizes</a> before installing.</p>
+<p>Use Python 3.10 or newer in a virtual environment. Choose one installation command for your machine, then keep the local server running.</p>
+<div class="code-label"><span>bash</span></div><pre><code class="language-bash"># Apple silicon: MLX text backend
+python -m pip install "jev-style[mlx]"
+
+# CPU or NVIDIA CUDA: use this command instead
+# python -m pip install "jev-style[torch]"
+
+jev-style serve --release 0.8b
+# Local Playground: http://127.0.0.1:8765</code></pre>
+<p>The first model start downloads weights. These commands do not use the hosted JevStyle API. After downloading and installing the required assets, local inference can process text on your machine. An online demo or remote API endpoint is a different deployment.</p>
+<p>Save the following as <code>classify_local.py</code> and run it in a second terminal in the same environment. The code proposes a label or a human-review result; it does not send a ticket to a team or perform another business action.</p>
+<div class="code-label"><span>python</span></div><pre><code class="language-python">import json
+import math
+
+import httpx
+from jev_style import JevStyle, JevStyleError, choice
+
+ROUTES = {
+    &quot;billing&quot;: &quot;Charges, invoices, payments, and refund requests&quot;,
+    &quot;shipping&quot;: &quot;Package tracking, delivery, and shipping-address changes&quot;,
+    &quot;account&quot;: &quot;Sign-in, passwords, and account access&quot;,
+    &quot;other&quot;: &quot;Messages outside the three categories above&quot;,
+}
+
+
+def classify_local(text, threshold=0.90):
+    # Illustrative threshold. Select a fixed value using separate labeled data.
+    if not math.isfinite(threshold) or not 0 &lt;= threshold &lt;= 1:
+        raise ValueError(&quot;threshold must be between 0 and 1&quot;)
+    try:
+        with JevStyle(base_url=&quot;http://127.0.0.1:8765&quot;, timeout=15.0) as model:
+            result = model.decide(
+                text,
+                {&quot;team&quot;: choice(&quot;Which team should review this message?&quot;, ROUTES)},
+            )
+        raw = result[&quot;answers&quot;][&quot;team&quot;][&quot;probabilities&quot;]
+        if set(raw) != set(ROUTES):
+            raise ValueError(&quot;unexpected options&quot;)
+        probabilities = {label: float(value) for label, value in raw.items()}
+        if not all(math.isfinite(p) and 0 &lt;= p &lt;= 1 for p in probabilities.values()):
+            raise ValueError(&quot;invalid probabilities&quot;)
+        label = max(probabilities, key=probabilities.get)
+        probability = probabilities[label]
+        review = label == &quot;other&quot; or probability &lt; threshold
+        return {
+            &quot;proposed_label&quot;: label,
+            &quot;top_probability&quot;: probability,
+            &quot;next_step&quot;: &quot;human_review&quot; if review else &quot;candidate_for_routing&quot;,
+        }
+    except (JevStyleError, httpx.HTTPError, KeyError, TypeError, ValueError):
+        return {&quot;next_step&quot;: &quot;human_review&quot;, &quot;reason&quot;: &quot;runtime_or_response_error&quot;}
+
+
+if __name__ == &quot;__main__&quot;:
+    print(json.dumps(classify_local(&quot;I was billed twice for the same month.&quot;), indent=2))</code></pre>
+
+<aside class="note"><p><strong>0.90 is an example, not a safety guarantee.</strong> This code uses the largest option probability, not the API's separate normalized <code>confidence</code> field. A high probability can still be wrong. The <code>other</code> option is useful but does not guarantee detection of every unfamiliar request.</p></aside>
+<p>The client request and error types are documented in the <a href="https://github.com/lawrence3699/jev-style/blob/v0.6.2/jev_style/client.py">versioned Python client source</a>. The <a href="/use-cases/support-ticket-classification/">support-ticket example</a> adds separate refund and urgency questions. For dispatch into a workflow, continue with <a href="/use-cases/local-llm-routing/">local request routing and fallback</a>.</p>
+</section>
+<section id="evaluate" aria-labelledby="evaluate-heading"><h2 id="evaluate-heading">Decide what can be automated</h2>
+<p>Run candidate approaches on the same held-out messages and the same labels. Record failed requests, out-of-scope inputs, and the proportion sent for review. Useful measures include per-class precision and recall, probability calibration where probabilities are produced, error among accepted decisions, and coverage.</p>
+<ol><li>Use development examples to refine the label definitions and resolve ambiguous categories.</li><li>Choose the review threshold on separate calibration examples. State the sample count and errors behind the choice.</li><li>Freeze the threshold, then evaluate on the untouched test split. Check individual classes and languages, not only an average.</li><li>Measure end-to-end latency and memory on the intended hardware, including fallback work. Published weight-file size is not runtime memory.</li></ol>
+<p>In the JevStyle setup, use the <a href="/guides/decision-evaluation/">evaluation guide</a> to score a labeled JSONL file. The <a href="/benchmarks/">published benchmark page</a> explains existing results and their limits; it does not replace validation on your messages. This page makes no claim that one of the three approaches is universally more accurate, faster, or cheaper.</p>
+</section>
+<section id="questions" aria-labelledby="questions-heading"><h2 id="questions-heading">Common questions</h2>
+<h3>Can this work without a GPU?</h3><p>A scikit-learn text baseline runs on CPU. JevStyle supports a PyTorch CPU backend, and Apple silicon has an MLX option. Performance and available memory still determine whether a particular model and input length are practical. See the <a href="/guides/local-decision-models/">local decision model guide</a>.</p>
+<h3>Are local embeddings already a classifier?</h3><p>An embedding is a vector representation. You can compare it to label descriptions or train a classifier on vectors, but those are additional decision rules. Similarity alone is not evidence that a score is a calibrated probability of a class.</p>
+<h3>Do I need labeled data when I use described choices?</h3><p>You can run a pretrained decision model with options described in words. Representative labeled examples are still needed to measure errors, choose a review threshold, and check that changes improve your task.</p>
+<h3>Does local execution mean that nothing can leave the machine?</h3><p>It describes where this inference step runs. Package installation and initial model downloads use the network; an application's logging, monitoring, or downstream services may also send data elsewhere. The Python example sends inference requests only to the loopback address shown in its code.</p>
+<h3>What should happen when the model or server fails?</h3><p>Keep an explicit failure result, and route it to human review or an independently designed fallback. Do not silently map a timeout or malformed response to a valid business category. The example returns <code>human_review</code> for those errors.</p>
+</section>
+<section class="related" aria-labelledby="next-heading"><h2 id="next-heading">Choose the next step</h2><div class="related-links"><a href="/guides/local-decision-models/">Local decision models<span>Match the model family and backend to the decision.</span></a><a href="/guides/decision-evaluation/">Evaluate labeled requests<span>Measure coverage and errors before automating.</span></a></div></section>
+</article><aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#choose">Choose an approach</a><a href="#supervised">Supervised baseline</a><a href="#decision-model">Local decision model</a><a href="#evaluate">Evaluate automation</a><a href="#questions">Common questions</a></aside></div>
+</main>
+<!--discovery:resource-links--><nav class="project-resource-nav" aria-label="Project resources"><a href="/guides/local-text-classification/">Local text classification</a> · <a href="/guides/local-decision-models/">Decision models</a> · <a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav><!--/discovery:resource-links-->
+<footer class="site-footer"><div class="footer-wrap"><span>JevStyle · Open local decision models</span><div><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub</a><a href="https://huggingface.co/chaoliangUNSW/" data-track="model_open">Hugging Face</a><a href="/about/">About</a><a href="/">Home</a></div></div></footer>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7a7432d7d2fe40b4b52e41e711938ac0"}'></script>
+</body></html>
