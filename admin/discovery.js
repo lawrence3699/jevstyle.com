@@ -1,6 +1,6 @@
 (function (global) {
   'use strict';
-  var labels = {substantive: '实质回答', refusal: '拒答', technical_error: '技术失败', blocked: '注册限制', not_run: '未执行'};
+  var labels = {substantive: '实质回答', refusal: '拒答', technical_error: '技术失败', blocked: '访问限制', not_run: '未执行'};
   function el(tag, text, className) {
     var node = document.createElement(tag);
     if (text != null) node.textContent = text;
@@ -29,21 +29,36 @@
     if (root.dataset.mounted) return;
     root.dataset.mounted = 'true';
     root.appendChild(el('p', '正在读取已审核的 GEO 快照…', 'note'));
-    fetch('/admin/data/geo-observations.json', {cache: 'no-cache', credentials: 'omit'}).then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    }).then(function (data) {
-      if (data.schema_version !== 1 || !Array.isArray(data.rounds) || !data.rounds.length) throw new Error('不支持的数据格式');
-      render(root, data);
-    }).catch(function () {
+    var lastVersion = null;
+    function load() { return fetch('/admin/data/geo-observations.json', {cache: 'no-cache', credentials: 'omit'}).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      }).then(function (data) {
+        if (data.schema_version !== 1 || !Array.isArray(data.rounds) || !data.rounds.length) throw new Error('不支持的数据格式');
+        if (data.generated_at !== lastVersion) { render(root, data); lastVersion=data.generated_at; }
+      });
+    }
+    var initial = load().catch(function () {
       root.replaceChildren(el('p', 'GEO 快照暂时无法加载。未取得的数据不会计作零。', 'geo-error'));
       var button = el('button', '重试', 'btn'); button.type = 'button';
       button.addEventListener('click', function () { delete root.dataset.mounted; root.replaceChildren(); mount(root); });
       root.appendChild(button);
     });
+    var timer=global.setInterval(function () { if (document.visibilityState==='visible') load().catch(function () {}); },300000);
+    global.addEventListener('pagehide',function () { global.clearInterval(timer); },{once:true});
+    document.addEventListener('visibilitychange',function () { if (document.visibilityState==='visible') load().catch(function () {}); });
+    return initial;
   }
   function render(root, data) {
     root.replaceChildren();
+    var schedule=el('div',null,'geo-summary'); schedule.appendChild(el('p','正在读取复测计划状态…'));root.appendChild(schedule);
+    fetch('/admin/data/monitoring-status.json',{cache:'no-cache',credentials:'omit'}).then(function (r) { if (!r.ok) throw new Error();return r.json(); }).then(function (info) {
+      var g=info.geo;
+      if (!g || !g.enabled) { schedule.firstChild.textContent='复测计划尚未启用，当前仅展示已有历史。';return; }
+      var latest=data.rounds[data.rounds.length-1];
+      schedule.firstChild.textContent='已启用：'+g.schedule_label+'。运行需要本机开机、Codex 应用运行及可用网页会话。最新记录：'+latest.label+'，完成于 '+date(latest.observed_at_end)+'。页面每 5 分钟检查新结果。';
+      if (Date.now()-Date.parse(latest.observed_at_end)>9*86400000) schedule.appendChild(el('p','超过 9 天没有新复测记录，请检查本机和计划任务；现有数据已过期。'));
+    }).catch(function () { schedule.firstChild.textContent='复测计划状态暂未取得；历史记录仍可查看。'; });
     var controls = el('div', null, 'geo-controls');
     var round = select('测试轮次', data.rounds.map(function (r) { return [r.id, r.label]; }), data.rounds[data.rounds.length - 1].id);
     var provider = select('AI 平台', data.rounds[0].providers.map(function (p) { return [p.id, p.name]; }), 'gemini');
@@ -59,7 +74,7 @@
       var g = p.discovery, metrics = el('div', null, 'grid geo-metrics');
       [['主动提及', g.metrics.mentions], ['官网引用', g.metrics.site_citations], ['GitHub / HF 引用', g.metrics.project_citations]].forEach(function (m) {
         var card = el('div', null, 'card'); card.appendChild(el('div', m[0], 'k')); card.appendChild(el('div', percent(m[1]), 'v'));
-        card.appendChild(el('div', m[1].denominator ? metricText(m[1]) + ' 个已核实实质回答' : '没有可核实样本', 'n')); metrics.appendChild(card);
+        card.appendChild(el('div', m[1].denominator ? '已核实 ' + metricText(m[1]) : '没有可核实样本', 'n')); metrics.appendChild(card);
       });
       var count = el('div', null, 'card'); count.appendChild(el('div', '实质回答', 'k')); count.appendChild(el('div', g.counts.substantive + '/' + g.planned_questions, 'v'));
       count.appendChild(el('div', g.attempted_questions + ' 题已尝试 · ' + g.attempt_count + ' 次请求', 'n')); metrics.appendChild(count); body.appendChild(metrics);
@@ -82,10 +97,12 @@
       bar.setAttribute('aria-label', descriptions.join('，')); coverage.appendChild(bar); coverage.appendChild(legend);
       coverage.appendChild(el('p', '完整回复不重复生成。技术失败尝试：' + g.technical_failure_attempts + '；无正文误停尝试：' + g.operator_aborted_attempts + '。拒答保留记录，主提及率只使用实质回答。', 'note')); body.appendChild(coverage);
       var env = p.environment;
-      body.appendChild(el('p', [env.browser, env.account_mode, env.model, env.search_mode].filter(Boolean).join(' · ') + '。本轮观察：' + date(r.observed_at_start) + ' – ' + date(r.observed_at_end), 'note'));
+      var modes={anonymous:'匿名',anonymous_incognito:'匿名临时会话',logged_in_temporary:'登录，临时会话',logged_in_no_personalization:'登录，不个性化',logged_in:'已登录',logged_in_mixed_session_modes:'登录，部分题临时模式未确认'};
+      body.appendChild(el('p', [env.browser, modes[env.account_mode] || env.account_mode, env.model, env.search_mode].filter(Boolean).join(' · ') + '。本轮观察：' + date(r.observed_at_start) + ' – ' + date(r.observed_at_end), 'note'));
       var questions = table(['题目 / 固定问题', '状态', '正文提及', '官网引用', '请求数']);
       g.questions.forEach(function (q) {
         var tr = el('tr'), td = el('td', q.id, 'geo-question'); td.appendChild(el('small', q.question)); tr.appendChild(td);
+        if (q.environment_deviation) td.appendChild(el('small',q.environment_deviation.description));
         [labels[q.status] || q.status, flag(q.brand_mentioned), flag(q.site_cited), q.attempts].forEach(function (v) { tr.appendChild(el('td', v)); }); questions.body.appendChild(tr);
       });
       var detail = el('details'); detail.appendChild(el('summary', '查看逐题检测记录')); detail.appendChild(questions.wrap); body.appendChild(detail);
@@ -94,15 +111,18 @@
         var item = el('div', null, 'geo-question'); item.appendChild(el('p', q.id + ' · ' + q.question));
         if (q.fact_check && q.fact_check.errors && q.fact_check.errors.length) {
           item.appendChild(el('span', '存在事实错误', 'pill')); var ul = el('ul'); q.fact_check.errors.forEach(function (error) { ul.appendChild(el('li', error)); }); item.appendChild(ul);
-        } else item.appendChild(el('p', q.status === 'substantive' ? '已取得回答；事实核查摘要未提供，请勿据此视为全对。' : labels[q.status] || q.status, 'note'));
+        } else item.appendChild(el('p', q.fact_check && q.fact_check.classification==='accurate' ? '本次核查未发现错误（限该回答所涉事实）。' : q.status === 'substantive' ? '已取得回答；事实核查摘要未提供，请勿据此视为全对。' : labels[q.status] || q.status, 'note'));
         facts.appendChild(item);
       }); body.appendChild(facts);
     }
     round.input.addEventListener('change', update); provider.input.addEventListener('change', update); update();
-    var compare = el('div', null, 'card geo-method'); compare.appendChild(el('h3', '两轮同题对照 · 无品牌问题'));
+    var pair=data.latest_comparison || {before_round_id:'round1',after_round_id:'round2',providers:data.comparison};
+    function roundLabel(id) { var x=data.rounds.find(function (r) { return r.id===id; });return x?x.label:id; }
+    var beforeLabel=roundLabel(pair.before_round_id),afterLabel=roundLabel(pair.after_round_id);
+    var compare = el('div', null, 'card geo-method'); compare.appendChild(el('h3', beforeLabel+' → '+afterLabel+' · 同题对照'));
     compare.appendChild(el('p', '按两轮共同取得实质回答的题目配对。浏览器、登录态或检索环境变化，不能归因于网站改动。', 'note'));
-    var rows = table(['平台', '第一轮主动提及', '第二轮主动提及', '第一轮官网引用', '第二轮官网引用', '共同样本']);
-    data.comparison.forEach(function (c) {
+    var rows = table(['平台', beforeLabel+'提及', afterLabel+'提及', beforeLabel+'官网引用', afterLabel+'官网引用', '共同样本']);
+    pair.providers.forEach(function (c) {
       var tr = el('tr'); [c.provider_name, metricText(c.metrics.mentions.before), metricText(c.metrics.mentions.after), metricText(c.metrics.site_citations.before), metricText(c.metrics.site_citations.after), c.paired_count ? c.paired_ids.join(', ') : '不可比较'].forEach(function (v) { tr.appendChild(el('td', v)); }); rows.body.appendChild(tr);
     }); compare.appendChild(rows.wrap); root.appendChild(compare);
     var method = el('details', null, 'geo-method'); method.appendChild(el('summary', '这些数据怎样检测、怎样更新？'));

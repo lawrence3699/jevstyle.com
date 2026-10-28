@@ -40,7 +40,7 @@ async function scenario(initial) {
   let response = initial;
   const window = {
     JevDiscovery: {mount(root) { assert.equal(root, nodes.get('geo-content')); mounts.geo++; }},
-    JevSearchPerformance: {mount(root) { assert.equal(root, nodes.get('search-content')); mounts.search++; }}
+    JevSearchMonitor: {mount(root) { assert.equal(root, nodes.get('search-content')); mounts.search++; }}
   };
   const context = vm.createContext({
     window, console, Date, Number, String, Math, Array, Error, Promise,
