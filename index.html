@@ -2732,8 +2732,8 @@ function heroDefault(){ const v = VIS(), i = v.findIndex(f => f.id === 'v4-2b');
 
 /* ---------- v3: use cases (four open a recorded demo, two point to the Playground) ---------- */
 const UCS = [
-  {k:'tk', demo:'patterns', type:'choice · noul · score'},
-  {k:'ag', demo:'agent-approval', type:'choice'},
+  {k:'tk', demo:'patterns', type:'choice · noul · score', guide:'/use-cases/support-ticket-classification/'},
+  {k:'ag', demo:'agent-approval', type:'choice', guide:'/guides/claude-code-guard/'},
   {k:'mv', demo:'snake', type:'choice'},
   {k:'md', href:'https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b', type:'choice · noul', pal:'b4'},
   {k:'rt', href:'/use-cases/local-llm-routing/', type:'choice', pal:'b2'},
@@ -2750,7 +2750,7 @@ function renderUseCases(){
     const act = d
       ? `<button type="button" class="more" data-demo="${di}"><span>${esc(t('uc.see'))}</span> <span class="ar" aria-hidden="true">→</span><span class="sr-only"> · ${esc(t('uc.' + u.k + '.h'))}</span></button>`
       : `<a class="more" href="${u.href}"><span>${esc(t('uc.try'))}</span> <span class="ar" aria-hidden="true">→</span><span class="sr-only"> · ${esc(t('uc.' + u.k + '.h'))}</span></a>`;
-    return `<article class="uc3-card">${m}<p class="uc3-type">${esc(u.type)}</p><h3>${esc(t('uc.' + u.k + '.h'))}</h3><p class="uc3-p">${esc(t('uc.' + u.k + '.p'))}</p>${act}</article>`;
+    return `<article class="uc3-card">${m}<p class="uc3-type">${esc(u.type)}</p><h3>${esc(t('uc.' + u.k + '.h'))}</h3><p class="uc3-p">${esc(t('uc.' + u.k + '.p'))}</p>${act}${u.guide ? `<a class="more" style="display:block;margin-top:14px" href="${u.guide}" data-track="guide_open">${lang === 'zh' ? '阅读完整教程' : 'Read the full guide'} →</a>` : ''}</article>`;
   });
   $('ucGrid').innerHTML = cards.slice(0, UC_FEAT).join('');
   $('ucMore').innerHTML = cards.slice(UC_FEAT).join('');
