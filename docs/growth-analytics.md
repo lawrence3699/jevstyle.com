@@ -134,8 +134,11 @@ The existing control backend exposes owner-only
 once through a separate Search Console read-only/offline OAuth flow. Ordinary
 Google login remains `openid email profile`. No browser cookie or OAuth token is
 copied into the public site repository. Refresh tokens, verifiers and cached
-performance data are protected in the Windows service account's private DPAPI
-vault with a protected directory DACL. No new database or public storage is used.
+performance data use authenticated Fernet encryption with a dedicated random
+key in a separate private key directory. Both directories have protected Windows
+DACLs granting only the service account and SYSTEM. This supports the existing
+S4U background task without storing a Windows password. No new database or
+public storage is used.
 
 The backend checks due work on startup and every minute, calling Google only
 when connected and due (24 hours). It fetches the last 28 complete Pacific-time
