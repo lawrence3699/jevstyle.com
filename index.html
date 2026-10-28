@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
-<title>JevStyle: Local Classification and Routing for AI Agents</title>
+<title>Local Text Classification and AI Routing in Python | JevStyle</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.">
-<meta property="og:title" content="JevStyle: Local Classification and Routing for AI Agents">
-<meta property="og:description" content="Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.">
+<meta name="description" content="Classify text, route requests, and score fixed choices in Python. Run small open models on CPU, CUDA, or Apple silicon; keep an LLM or human fallback.">
+<meta property="og:title" content="Local Text Classification and AI Routing in Python | JevStyle">
+<meta property="og:description" content="Classify text, route requests, and score fixed choices in Python. Run small open models on CPU, CUDA, or Apple silicon; keep an LLM or human fallback.">
 <meta property="og:url" content="https://jevstyle.com/">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -937,6 +937,10 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 @media (prefers-reduced-motion:reduce){#hero[data-sx],#switcher[data-sx] .stage,.uc3-card .media{transform:none !important;opacity:1 !important}.scrub .sw{color:inherit}}
 
 .api-reference-note{color:var(--ink2);line-height:1.6;max-width:850px;margin:-12px 0 24px}.project-faq{max-width:850px;line-height:1.7;margin-top:28px}.project-faq h3{font-size:20px;margin:24px 0 8px}.project-faq p{color:var(--ink2);margin-bottom:14px}.project-faq a{text-decoration:underline;text-underline-offset:3px}
+
+.current-project-facts{margin-top:28px;padding:24px;border:1px solid var(--line);border-radius:14px;max-width:1050px;font-size:15px;line-height:1.65}.current-project-facts h3{font-size:20px;margin-bottom:12px}.current-project-facts p+p{margin-top:12px}.current-project-facts a{text-decoration:underline;text-underline-offset:3px}.current-project-facts .facts-date{font-size:12px;color:var(--ink2)}
+
+@media(max-width:1023px){.cta3.rv.pre,.cta3.rv.pre:last-child{transform:translateY(24px)}}
 </style>
 <link rel="alternate" hreflang="en" href="https://jevstyle.com/">
 <link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/">
@@ -948,11 +952,11 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/home-growth.css">
 <script src="/assets/journey.js" defer></script>
-<meta name="twitter:title" content="JevStyle: Local Classification and Routing for AI Agents">
-<meta name="twitter:description" content="Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.">
+<meta name="twitter:title" content="Local Text Classification and AI Routing in Python | JevStyle">
+<meta name="twitter:description" content="Classify text, route requests, and score fixed choices in Python. Run small open models on CPU, CUDA, or Apple silicon; keep an LLM or human fallback.">
 <meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
 <link rel="canonical" href="https://jevstyle.com/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/#webpage", "url": "https://jevstyle.com/", "name": "JevStyle: Local Classification and Routing for AI Agents", "description": "Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "Person", "@id": "https://jevstyle.com/about/#maintainer", "name": "Chaoliang Yan", "url": "https://jevstyle.com/about/", "sameAs": ["https://github.com/lawrence3699", "https://huggingface.co/chaoliangUNSW"]}, {"@type": "SoftwareSourceCode", "@id": "https://jevstyle.com/#software", "name": "JevStyle", "alternateName": "Jev-Style", "url": "https://jevstyle.com/", "description": "Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.", "codeRepository": "https://github.com/lawrence3699/jev-style", "license": "https://www.apache.org/licenses/LICENSE-2.0", "programmingLanguage": "Python", "author": {"@id": "https://jevstyle.com/about/#maintainer"}, "sameAs": ["https://github.com/lawrence3699/jev-style", "https://huggingface.co/chaoliangUNSW", "https://pypi.org/project/jev-style/"]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/#webpage", "url": "https://jevstyle.com/", "name": "Local Text Classification and AI Routing in Python | JevStyle", "description": "Classify text, route requests, and score fixed choices in Python. Run small open models on CPU, CUDA, or Apple silicon; keep an LLM or human fallback.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "Person", "@id": "https://jevstyle.com/about/#maintainer", "name": "Chaoliang Yan", "url": "https://jevstyle.com/about/", "sameAs": ["https://github.com/lawrence3699", "https://huggingface.co/chaoliangUNSW"]}, {"@type": "SoftwareSourceCode", "@id": "https://jevstyle.com/#software", "name": "JevStyle", "alternateName": "Jev-Style", "url": "https://jevstyle.com/", "description": "Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.", "codeRepository": "https://github.com/lawrence3699/jev-style", "license": "https://www.apache.org/licenses/LICENSE-2.0", "programmingLanguage": "Python", "version": "0.6.2", "author": {"@id": "https://jevstyle.com/about/#maintainer"}, "sameAs": ["https://github.com/lawrence3699/jev-style", "https://huggingface.co/chaoliangUNSW", "https://pypi.org/project/jev-style/"]}]}</script>
 </head>
 <body>
 
@@ -991,8 +995,8 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 
 <main id="top" class="wrap v3">
   <section class="h3" id="hero" aria-labelledby="heroTitle" data-sx="exit">
-    <h1 id="heroTitle">Local decisions for your AI agents</h1>
-    <p class="h3-sub" data-i18n="h3.sub">Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.</p>
+    <h1 id="heroTitle">Local classification and routing for AI agents</h1>
+    <p class="h3-sub" data-i18n="h3.sub">Classify text, route requests, and score fixed choices in Python. Run small open models on CPU, CUDA, or Apple silicon; keep an LLM or human fallback.</p>
     <div class="h3-acts">
       <a class="pill dark lg" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="h3.cta">Try the live demo</a>
       <a class="pill soft lg" href="#developers" data-track="quickstart_open" data-i18n="start.local">Run locally</a>
@@ -1015,6 +1019,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
     </ul>
   </section>
 
+<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">Start with the task you need to run locally</h2><p>Choose an approach for your inputs, labels, and hardware, then compare results on your own data.</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Local text classification in Python</b><span>Compare a traditional classifier with typed decision models, and keep a review path.</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>Local decision models on Apple silicon</b><span>Choose a method and backend for fixed choices and your available hardware.</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>Workflow routing with LLM fallback</b><span>Make the local routing decision before escalating uncertain requests.</span></a></div><div class="current-project-facts" id="current-facts"><h3>Current releases and service availability</h3><p>The Python package is <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>. <a href="/models/2b-v4/">2B v4 was released on 2026-10-27</a>: PyTorch supports text and images; MLX and GGUF builds are text-only. The default local text model is <a href="/models/0-8b-v3/">0.8B v3</a>.</p><p><strong>The hosted API is under maintenance and is currently unavailable.</strong> Local models and the Hugging Face demo are separate entry points; hosted-service availability does not determine whether a local model works.</p><p>Maintainer: <a href="/about/">Chaoliang Yan</a> (GitHub: lawrence3699). JevStyle is independent and is not affiliated with or endorsed by TypeSafe.</p><p>Training provenance: 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. The Python package does not bundle the raw teacher response datasets. See <a href="/models/2b-v4/#results">the model and training sources</a>.</p><p class="facts-date">Reviewed: <time datetime="2026-10-29">2026-10-29</time></p></div></section><!--/discovery:task-entrypoints-->
   <section id="try" aria-labelledby="tryH">
     <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">One request, every option scored</h2><p data-i18n="try.p">One support ticket, three questions, one call.</p></div>
     <div class="tabs ftabs" id="tyTabs" role="tablist" data-i18n-aria="ex.h"></div>
@@ -1579,13 +1584,13 @@ const I18N = {
   "om.p": "Apache-2.0 decision models on Hugging Face in Transformers, GGUF and MLX formats, plus a pip package that serves them on your own machine.",
   "dl.allrepos": "All {n} repositories",
   "ab.ch": "Get in touch",
-  "title3": "JevStyle: Local Classification and Routing for AI Agents",
+  "title3": "Local Text Classification and AI Routing in Python | JevStyle",
   "n3.api": "How it works",
   "n3.uc": "Use cases",
   "n3.models": "Open models",
   "n3.login": "Log in",
-  "h3.title": "Local decisions for your AI agents",
-  "h3.sub": "Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.",
+  "h3.title": "Local classification and routing for AI agents",
+  "h3.sub": "Classify text, route requests, and score fixed choices in Python. Run small open models on CPU, CUDA, or Apple silicon; keep an LLM or human fallback.",
   "h3.cta": "Try the live demo",
   "start.local": "Run locally",
   "start.demo": "Try demo",
@@ -2090,13 +2095,13 @@ const I18N = {
   "om.p": "Apache-2.0 许可的决策模型，在 Hugging Face 上提供 Transformers、GGUF 和 MLX 格式，另有 pip 包可以在你自己的机器上运行。",
   "dl.allrepos": "全部 {n} 个仓库",
   "ab.ch": "联系我",
-  "title3": "JevStyle：AI Agent 本地分类与路由模型",
+  "title3": "Python 本地文本分类与 AI 路由模型 | JevStyle",
   "n3.api": "工作原理",
   "n3.uc": "应用场景",
   "n3.models": "开源模型",
   "n3.login": "登录",
-  "h3.title": "让 AI Agent 在本地做出决策",
-  "h3.sub": "用小型开源模型完成分类、请求路由和评分。在本地运行，将不确定的情况交给大模型。",
+  "h3.title": "AI Agent 的本地分类与路由",
+  "h3.sub": "在 Python 中完成文本分类、请求路由和固定选项评分。小型开源模型支持 CPU、CUDA 与 Apple silicon，可保留大模型或人工回退。",
   "h3.cta": "直接体验 Demo",
   "start.local": "本地运行",
   "start.demo": "体验 Demo",

@@ -14,5 +14,10 @@
     "model": "Jev-Style Decision 2B v3",
     "dailyQuota": 10000,
     "inputTokenLimit": 8000
-  }
+  },
+  "packageVersion": "0.6.2",
+  "latest2bModel": "Jev-Style-2B-Decision-v4",
+  "latest2bReleased": "2026-10-27",
+  "defaultTextModel": "Jev-Style-0.8B-Decision-v3",
+  "trainingProvenance": "Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. This does not imply affiliation or endorsement."
 }

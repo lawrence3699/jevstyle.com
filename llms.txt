@@ -4,6 +4,9 @@
 
 Maintainer: Chaoliang Yan. Code and weights: Apache-2.0.
 Hosted API: under maintenance as of 2026-10-29. Local models and hosted demos are separate.
+Current Python package: 0.6.2. Local default: 0.8B v3; --release 2b selects 2B v4 (released 2026-10-27).
+2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.
+Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. This does not imply affiliation or endorsement.
 
 ## Official pages
 
@@ -11,7 +14,9 @@ Hosted API: under maintenance as of 2026-10-29. Local models and hosted demos ar
 - [JevStyle benchmarks: accuracy, latency and evaluation protocols | JevStyle](https://jevstyle.com/benchmarks/)
 - [Claude Code tool-call guard with a local model | JevStyle](https://jevstyle.com/guides/claude-code-guard/)
 - [Evaluate local decision models and choose a threshold | JevStyle](https://jevstyle.com/guides/decision-evaluation/)
-- [JevStyle: Local Classification and Routing for AI Agents](https://jevstyle.com/)
+- [Local decision models for classification and routing | JevStyle](https://jevstyle.com/guides/local-decision-models/)
+- [Local text classification in Python: baselines, decisions and review | JevStyle](https://jevstyle.com/guides/local-text-classification/)
+- [Local Text Classification and AI Routing in Python | JevStyle](https://jevstyle.com/)
 - [Jev-Style 0.8B v3: small local text decision model | JevStyle](https://jevstyle.com/models/0-8b-v3/)
 - [Jev-Style 2B v4: local text and image decisions | JevStyle](https://jevstyle.com/models/2b-v4/)
 - [Compare JevStyle models: 0.8B v3 vs 2B v4 | JevStyle](https://jevstyle.com/models/compare/)

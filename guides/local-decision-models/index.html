@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local decision models for classification and routing | JevStyle</title>
+<meta name="description" content="Choose a local classifier, embedding router, or decision model for fixed choices. Compare outputs, Apple silicon backends, setup, and evaluation needs.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Local decision models for classification and routing | JevStyle">
+<meta property="og:description" content="Choose a local classifier, embedding router, or decision model for fixed choices. Compare outputs, Apple silicon backends, setup, and evaluation needs.">
+<meta property="og:url" content="https://jevstyle.com/guides/local-decision-models/">
+<meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
+<meta property="og:image:alt" content="JevStyle — open local decision models">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Local decision models for classification and routing | JevStyle">
+<meta name="twitter:description" content="Choose a local classifier, embedding router, or decision model for fixed choices. Compare outputs, Apple silicon backends, setup, and evaluation needs.">
+<meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
+<link rel="stylesheet" href="/assets/growth.css">
+<script src="/assets/journey.js" defer></script>
+<link rel="canonical" href="https://jevstyle.com/guides/local-decision-models/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/guides/local-decision-models/#webpage", "url": "https://jevstyle.com/guides/local-decision-models/", "name": "Local decision models for classification and routing | JevStyle", "description": "Choose a local classifier, embedding router, or decision model for fixed choices. Compare outputs, Apple silicon backends, setup, and evaluation needs.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Local decision models for classification and routing", "item": "https://jevstyle.com/guides/local-decision-models/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-wrap">
+<a class="brand" href="/" aria-label="JevStyle home"><svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="9" cy="11" r="6" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="11" r="2" fill="currentColor"/><path d="M15 11h6" stroke="currentColor" stroke-width="2"/></svg>JevStyle</a>
+<nav aria-label="Main navigation"><a href="/models/compare/">Models</a><a href="/use-cases/local-llm-routing/">Use cases</a><a href="/guides/decision-evaluation/">Evaluation</a><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub ↗</a></nav>
+</div></header>
+<main id="main" class="page">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Guides</span><span aria-hidden="true">/</span><span aria-current="page">Local decision models</span></nav>
+<div class="eyebrow">Guides / Local decisions</div>
+<h1>Choose a local decision model for classification and routing</h1>
+<p class="lead">Start with the output you need: a label, a similarity score, probabilities over fixed options, or generated text. That choice matters more than the model's parameter count.</p>
+<div class="actions"><a class="button" href="#approaches">Compare approaches</a><a class="button secondary" href="#quickstart" data-track="quickstart_open">Run on your machine</a></div>
+<p class="hero-note">Source review: <time datetime="2026-10-29">29 October 2026</time> · Commands follow jev-style 0.6.2 · No cross-tool speed ranking is claimed</p>
+
+<div class="layout"><article class="article">
+<section id="starting-point" aria-labelledby="starting-point-heading">
+<h2 id="starting-point-heading">Match the method to the decision</h2>
+<p>If you have representative labeled text and stable categories, build a supervised classifier as a baseline. If routes are described by example utterances, evaluate an embedding router. If the decision depends on instructions and a fixed set of options, evaluate a typed decision model such as JevStyle. If you also need a written answer or flexible extraction, keep a local generative model in the comparison.</p>
+<p>These are alternatives to test, not a universal ordering. A model that succeeds on a public benchmark can still fail on your languages, labels, documents, or unusual inputs. Keep the input set fixed when comparing methods.</p>
+</section>
+
+<section id="approaches" aria-labelledby="approaches-heading">
+<h2 id="approaches-heading">Four ways to make local decisions</h2>
+<div class="table-wrap"><table>
+<caption>Compare the decision interface before choosing a runtime.</caption>
+<thead><tr><th scope="col">Approach</th><th scope="col">You provide</th><th scope="col">You receive</th><th scope="col">Useful starting condition</th><th scope="col">Check before adopting</th></tr></thead>
+<tbody>
+<tr><th scope="row">Supervised text classifier</th><td>Labeled examples; text features such as TF–IDF</td><td>A class prediction; some estimators also expose scores or probabilities</td><td>Stable labels and enough representative training data</td><td>Class imbalance, vocabulary/domain shift, and probability calibration</td></tr>
+<tr><th scope="row">Embedding router</th><td>A local encoder and route examples</td><td>Similarity scores and a proposed route</td><td>Routes can be represented by example utterances</td><td>Similarity is not automatically a probability; test ambiguous and out-of-scope requests</td></tr>
+<tr><th scope="row">Typed decision model</th><td>Text or JSON, instructions, and predefined options</td><td>Probabilities for yes/no, choices, or ordered score levels</td><td>The application needs a bounded decision rather than a generated answer</td><td>Task-specific accuracy, calibration, option wording, and fallback coverage</td></tr>
+<tr><th scope="row">Generative LLM with structured output</th><td>A prompt and an output schema or grammar</td><td>Generated text or a structured object</td><td>You need extraction, explanations, or a response as well as a label</td><td>Schema compliance is not semantic correctness; validate fields and measure the full request path</td></tr>
+</tbody></table></div>
+<p>The <a href="https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction">scikit-learn text feature guide</a> describes bag-of-words and TF–IDF representations. <a href="https://github.com/aurelio-labs/semantic-router#quickstart">Semantic Router's local quickstart</a> demonstrates routes built from utterances and a local embedding model. These offer useful baselines alongside instruction-driven decision models.</p>
+<p>For generated output, <a href="https://github.com/ggml-org/llama.cpp/blob/master/grammars/README.md">llama.cpp's grammar documentation</a> explains output constraints. A valid JSON object still needs application-level checks: a syntactically valid <code>{"team":"billing"}</code> can select the wrong team.</p>
+</section>
+
+<section id="fixed-options" aria-labelledby="fixed-options-heading">
+<h2 id="fixed-options-heading">When fixed-option scoring is a useful fit</h2>
+<p>Consider a service request: “I was charged twice.” A classifier might assign <code>billing</code>; an embedding router might match a billing example; a typed decision model can score your defined destinations and a separate refund question. A generative model can also propose a label, but generating a paragraph is unnecessary if the next component only accepts a route.</p>
+<p>JevStyle is one open-source implementation of the typed-decision approach. Its local API returns probabilities over supplied options; your application decides whether to accept the result or send it for review. It does not execute a selected action. Multiple questions may share one input state, for example team, refund intent, and urgency.</p>
+<p>Use the <a href="/guides/local-text-classification/">local text classification tutorial</a> for a Python implementation, the <a href="/use-cases/local-llm-routing/">routing guide</a> for a fallback workflow, or the <a href="/guides/claude-code-guard/">Claude Code guard guide</a> for an additional tool-call review signal. A probabilistic guard is not a sandbox or authorization system.</p>
+</section>
+
+<section id="apple-silicon" aria-labelledby="apple-silicon-heading">
+<h2 id="apple-silicon-heading">Running local decisions on Apple silicon</h2>
+<p>A runtime and a model are different choices. <a href="https://github.com/ml-explore/mlx-lm">MLX LM</a> provides local language-model generation and fine-tuning on Apple silicon. <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> supports local inference across hardware, including Apple silicon. JevStyle supplies matching decision runtimes for its own models; its probability outputs do not come from a generic text-generation command.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Input and machine</th><th scope="col">JevStyle starting point</th><th scope="col">Important boundary</th></tr></thead>
+<tbody>
+<tr><th scope="row">Text on Apple silicon</th><td>0.8B v3 or 2B v4 with MLX</td><td>Both MLX builds are text-only. Evaluate quality and memory on the actual input lengths.</td></tr>
+<tr><th scope="row">Images on an Apple silicon Mac or CUDA machine</th><td>2B v4 with PyTorch</td><td>Explicitly select PyTorch on a Mac; automatic backend selection otherwise favors MLX for text.</td></tr>
+<tr><th scope="row">CPU-only text</th><td>PyTorch with <code>--device cpu</code></td><td>GPU benchmark latency does not predict CPU latency.</td></tr>
+<tr><th scope="row">GGUF decision weights</th><td>The matching JevStyle scorer</td><td><code>jev-score</code> for 0.8B v3; <code>jev-score-v2</code> for 2B v3/v4. Follow the release-specific build instructions.</td></tr>
+</tbody></table></div>
+<p>The <a href="/models/compare/">model comparison</a> separates download sizes from runtime memory and lists the input limits for each release. Weight files are only part of the memory budget; framework state, context, and image processing also need space.</p>
+</section>
+
+<section id="quickstart" aria-labelledby="quickstart-heading">
+<h2 id="quickstart-heading">Start a local server and score a choice</h2>
+<p>Use Python 3.10 or newer in a virtual environment. Choose one setup below for the same local API. The first start downloads model files; later requests can use the downloaded assets without the hosted JevStyle service.</p>
+<div class="code-label"><span>Apple silicon · text</span></div>
+<pre><code class="language-bash">python -m pip install "jev-style[mlx]"
+jev-style serve --release 0.8b --backend mlx</code></pre>
+<div class="code-label"><span>PyTorch · 2B v4 text and images</span></div>
+<pre><code class="language-bash">python -m pip install "jev-style[torch]"
+jev-style serve --release 2b --backend torch</code></pre>
+<div class="code-label"><span>CPU-only · text baseline</span></div>
+<pre><code class="language-bash">python -m pip install "jev-style[torch]"
+jev-style serve --release 0.8b --backend torch --device cpu</code></pre>
+<p>Leave the server running. In a second terminal with the same environment:</p>
+<div class="code-label"><span>One decision through the local endpoint</span></div>
+<pre><code class="language-bash">jev-style decide "I was charged twice" \
+  --url http://127.0.0.1:8765 \
+  --choice "Which team should handle this request?::billing,shipping,account"</code></pre>
+<p>The command prints the actual model result; this page does not promise a particular prediction. Open <a href="http://127.0.0.1:8765">the local Playground</a> to inspect options and scores. For GGUF, use the package's <a href="https://github.com/lawrence3699/jev-style#backends">matching scorer instructions</a> instead of substituting a generic chat runner.</p>
+</section>
+
+<section id="evaluation" aria-labelledby="evaluation-heading">
+<h2 id="evaluation-heading">Make the comparison on your workload</h2>
+<ol>
+<li>Define the correct decision and collect representative examples, including ambiguous, rare, and out-of-scope inputs.</li>
+<li>Fix a final test set before tuning prompts, route descriptions, or thresholds. Record model revision, backend, precision, and hardware.</li>
+<li>Compare errors per class, calibration, accepted-request coverage, and end-to-end latency. Include serialization, queueing, and fallback requests if they are part of production.</li>
+<li>Send low-confidence outputs and runtime failures to a person or existing LLM. Test how that fallback behaves before automating downstream actions.</li>
+</ol>
+<p>A threshold such as 0.90 is not a general safety rule. An embedding similarity, a model's option probability, and a transformed confidence field are different quantities. Choose the threshold using the actual score exposed by the method you deploy.</p>
+<p>Follow the <a href="/guides/decision-evaluation/">evaluation and threshold guide</a>. The <a href="/benchmarks/">published JevStyle benchmark page</a> records existing self-runs and their limitations; it is not a head-to-head test of the four approaches on this page.</p>
+</section>
+
+<section id="questions" aria-labelledby="questions-heading">
+<h2 id="questions-heading">Common selection questions</h2>
+<h3>Do I need a generative LLM to return a label?</h3>
+<p>No. A supervised classifier, embedding router, or typed decision model may fit that step. A generative model remains useful when the task also needs an explanation, extraction, or open-ended response. Compare against a simple baseline before replacing an existing system.</p>
+<h3>Can I score options locally without sending private inputs to a hosted API?</h3>
+<p>Yes, if the model, encoder, and inference path run locally. Download the required dependencies and model assets first, and check the configuration of every component in the workflow. JevStyle's hosted API and Hugging Face demos are separate remote services.</p>
+<h3>Are embedding scores and decision-model probabilities interchangeable?</h3>
+<p>No. Similarity measures match in an embedding space; option probabilities belong to a particular model, input, and choice set. Neither guarantees correctness on a new domain. Calibrate and validate the acceptance rule for the score you actually use.</p>
+<h3>Can stock Ollama or MLX generation commands return JevStyle decision scores?</h3>
+<p>Use those tools for compatible generative models. JevStyle's current decision releases require their matching decision runtime to expose option probabilities. Use the package's MLX, PyTorch, or GGUF setup rather than treating decision weights as an ordinary chat model.</p>
+<h3>Is the largest model always the right choice?</h3>
+<p>No. Accuracy, memory, warm and cold latency, and fallback frequency depend on the workload and backend. Compare them on the same held-out inputs. A model's download size or public benchmark result alone does not settle that choice.</p>
+</section>
+
+<section class="related" aria-labelledby="next-heading">
+<h2 id="next-heading">Build the next step</h2>
+<div class="related-links">
+<a href="/guides/local-text-classification/">Classify text in Python<span>Choose a baseline and build a local decision step.</span></a>
+<a href="/use-cases/local-llm-routing/">Route with a fallback<span>Keep uncertain requests in a review path.</span></a>
+<a href="/models/compare/">Compare JevStyle releases<span>Inputs, backends, limits, and weight sizes.</span></a>
+<a href="/guides/decision-evaluation/">Evaluate before automating<span>Measure accuracy, calibration, and coverage.</span></a>
+</div>
+</section>
+</article>
+<aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#starting-point">Choose the decision interface</a><a href="#approaches">Compare four approaches</a><a href="#fixed-options">Score fixed options</a><a href="#apple-silicon">Apple silicon and backends</a><a href="#quickstart">Run a local server</a><a href="#evaluation">Evaluate on your data</a><a href="#questions">Common questions</a></aside>
+</div>
+</main>
+<!--discovery:resource-links--><nav class="project-resource-nav" aria-label="Project resources"><a href="/guides/local-text-classification/">Local text classification</a> · <a href="/guides/local-decision-models/">Decision models</a> · <a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav><!--/discovery:resource-links-->
+<footer class="site-footer"><div class="footer-wrap"><span>JevStyle · Open local decision models</span><div><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub</a><a href="https://huggingface.co/chaoliangUNSW/" data-track="model_open">Hugging Face</a><a href="/about/">About</a><a href="/">Home</a></div></div></footer>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{&quot;token&quot;: &quot;7a7432d7d2fe40b4b52e41e711938ac0&quot;}'></script>
+</body></html>
