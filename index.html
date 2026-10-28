@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="canonical" href="https://jevstyle.com/">
-<title>JevStyle: Open Decision Models and API</title>
+<title>JevStyle: Local Classification and Routing for AI Agents</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Open-weight decision models: Jev-Style 2B v4 reads text and images and gives a calibrated probability for every option in one pass. Run them with the jev-style package or call the API.">
-<meta property="og:title" content="JevStyle: Open Decision Models and API">
-<meta property="og:description" content="Open-weight decision models: Jev-Style 2B v4 reads text and images and gives a calibrated probability for every option in one pass. Run them with the jev-style package or call the API.">
+<meta name="description" content="Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.">
+<meta property="og:title" content="JevStyle: Local Classification and Routing for AI Agents">
+<meta property="og:description" content="Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.">
 <meta property="og:url" content="https://jevstyle.com/">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -937,106 +937,118 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 .mcard .media{transition:transform 1s var(--out)}
 @media (prefers-reduced-motion:reduce){#hero[data-sx],#switcher[data-sx] .stage,.uc3-card .media{transform:none !important;opacity:1 !important}.scrub .sw{color:inherit}}
 </style>
+<link rel="alternate" hreflang="en" href="https://jevstyle.com/">
+<link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/">
+<link rel="alternate" hreflang="x-default" href="https://jevstyle.com/">
+<meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JevStyle: local classification and routing for AI agents">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/home-growth.css">
+<script src="/assets/journey.js" defer></script>
 </head>
 <body>
 
 
-<div class="maint" role="status"><span data-i18n="mt.note"></span></div>
+<div class="maint" role="status"><span data-i18n="mt.note">The hosted API is temporarily down for maintenance, so API calls will fail for now. The open models are still available on Hugging Face.</span></div>
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn"></span></a>
+    <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn">JevStyle</span></a>
     <nav class="nav" aria-label="Primary">
-      <a href="#try" data-i18n="n3.api"></a>
-      <a href="#use-cases" data-i18n="n3.uc"></a>
-      <a href="#open-models" data-i18n="n3.models"></a>
-      <a href="/api/" data-i18n="nav.docs"></a>
-      <a href="/console/" data-i18n="nav.console"></a>
+      <a href="#try" data-i18n="n3.api">How it works</a>
+      <a href="#use-cases" data-i18n="n3.uc">Use cases</a>
+      <a href="#open-models" data-i18n="n3.models">Open models</a>
+      <a href="/api/" data-i18n="nav.docs">Docs</a>
+      <a href="/console/" data-i18n="nav.console">Console</a>
     </nav>
     <button type="button" class="icon-btn" id="searchBtn" data-i18n-aria="search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.6 3.6" stroke-linecap="round"/></svg></button>
     <span class="sp"></span>
-    <button type="button" class="pill soft" id="langBtn"></button>
-    <a class="pill soft hdr-login" href="/login/" data-i18n="n3.login"></a>
-    <a class="pill dark" href="/register/" data-i18n="nav.getkey"></a>
+    <button type="button" class="pill soft" id="langBtn">中文</button>
+    <a class="pill soft hdr-login" href="/login/" data-i18n="n3.login">Log in</a>
+    <a class="pill dark" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=header" data-track="demo_open" data-i18n="start.demo">Try demo</a>
     <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mnav" data-i18n-aria="menu"></button>
   </div>
 </header>
 <div class="mnav" id="mnav" hidden>
   <nav aria-label="Mobile">
-    <a href="#try" data-i18n="n3.api" style="--i:0"></a>
-    <a href="#use-cases" data-i18n="n3.uc" style="--i:1"></a>
-    <a href="#open-models" data-i18n="n3.models" style="--i:2"></a>
-    <a href="#developers" data-i18n="nav.dev" style="--i:3"></a>
-    <a href="/api/" data-i18n="nav.docs" style="--i:4"></a>
-    <a href="/console/" data-i18n="nav.console" style="--i:5"></a>
-    <a href="#about" data-i18n="nav.about" style="--i:6"></a>
+    <a href="#try" data-i18n="n3.api" style="--i:0">How it works</a>
+    <a href="#use-cases" data-i18n="n3.uc" style="--i:1">Use cases</a>
+    <a href="#open-models" data-i18n="n3.models" style="--i:2">Open models</a>
+    <a href="#developers" data-i18n="nav.dev" style="--i:3">Quickstart</a>
+    <a href="/api/" data-i18n="nav.docs" style="--i:4">Docs</a>
+    <a href="/console/" data-i18n="nav.console" style="--i:5">Console</a>
+    <a href="#about" data-i18n="nav.about" style="--i:6">About</a>
   </nav>
-  <div class="mnav-acts"><a class="pill dark" href="/register/" data-i18n="nav.getkey"></a><a class="pill soft" href="/login/" data-i18n="n3.login"></a><a class="pill soft hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a></div>
+  <div class="mnav-acts"><a class="pill dark" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=header" data-track="demo_open" data-i18n="start.demo">Try demo</a><a class="pill soft" href="/login/" data-i18n="n3.login">Log in</a><a class="pill soft hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft dc" href="https://discord.gg/udfvMu2GM" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a></div>
 </div>
 
 <main id="top" class="wrap v3">
   <section class="h3" id="hero" aria-labelledby="heroTitle" data-sx="exit">
-    <h1 id="heroTitle"></h1>
-    <p class="h3-sub" data-i18n="h3.sub"></p>
+    <h1 id="heroTitle">Local decisions for your AI agents</h1>
+    <p class="h3-sub" data-i18n="h3.sub">Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.</p>
     <div class="h3-acts">
-      <a class="pill dark lg" href="/register/" data-i18n="h3.cta"></a>
+      <a class="pill dark lg" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="h3.cta">Try the live demo</a>
+      <a class="pill soft lg" href="#developers" data-track="quickstart_open" data-i18n="start.local">Run locally</a>
       <div class="dd" id="docsDd">
-        <button type="button" class="pill soft lg" id="docsBtn" aria-expanded="false" aria-controls="docsMenu"><span data-i18n="nav.docs"></span><svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button>
+        <button type="button" class="pill soft lg" id="docsBtn" aria-expanded="false" aria-controls="docsMenu"><span data-i18n="nav.docs">Docs</span><svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button>
         <div class="dd-menu" id="docsMenu" hidden>
-          <a href="/api/"><b data-i18n="dd.qs"></b><span data-i18n="dd.qs.d"></span></a>
-          <a href="/console/#playground"><b data-i18n="nav.play"></b><span data-i18n="dd.pg.d"></span></a>
-          <a href="/api/limits.html"><b data-i18n="dd.lim"></b><span data-i18n="dd.lim.d"></span></a>
+          <a href="/api/"><b data-i18n="dd.qs">Quickstart</b><span data-i18n="dd.qs.d">Your first request in a few minutes</span></a>
+          <a href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b"><b data-i18n="nav.play">Playground</b><span data-i18n="dd.pg.d">Try requests in the browser</span></a>
+          <a href="/api/limits.html"><b data-i18n="dd.lim">Limits</b><span data-i18n="dd.lim.d">Rate limits, quotas and retries</span></a>
         </div>
       </div>
     </div>
     <p class="h3-status"><span class="api-status" hidden><i aria-hidden="true"></i><span></span></span></p>
     <div class="tick" id="tick" aria-hidden="true"></div>
     <ul class="proof" data-i18n-aria="pr.label">
-      <li><a class="hf" href="#" target="_blank" rel="noopener"><b>Hugging Face</b><span class="num" id="proofDl"></span></a></li>
-      <li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener"><b>PyPI</b><span data-i18n="pr.pypi"></span></a></li>
-      <li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener"><b>GitHub</b><span data-i18n="pr.gh"></span></a></li>
-      <li><span><b>Apache-2.0</b><span data-i18n="pr.weights"></span></span></li>
+      <li><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener"><b>Hugging Face</b><span class="num" id="proofDl"><!--prerender:proofDl-->Open models on Hugging Face<!--/prerender:proofDl--></span></a></li>
+      <li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener"><b>PyPI</b><span data-i18n="pr.pypi">jev-style package</span></a></li>
+      <li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener"><b>GitHub</b><span data-i18n="pr.gh">Source code</span></a></li>
+      <li><span><b>Apache-2.0</b><span data-i18n="pr.weights">Open weights</span></span></li>
     </ul>
   </section>
 
   <section id="try" aria-labelledby="tryH">
-    <div class="s3-head"><h2 id="tryH" data-i18n="ex.h"></h2><p data-i18n="try.p"></p></div>
+    <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">One request, every option scored</h2><p data-i18n="try.p">One support ticket, three questions, one call.</p></div>
     <div class="tabs ftabs" id="tyTabs" role="tablist" data-i18n-aria="ex.h"></div>
-    <div class="feat" id="tyPanel" role="tabpanel"></div>
-    <p class="feat-meta"><span data-i18n="ty.state"></span>: <q>Hi, I was billed twice for my March plan. Please refund one of them today.</q></p>
+    <div class="feat" id="tyPanel" role="tabpanel"><!--prerender:tyPanel--><div class="static-example"><h3>A probability for each option</h3><p>“I was billed twice. Please refund one charge.”</p><pre>{"refund": {"type": "noul", "instructions": "The customer asks for money back."}}</pre><p>Illustrative output: refund probability 0.967. Results depend on the model and input.</p></div><!--/prerender:tyPanel--></div>
+    <p class="feat-meta"><span data-i18n="ty.state">One state for all three questions</span>: <q>Hi, I was billed twice for my March plan. Please refund one of them today.</q></p>
   </section>
 
   <section id="api-code" aria-labelledby="codeH">
-    <div class="s3-head"><h2 id="codeH" data-i18n="code.h"></h2></div>
+    <div class="s3-head"><h2 id="codeH" data-i18n="code.h">Hosted API reference</h2></div>
     <dl class="kstats" id="kStats">
-      <div><dt data-i18n="k3.free"></dt><dd data-v="10,000">10,000</dd></div>
-      <div><dt data-i18n="k3.lat"></dt><dd data-v="0.04 s">0.04 s</dd></div>
-      <div><dt data-i18n="k3.tok"></dt><dd data-v="8,000">8,000</dd></div>
-      <div><dt data-i18n="k3.out"></dt><dd data-i18n="k3.out.v"></dd></div>
+      <div><dt data-i18n="k3.free">free requests a day</dt><dd data-v="10,000">10,000</dd></div>
+      <div><dt data-i18n="k3.lat">GPU time, short request</dt><dd data-v="0.04 s">0.04 s</dd></div>
+      <div><dt data-i18n="k3.tok">input tokens per request</dt><dd data-v="8,000">8,000</dd></div>
+      <div><dt data-i18n="k3.out">for every option, nothing to parse</dt><dd data-i18n="k3.out.v">Probabilities</dd></div>
     </dl>
     <div class="ac-main">
       <div class="tabs" id="apTabs" role="tablist" data-i18n-aria="code.h"></div>
-      <div class="code" id="apPanel" role="tabpanel"><div class="code-head"><span id="apFile"></span><span class="run" id="apRun" hidden></span><button type="button" class="cbtn" id="apCopy" data-i18n="copy"></button></div><pre class="wrapc" id="apCode"></pre></div>
+      <div class="code" id="apPanel" role="tabpanel"><div class="code-head"><span id="apFile"></span><span class="run" id="apRun" hidden></span><button type="button" class="cbtn" id="apCopy" data-i18n="copy">Copy</button></div><pre class="wrapc" id="apCode"></pre></div>
     </div>
-    <div class="trust"><ul class="chk"><li data-i18n="tr.1"></li><li data-i18n="tr.2"></li><li data-i18n="tr.3"></li></ul><a class="more" href="/api/endpoints.html"><span data-i18n="code.ref"></span> <span class="ar" aria-hidden="true">&rarr;</span></a></div>
+    <div class="trust"><ul class="chk"><li data-i18n="tr.1">Request text isn&#x27;t stored</li><li data-i18n="tr.2">Failed requests don&#x27;t count</li><li data-i18n="tr.3">2 GPU replicas</li></ul><a class="more" href="/api/endpoints.html"><span data-i18n="code.ref">Full API reference</span> <span class="ar" aria-hidden="true">&rarr;</span></a></div>
   </section>
 
   <section id="use-cases" aria-labelledby="ucH">
     <span id="demos" class="sr-only"></span>
-    <div class="s3-head"><h2 id="ucH" data-i18n="uc.h"></h2></div>
-    <div class="uc3 uc3-feat" id="ucGrid"></div>
-    <div class="dmore-row" id="ucMoreRow"><button type="button" class="pill soft dmore" id="ucMoreBtn" aria-expanded="false" aria-controls="ucMoreBody"><span data-i18n="uc.more"></span><span class="dmn">(<span id="ucMoreN"></span>)</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button></div>
+    <div class="s3-head"><h2 id="ucH" data-i18n="uc.h">Use cases</h2></div>
+    <div class="uc3 uc3-feat" id="ucGrid"><!--prerender:ucGrid--><article class="uc3-card static-model"><h3><a href="/use-cases/support-ticket-classification/">Support ticket classification</a></h3><p>Classify the team, refund request, and urgency in one call.</p></article><article class="uc3-card static-model"><h3><a href="/guides/claude-code-guard/">Agent tool-call review</a></h3><p>Use a local model and explicit rules to allow, ask, or deny.</p></article><!--/prerender:ucGrid--></div>
+    <div class="dmore-row" id="ucMoreRow"><button type="button" class="pill soft dmore" id="ucMoreBtn" aria-expanded="false" aria-controls="ucMoreBody"><span data-i18n="uc.more">More use cases</span><span class="dmn">(<span id="ucMoreN"></span>)</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button></div>
     <div class="dmore-body" id="ucMoreBody" hidden><div class="uc3" id="ucMore"></div></div>
   </section>
 
   <div class="half" id="modelsHalf">
     <section id="open-models" class="half-head hh-m om-big" aria-labelledby="omH" data-sx="enter">
       <div>
-        <p class="half-k m"><i aria-hidden="true"></i><span data-i18n="om.k"></span></p>
-        <h2 id="omH" data-i18n="om3.h"></h2>
+        <p class="half-k m"><i aria-hidden="true"></i><span data-i18n="om.k">Open models</span></p>
+        <h2 id="omH" data-i18n="om3.h">Or run it yourself</h2>
         <dl class="om-stats" id="omStats"></dl>
-        <div class="hh-acts"><a class="pill dark lg hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft lg" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft lg" href="#developers" data-i18n="chip.qs"></a></div>
+        <div class="hh-acts"><a class="pill dark lg hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft lg" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft lg" href="#developers" data-i18n="chip.qs">Quickstart</a></div>
       </div>
-    </section>
+    <p class="stats-note">HF download counts are file-request counts, not unique users. <a href="https://huggingface.co/docs/hub/models-download-stats">How downloads are counted</a>.</p>
+</section>
 
     <section id="switcher" data-i18n-aria="sec.models" data-sx="enter">
       <div class="tabs mtabs" id="mTabs" role="tablist" data-i18n-aria="sec.models" hidden></div>
@@ -1051,7 +1063,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
           <div>
             <h3 class="st-name" id="stName"></h3>
             <p class="st-one" id="stOne"></p>
-            <div class="st-acts"><button type="button" class="pill dark" id="stOpen" data-open="v3-2b"><span data-i18n="details"></span> <span class="ar" aria-hidden="true">→</span></button><a class="pill soft" id="stHF" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a></div>
+            <div class="st-acts"><button type="button" class="pill dark" id="stOpen" data-open="v3-2b"><span data-i18n="details">Details</span> <span class="ar" aria-hidden="true">→</span></button><a class="pill soft" id="stHF" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a></div>
           </div>
           <dl class="specs" id="stSpecs"></dl>
         </div>
@@ -1059,61 +1071,75 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
     </section>
 
     <section id="models">
-      <div class="sec-head"><h2 data-i18n="sec.models"></h2><div class="filters" id="mFilters"></div></div>
-      <div class="mgrid" id="mGrid"></div>
+      <div class="sec-head"><h2 data-i18n="sec.models">Models</h2><div class="filters" id="mFilters"></div></div>
+      <div class="mgrid" id="mGrid"><!--prerender:mGrid--><article class="mcard static-model"><h3><a href="/models/2b-v4/">Jev-Style-2B-Decision-v4</a></h3><p>Decisions about text and images at 2B. Every option scored in one pass.</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4">Transformers BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4-GGUF">GGUF F16 / Q8_0 / Q4_K_M</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4-MLX">MLX BF16 / 8-bit</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3">Jev-Style-2B-Decision-v3</a></h3><p>Long-input decisions at 2B. Every option scored in one pass.</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3">Transformers BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3-GGUF">GGUF F16 / Q8_0 / Q4_K_M</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3-MLX">MLX BF16 / 8-bit</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Cascade-9B">Jev-Style-Cascade-9B</a></h3><p>Our 2B answers first; questions it is unsure of go to JevK5-9B by alibiserikbay.</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Cascade-9B">Cascade config (no weights)</a></p></article><article class="mcard static-model"><h3><a href="/models/0-8b-v3/">Jev-Style-0.8B-Decision-v3</a></h3><p>Long-input, multilingual decisions in 0.8B.</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3">Transformers BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF">GGUF F16 / Q8_0 / Q4_K_M</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX">MLX BF16 / 8-bit</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2">Jev-Style-Qwen3.5-2B-Decision v2</a></h3><p>Calibrated English classification.</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2">HF BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF">GGUF Q4_K_M / Q8_0 / BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16">MLX BF16</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya">MacJev-322M-4K-Laya</a></h3><p>Decisions for local Mac agents.</p><p><a href="https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya">PyTorch FP32</a> · <a href="https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya-MLX">MLX FP32</a> · <a href="https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya-GGUF">GGUF F16</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF">Jev-Style-Qwen3.5-2B-Decision v1</a></h3><p>First release. Superseded by v3 (0.8B) and v4 (2B).</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF">GGUF Q4_K_M / Q8_0 / BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16">MLX BF16</a></p></article><!--/prerender:mGrid--></div>
       <details class="repos" id="downloads">
         <summary><span id="repoSum"></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></summary>
         <span id="releases" class="sr-only"></span>
         <div class="dl-list" id="dlList"></div>
-        <p class="dl-note" data-i18n="dl.note"></p>
+        <p class="dl-note" data-i18n="dl.note">Pulled from the Hugging Face API every 3 hours, and live when your browser can reach Hugging Face. Hugging Face itself can lag by up to a day.</p>
       </details>
     </section>
 
     <section id="benchmarks" class="car">
-      <div class="sec-head"><h2 data-i18n="sec.bench"></h2></div>
-      <div class="car-track bench3" id="carTrack"></div>
+      <div class="sec-head"><h2 data-i18n="sec.bench">Benchmarks</h2></div>
+      <div class="car-track bench3" id="carTrack"><!--prerender:carTrack--><div class="static-bench"><p>Jev-Style 2B v4: JevBench v1.4.1 public accuracy 74.9%; Decision Index 0.3 public score 44.37.</p><p>Single self-runs, not official board ranks. Hardware, test protocols, confidence intervals, and limitations: <a href="/models/2b-v4/">read the model guide</a>.</p></div><!--/prerender:carTrack--></div>
     </section>
 
     <section id="developers">
-      <div class="sec-head"><h2 data-i18n="sec.dev"></h2><a class="more" id="qsRepo" href="#" target="_blank" rel="noopener"><span data-i18n="dev.repo"></span> <span class="ne" aria-hidden="true">↗</span></a></div>
+      <div class="sec-head"><h2 data-i18n="sec.dev">Quickstart</h2><a class="more" id="qsRepo" href="https://github.com/lawrence3699/jev-style#quick-start" target="_blank" rel="noopener"><span data-i18n="dev.repo">Open repository</span> <span class="ne" aria-hidden="true">↗</span></a></div>
       <div class="dev-body">
         <div class="tabs" id="qsTabs" role="tablist" data-i18n-aria="sec.dev"></div>
         <div class="code" id="qsPanel" role="tabpanel">
-          <div class="code-head"><span id="qsFile"></span><button type="button" class="cbtn" id="copyBtn" data-i18n="copy"></button></div>
-          <pre id="qsCode"></pre>
+          <div class="code-head"><span id="qsFile"></span><button type="button" class="cbtn" id="copyBtn" data-i18n="copy">Copy</button></div>
+          <pre id="qsCode"><!--prerender:qsCode--># Python 3.10+; run inside a virtual environment.
+python -m pip install &quot;jev-style[torch]&quot;
+jev-style serve --release 2b --backend torch
+# Open http://127.0.0.1:8765
+# For Apple silicon text-only: install &quot;jev-style[mlx]&quot; and use --backend mlx.<!--/prerender:qsCode--></pre>
         </div>
       </div>
     </section>
 
   </div>
 
+  <section id="build-guides" class="growth-guides" aria-labelledby="guidesH">
+    <div class="s3-head"><h2 id="guidesH" data-i18n="learn.h">Build with JevStyle</h2><p data-i18n="learn.p">Complete guides, runnable examples, and model choices for your project.</p></div>
+    <div class="guide-grid">
+      <a href="/use-cases/local-llm-routing/" data-track="guide_open"><b data-i18n="guide.0.h">Local LLM routing</b><span data-i18n="guide.0.p">Choose a route locally; send uncertain decisions to your LLM.</span></a>
+      <a href="/use-cases/support-ticket-classification/" data-track="guide_open"><b data-i18n="guide.1.h">Support ticket classification</b><span data-i18n="guide.1.p">Team, refund request, and urgency in one call.</span></a>
+      <a href="/guides/claude-code-guard/" data-track="guide_open"><b data-i18n="guide.2.h">Claude Code guard</b><span data-i18n="guide.2.p">Inspect tool calls with a local model and explicit rules.</span></a>
+      <a href="/guides/decision-evaluation/" data-track="guide_open"><b data-i18n="guide.3.h">Evaluate your own data</b><span data-i18n="guide.3.p">Measure accuracy, calibration, coverage, and latency.</span></a>
+    </div>
+  </section>
+
   <section class="duo3" id="start" aria-label="Get started" data-i18n-aria="res.h">
     <article class="cta3">
-      <h2 data-i18n="fc.api.h"></h2>
-      <ul class="chk"><li data-i18n="fc.api.1"></li><li data-i18n="fc.api.2"></li></ul>
-      <div class="acts"><a class="pill dark" href="/register/" data-i18n="h3.cta"></a><a class="pill soft" href="/api/" data-i18n="duo.api.docs"></a></div>
+      <h2 data-i18n="fc.api.h">Try it in your browser</h2>
+      <ul class="chk"><li data-i18n="fc.api.1">No installation or API key</li><li data-i18n="fc.api.2">Text and image examples on Hugging Face</li></ul>
+      <div class="acts"><a class="pill dark" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="h3.cta">Try the live demo</a><a class="pill soft" href="/api/" data-i18n="duo.api.docs">API docs</a></div>
     </article>
     <article class="cta3">
-      <h2 data-i18n="fc.os.h"></h2>
-      <ul class="chk"><li data-i18n="fc.os.1"></li><li data-i18n="fc.os.2"></li></ul>
-      <div class="snip"><pre id="pipCode">pip install jev-style</pre><button type="button" class="cbtn" id="pipCopy" data-i18n="copy"></button></div>
-      <div class="acts"><a class="pill dark hf" href="#" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="#developers" data-i18n="chip.qs"></a></div>
+      <h2 data-i18n="fc.os.h">Run it yourself</h2>
+      <ul class="chk"><li data-i18n="fc.os.1">Apache-2.0 weights</li><li data-i18n="fc.os.2">CPU, CUDA and Apple silicon</li></ul>
+      <div class="snip"><pre id="pipCode">pip install "jev-style[torch]"</pre><button type="button" class="cbtn" id="pipCopy" data-i18n="copy">Copy</button></div>
+      <div class="acts"><a class="pill dark hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="#developers" data-i18n="chip.qs">Quickstart</a></div>
     </article>
   </section>
 
   <section id="about">
     <div class="about">
       <div class="ab-left">
-        <h2 class="ab-h" data-i18n="sec.about"></h2>
-        <p class="ab-lead" data-sx="scrub"><span data-i18n="ab.lead" class="scrub"></span><span class="ab-sig" data-i18n="ab.sig"></span></p>
+        <h2 class="ab-h" data-i18n="sec.about">About</h2>
+        <p class="ab-lead" data-sx="scrub"><span data-i18n="ab.lead" class="scrub">I build small models that each make one kind of decision: calibrated, and small enough to run on your own machine.</span><span class="ab-sig" data-i18n="ab.sig">Chaoliang Yan · UNSW</span></p>
       </div>
       <div class="ab-contact" id="contact">
-        <h3 class="typein" id="ctaH" data-i18n="ab.ch"></h3>
-        <p class="cta-p"><span><span data-i18n="cta.p"></span><span class="mail" id="email"></span><span data-i18n="cta.end"></span></span></p>
+        <h3 class="typein" id="ctaH" data-i18n="ab.ch">Get in touch</h3>
+        <p class="cta-p"><span><span data-i18n="cta.p">Open to internships, jobs and research collaborations: </span><span class="mail" id="email"><!--prerender:email-->yanchaoliang369@gmail.com<!--/prerender:email--></span><span data-i18n="cta.end">.</span></span></p>
         <div class="cta-acts">
-          <button type="button" class="pill soft" id="copyEmail" data-i18n="final.mail"></button>
+          <button type="button" class="pill soft" id="copyEmail" data-i18n="final.mail">Copy email</button>
           <a class="pill soft" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a>
-          <a class="pill soft dc" href="#" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a>
+          <a class="pill soft dc" href="https://discord.gg/udfvMu2GM" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
@@ -1122,22 +1148,22 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 
 <footer class="wrap foot">
   <div class="fcols">
-    <div class="fcol"><p class="fh" data-i18n="f.models"></p><button type="button" data-open="v4-2b">Jev-Style 2B v4</button><button type="button" data-open="v3-2b">Jev-Style 2B v3</button><button type="button" data-open="cascade-9b">Jev-Style Cascade 9B</button><button type="button" data-open="v3">Jev-Style 0.8B v3</button><button type="button" data-open="macjev">MacJev 322M</button><button type="button" data-open="v2">Decision 2B v2</button><button type="button" data-open="v1">Decision 2B v1</button></div>
-    <div class="fcol"><p class="fh" data-i18n="ng.api"></p><a href="#try" data-i18n="nav.overview"></a><a href="/api/" data-i18n="nav.docs"></a><a href="/register/" data-i18n="nav.getkey"></a><a href="/console/" data-i18n="nav.console"></a><a href="/console/#playground" data-i18n="nav.play"></a><a href="/api/limits.html" data-i18n="nav.limits"></a><a href="#use-cases" data-i18n="n3.uc"></a></div>
-    <div class="fcol"><p class="fh" data-i18n="f.dev"></p><a href="#developers" data-i18n="chip.qs"></a><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener">PyPI <span aria-hidden="true">↗</span></a><a class="hf" href="#" target="_blank" rel="noopener">Hugging Face <span aria-hidden="true">↗</span></a></div>
-    <div class="fcol"><p class="fh" data-i18n="f.comm"></p><a class="dc" href="#" target="_blank" rel="noopener">Discord <span aria-hidden="true">↗</span></a><a href="#about" data-i18n="nav.about"></a><a href="#contact" data-i18n="f.contact"></a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.models">Models</p><button type="button" data-open="v4-2b">Jev-Style 2B v4</button><button type="button" data-open="v3-2b">Jev-Style 2B v3</button><button type="button" data-open="cascade-9b">Jev-Style Cascade 9B</button><button type="button" data-open="v3">Jev-Style 0.8B v3</button><button type="button" data-open="macjev">MacJev 322M</button><button type="button" data-open="v2">Decision 2B v2</button><button type="button" data-open="v1">Decision 2B v1</button></div>
+    <div class="fcol"><p class="fh" data-i18n="ng.api">API</p><a href="#try" data-i18n="nav.overview">Overview</a><a href="/api/" data-i18n="nav.docs">Docs</a><a href="/register/" data-i18n="nav.getkey">Get API key</a><a href="/console/" data-i18n="nav.console">Console</a><a href="/console/#playground" data-i18n="nav.play">Playground</a><a href="/api/limits.html" data-i18n="nav.limits">Limits</a><a href="#use-cases" data-i18n="n3.uc">Use cases</a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.dev">Developers</p><a href="#developers" data-track="quickstart_open" data-i18n="chip.qs">Quickstart</a><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener">PyPI <span aria-hidden="true">↗</span></a><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span aria-hidden="true">↗</span></a></div>
+    <div class="fcol"><p class="fh" data-i18n="f.comm">Community</p><a class="dc" href="https://discord.gg/udfvMu2GM" target="_blank" rel="noopener">Discord <span aria-hidden="true">↗</span></a><a href="#about" data-i18n="nav.about">About</a><a href="#contact" data-i18n="f.contact">Contact</a></div>
   </div>
   <div class="fbot">
-    <p class="fnote" data-i18n="foot"></p>
-    <span class="fcopy"><span class="bn"></span> © 2026</span>
+    <p class="fnote" data-i18n="foot">Independent project, not affiliated with TypeSafe AI (Jev) or the Laya authors. Weights: Apache-2.0.</p>
+    <span class="fcopy"><span class="bn">JevStyle</span> © 2026</span>
     <button type="button" class="pill soft" id="langBtn2"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3c2.2 2.4 2.2 11.6 0 14M10 3c-2.2 2.4-2.2 11.6 0 14"/></svg><span></span></button>
   </div>
-</footer>
+<!--language-fallback--><noscript><a href="/zh/">中文</a></noscript><!--/language-fallback--></footer>
 
 <div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-labelledby="srchLab">
   <div class="srch-scrim" id="srchScrim"></div>
   <div class="srch-box">
-    <label class="sr-only" id="srchLab" for="srchIn" data-i18n="search"></label>
+    <label class="sr-only" id="srchLab" for="srchIn" data-i18n="search">Search</label>
     <div class="srch-in"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.6 3.6" stroke-linecap="round"/></svg><input id="srchIn" type="search" autocomplete="off" spellcheck="false"><kbd>Esc</kbd></div>
     <ul id="srchList"></ul>
     <p class="sr-only" role="status" id="srchStat"></p>
@@ -1146,7 +1172,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 
 <div class="scrim" id="scrim" hidden></div>
 <div class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="drTitle">
-  <div class="dr-head"><span class="cap" id="drCap"></span><button type="button" id="drClose" data-i18n="close"></button></div>
+  <div class="dr-head"><span class="cap" id="drCap"></span><button type="button" id="drClose" data-i18n="close">Close</button></div>
   <div class="dr-body" id="drBody"></div>
 </div>
 
@@ -1165,13 +1191,14 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
   </div>
 </div>
 
-<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v4-2b","name":"Jev-Style-2B-Decision-v4","short":"2B v4","status":"latest","params":"2.2B","params_exact":"2,213,241,664","arch":"decoder","base":"Qwen/Qwen3.5-2B with its vision tower, full fine-tune","langs":null,"context":"32,768","types":["choice","noul","score"],"released":"2026-10-27","release_planned":false,"train":"Two full fine-tunes on one A100 80GB each (about 294M tokens per run), weights averaged; soft labels distilled from TypeSafe Jev 1.14 via its public API","compare_label":"2B v3","space":"chaoliangUNSW/jev-style-2b","collection":"https://huggingface.co/collections/chaoliangUNSW/jev-style-decision-v4-2b","github":"https://github.com/lawrence3699/jev-style","spot_big":"2B","spot_sub":"v4","headline":[["44.37","hl.di4"],["57.55","hl.vis4"],["74.9%","hl.jb"],["32,768","hl.ctx4"],["1.27 GB","hl.q4"]],"metrics":[],"v4":{"di":{"edition":"0.3","kit":"25c6ec7","index":44.37,"raw":57.68,"v3":34.05,"requests":140178,"areas":[["ar.kr",23.6,17.2],["ar.lu",42.5,29.9],["ar.rc",65.4,51.6],["ar.ta",61.8,52.8],["ar.at",29.0,19.0]],"pr":"https://github.com/apolinario/decision-index/pull/319"},"vision":{"index":57.55,"rows":12210},"jevbench":{"version":"v1.4.1","items":231,"correct":173,"acc":0.7489177489177489,"ci95":[0.689,0.8],"board":[{"key":"jev","name":"Jev 1.13.0","acc":0.8658008658008658},{"key":"v4-2b","name":"Jev-Style 2B v4","acc":0.7489177489177489},{"key":"v3-2b","name":"Jev-Style 2B v3","acc":0.7359307359307359},{"key":"decider-2b","name":"decider-2b","note":"Mapika · Qwen3.5-2B-Base","acc":0.70995670995671}],"source":"https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4#jevbench-v141-749-on-the-public-items"},"speed":{"median_ms":16.4,"n":750},"order":{"v4":0.94,"n4":705,"v3":0.88,"n3":643}},"repos":[{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v4","format":"Transformers BF16","size":"4.43 GB","runs":"PyTorch · CUDA · MPS · CPU · text and images","fresh":true,"downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-10-27T15:21:08.000Z","createdAt":"2026-10-27T11:55:32.000Z"},{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v4-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"1.27–3.78 GB","runs":"llama.cpp · jev-score-v2 · text","fresh":true,"downloads":0,"downloadsAllTime":0,"likes":1,"lastModified":"2026-10-27T15:18:45.000Z","createdAt":"2026-10-27T15:13:56.000Z"},{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v4-MLX","format":"MLX BF16 / 8-bit","size":"2.00–3.76 GB","runs":"Apple silicon · text","fresh":true,"downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-10-27T15:20:00.000Z","createdAt":"2026-10-27T15:18:58.000Z"}],"tags":["DECISION","IMAGES","32.8K INPUT","CALIBRATED","GGUF · MLX"]},{"id":"v3-2b","name":"Jev-Style-2B-Decision-v3","short":"2B v3","status":"superseded","params":"2B","params_exact":"1,881,825,088","arch":"decoder","base":"Qwen/Qwen3.5-2B, full fine-tune","langs":null,"context":"25,600","types":["choice","noul","score"],"released":"2026-09-27","release_planned":false,"train":"Colab A100 40GB · full fine-tune · 458 steps, 1 epoch · reduced data pool (60,032,377 tokens)","compare_label":"decider-2b","space":"chaoliangUNSW/jev-style-2b","spot_big":"2B","spot_sub":"v3","headline":[["73.6%","hl.jb"],["25,600","hl.ctx2b"],["+9.5","hl.jbgain"],["2B","hl.params"],["1.27 GB","hl.q4"]],"metrics":[{"key":"jb","base":0.70995670995671,"model":0.7359307359307359,"better":"up"}],"bench":{"jevbench":{"version":"v1.4.1","items":231,"correct":170,"acc":0.7359307359307359,"ci95":[0.676,0.789],"engine":"GGUF F16, run once, global temperature only","board":[{"key":"jev","name":"Jev 1.13.0","correct":200,"acc":0.8658008658008658},{"key":"v3-2b","name":"Jev-Style 2B v3","correct":170,"acc":0.7359307359307359},{"key":"decider-2b","name":"decider-2b","note":"Mapika · Qwen3.5-2B-Base","correct":164,"acc":0.70995670995671},{"key":"v3","name":"Jev-Style 0.8B v3","correct":148,"acc":0.6406926406926406}],"higher_on_board":42,"board_systems":82,"source":"https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3/blob/main/validation/benchmarks/jevbench_v1.4.1_results.json; board: https://github.com/fstandhartinger/jevbench (tag v1.4.1, commit 24b9b5c)"},"tweet_topic":{"n":1693,"acc":0.822209096278795,"ci95":[0.804,0.84],"macro_f1":0.677897069437572,"jev_acc":0.793,"jev_macro_f1":0.694,"source":"https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3/blob/main/validation/benchmarks/zeroshot_metrics.json; Jev: https://github.com/elcronos/jev-vs-open-decision-models (results/cross_dataset_summary.json @ a1901bc)"}},"repos":[{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v3","format":"Transformers BF16","size":"3.76 GB","runs":"PyTorch · CUDA · MPS · CPU","downloads":197,"downloadsAllTime":197,"likes":3,"lastModified":"2026-10-02T21:54:22.000Z","createdAt":"2026-09-27T02:32:26.000Z"},{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v3-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"1.27–3.78 GB","runs":"llama.cpp · jev-score-v2","downloads":1067,"downloadsAllTime":1067,"likes":5,"lastModified":"2026-09-27T03:55:47.000Z","createdAt":"2026-09-27T02:34:05.000Z"},{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v3-MLX","format":"MLX BF16 / 8-bit","size":"2.00–3.76 GB","runs":"Apple silicon","downloads":265,"downloadsAllTime":265,"likes":1,"lastModified":"2026-09-27T03:55:52.000Z","createdAt":"2026-09-27T02:36:59.000Z"}],"tags":["DECISION","25.6K INPUT","NO OPTION CAP","CALIBRATED","GGUF · MLX"]},{"id":"cascade-9b","name":"Jev-Style-Cascade-9B","short":"Cascade","status":"latest","params":"2B → 9B","arch":"cascade","base":"Jev-Style-2B-Decision-v3 (tier 1) → JevK5-9B v0.3.3 by alibiserikbay (tier 2, third party, Apache-2.0)","langs":null,"context":"25,600","released":"2026-10-03","package":"jev-style 0.4.0","compare_label":"Jev 1.13.0","github":"https://github.com/lawrence3699/Jev-Style-Cascade-9B","metrics":[{"key":"jb","base":0.8658008658008658,"model":0.8787878787878788,"better":"up"}],"cascade":{"tau":0.75,"tiers":[{"tier":1,"model":"Jev-Style-2B-Decision-v3","url":"https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3","size":"3.76 GB","engine":"PyTorch float32, CUDA graphs"},{"tier":2,"model":"JevK5-9B v0.3.3","url":"https://huggingface.co/alibiserikbay/JevK5-9B","size":"~19 GB","by":"alibiserikbay","license":"Apache-2.0","runtime":"allebee/jevk5"}],"jevbench":{"items":231,"correct":203,"acc":0.8787878787878788,"ece":0.026,"settled_by_2b":123,"harness":"github.com/fstandhartinger/jevbench @ bb05a335 (v1.4.2.2 + 5 commits), public items only, our run","by_tier":[{"key":"easy","n":48,"correct":48},{"key":"standard","n":72,"correct":70},{"key":"hard","n":111,"correct":85}],"board":[{"key":"cascade-9b","name":"Jev-Style Cascade 9B","sub":"c9.s.ours","correct":203,"acc":0.8787878787878788,"ece":0.026},{"key":"jevk5","name":"JevK5-9B alone","label":"c9.b.k5","sub":"c9.s.k5","correct":203,"acc":0.8787878787878788,"ece":0.034},{"key":"jev","name":"Jev 1.13.0","sub":"c9.s.pub","correct":200,"acc":0.8658008658008658},{"key":"v3-2b","name":"Jev-Style 2B v3 alone","label":"c9.b.2b","sub":"c9.s.ours","correct":170,"acc":0.7359307359307359,"ece":0.062}],"source":"https://huggingface.co/chaoliangUNSW/Jev-Style-Cascade-9B (validation/jevbench/); Jev 1.13.0: public_accuracy 0.8658 in github.com/fstandhartinger/jevbench results/v1.4.2"},"calib_set":{"questions":4992,"datasets":29,"acc":0.731,"jevk5_acc":0.741,"v3_2b_acc":0.662,"settled_by_2b":0.428},"di_forecast":{"version":"0.2.1","score":46.08,"v3_2b":34.83,"note":"offline forecast composed from public per-row results at the frozen tau, scored with the official kit; not a board entry"},"rtx5090":{"median_ms_jevbench":29,"median_ms_calib":37.5,"mem_gb_start":29.7,"mem_gb_peak":31.8,"startup_s":47,"longest_tokens":25275,"longest_s":2.4}},"repos":[{"repo":"chaoliangUNSW/Jev-Style-Cascade-9B","format":"Cascade config (no weights)","size":"< 1 MB","runs":"jev-style ≥ 0.4.0 · CUDA · 32 GB GPU","chip":"Config","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-10-02T22:58:34.000Z","createdAt":"2026-10-02T22:33:13.000Z"}],"tags":["DECISION","CASCADE","25.6K INPUT","CALIBRATED","CUDA"]},{"id":"v3","name":"Jev-Style-0.8B-Decision-v3","short":"v3","status":"latest","params":"0.8B","params_exact":"752,393,024","arch":"decoder","base":"Qwen/Qwen3.5-0.8B, full fine-tune","langs":"51","context":"25,600","types":["choice","noul","score"],"released":"2026-09-24","train":"1 × H100 · full fine-tune in bf16 · ~96 min · 321,756-row pool in 19 languages","compare_label":"Laya typed","headline":[["0.8B","hl.params"],["25,600","hl.ctx"],["77","hl.opts"],["51","hl.langs"],["0.53 GB","hl.q4"]],"metrics":[{"key":"typed","base":0.766,"model":0.7915,"better":"up"},{"key":"massive51","base":0.4008,"model":0.7175,"better":"up"},{"key":"ece49","base":0.2994,"model":0.0542,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3","format":"Transformers BF16","size":"1.50 GB","runs":"PyTorch · CUDA · MPS · CPU","downloads":531,"downloadsAllTime":531,"likes":4,"lastModified":"2026-10-02T21:54:20.000Z","createdAt":"2026-09-24T14:59:46.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"0.53–1.52 GB","runs":"llama.cpp · jev-score","downloads":3044,"downloadsAllTime":3044,"likes":12,"lastModified":"2026-09-26T11:50:27.000Z","createdAt":"2026-09-24T15:00:37.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX","format":"MLX BF16 / 8-bit","size":"0.80–1.50 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":1,"lastModified":"2026-09-26T11:50:25.000Z","createdAt":"2026-09-24T16:02:31.000Z"}],"tags":["DECISION","25.6K INPUT","51 LANGUAGES","CALIBRATED","GGUF · MLX"]},{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":1397,"downloadsAllTime":1397,"likes":0,"lastModified":"2026-09-27T03:01:01.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":2272,"downloadsAllTime":2272,"likes":7,"lastModified":"2026-09-27T03:00:49.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":1685,"downloadsAllTime":1685,"likes":0,"lastModified":"2026-09-27T03:00:58.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"downloadsAllTime":0,"likes":4,"lastModified":"2026-09-23T22:16:11.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:13.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":277,"downloadsAllTime":277,"likes":0,"lastModified":"2026-09-23T22:16:14.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":9109,"downloadsAllTime":9109,"likes":20,"lastModified":"2026-09-27T03:00:45.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":5739,"downloadsAllTime":5739,"likes":3,"lastModified":"2026-09-27T03:00:54.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"demos":[{"slug":"agent-approval","featured":true,"title_en":"Agent action approval","title_zh":"Agent 操作审批","caption_en":"Before each coding-agent command runs, the model decides: allow, ask or deny.","caption_zh":"编程 Agent 每条命令执行前，模型判断放行、询问还是拒绝。","video":"media/demos/agent-approval.mp4","webm":"media/demos/agent-approval.webm","poster":"media/demos/agent-approval.jpg","duration_s":39.5},{"slug":"snake","featured":true,"title_en":"Snake","title_zh":"贪吃蛇","caption_en":"Code lists the legal moves; the model picks every step in about 0.1 s.","caption_zh":"代码列出能走的方向，模型每一步约 0.1 秒做出选择。","video":"media/demos/snake.mp4","webm":"media/demos/snake.webm","poster":"media/demos/snake.jpg","duration_s":44.6},{"slug":"playground","featured":false,"title_en":"Playground","title_zh":"试用","caption_en":"Type a situation and questions; get a probability for every option.","caption_zh":"输入情况和问题，每个选项都得到一个概率。","video":"media/demos/playground.mp4","webm":"media/demos/playground.webm","poster":"media/demos/playground.jpg","duration_s":25.3},{"slug":"workflows","featured":false,"title_en":"Workflows","title_zh":"工作流","caption_en":"Security alerts, invoices, support: code does the math, the model makes the calls.","caption_zh":"安全告警、发票、客服：代码算数，模型做判断。","video":"media/demos/workflows.mp4","webm":"media/demos/workflows.webm","poster":"media/demos/workflows.jpg","duration_s":36.6},{"slug":"patterns","featured":false,"title_en":"Patterns","title_zh":"模式","caption_en":"One ticket, seven questions, one call; code turns the answers into actions.","caption_zh":"一张工单一次问七个问题，代码据此决定下一步。","video":"media/demos/patterns.mp4","webm":"media/demos/patterns.webm","poster":"media/demos/patterns.jpg","duration_s":25.4},{"slug":"long-context","featured":false,"title_en":"Long document","title_zh":"长文档","caption_en":"Reads a 19,000-token document once and answers ten questions.","caption_zh":"读一遍 1.9 万 token 的文档，连答十个问题。","video":"media/demos/long-context.mp4","webm":"media/demos/long-context.webm","poster":"media/demos/long-context.jpg","duration_s":36.4},{"slug":"chinese","featured":false,"title_en":"Chinese & 51 languages","title_zh":"中文与多语言","caption_en":"Chinese tickets and e-mails, plus one question in 51 languages.","caption_zh":"中文工单和邮件，同一个问题问 51 种语言。","video":"media/demos/chinese.mp4","webm":"media/demos/chinese.webm","poster":"media/demos/chinese.jpg","duration_s":27.7},{"slug":"confidence","featured":false,"title_en":"Confidence","title_zh":"置信度","caption_en":"Drag the probabilities and watch how confidence is scored.","caption_zh":"拖动概率，看“把握”是怎么算的。","video":"media/demos/confidence.mp4","webm":"media/demos/confidence.webm","poster":"media/demos/confidence.jpg","duration_s":23.0}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]},"v3":{"beyond":[{"task":"Banking77","metric":"accuracy, 77 intents","v3":0.6825,"best_laya":0.4925,"best_laya_checkpoint":"typed","n":400},{"task":"Jailbreak","metric":"balanced accuracy","v3":0.9036238842064085,"best_laya":0.8311462000782389,"best_laya_checkpoint":"multilingual","n":400},{"task":"Toxicity","metric":"macro-F1","v3":0.7089254055198327,"best_laya":0.41360068097985436,"best_laya_checkpoint":"multilingual","n":400},{"task":"Model routing","metric":"accuracy","v3":0.9624060150375939,"best_laya":0.6591478696741855,"best_laya_checkpoint":"typed","n":399},{"task":"MASSIVE intent","metric":"37 held-out locales","v3":0.6551351351351351,"best_laya":0.36108108108108106,"best_laya_checkpoint":"multilingual","n":3700}],"calib":{"NLL":{"v3":0.4928839178581892,"best_laya":2.212565130608199,"checkpoint":"multilingual"},"Brier score":{"v3":0.23930092306086748,"best_laya":0.7120664110846202,"checkpoint":"multilingual"},"ECE":{"v3":0.05416919804670487,"best_laya":0.2994167384382702,"checkpoint":"multilingual"}},"massive":{"languages":51,"v3_beats_laya_multilingual":51,"v3_beats_best_laya_checkpoint":51,"v3_beats_laya_multilingual_never_trained":37,"v3_above_3x_chance":51,"laya_multilingual_above_3x_chance":48,"macro_v3":0.7174509803921569,"macro_laya_multilingual":0.4007843137254902,"macro_v3_never_trained37":0.6551351351351351,"macro_laya_multilingual_never_trained37":0.36108108108108106,"min_margin_vs_laya_multilingual":0.11}}},"snapshot":"2026-10-02"}</script>
+<script id="site-data" type="application/json">{"brand":"JevStyle","author":"chaoliangUNSW","discord":"https://discord.gg/udfvMu2GM","email":"yanchaoliang369@gmail.com","families":[{"id":"v4-2b","name":"Jev-Style-2B-Decision-v4","short":"2B v4","status":"latest","params":"2.2B","params_exact":"2,213,241,664","arch":"decoder","base":"Qwen/Qwen3.5-2B with its vision tower, full fine-tune","langs":null,"context":"32,768","types":["choice","noul","score"],"released":"2026-10-27","release_planned":false,"train":"Two full fine-tunes on one A100 80GB each (about 294M tokens per run), weights averaged; soft labels distilled from TypeSafe Jev 1.14 via its public API","compare_label":"2B v3","space":"chaoliangUNSW/jev-style-2b","collection":"https://huggingface.co/collections/chaoliangUNSW/jev-style-decision-v4-2b","github":"https://github.com/lawrence3699/jev-style","spot_big":"2B","spot_sub":"v4","headline":[["44.37","hl.di4"],["57.55","hl.vis4"],["74.9%","hl.jb"],["32,768","hl.ctx4"],["1.27 GB","hl.q4"]],"metrics":[],"v4":{"di":{"edition":"0.3","kit":"25c6ec7","index":44.37,"raw":57.68,"v3":34.05,"requests":140178,"areas":[["ar.kr",23.6,17.2],["ar.lu",42.5,29.9],["ar.rc",65.4,51.6],["ar.ta",61.8,52.8],["ar.at",29.0,19.0]],"pr":"https://github.com/apolinario/decision-index/pull/319"},"vision":{"index":57.55,"rows":12210},"jevbench":{"version":"v1.4.1","items":231,"correct":173,"acc":0.7489177489177489,"ci95":[0.689,0.8],"board":[{"key":"jev","name":"Jev 1.13.0","acc":0.8658008658008658},{"key":"v4-2b","name":"Jev-Style 2B v4","acc":0.7489177489177489},{"key":"v3-2b","name":"Jev-Style 2B v3","acc":0.7359307359307359},{"key":"decider-2b","name":"decider-2b","note":"Mapika · Qwen3.5-2B-Base","acc":0.70995670995671}],"source":"https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4#jevbench-v141-749-on-the-public-items"},"speed":{"median_ms":16.4,"n":750},"order":{"v4":0.94,"n4":705,"v3":0.88,"n3":643}},"repos":[{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v4","format":"Transformers BF16","size":"4.43 GB","runs":"PyTorch · CUDA · MPS · CPU · text and images","fresh":true,"downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-10-27T15:21:08.000Z","createdAt":"2026-10-27T11:55:32.000Z"},{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v4-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"1.27–3.78 GB","runs":"llama.cpp · jev-score-v2 · text","fresh":true,"downloads":0,"downloadsAllTime":0,"likes":1,"lastModified":"2026-10-27T15:18:45.000Z","createdAt":"2026-10-27T15:13:56.000Z"},{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v4-MLX","format":"MLX BF16 / 8-bit","size":"2.00–3.76 GB","runs":"Apple silicon · text","fresh":true,"downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-10-27T15:20:00.000Z","createdAt":"2026-10-27T15:18:58.000Z"}],"tags":["DECISION","IMAGES","32.8K INPUT","CALIBRATED","GGUF · MLX"]},{"id":"v3-2b","name":"Jev-Style-2B-Decision-v3","short":"2B v3","status":"superseded","params":"2B","params_exact":"1,881,825,088","arch":"decoder","base":"Qwen/Qwen3.5-2B, full fine-tune","langs":null,"context":"25,600","types":["choice","noul","score"],"released":"2026-09-27","release_planned":false,"train":"Colab A100 40GB · full fine-tune · 458 steps, 1 epoch · reduced data pool (60,032,377 tokens)","compare_label":"decider-2b","space":"chaoliangUNSW/jev-style-2b","spot_big":"2B","spot_sub":"v3","headline":[["73.6%","hl.jb"],["25,600","hl.ctx2b"],["+9.5","hl.jbgain"],["2B","hl.params"],["1.27 GB","hl.q4"]],"metrics":[{"key":"jb","base":0.70995670995671,"model":0.7359307359307359,"better":"up"}],"bench":{"jevbench":{"version":"v1.4.1","items":231,"correct":170,"acc":0.7359307359307359,"ci95":[0.676,0.789],"engine":"GGUF F16, run once, global temperature only","board":[{"key":"jev","name":"Jev 1.13.0","correct":200,"acc":0.8658008658008658},{"key":"v3-2b","name":"Jev-Style 2B v3","correct":170,"acc":0.7359307359307359},{"key":"decider-2b","name":"decider-2b","note":"Mapika · Qwen3.5-2B-Base","correct":164,"acc":0.70995670995671},{"key":"v3","name":"Jev-Style 0.8B v3","correct":148,"acc":0.6406926406926406}],"higher_on_board":42,"board_systems":82,"source":"https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3/blob/main/validation/benchmarks/jevbench_v1.4.1_results.json; board: https://github.com/fstandhartinger/jevbench (tag v1.4.1, commit 24b9b5c)"},"tweet_topic":{"n":1693,"acc":0.822209096278795,"ci95":[0.804,0.84],"macro_f1":0.677897069437572,"jev_acc":0.793,"jev_macro_f1":0.694,"source":"https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3/blob/main/validation/benchmarks/zeroshot_metrics.json; Jev: https://github.com/elcronos/jev-vs-open-decision-models (results/cross_dataset_summary.json @ a1901bc)"}},"repos":[{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v3","format":"Transformers BF16","size":"3.76 GB","runs":"PyTorch · CUDA · MPS · CPU","downloads":197,"downloadsAllTime":197,"likes":3,"lastModified":"2026-10-02T21:54:22.000Z","createdAt":"2026-09-27T02:32:26.000Z"},{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v3-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"1.27–3.78 GB","runs":"llama.cpp · jev-score-v2","downloads":1067,"downloadsAllTime":1067,"likes":5,"lastModified":"2026-09-27T03:55:47.000Z","createdAt":"2026-09-27T02:34:05.000Z"},{"repo":"chaoliangUNSW/Jev-Style-2B-Decision-v3-MLX","format":"MLX BF16 / 8-bit","size":"2.00–3.76 GB","runs":"Apple silicon","downloads":265,"downloadsAllTime":265,"likes":1,"lastModified":"2026-09-27T03:55:52.000Z","createdAt":"2026-09-27T02:36:59.000Z"}],"tags":["DECISION","25.6K INPUT","NO OPTION CAP","CALIBRATED","GGUF · MLX"]},{"id":"cascade-9b","name":"Jev-Style-Cascade-9B","short":"Cascade","status":"latest","params":"2B → 9B","arch":"cascade","base":"Jev-Style-2B-Decision-v3 (tier 1) → JevK5-9B v0.3.3 by alibiserikbay (tier 2, third party, Apache-2.0)","langs":null,"context":"25,600","released":"2026-10-03","package":"jev-style 0.4.0","compare_label":"Jev 1.13.0","github":"https://github.com/lawrence3699/Jev-Style-Cascade-9B","metrics":[{"key":"jb","base":0.8658008658008658,"model":0.8787878787878788,"better":"up"}],"cascade":{"tau":0.75,"tiers":[{"tier":1,"model":"Jev-Style-2B-Decision-v3","url":"https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3","size":"3.76 GB","engine":"PyTorch float32, CUDA graphs"},{"tier":2,"model":"JevK5-9B v0.3.3","url":"https://huggingface.co/alibiserikbay/JevK5-9B","size":"~19 GB","by":"alibiserikbay","license":"Apache-2.0","runtime":"allebee/jevk5"}],"jevbench":{"items":231,"correct":203,"acc":0.8787878787878788,"ece":0.026,"settled_by_2b":123,"harness":"github.com/fstandhartinger/jevbench @ bb05a335 (v1.4.2.2 + 5 commits), public items only, our run","by_tier":[{"key":"easy","n":48,"correct":48},{"key":"standard","n":72,"correct":70},{"key":"hard","n":111,"correct":85}],"board":[{"key":"cascade-9b","name":"Jev-Style Cascade 9B","sub":"c9.s.ours","correct":203,"acc":0.8787878787878788,"ece":0.026},{"key":"jevk5","name":"JevK5-9B alone","label":"c9.b.k5","sub":"c9.s.k5","correct":203,"acc":0.8787878787878788,"ece":0.034},{"key":"jev","name":"Jev 1.13.0","sub":"c9.s.pub","correct":200,"acc":0.8658008658008658},{"key":"v3-2b","name":"Jev-Style 2B v3 alone","label":"c9.b.2b","sub":"c9.s.ours","correct":170,"acc":0.7359307359307359,"ece":0.062}],"source":"https://huggingface.co/chaoliangUNSW/Jev-Style-Cascade-9B (validation/jevbench/); Jev 1.13.0: public_accuracy 0.8658 in github.com/fstandhartinger/jevbench results/v1.4.2"},"calib_set":{"questions":4992,"datasets":29,"acc":0.731,"jevk5_acc":0.741,"v3_2b_acc":0.662,"settled_by_2b":0.428},"di_forecast":{"version":"0.2.1","score":46.08,"v3_2b":34.83,"note":"offline forecast composed from public per-row results at the frozen tau, scored with the official kit; not a board entry"},"rtx5090":{"median_ms_jevbench":29,"median_ms_calib":37.5,"mem_gb_start":29.7,"mem_gb_peak":31.8,"startup_s":47,"longest_tokens":25275,"longest_s":2.4}},"repos":[{"repo":"chaoliangUNSW/Jev-Style-Cascade-9B","format":"Cascade config (no weights)","size":"< 1 MB","runs":"jev-style ≥ 0.4.0 · CUDA · 32 GB GPU","chip":"Config","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-10-02T22:58:34.000Z","createdAt":"2026-10-02T22:33:13.000Z"}],"tags":["DECISION","CASCADE","25.6K INPUT","CALIBRATED","CUDA"]},{"id":"v3","name":"Jev-Style-0.8B-Decision-v3","short":"v3","status":"latest","params":"0.8B","params_exact":"752,393,024","arch":"decoder","base":"Qwen/Qwen3.5-0.8B, full fine-tune","langs":"51","context":"25,600","types":["choice","noul","score"],"released":"2026-09-24","train":"1 × H100 · full fine-tune in bf16 · ~96 min · 321,756-row pool in 19 languages","compare_label":"Laya typed","headline":[["0.8B","hl.params"],["25,600","hl.ctx"],["77","hl.opts"],["51","hl.langs"],["0.53 GB","hl.q4"]],"metrics":[{"key":"typed","base":0.766,"model":0.7915,"better":"up"},{"key":"massive51","base":0.4008,"model":0.7175,"better":"up"},{"key":"ece49","base":0.2994,"model":0.0542,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3","format":"Transformers BF16","size":"1.50 GB","runs":"PyTorch · CUDA · MPS · CPU","downloads":531,"downloadsAllTime":531,"likes":4,"lastModified":"2026-10-02T21:54:20.000Z","createdAt":"2026-09-24T14:59:46.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF","format":"GGUF F16 / Q8_0 / Q4_K_M","size":"0.53–1.52 GB","runs":"llama.cpp · jev-score","downloads":3044,"downloadsAllTime":3044,"likes":12,"lastModified":"2026-09-26T11:50:27.000Z","createdAt":"2026-09-24T15:00:37.000Z"},{"repo":"chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX","format":"MLX BF16 / 8-bit","size":"0.80–1.50 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":1,"lastModified":"2026-09-26T11:50:25.000Z","createdAt":"2026-09-24T16:02:31.000Z"}],"tags":["DECISION","25.6K INPUT","51 LANGUAGES","CALIBRATED","GGUF · MLX"]},{"id":"v2","name":"Jev-Style-Qwen3.5-2B-Decision v2","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-32 LoRA","langs":"EN","context":"1,024","types":["choice","bool","score"],"released":"2026-09-23","train":"36.9 min on 1 × H100 · 33.6M LoRA params · 60k-record pool","compare_label":"English Laya","deploy":[{"format":"MLX BF16","agree":0.996},{"format":"GGUF BF16","agree":0.996},{"format":"GGUF Q8_0","agree":0.992},{"format":"GGUF Q4_K_M","agree":0.914}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2","format":"HF BF16","size":"3.76 GB","runs":"Transformers · CUDA · CPU","downloads":1397,"downloadsAllTime":1397,"likes":0,"lastModified":"2026-09-27T03:01:01.000Z","createdAt":"2026-09-23T16:16:34.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.27–3.78 GB","runs":"llama.cpp · LM Studio","downloads":2272,"downloadsAllTime":2272,"likes":7,"lastModified":"2026-09-27T03:00:49.000Z","createdAt":"2026-09-23T16:17:49.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":1685,"downloadsAllTime":1685,"likes":0,"lastModified":"2026-09-27T03:00:58.000Z","createdAt":"2026-09-23T16:18:41.000Z"}],"short":"v2","tags":["DECISION","CLASSIFICATION","CALIBRATED","EN","GGUF · MLX"]},{"id":"macjev","name":"MacJev-322M-4K-Laya","status":"latest","params":"322M","params_exact":"321,908,995","arch":"encoder","base":"convaiinnovations/laya (mmBERT-base)","langs":"EN · 中文","context":"4,096","types":["choice","score","noul"],"released":"2026-09-23","train":"1 × H100 · 44.9M adapted params · 50k decisions (half at 1K–4K tokens)","compare_label":"Laya multilingual","metrics":[{"key":"yesno_long","base":0.31,"model":0.891,"better":"up"},{"key":"rule_long","base":0.237,"model":0.447,"better":"up"},{"key":"rule_all","base":0.232,"model":0.397,"better":"up"},{"key":"typed","base":0.352,"model":0.422,"better":"up"},{"key":"ece_long","base":0.253,"model":0.032,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya","format":"PyTorch FP32","size":"1.29 GB","runs":"CPU · MPS · CUDA","downloads":0,"downloadsAllTime":0,"likes":4,"lastModified":"2026-09-23T22:16:11.000Z","createdAt":"2026-09-22T19:48:41.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-MLX","format":"MLX FP32","size":"1.29 GB","runs":"Apple silicon","downloads":0,"downloadsAllTime":0,"likes":0,"lastModified":"2026-09-23T22:16:13.000Z","createdAt":"2026-09-23T00:46:20.000Z"},{"repo":"chaoliangUNSW/MacJev-322M-4K-Laya-GGUF","format":"GGUF F16","size":"0.69 GB","runs":"llama.cpp · LM Studio server","downloads":277,"downloadsAllTime":277,"likes":0,"lastModified":"2026-09-23T22:16:14.000Z","createdAt":"2026-09-23T01:02:04.000Z"}],"short":"MacJev 322M","tags":["DECISION","TOOL ROUTING","4K INPUT","EN · 中文","ON-DEVICE"]},{"id":"v1","name":"Jev-Style-Qwen3.5-2B-Decision v1","status":"superseded","params":"2B","arch":"decoder","base":"Qwen/Qwen3.5-2B-Base + rank-16 LoRA","langs":"EN","context":null,"types":["choice","bool","score"],"released":"2026-09-21","train":"M1 Max (MLX) · custom chunk-parallel Gated DeltaNet, 6.5× faster steps","compare_label":"Qwen3.5-2B-Base zero-shot","metrics":[{"key":"mnli","base":0.523,"model":0.867,"better":"up"},{"key":"sst5","base":0.32,"model":0.617,"better":"up"},{"key":"boolq","base":0.73,"model":0.827,"better":"up"},{"key":"sst2","base":0.873,"model":0.927,"better":"up"},{"key":"ag_news","base":0.847,"model":0.877,"better":"up"},{"key":"ece5","base":0.065,"model":0.017,"better":"down"}],"repos":[{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF","format":"GGUF Q4_K_M / Q8_0 / BF16","size":"1.3–3.9 GB","runs":"llama.cpp · LM Studio","downloads":9109,"downloadsAllTime":9109,"likes":20,"lastModified":"2026-09-27T03:00:45.000Z","createdAt":"2026-09-21T08:39:50.000Z"},{"repo":"chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16","format":"MLX BF16","size":"3.76 GB","runs":"Apple silicon","downloads":5739,"downloadsAllTime":5739,"likes":3,"lastModified":"2026-09-27T03:00:54.000Z","createdAt":"2026-09-21T08:38:27.000Z"}],"short":"v1","tags":["DECISION","CALIBRATED","EN"]}],"planned":[{"id":"router","name":"Router","params":"≤1B","tags":["LLM ROUTING","COST"]},{"id":"guard","name":"Guard","params":"≤1B","tags":["GUARDRAILS","JAILBREAK","TOXICITY"]}],"demos":[{"slug":"agent-approval","featured":true,"title_en":"Agent action approval","title_zh":"Agent 操作审批","caption_en":"Before each coding-agent command runs, the model decides: allow, ask or deny.","caption_zh":"编程 Agent 每条命令执行前，模型判断放行、询问还是拒绝。","video":"/media/demos/agent-approval.mp4","webm":"/media/demos/agent-approval.webm","poster":"/media/demos/agent-approval.jpg","duration_s":39.5},{"slug":"snake","featured":true,"title_en":"Snake","title_zh":"贪吃蛇","caption_en":"Code lists the legal moves; the model picks every step in about 0.1 s.","caption_zh":"代码列出能走的方向，模型每一步约 0.1 秒做出选择。","video":"/media/demos/snake.mp4","webm":"/media/demos/snake.webm","poster":"/media/demos/snake.jpg","duration_s":44.6},{"slug":"playground","featured":false,"title_en":"Playground","title_zh":"试用","caption_en":"Type a situation and questions; get a probability for every option.","caption_zh":"输入情况和问题，每个选项都得到一个概率。","video":"/media/demos/playground.mp4","webm":"/media/demos/playground.webm","poster":"/media/demos/playground.jpg","duration_s":25.3},{"slug":"workflows","featured":false,"title_en":"Workflows","title_zh":"工作流","caption_en":"Security alerts, invoices, support: code does the math, the model makes the calls.","caption_zh":"安全告警、发票、客服：代码算数，模型做判断。","video":"/media/demos/workflows.mp4","webm":"/media/demos/workflows.webm","poster":"/media/demos/workflows.jpg","duration_s":36.6},{"slug":"patterns","featured":false,"title_en":"Patterns","title_zh":"模式","caption_en":"One ticket, seven questions, one call; code turns the answers into actions.","caption_zh":"一张工单一次问七个问题，代码据此决定下一步。","video":"/media/demos/patterns.mp4","webm":"/media/demos/patterns.webm","poster":"/media/demos/patterns.jpg","duration_s":25.4},{"slug":"long-context","featured":false,"title_en":"Long document","title_zh":"长文档","caption_en":"Reads a 19,000-token document once and answers ten questions.","caption_zh":"读一遍 1.9 万 token 的文档，连答十个问题。","video":"/media/demos/long-context.mp4","webm":"/media/demos/long-context.webm","poster":"/media/demos/long-context.jpg","duration_s":36.4},{"slug":"chinese","featured":false,"title_en":"Chinese & 51 languages","title_zh":"中文与多语言","caption_en":"Chinese tickets and e-mails, plus one question in 51 languages.","caption_zh":"中文工单和邮件，同一个问题问 51 种语言。","video":"/media/demos/chinese.mp4","webm":"/media/demos/chinese.webm","poster":"/media/demos/chinese.jpg","duration_s":27.7},{"slug":"confidence","featured":false,"title_en":"Confidence","title_zh":"置信度","caption_en":"Drag the probabilities and watch how confidence is scored.","caption_zh":"拖动概率，看“把握”是怎么算的。","video":"/media/demos/confidence.mp4","webm":"/media/demos/confidence.webm","poster":"/media/demos/confidence.jpg","duration_s":23.0}],"site_url":"https://jevstyle.com","eval":{"v2":{"n":3277,"overview":{"v1":{"accuracy":0.7667968493600263,"macro_f1":0.7542251333163978,"nll":0.575152117780084,"brier":0.3289652416178414,"ece":0.08512955323369954},"laya":{"accuracy":0.750889399409255,"macro_f1":0.7344520495576862,"nll":0.6318461242308782,"brier":0.3481931154806123,"ece":0.12362140723612026},"v2":{"accuracy":0.8120490099551472,"macro_f1":0.797772564877388,"nll":0.5153573778298738,"brier":0.27870374107073076,"ece":0.09100670643474301}},"reliability":{"model":"v2 CUDA reference","temperature":1.0423505400296817,"binning":"15 equal-width confidence bins on [0,1]","empty_bins":"omitted","uncertainty":"Wilson 95% intervals within each confidence bin","aggregation":"pooled over real-label examples","pooled_ece":0.07282541921307938,"bins":[{"lo":0.3333333333333333,"hi":0.4,"n":11,"mean_confidence":0.38078092576157074,"accuracy":0.45454545454545453,"wilson95":[0.21271271622459764,0.719908462590678]},{"lo":0.4,"hi":0.4666666666666667,"n":31,"mean_confidence":0.44342106018763106,"accuracy":0.3870967741935484,"wilson95":[0.23733101420380254,0.5617589138033927]},{"lo":0.4666666666666667,"hi":0.5333333333333333,"n":130,"mean_confidence":0.5071245091267953,"accuracy":0.4,"wilson95":[0.3198243104508396,0.4859160017880467]},{"lo":0.5333333333333333,"hi":0.6,"n":152,"mean_confidence":0.5683921263707039,"accuracy":0.5197368421052632,"wilson95":[0.4408087537451127,0.5976919125435891]},{"lo":0.6,"hi":0.6666666666666666,"n":158,"mean_confidence":0.6355755895198861,"accuracy":0.5379746835443038,"wilson95":[0.46025816470988046,0.6138884729158649]},{"lo":0.6666666666666666,"hi":0.7333333333333333,"n":145,"mean_confidence":0.7017602376997318,"accuracy":0.6551724137931034,"wilson95":[0.5747027826751803,0.7276323352183527]},{"lo":0.7333333333333333,"hi":0.8,"n":153,"mean_confidence":0.7684716912664443,"accuracy":0.7647058823529411,"wilson95":[0.6915216339127415,0.8249234476941671]},{"lo":0.8,"hi":0.8666666666666667,"n":166,"mean_confidence":0.8361544180666837,"accuracy":0.7048192771084337,"wilson95":[0.6314328145486011,0.7689405717386028]},{"lo":0.8666666666666667,"hi":0.9333333333333333,"n":333,"mean_confidence":0.9044363365371433,"accuracy":0.7627627627627628,"wilson95":[0.7142396166140905,0.8052926304337862]},{"lo":0.9333333333333333,"hi":1.0,"n":1998,"mean_confidence":0.984503687108951,"accuracy":0.9229229229229229,"wilson95":[0.9103995454324445,0.9338231538993982]}]},"permutation":{"v1":{"n":400,"semantic_flip_rate":0.0925,"permuted_accuracy":0.6675},"laya":{"n":400,"semantic_flip_rate":0.12,"permuted_accuracy":0.67},"v2":{"n":400,"semantic_flip_rate":0.06,"permuted_accuracy":0.8}},"counterfactual":{"v1":{"pairs":200,"both_correct":0.63,"scope":"programmatic threshold-policy shift only"},"laya":{"pairs":200,"both_correct":0.075,"scope":"programmatic threshold-policy shift only"},"v2":{"pairs":200,"both_correct":0.715,"scope":"programmatic threshold-policy shift only"}},"by_task":{"v1":{"ag_news":0.8766666666666667,"anli":0.48,"boolq":0.8266666666666667,"emotion":0.5833333333333334,"enron_spam":0.7733333333333333,"hans":0.68,"imdb":0.9666666666666667,"mnli":0.8666666666666667,"rte":0.8447653429602888,"sst2":0.9266666666666666,"sst5":0.61,"typed_decisions":0.5335},"laya":{"ag_news":0.89,"anli":0.49666666666666665,"boolq":0.7566666666666667,"emotion":0.6033333333333334,"enron_spam":0.9633333333333334,"hans":0.75,"imdb":0.9366666666666666,"mnli":0.85,"rte":0.779783393501805,"sst2":0.9166666666666666,"sst5":0.31666666666666665,"typed_decisions":0.3755},"laya_typed":{"typed_decisions":0.746},"v2":{"ag_news":0.88,"anli":0.4866666666666667,"boolq":0.8166666666666667,"emotion":0.8533333333333334,"enron_spam":0.9766666666666667,"hans":0.68,"imdb":0.9633333333333334,"mnli":0.88,"rte":0.8592057761732852,"sst2":0.93,"sst5":0.6066666666666667,"typed_decisions":0.7345}},"limitations":["Single training seed.","Historical v1 core and RTE regression examples.","Length-filtered inputs.","Typed reference is teacher agreement, reported separately.","Synthetic counterfactual family is narrow.","Point-estimate task wins are not all statistically significant wins."]},"v3":{"beyond":[{"task":"Banking77","metric":"accuracy, 77 intents","v3":0.6825,"best_laya":0.4925,"best_laya_checkpoint":"typed","n":400},{"task":"Jailbreak","metric":"balanced accuracy","v3":0.9036238842064085,"best_laya":0.8311462000782389,"best_laya_checkpoint":"multilingual","n":400},{"task":"Toxicity","metric":"macro-F1","v3":0.7089254055198327,"best_laya":0.41360068097985436,"best_laya_checkpoint":"multilingual","n":400},{"task":"Model routing","metric":"accuracy","v3":0.9624060150375939,"best_laya":0.6591478696741855,"best_laya_checkpoint":"typed","n":399},{"task":"MASSIVE intent","metric":"37 held-out locales","v3":0.6551351351351351,"best_laya":0.36108108108108106,"best_laya_checkpoint":"multilingual","n":3700}],"calib":{"NLL":{"v3":0.4928839178581892,"best_laya":2.212565130608199,"checkpoint":"multilingual"},"Brier score":{"v3":0.23930092306086748,"best_laya":0.7120664110846202,"checkpoint":"multilingual"},"ECE":{"v3":0.05416919804670487,"best_laya":0.2994167384382702,"checkpoint":"multilingual"}},"massive":{"languages":51,"v3_beats_laya_multilingual":51,"v3_beats_best_laya_checkpoint":51,"v3_beats_laya_multilingual_never_trained":37,"v3_above_3x_chance":51,"laya_multilingual_above_3x_chance":48,"macro_v3":0.7174509803921569,"macro_laya_multilingual":0.4007843137254902,"macro_v3_never_trained37":0.6551351351351351,"macro_laya_multilingual_never_trained37":0.36108108108108106,"min_margin_vs_laya_multilingual":0.11}}},"snapshot":"2026-10-02"}</script>
 <script>
 (function(){
 const $ = id => document.getElementById(id);
 const DATA = JSON.parse($('site-data').textContent);
 const I18N = {
 en:{
+"guide.0.h":"Local LLM routing","guide.0.p":"Choose a route locally; send uncertain decisions to your LLM.","guide.1.h":"Support ticket classification","guide.1.p":"Team, refund request, and urgency in one call.","guide.2.h":"Claude Code guard","guide.2.p":"Inspect tool calls with a local model and explicit rules.","guide.3.h":"Evaluate your own data","guide.3.p":"Measure accuracy, calibration, coverage, and latency.",
  "nav.models":"Models","nav.api":"Free API","nav.getkey":"Get API key","nav.console":"Console","api.lead":"Free hosted 2B Decision API — typed noul / choice / score.","api.docs":"Free API docs","api.create":"Create key","api.badge":"Independent · non-TypeSafe","api.strip.h":"Free Decision API","api.strip.p":"Fair-use free tier. Create a key, then call api.jevstyle.com. Docs for auth, limits, and errors.","nav.tl":"Timeline","sec.tl":"Release timeline","tl.next.when":"Next",
  "nav.demos":"Demos","sec.demos":"Demos","dm.sub":"Jev-Style v3, running locally","dm.play":"Play video","dm.more":"More demos",
  "hl.pub":"Public holdout hard agreement","hl.soft":"Sensitive safe-class soft (v4)","hl.adapter":"Deployable LoRA + head","an.tag":"New","an.text":"Jev-Style 2B v4: reads images, 44.37 on the Decision Index 0.3 public index (v3: 34.05), 32,768-token inputs",
@@ -1247,7 +1274,7 @@ en:{
  "ex.h":"One request, every option scored","ex.aside":"Real production response · Oct 8, 2026","ex.p":"A real support ticket with three questions, sent in one call from Sydney: about 0.42 s end-to-end.","ex.req":"request","ex.res":"Response","ex.res.meta":"29.7 ms on the GPU",
  "q.yes":"yes","q.no":"no","q.conf":"confidence","q.py":"probability of yes","q.exp":"expected level, 0–2",
  "q.d.noul":" — a yes/no question. You get the probability that the answer is yes.","q.d.choice":" — pick one of your named options. Every option gets a probability; descriptions are optional.","q.d.score":" — an ordered scale with 2–10 levels. You get the expected level and a probability for each level.",
- "code.h":"Call it from your code","code.p":"One POST with your key, from any language.","code.ep":"Endpoint","code.auth":"Auth","code.body":"Body","code.bodyv":"state + up to 64 questions","code.cap":"Input","code.capv":"up to 8,000 tokens per request","code.ref":"Full API reference",
+ "code.h":"Hosted API reference","code.p":"One POST with your key, from any language.","code.ep":"Endpoint","code.auth":"Auth","code.body":"Body","code.bodyv":"state + up to 64 questions","code.cap":"Input","code.capv":"up to 8,000 tokens per request","code.ref":"Full API reference",
  "pf.h":"Fast and calibrated","pf.when":"Measured Oct 8, 2026","pf.1":"Median end-to-end for a short request, Sydney to API over the public internet","pf.2":"Model compute for a short request","pf.3":"Model compute at 7.9k input tokens","pf.4":"GPU replicas serving requests","pf.5":"Top answers identical to FP32 (BF16 serving, JevBench + sample tickets)","pf.same":"The API serves the same Jev-Style 2B v3 weights you can download.","pf.model":"See the model",
  "uc.h":"Use cases","uc.sub":"Demos recorded with the open Jev-Style v3 models","uc.t1":"Ticket routing","uc.p1":"Send each ticket to the right team and flag refunds and urgency, all in one call.","uc.t2":"Moderation","uc.p2":"Check posts against your own policy, then threshold the probability: allow, review or remove.","uc.t3":"LLM routing","uc.p3":"Decide whether a small model or a frontier model should answer, before you spend the tokens.",
  "lim.h":"Free tier","lim.full":"Full limits","lim.1":"elastic concurrency","lim.2":"elastic request rate","lim.3":"successful requests per day (UTC)","lim.4":"input tokens per request","lim.5":"API keys per account","lim.note":"Limits are per account and shared by all of its keys. Failed, rejected and timed-out requests are not charged. Fair use, best effort.",
@@ -1256,21 +1283,21 @@ en:{
  "om.k":"Open models","om.h":"Open weights you can run anywhere","om.p":"Apache-2.0 decision models on Hugging Face in Transformers, GGUF and MLX formats, plus a pip package that serves them on your own machine.",
  "dl.allrepos":"All {n} repositories","ab.ch":"Get in touch",
  // v3 (2026-10-08): API-first page in the openai.com/api layout
- "title3":"JevStyle: open decision models and API",
- "n3.api":"API",
+ "title3":"JevStyle: Local Classification and Routing for AI Agents",
+ "n3.api":"How it works",
  "n3.uc":"Use cases",
  "n3.models":"Open models",
  "n3.login":"Log in",
- "h3.title":"Build calibrated decisions into your product",
- "h3.sub":"One POST. A probability for every option. Free.",
- "h3.cta":"Get a free API key",
+ "h3.title":"Local decisions for your AI agents",
+ "h3.sub":"Classify text, route requests, and score options with small open models. Run locally, and send uncertain cases to your LLM.",
+ "h3.cta":"Try the live demo", "start.local":"Run locally", "start.demo":"Try demo", "learn.h":"Build with JevStyle", "learn.p":"Complete guides, runnable examples, and model choices for your project.",
  "dd.qs":"Quickstart",
  "dd.qs.d":"Your first request in a few minutes",
  "dd.pg.d":"Try requests in the browser",
  "dd.lim":"Limits",
  "dd.lim.d":"Rate limits, quotas and retries",
  "pr.label":"Project facts",
- "pr.hf":"{n} downloads",
+ "pr.hf":"{n} all-time downloads",
  "pr.pypi":"jev-style package",
  "pr.gh":"Source code",
  "pr.mcp":"jev-style server",
@@ -1357,9 +1384,9 @@ en:{
  "pd.c3.4":"/v1/systemone-compatible requests: a state plus typed questions.",
  "om3.h":"Or run it yourself",
  "om3.p":"The same models, Apache-2.0. Run them with Transformers, GGUF or MLX.",
- "fc.api.h":"Use the hosted API",
- "fc.api.1":"Nothing to install",
- "fc.api.2":"10,000 free requests a day",
+ "fc.api.h":"Try it in your browser",
+ "fc.api.1":"No installation or API key",
+ "fc.api.2":"Text and image examples on Hugging Face",
  "fc.api.3":"Playground and usage charts in Console",
  "fc.api.4":"Docs for auth, limits and error codes",
  "fc.os.h":"Run it yourself",
@@ -1384,6 +1411,7 @@ en:{
  "run.see":"See response"
 },
 zh:{
+"guide.0.h":"本地大模型路由","guide.0.p":"在本地选择路由，将不确定的决策交给大模型。","guide.1.h":"客服工单分类","guide.1.p":"一次请求判断负责团队、退款诉求与紧急程度。","guide.2.h":"Claude Code 调用审核","guide.2.p":"通过本地模型和明确规则检查工具调用。","guide.3.h":"评估你自己的数据","guide.3.p":"衡量准确率、校准、覆盖率和延迟。",
  "nav.models":"模型","nav.api":"免费 API","nav.getkey":"获取 API key","nav.console":"控制台","api.lead":"免费托管 2B Decision API — typed noul / choice / score。","api.docs":"API 文档","api.create":"创建 key","api.badge":"Independent · non-TypeSafe","api.strip.h":"免费 Decision API","api.strip.p":"公平使用免费额度。注册后在 Console 建 key，调用 api.jevstyle.com。认证、限额与错误见文档。","nav.tl":"时间线","sec.tl":"发布时间线","tl.next.when":"下一步",
  "nav.demos":"演示","sec.demos":"演示","dm.sub":"Jev-Style v3，本机运行","dm.play":"播放视频","dm.more":"更多演示",
  "hl.pub":"公开 holdout 硬一致率","hl.soft":"敏感 safe-class 软一致（v4）","hl.adapter":"可部署 LoRA + head","an.tag":"新","an.text":"Jev-Style 2B v4：能看图，Decision Index 0.3 公开指数 44.37（v3：34.05），输入 32,768 token",
@@ -1468,21 +1496,21 @@ zh:{
  "om.k":"开源模型","om.h":"开源权重，随处运行","om.p":"Apache-2.0 许可的决策模型，在 Hugging Face 上提供 Transformers、GGUF 和 MLX 格式，另有 pip 包可以在你自己的机器上运行。",
  "dl.allrepos":"全部 {n} 个仓库","ab.ch":"联系我",
  // v3 (2026-10-08): API-first page in the openai.com/api layout
- "title3":"JevStyle：开源决策模型与 API",
- "n3.api":"API",
+ "title3":"JevStyle：AI Agent 本地分类与路由模型",
+ "n3.api":"工作原理",
  "n3.uc":"应用场景",
  "n3.models":"开源模型",
  "n3.login":"登录",
- "h3.title":"把校准过的决策，接入你的产品",
- "h3.sub":"一次 POST，每个选项都有概率。免费。",
- "h3.cta":"免费获取 API key",
+ "h3.title":"让 AI Agent 在本地做出决策",
+ "h3.sub":"用小型开源模型完成分类、请求路由和评分。在本地运行，将不确定的情况交给大模型。",
+ "h3.cta":"直接体验 Demo", "start.local":"本地运行", "start.demo":"体验 Demo", "learn.h":"将 JevStyle 接入你的项目", "learn.p":"从完整教程、可运行案例和模型选择开始。",
  "dd.qs":"快速开始",
  "dd.qs.d":"几分钟发出第一个请求",
  "dd.pg.d":"在浏览器里试请求",
  "dd.lim":"限额",
  "dd.lim.d":"速率、额度和重试",
  "pr.label":"项目数据",
- "pr.hf":"{n} 次下载",
+ "pr.hf":"累计 {n} 次下载",
  "pr.pypi":"jev-style 包",
  "pr.gh":"源代码",
  "pr.mcp":"已收录 jev-style",
@@ -1569,9 +1597,9 @@ zh:{
  "pd.c3.4":"兼容 /v1/systemone 的请求格式：一段 state 加上带类型的问题。",
  "om3.h":"也可以自己运行",
  "om3.p":"同样的模型，Apache-2.0 许可，可用 Transformers、GGUF 或 MLX 运行。",
- "fc.api.h":"使用托管 API",
- "fc.api.1":"无需安装",
- "fc.api.2":"每天 10,000 次免费请求",
+ "fc.api.h":"在浏览器中直接体验",
+ "fc.api.1":"无需安装或 API Key",
+ "fc.api.2":"在 Hugging Face 体验文本和图片案例",
  "fc.api.3":"控制台里有 Playground 和用量图表",
  "fc.api.4":"认证、限额、错误码都有文档",
  "fc.os.h":"自己运行",
@@ -1596,9 +1624,7 @@ zh:{
  "run.see":"查看响应"
 }};
 
-let lang;
-try { lang = localStorage.getItem('lang'); } catch(e) {}
-if (lang !== 'en' && lang !== 'zh') lang = 'en';   // English by default; 中文 only when the visitor picks it
+let lang = location.pathname.startsWith('/zh/') ? 'zh' : 'en';   // English by default; 中文 only when the visitor picks it
 const t = k => I18N[lang][k] ?? I18N.en[k] ?? k;
 const pct = (v,d=1) => (Math.round(v*100*10**d + 1e-6)/10**d).toFixed(d)+'%';   // round half up: 0.7915 -> 79.2%
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -1853,11 +1879,12 @@ function renderModels(){
     const chips = planned ? '' : `<div class="fchips">${m.repos.filter(repoVis).map(r => `<a href="${HF+r.repo}" target="_blank" rel="noopener">${esc(r.chip || r.format.split(' ')[0])} <span aria-hidden="true">↗</span></a>`).join('')}</div>`;
     const meta = planned ? ''
       : `<p class="meta"><b>${t('cat.model')}</b><span>${relDate(m)}</span>${m.repos.some(onHub) ? `<span class="num">↓ ${famDl(m).toLocaleString('en-US')}<span class="sr-only"> ${t('dl.unit')}</span></span>` : `<span>${t('dl.soon')}</span>`}</p>`;
-    return `<article class="mcard hov${planned ? ' plan' : ''}${mAnim ? ' in' : ''}" style="--i:${i}">${media('model-'+m.id, planned ? 'plan' : m.id, 'wide', ov)}<div class="mbody"><h3 class="card-t">${planned ? esc(name) : `<button type="button" class="mt" data-open="${m.id}">${esc(name)}</button>`}</h3>${chips}${meta}</div></article>`;
+    return `<article class="mcard hov${planned ? ' plan' : ''}${mAnim ? ' in' : ''}" style="--i:${i}">${media('model-'+m.id, planned ? 'plan' : m.id, 'wide', ov)}<div class="mbody"><h3 class="card-t">${planned ? esc(name) : `<a class="mt" href="${MODEL_PAGES[m.id] || (HF + m.repos[0].repo)}">${esc(name)}</a>`}</h3>${chips}${meta}</div></article>`;
   }).join('');
   paintArt($('mGrid'));
 }
 
+const MODEL_PAGES = {'v4-2b':'/models/2b-v4/', v3:'/models/0-8b-v3/'};
 const SPOT_ID = 'v4-2b';
 const jbRef = (f, k) => f.bench.jevbench.board.find(b => b.key === k).acc;
 const BENCH_NAME = {'v4-2b':'Jev-Style 2B v4', 'v3-2b':'Jev-Style 2B v3', v3:'Jev-Style 0.8B v3'};   // JevBench labels: never "Decision 2B" (FlyMy.AI's model)
@@ -1997,7 +2024,7 @@ async function getJSON(url, ms){
 async function liveStats(){
   try {
     // 1) stats.json: same origin, refreshed every 3 h by a GitHub Action, so it works where huggingface.co is blocked
-    const site = await getJSON('stats.json', 5000);
+    const site = await getJSON('/stats.json', 5000);
     if (site && Array.isArray(site.models)) applyStats(site.models, 'site', new Date(site.updated));
     // 2) Hugging Face API directly: newest numbers when the visitor can reach it
     const hf = await getJSON(`https://huggingface.co/api/models?author=${encodeURIComponent(DATA.author)}&limit=200&expand[]=downloads&expand[]=downloadsAllTime&expand[]=likes&expand[]=createdAt`, 8000);
@@ -2058,11 +2085,22 @@ function carStop(){ if (!CAR.auto) return; CAR.auto = false; carArm(); }
 
 /* ---------- quickstart tabs with countdown ---------- */
 const QS = [
- {id:'pip', url:'https://pypi.org/project/jev-style/', label:'pip · jev-style · 2B v4', file:'python', code:`# pip install "jev-style[torch]"    PyTorch: text and images
-# pip install "jev-style[mlx]"      Apple silicon (MLX: text)
+ {id:'start-torch', url:'https://github.com/lawrence3699/jev-style#quick-start', label:'Run locally · PyTorch', file:'shell', code:`# Python 3.10+; run inside a virtual environment.
+python -m pip install "jev-style[torch]"
+jev-style serve --release 2b --backend torch
+# Open http://127.0.0.1:8765
+# First start downloads the model. This build supports text and images.`},
+ {id:'start-mac', url:'https://github.com/lawrence3699/jev-style#quick-start', label:'Run locally · Apple silicon', file:'shell', code:`# Python 3.10+; run inside a virtual environment.
+python -m pip install "jev-style[mlx]"
+jev-style serve --release 2b --backend mlx
+# Open http://127.0.0.1:8765
+# MLX is text-only. Use PyTorch for images.
+# For the smaller 0.8B text model: jev-style serve --release 0.8b`},
+ {id:'pip', url:'https://pypi.org/project/jev-style/', label:'pip · jev-style · 2B v4', file:'python', code:`# pip install "jev-style[torch]"    PyTorch: text and images, including on Apple MPS
+# Save a receipt image as receipt.png before running the image example below.
 from jev_style import JevStyle, choice, image, noul
 
-js = JevStyle(release="2b")       # Jev-Style 2B v4; JevStyle() is the default 0.8B
+js = JevStyle(release="2b", backend="torch")  # Explicitly select the image-capable build on every platform
 teams = {"billing": "payments, refunds", "tech": "bugs, crashes", "sales": "pricing, plans"}
 out = js.decide({"messages": ["Refund still missing after 3 weeks"]},
                 {"team": choice("Which team should handle this ticket?", teams)})
@@ -2192,7 +2230,7 @@ python jev_decision_client.py --url http://127.0.0.1:8080 \\
   --options negative positive`},
 ];
 const QS_FOR = {'v4-2b':'pip', 'v3-2b':'b2t', v3:'v3t', macjev:'mj', v2:'v2g', 'cascade-9b':'c9'};
-let qsActive = 'pip', qsAuto = !REDUCED, qsVis = false;
+let qsActive = 'start-torch', qsAuto = false, qsVis = false;
 function hl(code){
   return esc(code).split('\n').map(line => {
     const i = line.indexOf('#'); let head = i>=0 ? line.slice(0,i) : line; const tail = i>=0 ? `<span class="c1">${line.slice(i)}</span>` : '';
@@ -2544,8 +2582,9 @@ function apPlay(){
   }, n * 45 + 380);
 }
 // live status: inference_ready:true -> "API operational"; any other answer -> "Inference unavailable"; no answer (network, CORS, timeout) -> no pill
-const API_UP = {s:null};
+const API_UP = {s:'down'};
 function renderStatus(){
+  const note = document.querySelector('.maint'); if (note) note.hidden = API_UP.s === 'up';
   document.querySelectorAll('.api-status').forEach(el => {
     el.hidden = !API_UP.s; if (!API_UP.s) return;
     el.dataset.state = API_UP.s; el.lastElementChild.textContent = t(API_UP.s === 'up' ? 'st.up' : 'st.down');
@@ -2682,7 +2721,7 @@ const famVis = f => !!f && f.repos.some(repoVis);
 const VIS = () => DATA.families.filter(famVis);
 const repoOf = id => DATA.families.flatMap(f => f.repos).find(r => r.repo === id);
 const qsFam = q => q.repo ? DATA.families.find(f => f.repos.some(r => r.repo === q.repo)) : fam('v4-2b');
-const QS_HOME = ['pip', 'b4t', 'b4g'];   // home page tabs; every model's own snippet is still in its drawer
+const QS_HOME = ['start-torch', 'start-mac', 'pip'];   // home page tabs; every model's own snippet is still in its drawer
 const QSV = () => QS.filter(q => { const r = q.repo && repoOf(q.repo); return QS_HOME.includes(q.id) && famVis(qsFam(q)) && (!r || repoVis(r)); });
 const visKey = () => VIS().map(f => f.id).join() + '|' + DATA.families.flatMap(f => f.repos).filter(repoVis).map(r => r.repo).join();
 function applyVisibility(){
@@ -2693,11 +2732,11 @@ function heroDefault(){ const v = VIS(), i = v.findIndex(f => f.id === 'v4-2b');
 
 /* ---------- v3: use cases (four open a recorded demo, two point to the Playground) ---------- */
 const UCS = [
+  {k:'tk', demo:'patterns', type:'choice · noul · score'},
   {k:'ag', demo:'agent-approval', type:'choice'},
   {k:'mv', demo:'snake', type:'choice'},
-  {k:'tk', demo:'patterns', type:'choice · noul · score'},
-  {k:'md', href:'/console/#playground', type:'choice · noul', pal:'b4'},
-  {k:'rt', href:'/console/#playground', type:'choice', pal:'b2'},
+  {k:'md', href:'https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b', type:'choice · noul', pal:'b4'},
+  {k:'rt', href:'/use-cases/local-llm-routing/', type:'choice', pal:'b2'},
   {k:'in', demo:'chinese', type:'choice'},
 ];
 const UC_FEAT = 2;   // shown up front, like the two featured demos on the old page; the rest sit behind "More"
@@ -2750,10 +2789,10 @@ function renderAll(){
 }
 function copy(text, btn, selEl){
   const fallback = () => { if (!selEl) return; const s = getSelection(), r = document.createRange(); r.selectNodeContents(selEl); s.removeAllRanges(); s.addRange(r); };
-  const done = () => { btn.textContent = t('copied'); clearTimeout(btn._t); btn._t = setTimeout(() => btn.textContent = t(btn.dataset.i18n), 1400); };
+  const done = () => { if (['copyBtn','pipCopy','apCopy'].includes(btn.id)) window.jevAnalytics?.track('code_copy', {component: btn.id}); btn.textContent = t('copied'); clearTimeout(btn._t); btn._t = setTimeout(() => btn.textContent = t(btn.dataset.i18n), 1400); };
   try { navigator.clipboard.writeText(text).then(done, fallback); } catch(e) { fallback(); }
 }
-function setLang(l){ lang = l; try { localStorage.setItem('lang', lang); } catch(_){} renderAll(); setupReveal(); }
+function setLang(l){ location.assign((l === 'zh' ? '/zh/' : '/') + location.hash); }
 
 document.querySelectorAll('.bn').forEach(e => e.textContent = DATA.brand);
 document.querySelectorAll('.hf').forEach(a => a.href = HF + DATA.author);

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#f7f7fc"/>
+<circle cx="63" cy="65" r="17" fill="none" stroke="#121218" stroke-width="5"/><circle cx="63" cy="65" r="5" fill="#121218"/><path d="M80 65h20" stroke="#121218" stroke-width="5"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#121218">
+<text x="115" y="77" font-size="34" font-weight="700">JevStyle</text>
+<text x="62" y="223" font-size="72" font-weight="700">Local decisions</text>
+<text x="62" y="305" font-size="72" font-weight="700" fill="#5557de">for AI agents.</text>
+<text x="65" y="364" font-size="28" fill="#5e5e6b">Classification · Routing · Confidence scores</text>
+<rect x="64" y="417" width="1072" height="132" rx="22" fill="#fff" stroke="#dedeea"/>
+<text x="96" y="461" font-size="17" fill="#777783" letter-spacing="2">SUPPORT TICKET</text>
+<text x="96" y="501" font-size="27">“I was billed twice.”</text>
+<path d="M460 484h95m-14-12 14 12-14 12" fill="none" stroke="#5557de" stroke-width="3"/>
+<text x="595" y="461" font-size="17" fill="#777783" letter-spacing="2">LOCAL MODEL</text>
+<text x="595" y="501" font-size="27">billing</text>
+<path d="M774 484h70m-14-12 14 12-14 12" fill="none" stroke="#5557de" stroke-width="3"/>
+<text x="883" y="461" font-size="17" fill="#777783" letter-spacing="2">YOUR POLICY</text>
+<text x="883" y="501" font-size="27">route or review</text>
+<text x="65" y="593" font-size="20" fill="#5e5e6b">Open weights · Python · MCP · Apple silicon / CUDA / CPU</text>
+<text x="975" y="593" font-size="20" font-weight="700">jevstyle.com</text>
+</g></svg>
