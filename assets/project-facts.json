@@ -10,10 +10,12 @@
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
   "reviewed": "2026-10-29",
   "hostedApi": {
-    "status": "maintenance",
-    "model": "Jev-Style Decision 2B v3",
+    "status": "operational",
+    "model": "Jev-Style Decision 2B v4 Q4_K_M",
     "dailyQuota": 10000,
-    "inputTokenLimit": 8000
+    "inputTokenLimit": 8000,
+    "textOnly": true,
+    "concurrencyLimit": 1
   },
   "packageVersion": "0.6.2",
   "latest2bModel": "Jev-Style-2B-Decision-v4",

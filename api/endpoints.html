@@ -50,7 +50,6 @@
       <a href="/console/">Console</a>
     </aside>
     <main class="content"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="https://jevstyle.com/">Home</a> / <span aria-current="page">Endpoints · Jev-Style API</span></nav>
-      <div class="maint-note" role="status" style="margin:0 0 20px;padding:10px 14px;border:1px solid rgba(217,119,6,.45);border-radius:10px;background:rgba(217,119,6,.10);font-size:14px;line-height:1.55"><b>Maintenance</b> · The hosted API is temporarily down for maintenance, so API calls will fail for now. The open models are still available on Hugging Face.<br><span lang="zh">API 服务暂时维护中，期间无法调用。开源模型仍可在 Hugging Face 下载使用。</span></div>
 
       <h1>Endpoints</h1>
       <p class="lead">All public traffic goes through <code>https://api.jevstyle.com</code>. Do not call internal inference ports.</p>
@@ -58,7 +57,7 @@
       <table>
         <tr><th>Method</th><th>Path</th><th>Auth</th><th>Notes</th></tr>
         <tr><td><code>POST</code></td><td><code>/v1/systemone</code></td><td>API key</td><td>Decision API: calibrated probabilities for noul / choice / score questions</td></tr>
-        <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td>API key</td><td>Lists the hosted model (<code>jev-style-2b-decision-v3</code>) with its context and input limits; also a quick way to check that a key works</td></tr>
+        <tr><td><code>GET</code></td><td><code>/v1/models</code></td><td>API key</td><td>Lists the hosted model (<code>jev-style-2b-decision-v4</code>) with its context and input limits; also a quick way to check that a key works</td></tr>
       </table>
       <h3>Request body</h3>
       <p style="color:var(--ink2)"><code>state</code> (string) + <code>questions</code> (map of id → question). Each question has <code>type</code>, <code>instructions</code>, and optional/required <code>criteria</code>.</p>

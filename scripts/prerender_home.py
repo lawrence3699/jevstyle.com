@@ -32,8 +32,8 @@ def render(source, translations, data, lang):
     # Restrict substitution to markup, not JS strings that also contain HTML.
     markup, scripts = source.split('<script id="site-data"', 1)
     api = facts['hostedApi']
-    summary = ('托管服务维护中。文档对应 2B v3；下列额度在服务恢复后适用。本地模型和在线 Demo 是独立入口。'
-               if lang == 'zh' else 'The hosted service is under maintenance. This reference describes 2B v3; quotas below apply after service resumes. Local models and the online demo are separate options.')
+    summary = ('托管 API 已恢复，使用 2B v4 Q4_K_M，仅支持文本，最多 8,000 个输入 token，一次处理一个请求。'
+               if lang == 'zh' else 'The hosted API runs 2B v4 Q4_K_M for text only, with up to 8,000 input tokens and one request at a time.')
     summary += ' ' + ('核对日期：' if lang == 'zh' else 'Reviewed: ') + facts['reviewed'] + '.'
     markup = re.sub(r'<!--discovery:api-summary-->.*?<!--/discovery:api-summary-->',
                     lambda _: '<!--discovery:api-summary--><p class="api-reference-note">'+html.escape(summary)+'</p><!--/discovery:api-summary-->', markup, flags=re.S)
@@ -98,9 +98,9 @@ def main():
     except json.JSONDecodeError:
         translations = json.loads(subprocess.check_output(['node','-e',js], input=obj.encode('utf-8')))
     facts = json.loads((ROOT / 'assets/project-facts.json').read_text())
-    assert facts['hostedApi']['status'] == 'maintenance', 'Review translated API copy before changing status.'
-    translations['en'].update({'k3.free':'daily quota after service resumes', 'k3.lat':'hosted API status', 'tr.3':'Open local models remain available', 'run.ok':'Recorded example · {s} s GPU time'})
-    translations['zh'].update({'k3.free':'服务恢复后的每日额度', 'k3.lat':'托管 API 状态', 'tr.3':'开源本地模型仍可使用', 'code.h':'托管 API 文档', 'run.ok':'已记录的示例 · GPU 计算 {s} 秒'})
+    assert facts['hostedApi']['status'] == 'operational', 'Review translated API copy before changing status.'
+    translations['en'].update({'k3.free':'daily quota per account', 'k3.lat':'hosted API status', 'tr.3':'Open local models remain available', 'run.ok':'Recorded example · {s} s GPU time'})
+    translations['zh'].update({'k3.free':'每个账号的每日额度', 'k3.lat':'托管 API 状态', 'tr.3':'开源本地模型仍可使用', 'code.h':'托管 API 文档', 'run.ok':'已记录的示例 · GPU 计算 {s} 秒'})
     translations['en'].update({'title3':'Local Text Classification and AI Routing in Python | JevStyle', 'h3.title':'Local classification and routing for AI agents', 'h3.sub':'Classify text, route requests, and score fixed choices in Python. Run small open models on CPU, CUDA, or Apple silicon; keep an LLM or human fallback.'})
     translations['zh'].update({'title3':'Python 本地文本分类与 AI 路由模型 | JevStyle', 'h3.title':'AI Agent 的本地分类与路由', 'h3.sub':'在 Python 中完成文本分类、请求路由和固定选项评分。小型开源模型支持 CPU、CUDA 与 Apple silicon，可保留大模型或人工回退。'})
     source = re.sub(r'const I18N = .*?;\s*let lang', lambda _: 'const I18N = '+json.dumps(translations, ensure_ascii=False, indent=1)+';\nlet lang', source, count=1, flags=re.S)

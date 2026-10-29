@@ -3,7 +3,7 @@
 > Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.
 
 Maintainer: Chaoliang Yan. Code and weights: Apache-2.0.
-Hosted API: under maintenance as of 2026-10-29. Local models and hosted demos are separate.
+Hosted API: operational, 2B v4 Q4_K_M, text only, one request at a time. Reviewed 2026-10-29. Local models and hosted demos are separate.
 Current Python package: 0.6.2. Local default: 0.8B v3; --release 2b selects 2B v4 (released 2026-10-27).
 2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.
 Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. This does not imply affiliation or endorsement.
@@ -29,7 +29,7 @@ Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1
 - [Source code](https://github.com/lawrence3699/jev-style)
 - [Model cards and weights](https://huggingface.co/chaoliangUNSW)
 - [Python package](https://pypi.org/project/jev-style/)
-- [Hosted API reference, under maintenance](https://jevstyle.com/api/)
+- [Hosted API reference](https://jevstyle.com/api/)
 
 ## Reading the evidence
 

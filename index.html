@@ -961,7 +961,6 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 <body>
 
 
-<div class="maint" role="status"><span data-i18n="mt.note">The hosted API is temporarily down for maintenance, so API calls will fail for now. The open models are still available on Hugging Face.</span></div>
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
     <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn">JevStyle</span></a>
@@ -1019,7 +1018,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
     </ul>
   </section>
 
-<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">Start with the task you need to run locally</h2><p>Choose an approach for your inputs, labels, and hardware, then compare results on your own data.</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Local text classification in Python</b><span>Compare a traditional classifier with typed decision models, and keep a review path.</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>Local decision models on Apple silicon</b><span>Choose a method and backend for fixed choices and your available hardware.</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>Workflow routing with LLM fallback</b><span>Make the local routing decision before escalating uncertain requests.</span></a></div><div class="current-project-facts" id="current-facts"><h3>Current releases and service availability</h3><p>The Python package is <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>. <a href="/models/2b-v4/">2B v4 was released on 2026-10-27</a>: PyTorch supports text and images; MLX and GGUF builds are text-only. The default local text model is <a href="/models/0-8b-v3/">0.8B v3</a>.</p><p><strong>The hosted API is under maintenance and is currently unavailable.</strong> Local models and the Hugging Face demo are separate entry points; hosted-service availability does not determine whether a local model works.</p><p>Maintainer: <a href="/about/">Chaoliang Yan</a> (GitHub: lawrence3699). JevStyle is independent and is not affiliated with or endorsed by TypeSafe.</p><p>Training provenance: 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. The Python package does not bundle the raw teacher response datasets. See <a href="/models/2b-v4/#results">the model and training sources</a>.</p><p class="facts-date">Reviewed: <time datetime="2026-10-29">2026-10-29</time></p></div></section><!--/discovery:task-entrypoints-->
+<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">Start with the task you need to run locally</h2><p>Choose an approach for your inputs, labels, and hardware, then compare results on your own data.</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Local text classification in Python</b><span>Compare a traditional classifier with typed decision models, and keep a review path.</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>Local decision models on Apple silicon</b><span>Choose a method and backend for fixed choices and your available hardware.</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>Workflow routing with LLM fallback</b><span>Make the local routing decision before escalating uncertain requests.</span></a></div><div class="current-project-facts" id="current-facts"><h3>Current releases and service availability</h3><p>The Python package is <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>. <a href="/models/2b-v4/">2B v4 was released on 2026-10-27</a>: PyTorch supports text and images; MLX and GGUF builds are text-only. The default local text model is <a href="/models/0-8b-v3/">0.8B v3</a>.</p><p><strong>The hosted API runs 2B v4 Q4_K_M for text only, processing one request at a time.</strong> Local models and the Hugging Face demo are separate entry points; hosted-service availability does not determine whether a local model works.</p><p>Maintainer: <a href="/about/">Chaoliang Yan</a> (GitHub: lawrence3699). JevStyle is independent and is not affiliated with or endorsed by TypeSafe.</p><p>Training provenance: 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. The Python package does not bundle the raw teacher response datasets. See <a href="/models/2b-v4/#results">the model and training sources</a>.</p><p class="facts-date">Reviewed: <time datetime="2026-10-29">2026-10-29</time></p></div></section><!--/discovery:task-entrypoints-->
   <section id="try" aria-labelledby="tryH">
     <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">One request, every option scored</h2><p data-i18n="try.p">One support ticket, three questions, one call.</p></div>
     <div class="tabs ftabs" id="tyTabs" role="tablist" data-i18n-aria="ex.h"></div>
@@ -1029,10 +1028,10 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 
   <section id="api-code" aria-labelledby="codeH">
     <div class="s3-head"><h2 id="codeH" data-i18n="code.h">Hosted API reference</h2></div>
-<!--discovery:api-summary--><p class="api-reference-note">The hosted service is under maintenance. This reference describes 2B v3; quotas below apply after service resumes. Local models and the online demo are separate options. Reviewed: 2026-10-29.</p><!--/discovery:api-summary-->
+<!--discovery:api-summary--><p class="api-reference-note">The hosted API runs 2B v4 Q4_K_M for text only, with up to 8,000 input tokens and one request at a time. Reviewed: 2026-10-29.</p><!--/discovery:api-summary-->
     <dl class="kstats" id="kStats">
-      <div><dt data-i18n="k3.free">daily quota after service resumes</dt><dd>10,000</dd></div>
-      <div><dt data-i18n="k3.lat">hosted API status</dt><dd data-i18n="st.down">Under maintenance</dd></div>
+      <div><dt data-i18n="k3.free">daily quota per account</dt><dd>10,000</dd></div>
+      <div><dt data-i18n="k3.lat">hosted API status</dt><dd data-i18n="st.up">API operational</dd></div>
       <div><dt data-i18n="k3.tok">input tokens per request</dt><dd>8,000</dd></div>
       <div><dt data-i18n="k3.out">for every option, nothing to parse</dt><dd data-i18n="k3.out.v">Probabilities</dd></div>
     </dl>
@@ -1139,7 +1138,7 @@ jev-style serve --release 2b --backend torch
     </article>
   </section>
 
-<!--discovery:home-guide--><section id="project-guide" class="growth-guides" aria-labelledby="project-guide-heading"><div class="s3-head"><h2 id="project-guide-heading">Choose a model. Check the evidence.</h2><p>JevStyle is an open-source toolkit for local classification, routing, and scoring. Its small decision models return probabilities for predefined options.</p></div><div class="guide-grid"><a href="/models/compare/"><b>Compare local models</b><span>Choose 0.8B or 2B by input, backend, and weight size.</span></a><a href="/benchmarks/"><b>Benchmarks and reproduction</b><span>Read published self-runs with protocols, sources, and limitations.</span></a></div><div class="project-faq"><h3>Can JevStyle run offline?</h3><p>After installing dependencies and downloading the model, you can process inputs locally. The online demo and hosted API are separate services and receive inputs sent to them.</p><h3>Which model should I use?</h3><p>Start with 0.8B v3 for text and compare 2B v4 on your own examples. Image input requires the 2B v4 PyTorch backend; MLX and GGUF builds are text-only.</p><h3>Does it generate chat replies?</h3><p>It returns probabilities for yes/no, choice, and ordered-score questions, rather than free-form replies. Keep human or LLM fallback for uncertain decisions.</p><p><a href="/about/">About the project and maintainer</a> · <a href="/api/">Hosted API reference (under maintenance)</a></p></div></section><!--/discovery:home-guide-->
+<!--discovery:home-guide--><section id="project-guide" class="growth-guides" aria-labelledby="project-guide-heading"><div class="s3-head"><h2 id="project-guide-heading">Choose a model. Check the evidence.</h2><p>JevStyle is an open-source toolkit for local classification, routing, and scoring. Its small decision models return probabilities for predefined options.</p></div><div class="guide-grid"><a href="/models/compare/"><b>Compare local models</b><span>Choose 0.8B or 2B by input, backend, and weight size.</span></a><a href="/benchmarks/"><b>Benchmarks and reproduction</b><span>Read published self-runs with protocols, sources, and limitations.</span></a></div><div class="project-faq"><h3>Can JevStyle run offline?</h3><p>After installing dependencies and downloading the model, you can process inputs locally. The online demo and hosted API are separate services and receive inputs sent to them.</p><h3>Which model should I use?</h3><p>Start with 0.8B v3 for text and compare 2B v4 on your own examples. Image input requires the 2B v4 PyTorch backend; MLX and GGUF builds are text-only.</p><h3>Does it generate chat replies?</h3><p>It returns probabilities for yes/no, choice, and ordered-score questions, rather than free-form replies. Keep human or LLM fallback for uncertain decisions.</p><p><a href="/about/">About the project and maintainer</a> · <a href="/api/">Hosted API reference</a></p></div></section><!--/discovery:home-guide-->
   <section id="about">
     <div class="about">
       <div class="ab-left">
@@ -1505,11 +1504,11 @@ const I18N = {
   "duo.api.go": "Create free key",
   "duo.api.docs": "API docs",
   "st.up": "API operational",
-  "st.down": "Under maintenance",
-  "mt.note": "The hosted API is temporarily down for maintenance, so API calls will fail for now. The open models are still available on Hugging Face.",
+  "st.down": "Inference unavailable",
+  "mt.note": "Inference is temporarily unavailable. Check the console service status before sending requests.",
   "api.k": "Hosted API",
-  "api.h": "The same 2B v3, hosted for free",
-  "api.p": "Don't want to run it yourself? Call Jev-Style 2B v3 on our GPUs: send text and typed questions to one endpoint and get a calibrated probability for every option.",
+  "api.h": "2B v4, hosted for free",
+  "api.p": "Send text and typed questions to the hosted Jev-Style 2B v4 Q4_K_M model and receive probabilities for every option. The service processes one request at a time.",
   "api.indep": "Independent project · not affiliated with TypeSafe",
   "ex.h": "One request, every option scored",
   "ex.aside": "Real production response · Oct 8, 2026",
@@ -1539,9 +1538,9 @@ const I18N = {
   "pf.1": "Median end-to-end for a short request, Sydney to API over the public internet",
   "pf.2": "Model compute for a short request",
   "pf.3": "Model compute at 7.9k input tokens",
-  "pf.4": "GPU replicas serving requests",
+  "pf.4": "inference worker",
   "pf.5": "Top answers identical to FP32 (BF16 serving, JevBench + sample tickets)",
-  "pf.same": "The API serves the same Jev-Style 2B v3 weights you can download.",
+  "pf.same": "The API runs the GGUF Q4_K_M build of Jev-Style 2B v4.",
   "pf.model": "See the model",
   "uc.h": "Use cases",
   "uc.sub": "Demos recorded with the open Jev-Style v3 models",
@@ -1574,7 +1573,7 @@ const I18N = {
   "faq.q3": "Is this affiliated with TypeSafe or Jev?",
   "faq.a3": "No. JevStyle is an independent project by Chaoliang Yan (UNSW). It is not affiliated with TypeSafe AI or its Jev models. The model weights are Apache-2.0.",
   "faq.q4": "Which model is served?",
-  "faq.a4": "Jev-Style 2B v3 (jev-style-2b-decision-v3), the same weights that are on Hugging Face, served in BF16 with CUDA graphs on 2 GPU replicas. Its top answers matched FP32 on 321 of 321 test questions. Each request can carry up to 8,000 input tokens.",
+  "faq.a4": "Jev-Style 2B v4 (jev-style-2b-decision-v4), using the text-only GGUF Q4_K_M build on Apple silicon. One worker processes requests sequentially. Each request accepts up to 8,000 input tokens.",
   "faq.q5": "What happens when I hit a limit?",
   "faq.a5": "You get HTTP 429 (with Retry-After when shared capacity is busy). Failed and rejected requests are not charged.",
   "faq.q6": "How long can a request be?",
@@ -1607,7 +1606,7 @@ const I18N = {
   "pr.gh": "Source code",
   "pr.mcp": "jev-style server",
   "pr.weights": "Open weights",
-  "pm.h": "Powered by Jev-Style 2B v3",
+  "pm.h": "Powered by Jev-Style 2B v4 Q4_K_M",
   "pm.p": "The same open weights you can download, served on GPUs and free to call.",
   "pm.badge": "Hosted · free tier",
   "pm.d": "A 2B decision model. Give it text and typed questions, and it scores every option in one pass.",
@@ -1686,7 +1685,7 @@ const I18N = {
   "pd.c2": "Limits and reliability",
   "pd.c2.1": "Per account: elastic concurrency (up to 3 while idle), elastic request rate based on shared capacity, 10,000 successful per day (UTC).",
   "pd.c2.2": "Failed, rejected and timed-out requests are not charged.",
-  "pd.c2.3": "2 GPU replicas; ~0.37 s median end-to-end for a short request from Sydney.",
+  "pd.c2.3": "One Apple silicon inference worker; requests run sequentially. Latency depends on input length and network conditions.",
   "pd.c2.4": "BF16 serving matches FP32 on 321 of 321 answers (JevBench + sample tickets).",
   "pd.c3": "Developer tools",
   "pd.c3.1": "Console with a Playground for trying requests.",
@@ -1705,7 +1704,7 @@ const I18N = {
   "fc.os.2": "CPU, CUDA and Apple silicon",
   "fc.os.3": "Runs on CPU, CUDA and Apple silicon",
   "fc.os.4": "Up to 32,768 input tokens with 2B v4, images included",
-  "k3.free": "daily quota after service resumes",
+  "k3.free": "daily quota per account",
   "k3.lat": "hosted API status",
   "k3.tok": "input tokens per request",
   "k3.out.v": "Probabilities",
@@ -2016,11 +2015,11 @@ const I18N = {
   "duo.api.go": "免费创建 key",
   "duo.api.docs": "API 文档",
   "st.up": "API 运行正常",
-  "st.down": "维护中",
-  "mt.note": "API 服务暂时维护中，期间无法调用。开源模型仍可在 Hugging Face 下载使用。",
+  "st.down": "推理暂不可用",
+  "mt.note": "推理服务暂时不可用，请先在控制台查看服务状态。",
   "api.k": "托管 API",
-  "api.h": "同一个 2B v3，免费托管",
-  "api.p": "不想自己部署？直接调用跑在我们 GPU 上的 Jev-Style 2B v3：把文本和带类型的问题发到同一个接口，每个选项都会得到一个校准过的概率。",
+  "api.h": "2B v4，免费托管",
+  "api.p": "将文本和带类型的问题发送给托管的 Jev-Style 2B v4 Q4_K_M 模型，为每个选项获取概率。服务一次处理一个请求。",
   "api.indep": "独立项目 · 与 TypeSafe 无关",
   "ex.h": "一次请求，每个选项都有分数",
   "ex.aside": "线上真实响应 · 2026 年 10 月 8 日",
@@ -2050,9 +2049,9 @@ const I18N = {
   "pf.1": "短请求端到端耗时中位数，从悉尼经公网访问",
   "pf.2": "短请求的模型计算时间",
   "pf.3": "输入 7.9k token 时的模型计算时间",
-  "pf.4": "同时提供服务的 GPU 副本",
+  "pf.4": "推理工作进程",
   "pf.5": "首选答案与 FP32 一致（BF16 线上推理，JevBench + 示例工单）",
-  "pf.same": "API 用的就是你可以下载的同一份 Jev-Style 2B v3 权重。",
+  "pf.same": "API 使用 Jev-Style 2B v4 的 GGUF Q4_K_M 版本。",
   "pf.model": "查看模型",
   "uc.h": "应用场景",
   "uc.sub": "演示录制自开源的 Jev-Style v3 模型",
@@ -2085,7 +2084,7 @@ const I18N = {
   "faq.q3": "和 TypeSafe 或 Jev 有关系吗？",
   "faq.a3": "没有。JevStyle 是 Chaoliang Yan（UNSW）的独立项目，与 TypeSafe AI 及其 Jev 模型无关。模型权重采用 Apache-2.0 许可。",
   "faq.q4": "线上用的是哪个模型？",
-  "faq.a4": "Jev-Style 2B v3（jev-style-2b-decision-v3），和 Hugging Face 上的是同一份权重，以 BF16 加 CUDA graphs 运行在 2 个 GPU 副本上。在 321 道测试题上，首选答案与 FP32 全部一致。每次请求最多可带 8,000 个输入 token。",
+  "faq.a4": "Jev-Style 2B v4（jev-style-2b-decision-v4），使用 Apple silicon 上的 GGUF Q4_K_M 版本，仅支持文本。单个工作进程依次处理请求，每次最多 8,000 个输入 token。",
   "faq.q5": "超出限额会怎样？",
   "faq.a5": "返回 HTTP 429（全站繁忙时带 Retry-After）。失败和被拒绝的请求不扣额度。",
   "faq.q6": "单次请求最多能多长？",
@@ -2118,7 +2117,7 @@ const I18N = {
   "pr.gh": "源代码",
   "pr.mcp": "已收录 jev-style",
   "pr.weights": "开源权重",
-  "pm.h": "由 Jev-Style 2B v3 驱动",
+  "pm.h": "由 Jev-Style 2B v4 Q4_K_M 驱动",
   "pm.p": "就是你可以下载的那份开源权重，跑在 GPU 上，免费调用。",
   "pm.badge": "托管 · 免费额度",
   "pm.d": "一个 2B 决策模型。给它文本和带类型的问题，一次前向就给每个选项打分。",
@@ -2197,7 +2196,7 @@ const I18N = {
   "pd.c2": "限额与可靠性",
   "pd.c2.1": "每个账号：弹性并发（空闲时最多 3 个），按全站余量弹性放行，每天 10,000 次成功请求（UTC）。",
   "pd.c2.2": "失败、被拒绝和超时的请求不扣额度。",
-  "pd.c2.3": "2 个 GPU 副本；从悉尼发短请求，端到端中位约 0.37 秒。",
+  "pd.c2.3": "单个 Apple silicon 推理工作进程依次处理请求；延迟取决于输入长度和网络状况。",
   "pd.c2.4": "BF16 线上推理与 FP32 在 321 个答案上全部一致（JevBench + 示例工单）。",
   "pd.c3": "开发者工具",
   "pd.c3.1": "控制台自带 Playground，可以直接试请求。",
@@ -2216,7 +2215,7 @@ const I18N = {
   "fc.os.2": "支持 CPU、CUDA 和 Apple silicon",
   "fc.os.3": "支持 CPU、CUDA 和 Apple silicon",
   "fc.os.4": "2B v4 最多支持 32,768 个输入 token（含图片）",
-  "k3.free": "服务恢复后的每日额度",
+  "k3.free": "每个账号的每日额度",
   "k3.lat": "托管 API 状态",
   "k3.tok": "每次输入 token",
   "k3.out.v": "概率",
@@ -3191,7 +3190,7 @@ function apPlay(){
   }, n * 45 + 380);
 }
 // live status: inference_ready:true -> "API operational"; any other answer -> "Inference unavailable"; no answer (network, CORS, timeout) -> no pill
-const API_UP = {s:'down'};
+const API_UP = {s:null};
 function renderStatus(){
   const note = document.querySelector('.maint'); if (note) note.hidden = API_UP.s === 'up';
   document.querySelectorAll('.api-status').forEach(el => {
