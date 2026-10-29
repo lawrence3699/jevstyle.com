@@ -262,7 +262,7 @@ def append(snapshot, run, root, run_bytes=None):
     require(snapshot.get("schema_version") == 1 and snapshot.get("rounds"), "Expected existing schema-v1 history")
     require(run.get("schema_version") == 1 and run.get("protocol") == PROTOCOL, "Unsupported collection protocol")
     require(run.get("acquisition_mode") == "consumer_web_ui", "API/synthetic answers must never enter consumer-web history")
-    require(run.get("runner_kind") in {"scheduled_agent", "human"}, "Unknown runner kind")
+    require(run.get("runner_kind") in {"scheduled_agent", "interactive_agent", "human"}, "Unknown runner kind")
     require(run.get("review_ready") is True, "Template/unreviewed run cannot be published")
     ident = run.get("run_id")
     require(isinstance(ident, str) and re.fullmatch(r"[a-z][a-z0-9_-]{2,79}", ident), "Invalid immutable run ID")

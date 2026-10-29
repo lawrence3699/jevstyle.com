@@ -63,6 +63,13 @@ class AppendContracts(unittest.TestCase):
         self.assertNotIn("screen.png", public)
         self.assertNotIn(str(self.root), public)
 
+    def test_user_requested_agent_run_retains_distinct_runner_kind(self):
+        self.run["runner_kind"] = "interactive_agent"
+        self.complete()
+        value, report = append(self.snapshot, self.run, self.root)
+        self.assertEqual(value["rounds"][-1]["runner_kind"], "interactive_agent")
+        self.assertEqual(report["validation"], "passed")
+
     def test_api_and_unreviewed_templates_cannot_be_imported(self):
         for field, bad in (("acquisition_mode", "api"), ("review_ready", False), ("protocol", "different")):
             value = copy.deepcopy(self.run); value[field] = bad

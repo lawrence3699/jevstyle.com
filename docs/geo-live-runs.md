@@ -45,6 +45,10 @@ Top-level manifest fields:
 }
 ```
 
+For an on-demand run requested in the chat, use `runner_kind: interactive_agent`.
+`scheduled_agent` identifies a recurring scheduled run; neither value means a
+provider API was used.
+
 Each platform has its fixed `id` (`chatgpt`, `gemini`, `perplexity`), `availability`
 (`available`, `partial`, `unavailable`), a full `attempts` log, and all ten
 `results`. Its public `environment` contains exactly four fields:
