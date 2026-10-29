@@ -34,7 +34,7 @@
 <div class="actions"><a class="button" href="#approaches">Compare approaches</a><a class="button secondary" href="#quickstart" data-track="quickstart_open">Run on your machine</a></div>
 <p class="hero-note">Source review: <time datetime="2026-10-29">29 October 2026</time> · Commands follow jev-style 0.6.2 · No cross-tool speed ranking is claimed</p>
 
-<div class="layout"><article class="article">
+<div class="layout"><article class="article"><!--geo4:task-answer--><section id="task-answer"><h2>When to use this local approach</h2><p><strong>JevStyle is a local option for scoring predefined choices on Apple silicon with MLX, or on CPU/CUDA with PyTorch.</strong> Choose it when you need typed option probabilities; keep a generative model when you also need a written reply. See <a href="/guides/local-routing-tools/">the named-tool comparison and Semantic Router integration</a>.</p></section><!--/geo4:task-answer-->
 <section id="starting-point" aria-labelledby="starting-point-heading">
 <h2 id="starting-point-heading">Match the method to the decision</h2>
 <p>If you have representative labeled text and stable categories, build a supervised classifier as a baseline. If routes are described by example utterances, evaluate an embedding router. If the decision depends on instructions and a fixed set of options, evaluate a typed decision model such as JevStyle. If you also need a written answer or flexible extraction, keep a local generative model in the comparison.</p>
@@ -136,7 +136,7 @@ jev-style serve --release 0.8b --backend torch --device cpu</code></pre>
 <aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#starting-point">Choose the decision interface</a><a href="#approaches">Compare four approaches</a><a href="#fixed-options">Score fixed options</a><a href="#apple-silicon">Apple silicon and backends</a><a href="#quickstart">Run a local server</a><a href="#evaluation">Evaluate on your data</a><a href="#questions">Common questions</a></aside>
 </div>
 </main>
-<!--discovery:resource-links--><nav class="project-resource-nav" aria-label="Project resources"><a href="/guides/local-text-classification/">Local text classification</a> · <a href="/guides/local-decision-models/">Decision models</a> · <a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav><!--/discovery:resource-links-->
+<!--discovery:resource-links--><nav class="project-resource-nav" aria-label="Project resources"><a href="/guides/local-text-classification/">Local text classification</a> · <a href="/guides/local-decision-models/">Decision models</a> · <a href="/guides/local-routing-tools/">Compare routing tools</a> · <a href="/use-cases/local-vision-decisions/">Image decisions</a> · <a href="/guides/replace-label-only-llm-calls/">Label-only calls</a> · <a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav><!--/discovery:resource-links-->
 <footer class="site-footer"><div class="footer-wrap"><span>JevStyle · Open local decision models</span><div><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub</a><a href="https://huggingface.co/chaoliangUNSW/" data-track="model_open">Hugging Face</a><a href="/about/">About</a><a href="/">Home</a></div></div></footer>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{&quot;token&quot;: &quot;7a7432d7d2fe40b4b52e41e711938ac0&quot;}'></script>
 </body></html>

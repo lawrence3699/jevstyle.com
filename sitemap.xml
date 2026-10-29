@@ -37,7 +37,13 @@
     <loc>https://jevstyle.com/guides/local-decision-models/</loc>
   </url>
   <url>
+    <loc>https://jevstyle.com/guides/local-routing-tools/</loc>
+  </url>
+  <url>
     <loc>https://jevstyle.com/guides/local-text-classification/</loc>
+  </url>
+  <url>
+    <loc>https://jevstyle.com/guides/replace-label-only-llm-calls/</loc>
   </url>
   <url>
     <loc>https://jevstyle.com/</loc>
@@ -56,6 +62,9 @@
   </url>
   <url>
     <loc>https://jevstyle.com/use-cases/local-llm-routing/</loc>
+  </url>
+  <url>
+    <loc>https://jevstyle.com/use-cases/local-vision-decisions/</loc>
   </url>
   <url>
     <loc>https://jevstyle.com/use-cases/support-ticket-classification/</loc>
