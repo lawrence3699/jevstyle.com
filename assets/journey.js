@@ -4,7 +4,7 @@
  */
 (() => {
   'use strict';
-  const allowed = new Set(['demo_open','quickstart_open','guide_open','model_open','github_open','code_copy']);
+  const allowed = new Set(['api_key_open','demo_open','quickstart_open','guide_open','model_open','github_open','code_copy']);
   const safe = value => typeof value === 'string' && /^[a-zA-Z0-9_./-]{1,96}$/.test(value) ? value : undefined;
   const query = new URLSearchParams(location.search);
   const campaign = {};

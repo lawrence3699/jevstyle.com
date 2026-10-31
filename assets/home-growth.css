@@ -17,6 +17,11 @@
 .static-bench a{color:var(--acc-ink)}
 .stats-note{font-size:13px;color:var(--ink2);line-height:1.6;margin-top:16px}
 .guide-grid a:focus-visible,.h3-acts a:focus-visible{outline:3px solid var(--acc);outline-offset:4px}
-@media(max-width:680px){.guide-grid{grid-template-columns:1fr}.growth-guides{padding:44px 0}.guide-grid>a{padding:22px}.h3-acts .dd{display:none}}
+#local-tasks .guide-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+#local-tasks .guide-grid>a{gap:8px;padding:22px}
+#local-tasks .guide-grid b{font-size:17px}
+#local-tasks .guide-grid span{font-size:14.5px;line-height:1.5}
+@media(max-width:980px){#local-tasks .guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){#local-tasks .guide-grid,.guide-grid{grid-template-columns:1fr}.growth-guides{padding:44px 0}.guide-grid>a{padding:22px}.h3-acts .dd{display:none}}
 /* The primary value proposition and actions should be readable on first paint. */
 .h3 h1 .w.go,.h3-sub,.h3-acts{animation:none!important;opacity:1;transform:none}
