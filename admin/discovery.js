@@ -86,6 +86,13 @@
       });
       findings.push('小样本观察不能代表全网曝光。'); summary.appendChild(el('p', findings.join(' ')));
       body.appendChild(summary);
+      var groups=table(['题型（固定题目分组）','有效回答','正文提及','官网引用']);
+      [['工具选型',['D3','D6']],['工作流方案',['D1','D2','D4']],['评估方法',['D5','D7']]].forEach(function (group) {
+        var all=g.questions.filter(function (q) { return group[1].indexOf(q.id)>=0; }), valid=all.filter(function (q) { return q.status==='substantive'; });
+        function count(key) { var known=valid.filter(function (q) { return q[key]===true || q[key]===false; });return known.length?known.filter(function (q) { return q[key]===true; }).length+'/'+known.length+(known.length<valid.length?' · 另有未知':''):'未测量'; }
+        var row=el('tr');[group[0]+'（'+group[1].join('、')+'）',valid.length+'/'+all.length,count('brand_mentioned'),count('site_cited')].forEach(function (v) { row.appendChild(el('td',v)); });groups.body.appendChild(row);
+      });
+      body.appendChild(groups.wrap);body.appendChild(el('p','同一套固定问题按意图拆分；每组样本很少，不生成额外答案，也不把正文提及直接当作推荐。','note'));
       var coverage = el('div', null, 'card'); coverage.appendChild(el('h3', g.planned_questions + ' 个无品牌问题的样本状态'));
       var bar = el('div', null, 'geo-statusbar'); bar.setAttribute('role', 'img');
       var legend = el('div', null, 'geo-legend'), descriptions = [];

@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "experiment_id": "banking-routing-v1",
+  "started_at": "2026-10-31T22:07:14.597439+00:00",
+  "finished_at": "2026-10-31T22:08:29.501544+00:00",
+  "protocol_sha256": "cdc35783d68b4f9a500834168e0dfb139f01430fcd040e132c062c0823ac21db",
+  "runner_sha256": "1600d3e73e16429ef376a29088819e8ff4d3fe9970aca58053730526260b8436",
+  "source": {
+    "repository": "PolyAI-LDN/task-specific-datasets",
+    "revision": "9d081458ff52e53cf7e848f414e6e9344e4e6696",
+    "license": "CC-BY-4.0",
+    "train_sha256": "b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b",
+    "test_sha256": "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d"
+  },
+  "hardware": {
+    "platform": "macOS-15.7.5-arm64-arm-64bit",
+    "python": "3.12.13",
+    "cpu_and_memory_bytes": [
+      "Apple M1 Max",
+      "68719476736"
+    ]
+  },
+  "packages": {
+    "jev-style": "0.6.2",
+    "mlx": "0.32.4",
+    "mlx-lm": "0.31.3",
+    "scikit-learn": "1.7.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "transformers": "5.22.1"
+  },
+  "model": {
+    "package": "jev-style==0.6.2",
+    "release": "0.8b-v3",
+    "backend": "mlx",
+    "precision": "8bit",
+    "repository": "chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX",
+    "revision": "7f14c9fa1491d168a7f70b16acf68baf9d4f7353",
+    "fine_tuning": false
+  },
+  "split_sizes": {
+    "train": 738,
+    "development": 120,
+    "test": 240
+  },
+  "baseline_fit_seconds": 0.06049170903861523,
+  "jevstyle_load_seconds": 2.437646833015606,
+  "results": {
+    "tfidf_logistic": {
+      "development": {
+        "count": 120,
+        "correct": 111,
+        "accuracy": 0.925,
+        "accuracy_wilson_95": [
+          0.8635908239400624,
+          0.9600428846040397
+        ],
+        "macro_f1": 0.9256859503598017,
+        "inference_errors": 0,
+        "warm_latency_ms": {
+          "median": 0.2322919899597764,
+          "p95": 0.40337489917874336,
+          "total": 30.92566947452724
+        },
+        "threshold_from_development": 0.29,
+        "accepted": 113,
+        "accepted_errors": 5,
+        "coverage": 0.9416666666666667,
+        "fallback": 7,
+        "accepted_accuracy": 0.9557522123893806,
+        "accepted_accuracy_wilson_95": [
+          0.9005822773378891,
+          0.9809541313958008
+        ],
+        "per_class": {
+          "card_arrival": {
+            "count": 20,
+            "correct": 18
+          },
+          "card_not_working": {
+            "count": 20,
+            "correct": 19
+          },
+          "card_payment_fee_charged": {
+            "count": 20,
+            "correct": 18
+          },
+          "cash_withdrawal_charge": {
+            "count": 20,
+            "correct": 20
+          },
+          "lost_or_stolen_card": {
+            "count": 20,
+            "correct": 16
+          },
+          "pending_transfer": {
+            "count": 20,
+            "correct": 20
+          }
+        }
+      },
+      "test": {
+        "count": 240,
+        "correct": 229,
+        "accuracy": 0.9541666666666667,
+        "accuracy_wilson_95": [
+          0.9198060053174897,
+          0.9742175174022611
+        ],
+        "macro_f1": 0.9538524468243343,
+        "inference_errors": 0,
+        "warm_latency_ms": {
+          "median": 0.24291651789098978,
+          "p95": 0.379874836653471,
+          "total": 62.97911633737385
+        },
+        "threshold_from_development": 0.29,
+        "accepted": 229,
+        "accepted_errors": 3,
+        "coverage": 0.9541666666666667,
+        "fallback": 11,
+        "accepted_accuracy": 0.9868995633187773,
+        "accepted_accuracy_wilson_95": [
+          0.9621983710655392,
+          0.9955348484798993
+        ],
+        "per_class": {
+          "card_arrival": {
+            "count": 40,
+            "correct": 38
+          },
+          "card_not_working": {
+            "count": 40,
+            "correct": 38
+          },
+          "card_payment_fee_charged": {
+            "count": 40,
+            "correct": 38
+          },
+          "cash_withdrawal_charge": {
+            "count": 40,
+            "correct": 40
+          },
+          "lost_or_stolen_card": {
+            "count": 40,
+            "correct": 35
+          },
+          "pending_transfer": {
+            "count": 40,
+            "correct": 40
+          }
+        }
+      }
+    },
+    "jevstyle": {
+      "development": {
+        "count": 120,
+        "correct": 114,
+        "accuracy": 0.95,
+        "accuracy_wilson_95": [
+          0.8951971146376326,
+          0.9768856355855343
+        ],
+        "macro_f1": 0.9496396927054896,
+        "inference_errors": 0,
+        "warm_latency_ms": {
+          "median": 145.59527055826038,
+          "p95": 199.57641698420048,
+          "total": 18060.75345631689
+        },
+        "threshold_from_development": 0.0,
+        "accepted": 120,
+        "accepted_errors": 6,
+        "coverage": 1.0,
+        "fallback": 0,
+        "accepted_accuracy": 0.95,
+        "accepted_accuracy_wilson_95": [
+          0.8951971146376326,
+          0.9768856355855343
+        ],
+        "per_class": {
+          "card_arrival": {
+            "count": 20,
+            "correct": 18
+          },
+          "card_not_working": {
+            "count": 20,
+            "correct": 20
+          },
+          "card_payment_fee_charged": {
+            "count": 20,
+            "correct": 20
+          },
+          "cash_withdrawal_charge": {
+            "count": 20,
+            "correct": 17
+          },
+          "lost_or_stolen_card": {
+            "count": 20,
+            "correct": 19
+          },
+          "pending_transfer": {
+            "count": 20,
+            "correct": 20
+          }
+        }
+      },
+      "test": {
+        "count": 240,
+        "correct": 224,
+        "accuracy": 0.9333333333333333,
+        "accuracy_wilson_95": [
+          0.8944621699310614,
+          0.958551099452921
+        ],
+        "macro_f1": 0.9325039119159125,
+        "inference_errors": 0,
+        "warm_latency_ms": {
+          "median": 135.70818747393787,
+          "p95": 164.0060420613736,
+          "total": 32884.92177706212
+        },
+        "threshold_from_development": 0.0,
+        "accepted": 240,
+        "accepted_errors": 16,
+        "coverage": 1.0,
+        "fallback": 0,
+        "accepted_accuracy": 0.9333333333333333,
+        "accepted_accuracy_wilson_95": [
+          0.8944621699310614,
+          0.958551099452921
+        ],
+        "per_class": {
+          "card_arrival": {
+            "count": 40,
+            "correct": 33
+          },
+          "card_not_working": {
+            "count": 40,
+            "correct": 39
+          },
+          "card_payment_fee_charged": {
+            "count": 40,
+            "correct": 40
+          },
+          "cash_withdrawal_charge": {
+            "count": 40,
+            "correct": 33
+          },
+          "lost_or_stolen_card": {
+            "count": 40,
+            "correct": 39
+          },
+          "pending_transfer": {
+            "count": 40,
+            "correct": 40
+          }
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "split-manifest.json": "23fb6f60ba104defc7f672f0d7cbbe16f2efb130fde6f2d495cbb1e0827f03c6",
+    "predictions.jsonl": "9cc72bb1702e45b5d6d42ed3623a6769e2bf5cca408553b9014e2c54b7b9d32e",
+    "frozen-protocol.json": "cdc35783d68b4f9a500834168e0dfb139f01430fcd040e132c062c0823ac21db",
+    "thresholds.json": "fa0a245f08ebb9cee9b49dc32287350da9cc124163199ac55d25d95711f50c7f"
+  },
+  "limitations": [
+    "Project-run closed-set six-intent experiment, not the full BANKING77 task or an independent benchmark.",
+    "Baseline uses labeled training data; JevStyle uses instructions and descriptions without task fine-tuning. Supervision differs.",
+    "Public data may have appeared in model pretraining; absence of contamination is not established.",
+    "No out-of-scope, multilingual, production traffic, image or downstream action evaluation.",
+    "Development error target is empirical; it does not guarantee the held-out error rate.",
+    "No test-driven prompt, class, hyperparameter or threshold tuning. All unfavorable outcomes retained."
+  ]
+}
