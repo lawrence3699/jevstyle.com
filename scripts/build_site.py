@@ -16,7 +16,7 @@ import site_chrome as chrome
 ROOT = Path(__file__).resolve().parents[1]
 FACTS = json.loads((ROOT / 'assets/project-facts.json').read_text())
 UPDATES = json.loads((ROOT / 'assets/updates.json').read_text())
-EMAIL = 'yanchaoliang369@gmail.com'
+EMAIL = chrome.EMAIL
 BEACON = '''<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{&quot;token&quot;: &quot;7a7432d7d2fe40b4b52e41e711938ac0&quot;}'></script>'''
 GROWTH_CSS = '<link rel="stylesheet" href="/assets/growth.css">'
 CHROME_ASSETS = '<link rel="stylesheet" href="/assets/site-chrome.css">\n<script src="/assets/site-chrome.js" defer></script>'
@@ -122,11 +122,11 @@ def updates_page():
 def contact_page(lang):
     if lang == 'zh':
         heading, lead, title, description = '联系我们', '问题、合作或错误反馈，都可以从这里找到我们。', '联系 JevStyle | JevStyle', '通过邮箱、Discord 或 GitHub 联系 JevStyle。'
-        items = [(f'mailto:{EMAIL}', '邮箱', EMAIL), (chrome.DISCORD, 'Discord', '和使用者交流，询问模型和接入问题。'), (chrome.GITHUB + '/issues', 'GitHub Issues', '报告错误或提出功能建议。')]
+        items = [(f'mailto:{EMAIL}', '邮箱', EMAIL), (chrome.DISCORD, 'Discord', '和使用者交流，询问模型和接入问题。'), (chrome.LINKEDIN, 'LinkedIn', '严超亮（Chaoliang Yan）'), (chrome.GITHUB + '/issues', 'GitHub Issues', '报告错误或提出功能建议。')]
     else:
         heading, lead, title, description = 'Contact', 'Questions, collaborations, and bug reports all start here.', 'Contact JevStyle | JevStyle', 'Reach JevStyle by email, on Discord, or through GitHub issues.'
-        items = [(f'mailto:{EMAIL}', 'Email', EMAIL), (chrome.DISCORD, 'Discord', 'Talk to other users and ask about models or integration.'), (chrome.GITHUB + '/issues', 'GitHub Issues', 'Report a bug or suggest a feature.')]
-    body = f'<div class="sp-hero"><h1>{heading}</h1><p class="lead">{lead}</p></div><div class="sp-grid">{cards(items, "")}</div>'
+        items = [(f'mailto:{EMAIL}', 'Email', EMAIL), (chrome.DISCORD, 'Discord', 'Talk to other users and ask about models or integration.'), (chrome.LINKEDIN, 'LinkedIn', 'Chaoliang Yan'), (chrome.GITHUB + '/issues', 'GitHub Issues', 'Report a bug or suggest a feature.')]
+    body = f'<div class="sp-hero"><h1>{heading}</h1><p class="lead">{lead}</p></div><div class="sp-grid two">{cards(items, "")}</div>'
     page('zh/contact/index.html' if lang == 'zh' else 'contact/index.html', lang, title, description, body, '/contact/')
 
 
@@ -157,7 +157,7 @@ def about_page(lang):
         rows = [
             ('定位', '我们做什么', '<p>给模型文本或 JSON，以及是/否、多选或有序评分问题，一次前向计算返回各选项的概率。可用于客服工单分类、请求路由和 Agent 工具调用的辅助审核，不生成自由文本回复。</p><div class="sp-pillars"><div><b>本地运行</b><span>下载后在你的机器上推理。</span></div><div><b>一次算完</b><span>一次前向给所有选项打分。</span></div><div><b>开放权重</b><span>代码和权重使用 Apache-2.0。</span></div><div><b>公开方法</b><span>测评协议和限制都写清楚。</span></div></div>'),
             ('做事方式', '我们怎么做事', '<ul class="sp-values"><li><b>说明数字怎么来的</b><span>公开的成绩都是项目自测，并写明协议和限制。见<a href="/benchmarks/">评测与复现（英文）</a>。</span></li><li><b>写明训练来源</b><span>每个模型卡记录基础模型和训练来源。2B v4 的蒸馏来源已在<a href="/models/2b-v4/#results">模型页（英文）</a>公开。</span></li><li><b>如实显示服务状态</b><span><a href="/zh/">首页</a>显示托管 API 的实时状态，本地模型不受它影响。</span></li><li><b>保留回退</b><span>不确定的结果应交给人工或更大的模型。见<a href="/guides/decision-evaluation/">评估指南（英文）</a>。</span></li></ul>'),
-            ('团队', '谁在做', f'<p><b>严超亮（Chaoliang Yan）</b>，创建者和维护者。<a href="https://github.com/lawrence3699">GitHub</a> · <a href="{chrome.HF}">Hugging Face</a></p>'),
+            ('团队', '谁在做', f'<p><b>严超亮（Chaoliang Yan）</b>，创建者和维护者。<a href="{chrome.LINKEDIN}">LinkedIn</a> · <a href="https://github.com/lawrence3699">GitHub</a> · <a href="{chrome.HF}">Hugging Face</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></p>'),
             ('生态', '支持的工具', '<ul class="sp-tools"><li>Hugging Face</li><li>PyPI</li><li>PyTorch</li><li>MLX</li><li>GGUF</li><li>MCP</li><li>Claude Code</li></ul><p style="margin-top:16px">这里列出的是可以配合使用的工具，不代表合作或背书关系。</p>'),
             ('来源', '官方来源与独立性', f'<p>Jev-Style 是模型系列名称，<code>jev-style</code> 是 Python 包名，JevStyle 是品牌和网站名称。安装依赖并下载模型后，本地推理在你的机器上执行。Hugging Face Demo 与托管 API 是独立服务；托管 API 当前使用 2B v4 Q4_K_M，仅支持文本，最多 8,000 个输入 token，一次处理一个请求。</p><p>以本网站、<a href="{chrome.GITHUB}">GitHub</a>、<a href="{chrome.PYPI}">PyPI</a> 和 <a href="{chrome.HF}">Hugging Face</a> 为核查入口。JevStyle 与 TypeSafe AI（Jev）、Laya 作者、阿里云或 Qwen 团队无隶属或背书关系。2B v4 的部分训练使用 TypeSafe Jev 1.14 公共 API 生成的软标签。</p><p>已发布的性能数字是项目在明确协议下的自测，不是官方榜单名次，也不保证适用于任意任务。</p>'),
         ]
@@ -167,7 +167,7 @@ def about_page(lang):
         rows = [
             ('What we do', 'Decisions, not chat', '<p>Give a model text or JSON and typed yes/no, choice, or ordered-score questions. It scores the options in one forward pass. Use it for support ticket classification, request routing, or an additional review signal for agent tool calls. It does not generate free-form chat replies.</p><div class="sp-pillars"><div><b>Runs locally</b><span>Inference stays on your machine once downloaded.</span></div><div><b>One forward pass</b><span>Every option scored in a single call.</span></div><div><b>Open weights</b><span>Code and published weights are Apache-2.0.</span></div><div><b>Published methods</b><span>Protocols and limits sit next to the numbers.</span></div></div>'),
             ('How we work', 'Show the working', '<ul class="sp-values"><li><b>Say how numbers were measured</b><span>Published results are self-runs with stated protocols and limits. Read the <a href="/benchmarks/">benchmarks and reproduction notes</a>.</span></li><li><b>Disclose training sources</b><span>Each model card records its base model and sources. See the <a href="/models/2b-v4/#results">2B v4 sources</a>.</span></li><li><b>Report service status as it is</b><span>The <a href="/">homepage</a> shows live hosted API status. Local models do not depend on it.</span></li><li><b>Keep a fallback</b><span>Send uncertain results to a person or a larger model. Read <a href="/guides/decision-evaluation/">how to evaluate your own data</a>.</span></li></ul>'),
-            ('Team', 'Who builds it', f'<p><b>Chaoliang Yan</b>, creator and maintainer. <a href="https://github.com/lawrence3699">GitHub</a> · <a href="{chrome.HF}">Hugging Face</a></p>'),
+            ('Team', 'Who builds it', f'<p><b>Chaoliang Yan</b>, creator and maintainer. <a href="{chrome.LINKEDIN}">LinkedIn</a> · <a href="https://github.com/lawrence3699">GitHub</a> · <a href="{chrome.HF}">Hugging Face</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></p>'),
             ('Ecosystem', 'Works with', '<ul class="sp-tools"><li>Hugging Face</li><li>PyPI</li><li>PyTorch</li><li>MLX</li><li>GGUF</li><li>MCP</li><li>Claude Code</li></ul><p style="margin-top:16px">These are tools JevStyle runs with. Listing them does not imply a partnership or endorsement.</p>'),
             ('Sources', 'Official sources and independence', f'<p>Jev-Style names the model family, <code>jev-style</code> is the Python package, and JevStyle is the brand and website. The <a href="/models/compare/">model comparison</a> separates releases, inputs, backends, and weight sizes.</p><p>After dependencies and weights are downloaded, local inference runs on your machine. The Hugging Face demo and hosted API are separate services that receive inputs sent to them. The hosted API currently uses 2B v4 Q4_K_M for text only, with up to 8,000 input tokens and one request at a time. Its limits differ from the local 2B v4 PyTorch model, which also supports images. See the <a href="/api/">current API reference</a>.</p><p>Use this website, <a href="{chrome.GITHUB}">GitHub</a>, <a href="{chrome.PYPI}">PyPI</a>, and <a href="{chrome.HF}">Hugging Face</a> to verify releases and capabilities. JevStyle is not affiliated with or endorsed by TypeSafe AI (Jev), the Laya authors, Alibaba Cloud, or the Qwen team.</p><p>Project code and published weights are licensed under Apache-2.0. Training provenance differs by release: the {html.escape(latest)} model card discloses soft-label distillation from TypeSafe Jev 1.14 through its public API. Published performance numbers are project self-runs under stated protocols, not official leaderboard positions or guarantees for arbitrary tasks.</p>'),
         ]
