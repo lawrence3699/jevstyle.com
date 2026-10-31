@@ -54,5 +54,11 @@ async function scenario(first) {
   ready.setReply(payload({state:'collecting',connected:true,snapshot}));await ready.click('立即采集');assert.ok(ready.calls.at(-1).url.endsWith('/refresh'));
   ready.setReply(payload());await ready.click('断开连接');assert.ok(ready.calls.at(-1).url.endsWith('/disconnect'));
   const expired=await scenario(payload({state:'ready',connected:true,snapshot}));expired.setReply(401);await expired.poll();assert.equal(expired.mounted[0].target.children.length,0);assert.deepEqual(expired.authLost,[401]);
+  const audited=await scenario(payload({state:'ready',connected:true,snapshot:{...snapshot,discovery_audit:{schema_version:1,observed_at:'2026-11-01T00:00:00Z',requested_window:{start:'2026-10-03',end:'2026-10-30'},pages:[{url:'https://jevstyle.com/guides/local-routing-tools/',index:{verdict:'PASS'},summary:{impressions:0,clicks:0},query_rows:[]},{url:'https://jevstyle.com/use-cases/local-vision-decisions/',index:null,summary:null,query_rows:[]}]}}}));
+  assert.ok(audited.nodes.some(n=>n.textContent==='已收录'));
+  assert.ok(audited.nodes.some(n=>n.textContent==='0 / 0'),'Explicit Google zero is displayed');
+  assert.ok(audited.nodes.some(n=>n.textContent==='未测量'),'Missing totals remain unknown');
+  assert.ok(audited.nodes.some(n=>n.textContent==='未返回，无法判定'),'Absent query rows do not claim zero nonbrand exposure');
+  audited.setReply(401);await audited.poll();assert.equal(audited.root.children[1].children.length,0,'Private diagnostics cleared when authorization is lost');
   console.log('Private search monitor: admin errors, empty/ready/stale states, same-cache retention, readonly connect URL and actions passed. No network used.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

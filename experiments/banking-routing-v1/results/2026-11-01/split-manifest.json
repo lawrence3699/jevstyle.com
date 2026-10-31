@@ -1,0 +1,5498 @@
+{
+  "train": [
+    {
+      "source_id": "train:39",
+      "expected": "card_arrival",
+      "text_sha256": "0032217aa34bf6da23e0e4c8b1807160a725bdd1e3ca6003fc49214e48234f74"
+    },
+    {
+      "source_id": "train:72",
+      "expected": "card_arrival",
+      "text_sha256": "e680d3f1e0fbca9cde3fa7b54b2a2be3f07f2f9db5194fa1d70cb5da493612e9"
+    },
+    {
+      "source_id": "train:73",
+      "expected": "card_arrival",
+      "text_sha256": "899cdd97f5a1ddbd6c0b8df9a38fec75f3c0bc03487b5d101d583fbdc27e9be8"
+    },
+    {
+      "source_id": "train:14",
+      "expected": "card_arrival",
+      "text_sha256": "400501a4e4bb0adabe506ecada2864cd3c52815c72f1de67c4cddcacfcc276bb"
+    },
+    {
+      "source_id": "train:149",
+      "expected": "card_arrival",
+      "text_sha256": "a25abb7ac837dd2fdeb3b5c8bba5fd19458be8a6a799372b4cc94b8f321524b3"
+    },
+    {
+      "source_id": "train:99",
+      "expected": "card_arrival",
+      "text_sha256": "f2a91ec8e7ded322b4fbc72952b2e05400974e20d63f7c50a672fd83094f36a7"
+    },
+    {
+      "source_id": "train:82",
+      "expected": "card_arrival",
+      "text_sha256": "46cb679fb043ea49076dd29f57ffc3bdb0d281ba9c1dfe7f7411a11a2504965c"
+    },
+    {
+      "source_id": "train:16",
+      "expected": "card_arrival",
+      "text_sha256": "22ce19e9479aa3dfe051eaebafaaa5a3069e1e4d5a1b807bfab6c56a59455480"
+    },
+    {
+      "source_id": "train:4",
+      "expected": "card_arrival",
+      "text_sha256": "ad06aa181367047319e113637e4e964525e427ff08ab16b6a416e375dc168b6c"
+    },
+    {
+      "source_id": "train:97",
+      "expected": "card_arrival",
+      "text_sha256": "ff787ad79cc2f0ca3691d853ffd18be3b8f5e10c09cae0adc9609608f7779014"
+    },
+    {
+      "source_id": "train:129",
+      "expected": "card_arrival",
+      "text_sha256": "e8ccb182b6240596b894b174d2291c8fa80529eed174d5a4ac2bacd2499c1af2"
+    },
+    {
+      "source_id": "train:76",
+      "expected": "card_arrival",
+      "text_sha256": "53b5764914d05967d1759f00780f64761343fe3f4abc770a383d97f37197e86e"
+    },
+    {
+      "source_id": "train:31",
+      "expected": "card_arrival",
+      "text_sha256": "ef01db1c41af5b7949e5b76a02e4fca0e72e3d1cf194cf3658a0d4fb32c82c0e"
+    },
+    {
+      "source_id": "train:148",
+      "expected": "card_arrival",
+      "text_sha256": "7ffbb33b6ae8d010b530dc00e39b61313dd565c79daa494e3a16656c6a7036b0"
+    },
+    {
+      "source_id": "train:2",
+      "expected": "card_arrival",
+      "text_sha256": "cf58638856e518b3f1f90a54d205af681e9c7c1651287d4727118a286956c0e8"
+    },
+    {
+      "source_id": "train:74",
+      "expected": "card_arrival",
+      "text_sha256": "bd8043e1456314c2347b4dc9a554dca16b20f6a6e8e4aee1856a3e6fe3f425c4"
+    },
+    {
+      "source_id": "train:103",
+      "expected": "card_arrival",
+      "text_sha256": "a3c4230bca830258bc055292b0e2fdc8925d31c93a85674f7a13d3baa52ccd44"
+    },
+    {
+      "source_id": "train:93",
+      "expected": "card_arrival",
+      "text_sha256": "834721ffde3603d4297ee61401b74b9c975ee14c4913dfed69315aa65f90dbae"
+    },
+    {
+      "source_id": "train:130",
+      "expected": "card_arrival",
+      "text_sha256": "ac4bd4503604e5f0f9692fdbb957314f3bdfd858e58f473fef1d020cd71e516a"
+    },
+    {
+      "source_id": "train:144",
+      "expected": "card_arrival",
+      "text_sha256": "44ca5f7416122c3bb555fb2f559c2bc769980fdf6ff5b03ec09231dc06fde827"
+    },
+    {
+      "source_id": "train:71",
+      "expected": "card_arrival",
+      "text_sha256": "0742dc1c8f6fac00426fd23e2834ac7186a62d601d8589f8e8012e0cfad21919"
+    },
+    {
+      "source_id": "train:91",
+      "expected": "card_arrival",
+      "text_sha256": "2567ef24deda78247330f6afc711d768f66658dae1c8538de1c6c13093e1bd28"
+    },
+    {
+      "source_id": "train:77",
+      "expected": "card_arrival",
+      "text_sha256": "a761e5bf506a91e172492a3c023bdd9aa03e38d3e55fedcd684eaef6a6f154cf"
+    },
+    {
+      "source_id": "train:118",
+      "expected": "card_arrival",
+      "text_sha256": "8f431a9ccc747929df39f046294e6945ceeaf090edc1bd84d25f0f8dae14c0e7"
+    },
+    {
+      "source_id": "train:96",
+      "expected": "card_arrival",
+      "text_sha256": "9d0d78de769514eb64f98ba9d0d621803d02f229790a0d0257976a300e7948fd"
+    },
+    {
+      "source_id": "train:127",
+      "expected": "card_arrival",
+      "text_sha256": "41b13e064e9c56dd64c8d3356784f015b17d2be16e8f347319d6029e2b5263d9"
+    },
+    {
+      "source_id": "train:70",
+      "expected": "card_arrival",
+      "text_sha256": "5e2c065f05e4568520317a330cd48f731329267a1ee25cd98380a968c59489d0"
+    },
+    {
+      "source_id": "train:115",
+      "expected": "card_arrival",
+      "text_sha256": "a261ed9258a7f8069559ef80d7be35d5f8c35cb299e84d1ba5b181d012a9a5b6"
+    },
+    {
+      "source_id": "train:10",
+      "expected": "card_arrival",
+      "text_sha256": "3013f5db398b9c8dc66900b156844a84e40b1251c961b360e7b8c3d382538054"
+    },
+    {
+      "source_id": "train:20",
+      "expected": "card_arrival",
+      "text_sha256": "421d0dc919f2eff15ac7585344038c8ded247e60dd9bea56b39e1a2683d9e2f7"
+    },
+    {
+      "source_id": "train:32",
+      "expected": "card_arrival",
+      "text_sha256": "3d311078a56feff60d70735b2e6f8e22a800881a0d4b83e2cc7c3d0887435004"
+    },
+    {
+      "source_id": "train:61",
+      "expected": "card_arrival",
+      "text_sha256": "4ea527b9b5727d9dc400ae45421d47c0bae576a5de3a22c4df255313c9b55eab"
+    },
+    {
+      "source_id": "train:36",
+      "expected": "card_arrival",
+      "text_sha256": "cc2651edcdc5b84e19b52a46d5652513e675ad947b6a02d16148cbc781af7ff6"
+    },
+    {
+      "source_id": "train:143",
+      "expected": "card_arrival",
+      "text_sha256": "0a003bad4208aefef87489a1d1635c4fcb144d644f71d3b49faace913d4542c4"
+    },
+    {
+      "source_id": "train:46",
+      "expected": "card_arrival",
+      "text_sha256": "88975d829fd8a0ae5f9125c0bb2e725395ceffb2340c8a17f2c3d1c39afb8c9a"
+    },
+    {
+      "source_id": "train:29",
+      "expected": "card_arrival",
+      "text_sha256": "f10618d4135928cfb68e6470abe66c40fd60527c146d709a62467e3b7416b5af"
+    },
+    {
+      "source_id": "train:116",
+      "expected": "card_arrival",
+      "text_sha256": "953baf55dde9eb92bb96ca5e71343cb14f0b9cfdea65e8bc24caf1c389f4699c"
+    },
+    {
+      "source_id": "train:51",
+      "expected": "card_arrival",
+      "text_sha256": "953f4ba21005976c2d11d4372683feff05077684e7af262b02b6c063de8f69df"
+    },
+    {
+      "source_id": "train:100",
+      "expected": "card_arrival",
+      "text_sha256": "86bb6fc95f0a1db2bfeca760573e15c0e8954e2fb8f1072fbcbb1dabd8e34723"
+    },
+    {
+      "source_id": "train:37",
+      "expected": "card_arrival",
+      "text_sha256": "f60e1b0d17c13ed94ae10c56b85233177ac4dd10c0861643ba3a334b4fda0461"
+    },
+    {
+      "source_id": "train:78",
+      "expected": "card_arrival",
+      "text_sha256": "405f7878c4a409ac3818722a776fa40320842b9ae949f302fb60502b17627750"
+    },
+    {
+      "source_id": "train:69",
+      "expected": "card_arrival",
+      "text_sha256": "ecbff70d0d1a77e1734ec16ba8f294204ed1d4f19c721defb0a8fe4daf42ac21"
+    },
+    {
+      "source_id": "train:18",
+      "expected": "card_arrival",
+      "text_sha256": "6139a6cd97feefa5bd8662438d5f916981e52810de27f172a5ac9b2a3b2c4630"
+    },
+    {
+      "source_id": "train:140",
+      "expected": "card_arrival",
+      "text_sha256": "bb2e3ef7d65017f809b574868ac6ea6020321b1c6217dc2c4e22e0a61049fb88"
+    },
+    {
+      "source_id": "train:87",
+      "expected": "card_arrival",
+      "text_sha256": "e310733a693e0f48e61198db79b6e66e280e8e2d7fe3d6404b0295411caef3f5"
+    },
+    {
+      "source_id": "train:75",
+      "expected": "card_arrival",
+      "text_sha256": "d0d0bbe2f1c7d025c19f5575f82dcd77076bd9a2513f310a47ceebb273d5e59b"
+    },
+    {
+      "source_id": "train:120",
+      "expected": "card_arrival",
+      "text_sha256": "e5cd0017d9e80d1068be6cf0a743af6e0f71f070666d227c871205703db9a02c"
+    },
+    {
+      "source_id": "train:128",
+      "expected": "card_arrival",
+      "text_sha256": "c970b9ba36f3feedaa737749af259556f9b020be9c7ac5a735e9a08840216b9c"
+    },
+    {
+      "source_id": "train:84",
+      "expected": "card_arrival",
+      "text_sha256": "078aa7a6111ee0de4ca247739ad2b3097b59f4fd244565739b7276c8ff7f3ea4"
+    },
+    {
+      "source_id": "train:90",
+      "expected": "card_arrival",
+      "text_sha256": "43ae33139ed3988b3d21cd6ab3153e5276f3b82fa3ef62a09ac12357dcfa9cde"
+    },
+    {
+      "source_id": "train:105",
+      "expected": "card_arrival",
+      "text_sha256": "72500e1ff59636213b1d68d4753b074a0a87861804fa64432a6887737de30b9c"
+    },
+    {
+      "source_id": "train:135",
+      "expected": "card_arrival",
+      "text_sha256": "01818d6cd3df3459188a5a2064d34f4b4b8bee0adf23f8b3e1e54cbda642aa95"
+    },
+    {
+      "source_id": "train:132",
+      "expected": "card_arrival",
+      "text_sha256": "b49e2d0fdeede57be1dd4b8b2b8e926ad427377c8a978edbe24bc3b368c6e885"
+    },
+    {
+      "source_id": "train:113",
+      "expected": "card_arrival",
+      "text_sha256": "ee3db2234a686ab63b76278df1a7cf7fa07ec2a5bc6bde37f4d98459481c5f95"
+    },
+    {
+      "source_id": "train:108",
+      "expected": "card_arrival",
+      "text_sha256": "b71962abd9553a4f58e01321e7ea9651f03f69733aeed6d069166d511f055e4c"
+    },
+    {
+      "source_id": "train:65",
+      "expected": "card_arrival",
+      "text_sha256": "48f43dc6e4ae24d6777640ca9e20a0be19b1533ea25b1607c8f2e53351f35232"
+    },
+    {
+      "source_id": "train:47",
+      "expected": "card_arrival",
+      "text_sha256": "79d997c614d315b79f1b41e239aaf7a0aaa074e7b9a14e82417fa41b5ecf5fbe"
+    },
+    {
+      "source_id": "train:151",
+      "expected": "card_arrival",
+      "text_sha256": "79b615f7c0b27a6e6f0fc4beae974ef415d42449e52af47d621bede01bf1a5ae"
+    },
+    {
+      "source_id": "train:24",
+      "expected": "card_arrival",
+      "text_sha256": "34c3f88a03a36fd6d056bb532b8dcaa4b203a92b3f3ca3e08554e2eeaded77c5"
+    },
+    {
+      "source_id": "train:53",
+      "expected": "card_arrival",
+      "text_sha256": "b2e6a87c10b06d0cb29f88062df7aa50917f6346257b5af8075dd557cdfa8298"
+    },
+    {
+      "source_id": "train:136",
+      "expected": "card_arrival",
+      "text_sha256": "a38f11e583771a77efbd0ea095f43f1b5b5cce97ac03ae44b63748dcedde9ec2"
+    },
+    {
+      "source_id": "train:44",
+      "expected": "card_arrival",
+      "text_sha256": "ad906c420a4f7c62714e23200e2985beb8e836b3a6be9aea2c0cd3021099ba73"
+    },
+    {
+      "source_id": "train:106",
+      "expected": "card_arrival",
+      "text_sha256": "fadf3d168ae01f1e90764872c5cfc4d0a3152a769fed0d477afaa232e0d0a085"
+    },
+    {
+      "source_id": "train:19",
+      "expected": "card_arrival",
+      "text_sha256": "38b050bdec3a3183d6c61cd5fd4016527f277894ec4b88825e966593560c0709"
+    },
+    {
+      "source_id": "train:30",
+      "expected": "card_arrival",
+      "text_sha256": "c09a17d1af9d9ee8c955eeea6427696a3b680ece8813ef1a97beb86a8ca9235d"
+    },
+    {
+      "source_id": "train:110",
+      "expected": "card_arrival",
+      "text_sha256": "aa19307c900af58ee8da6cbfc26499fa34d00336c360169ada0f2434f2ff92bb"
+    },
+    {
+      "source_id": "train:21",
+      "expected": "card_arrival",
+      "text_sha256": "2b495712a462ed62a9cdfbb7934c68d122cfe877dd2494101058502153ab8cc7"
+    },
+    {
+      "source_id": "train:139",
+      "expected": "card_arrival",
+      "text_sha256": "9b449320cad27664fa2eab36ba073a250692c07b07bfed956868e896ebd246d0"
+    },
+    {
+      "source_id": "train:92",
+      "expected": "card_arrival",
+      "text_sha256": "2174234316eb739eb74f56e150bf5fdfabd5cc0d049b0eb071e4245292e311c1"
+    },
+    {
+      "source_id": "train:7",
+      "expected": "card_arrival",
+      "text_sha256": "de74e15af9513c9fc0075bc186d0373aea89555a6f925b064baf749ee635b0db"
+    },
+    {
+      "source_id": "train:54",
+      "expected": "card_arrival",
+      "text_sha256": "01d96e06cbad3c6dca4b1d6e8119dc72c13bf8f4378572ca60656630b6f89486"
+    },
+    {
+      "source_id": "train:109",
+      "expected": "card_arrival",
+      "text_sha256": "15e6840ac96fd19b544ecce8fdae9872fb6301386d3bfa4c6fa94a1357ae4c32"
+    },
+    {
+      "source_id": "train:101",
+      "expected": "card_arrival",
+      "text_sha256": "d9472a63bcb9d711b57a814491d396e8ca6cd1712fd6113d28f2aaf74eb6debc"
+    },
+    {
+      "source_id": "train:133",
+      "expected": "card_arrival",
+      "text_sha256": "be0fc5a42257772f1585fb43aa750e7760ec26379cbd4698cfc66fa91a54a73d"
+    },
+    {
+      "source_id": "train:122",
+      "expected": "card_arrival",
+      "text_sha256": "d3ece9887cec6f33dfe629d207e9a135d49436e849db8858f9423a2b4875a77d"
+    },
+    {
+      "source_id": "train:52",
+      "expected": "card_arrival",
+      "text_sha256": "9a5ad7f51fd79bcc1845e597766c3f9212bbbb76de95d7cff81239a03b7763af"
+    },
+    {
+      "source_id": "train:125",
+      "expected": "card_arrival",
+      "text_sha256": "a51849a4569f924b5748181fa64f613a79426c95193a5b3d44ba47692b909ae5"
+    },
+    {
+      "source_id": "train:23",
+      "expected": "card_arrival",
+      "text_sha256": "17fd8bb541ec718b410907700affcb1b6ab38433723bfef0281c25ed29f083bd"
+    },
+    {
+      "source_id": "train:45",
+      "expected": "card_arrival",
+      "text_sha256": "2425de6c0d01e62f9248c90a362a852f2546fa934238a36fd4d79b2009c6d6d7"
+    },
+    {
+      "source_id": "train:138",
+      "expected": "card_arrival",
+      "text_sha256": "2d2a4ad6afc684ee11276054cac5e6d7baec5b68bc782f315b8963367dd5014b"
+    },
+    {
+      "source_id": "train:27",
+      "expected": "card_arrival",
+      "text_sha256": "2a58a62e8d6fcf5ad9394b4104cef3e1ebde7d34eb6b4e99657cb9c5d80277b2"
+    },
+    {
+      "source_id": "train:62",
+      "expected": "card_arrival",
+      "text_sha256": "1c06b95718aa887533fdd2f53f71a660f3031aa4e32aaeba0480ae6b8f750502"
+    },
+    {
+      "source_id": "train:43",
+      "expected": "card_arrival",
+      "text_sha256": "b00305130616d12f7c38862caaa5ad8304a0f9f696ff15b8478db347f0b70def"
+    },
+    {
+      "source_id": "train:55",
+      "expected": "card_arrival",
+      "text_sha256": "64c713cde26ed45a68470472fbc315a3606acfe337033b36f5afc0b97658049b"
+    },
+    {
+      "source_id": "train:33",
+      "expected": "card_arrival",
+      "text_sha256": "3215a51aa2bc09532516fc4ef4be09518722075472a45a90c5104c0cccdfeedd"
+    },
+    {
+      "source_id": "train:152",
+      "expected": "card_arrival",
+      "text_sha256": "4287bd7380db21d92aea52d148e0b420d9fbd813050223ed1e961682f828272d"
+    },
+    {
+      "source_id": "train:59",
+      "expected": "card_arrival",
+      "text_sha256": "b5797596be33dfae2630f52037fef2171c51615cd2fc67a682a12ea1b3608c07"
+    },
+    {
+      "source_id": "train:124",
+      "expected": "card_arrival",
+      "text_sha256": "b4c1667ba164f5772653eb2aee97370c5ef23d1a7e4fd77ef37a8f3dedd44ea5"
+    },
+    {
+      "source_id": "train:50",
+      "expected": "card_arrival",
+      "text_sha256": "7274c184dbfa920c5be50e150b772b63c79fb70edad6aa199dcd099a480ec3f7"
+    },
+    {
+      "source_id": "train:131",
+      "expected": "card_arrival",
+      "text_sha256": "07421ac6c4cd38d700a12e88b5521aebed7411bf92dc62958eab4c61407441b8"
+    },
+    {
+      "source_id": "train:6",
+      "expected": "card_arrival",
+      "text_sha256": "bdb15f3684faa66b65b11884925bd4e5566cea41aaa0d35c8d05de53f4e793e1"
+    },
+    {
+      "source_id": "train:85",
+      "expected": "card_arrival",
+      "text_sha256": "26f62871909685e7c2424ece0d4c99b5987a2ffe7ec7362e20d19b2194505a64"
+    },
+    {
+      "source_id": "train:26",
+      "expected": "card_arrival",
+      "text_sha256": "459bca68b0fc30cada6d66c3130aaeb2839dda63975b60222c78f8c9af03147c"
+    },
+    {
+      "source_id": "train:141",
+      "expected": "card_arrival",
+      "text_sha256": "0424203d2c9a8069a24ce327acddb704e8b7abcffcf527f78ff81c1c5ee6d758"
+    },
+    {
+      "source_id": "train:41",
+      "expected": "card_arrival",
+      "text_sha256": "56fc927e94edbe1243cd24afadf35f94c1f5ad1bb17387df2f90012208ec34af"
+    },
+    {
+      "source_id": "train:81",
+      "expected": "card_arrival",
+      "text_sha256": "60f219b42591ada1b60bd5a9da598125cadcb8bb92b5da4418e641a6a7c98cc7"
+    },
+    {
+      "source_id": "train:107",
+      "expected": "card_arrival",
+      "text_sha256": "8f70ba39dc0cca47a8fe1535b276e7b23909bf937bd8fe1aca663d4f05fc1f15"
+    },
+    {
+      "source_id": "train:102",
+      "expected": "card_arrival",
+      "text_sha256": "f68a2de686d530a85855be3a7dbb7009d8905247de2c7ac816acb059f1a5f4f9"
+    },
+    {
+      "source_id": "train:67",
+      "expected": "card_arrival",
+      "text_sha256": "0a3340864102a729274f127dfe371ba6e00c5ab2e919b05ac681b54b536d2a26"
+    },
+    {
+      "source_id": "train:88",
+      "expected": "card_arrival",
+      "text_sha256": "9fbf6b56771d931ced677ba09f201311a10cc2a335eacc22406d4a1b93fa98d8"
+    },
+    {
+      "source_id": "train:89",
+      "expected": "card_arrival",
+      "text_sha256": "ef4530f1bf96d459782cb526b1777f9c198916980f19f6ad1a5f13745fbb4bcf"
+    },
+    {
+      "source_id": "train:126",
+      "expected": "card_arrival",
+      "text_sha256": "defbc54d981c2f435333f250a0f61f05c8c611c7381fa24c94565a78b436fe00"
+    },
+    {
+      "source_id": "train:38",
+      "expected": "card_arrival",
+      "text_sha256": "1c3aee5ca8ba7569c9cec5be29c65507771bea2b0cc08aeb58194d7301a8c362"
+    },
+    {
+      "source_id": "train:119",
+      "expected": "card_arrival",
+      "text_sha256": "ad938e972ca3dcf211e24a71fa758357dba2ed98376976914263a14b3ba40162"
+    },
+    {
+      "source_id": "train:150",
+      "expected": "card_arrival",
+      "text_sha256": "a57bb78976186b662cd58bb3ce0dbbd10aa68c691b80cf5588907f240c2987be"
+    },
+    {
+      "source_id": "train:147",
+      "expected": "card_arrival",
+      "text_sha256": "fb256db5b0158587a08114d8fe4d0d1dcd40e27a2b184de85c9924fe06eb4323"
+    },
+    {
+      "source_id": "train:13",
+      "expected": "card_arrival",
+      "text_sha256": "e785629c7aabcb67a92b65d098e2e2fe5bf0210fd50ccc1e7e44846450747e52"
+    },
+    {
+      "source_id": "train:86",
+      "expected": "card_arrival",
+      "text_sha256": "b8a5bce6569274c907e627803b3149fe2ffb1493f1140429df4dbff9536074e9"
+    },
+    {
+      "source_id": "train:42",
+      "expected": "card_arrival",
+      "text_sha256": "e67880d69a01e5665a107f66c5a4f397e9d16677c8a8b26e6870e0d362c83f67"
+    },
+    {
+      "source_id": "train:83",
+      "expected": "card_arrival",
+      "text_sha256": "49679842d21e80dee366bbc80cbc97435a7c28ae7ed56c47c7b1817b76f3ed1c"
+    },
+    {
+      "source_id": "train:60",
+      "expected": "card_arrival",
+      "text_sha256": "b1feaeaa4f68f9614771f51120c70d4c88ad59e6775ae16bffa85a49505b620c"
+    },
+    {
+      "source_id": "train:17",
+      "expected": "card_arrival",
+      "text_sha256": "6dc8d64b41a38aaf73f0e4278505022c367042e1f70e164edea8fab24cfe2f7c"
+    },
+    {
+      "source_id": "train:66",
+      "expected": "card_arrival",
+      "text_sha256": "a4da875b06b0ef1e5fd6cdcfc518642b84a46b81e7d127e87caa525653867086"
+    },
+    {
+      "source_id": "train:15",
+      "expected": "card_arrival",
+      "text_sha256": "338ad3dd9542e4b0ef8042193bc83dd58b41580093f07c9924d323066bb21185"
+    },
+    {
+      "source_id": "train:12",
+      "expected": "card_arrival",
+      "text_sha256": "b8d15b6107f416d162b74ddba6bf95f5c5c09c99f1b81e7f6c0290e8bf7e7fc7"
+    },
+    {
+      "source_id": "train:121",
+      "expected": "card_arrival",
+      "text_sha256": "ba6fd81be24b3a4bfdc5dc6dbc1b3d91d46dbeca78efd27319a400d3c7c905a8"
+    },
+    {
+      "source_id": "train:123",
+      "expected": "card_arrival",
+      "text_sha256": "82107c2423e6b7aa3300685e9200c50d4501cdb045bea42105389a35c8156d18"
+    },
+    {
+      "source_id": "train:114",
+      "expected": "card_arrival",
+      "text_sha256": "63b88492c755322ea0a482e8a93533920af5ddccf7b32e4747bb0611cfbd874e"
+    },
+    {
+      "source_id": "train:57",
+      "expected": "card_arrival",
+      "text_sha256": "54da19f004749c259bedce65a50520b2cb5db9d96512257851aa4ad46401792c"
+    },
+    {
+      "source_id": "train:79",
+      "expected": "card_arrival",
+      "text_sha256": "92dd7670383ca5f50e20ff0c1acc960a9e8a8aeda27fddcd27ba8cd530c68524"
+    },
+    {
+      "source_id": "train:117",
+      "expected": "card_arrival",
+      "text_sha256": "57c6a28f5d6ed09d6379eb126104c187cdfe68b766029cfc4ec95c915bcf6eec"
+    },
+    {
+      "source_id": "train:56",
+      "expected": "card_arrival",
+      "text_sha256": "947105bbf5cf8ce7140dca70fcbe8dcedfeb1779b2dc447ad00f6119eb6a8fb5"
+    },
+    {
+      "source_id": "train:63",
+      "expected": "card_arrival",
+      "text_sha256": "0730d841f35d21f200b9c1ebaa53ac1f551e7aa29fca2079d3f203416af43a75"
+    },
+    {
+      "source_id": "train:0",
+      "expected": "card_arrival",
+      "text_sha256": "7d46f1aa7c0a83b4fe386b6c72b132fd3650942a23d0110451cf3c3f6b85b8aa"
+    },
+    {
+      "source_id": "train:146",
+      "expected": "card_arrival",
+      "text_sha256": "ecac85ce232dd56bd1fd185a12a7eec5b80db704b947faad950f2e256351867d"
+    },
+    {
+      "source_id": "train:98",
+      "expected": "card_arrival",
+      "text_sha256": "e0fdb4fe068e4a1dc4e9ec3b6d3843bf1c8302a71175ed06dd7fe8ef232069fe"
+    },
+    {
+      "source_id": "train:22",
+      "expected": "card_arrival",
+      "text_sha256": "70a1cc3cd3fae797c0324b7b7acc0f06bb729bb003b97e15cf280ebbc866f664"
+    },
+    {
+      "source_id": "train:49",
+      "expected": "card_arrival",
+      "text_sha256": "746a688cd15c24f5e8742c78c583512b2bc4acd6d4ec4c233d69d310e2321d68"
+    },
+    {
+      "source_id": "train:137",
+      "expected": "card_arrival",
+      "text_sha256": "8682ecb19406155c9f5314f5d234e8d6cffc4a109c38fd3fa154c7e3f8807a40"
+    },
+    {
+      "source_id": "train:95",
+      "expected": "card_arrival",
+      "text_sha256": "49fc63949b6bd22f2f69aa5ded2c9613553f727dfc79ca3de33e3cb05badac1d"
+    },
+    {
+      "source_id": "train:68",
+      "expected": "card_arrival",
+      "text_sha256": "8f5052c5586293a7724aac0bc2411583bcd6a7bb3854f762c301685b66689c37"
+    },
+    {
+      "source_id": "train:111",
+      "expected": "card_arrival",
+      "text_sha256": "ed801fb2e416977c85b759ec41826794a17eb0fb0094b833e01cd019f3cd9b45"
+    },
+    {
+      "source_id": "train:142",
+      "expected": "card_arrival",
+      "text_sha256": "12affbcf4dbbdca3c6706e6019e1498c7cb47fbf06318b79a3aa953ea738f619"
+    },
+    {
+      "source_id": "train:1337",
+      "expected": "card_not_working",
+      "text_sha256": "25e3c504ff63724423a6e11a49b0db20e186cc868c8cc0e7c2a10479d52c4e6d"
+    },
+    {
+      "source_id": "train:1295",
+      "expected": "card_not_working",
+      "text_sha256": "085d05921d451f58996a4568fd3dae907ba6d07f716c3e73daa5b69db4625d29"
+    },
+    {
+      "source_id": "train:1284",
+      "expected": "card_not_working",
+      "text_sha256": "81d97cc1673812ba79eb610b2d568b14a369ce93f0001d3988715f01696874c9"
+    },
+    {
+      "source_id": "train:1339",
+      "expected": "card_not_working",
+      "text_sha256": "91205eea3b709f279bd65f15f7aed1f101b5d15e6a1d4461531cc60bac82735f"
+    },
+    {
+      "source_id": "train:1246",
+      "expected": "card_not_working",
+      "text_sha256": "0147a7ca0ad72b724222d4582045df0d0135832f1412c58ccd66cd11edd08922"
+    },
+    {
+      "source_id": "train:1277",
+      "expected": "card_not_working",
+      "text_sha256": "65bfea444c539515599b22b13a3698ff1e19054958ed20980de98e35a0c0946d"
+    },
+    {
+      "source_id": "train:1302",
+      "expected": "card_not_working",
+      "text_sha256": "2720a3c1ac58806b2fcd0390d3c8df7661dd9391208c13305351d02d9cd73757"
+    },
+    {
+      "source_id": "train:1282",
+      "expected": "card_not_working",
+      "text_sha256": "3be69dc7eec6d7aa2df4dea9039292a7e85bd63462c8a2bf67d4cdc2cf78be37"
+    },
+    {
+      "source_id": "train:1341",
+      "expected": "card_not_working",
+      "text_sha256": "5be241fe1bd1d490d40cadf7c4737c2abc2105c85a640cdc184fb11ca2ca85d2"
+    },
+    {
+      "source_id": "train:1314",
+      "expected": "card_not_working",
+      "text_sha256": "ec97e0dbf92e8d7e3227c2c54d9bc5863b47eb2f09d999f5a6cf3a4e2a1712af"
+    },
+    {
+      "source_id": "train:1269",
+      "expected": "card_not_working",
+      "text_sha256": "838ebc44dbe0b9013dedc31b9fe81f0c751c0d968c542dba1871f533f94f8e2d"
+    },
+    {
+      "source_id": "train:1287",
+      "expected": "card_not_working",
+      "text_sha256": "c5999cb4fc39573d4813beb1dc80ad43fa71131d71e3deaec9bb4216addc3b8f"
+    },
+    {
+      "source_id": "train:1257",
+      "expected": "card_not_working",
+      "text_sha256": "aa6e5eded46ca659d2b5fd404537f2e7869b93ca7e2dcf85740ee33011db1253"
+    },
+    {
+      "source_id": "train:1250",
+      "expected": "card_not_working",
+      "text_sha256": "0d7b2522a5445570dbcda42d936ee6926bc7ec50b2272eed2b0e8b29575b6181"
+    },
+    {
+      "source_id": "train:1310",
+      "expected": "card_not_working",
+      "text_sha256": "83f427ed7b6f63a026ba731e1273e8ed76c710bc53ae98a68dc3764c7dc672cd"
+    },
+    {
+      "source_id": "train:1307",
+      "expected": "card_not_working",
+      "text_sha256": "2f6075b375dcf5ccfc47ca57f9ce5396a50833054bb546e605ba20a6f7db9a7f"
+    },
+    {
+      "source_id": "train:1289",
+      "expected": "card_not_working",
+      "text_sha256": "7f7fb07f93a36081a288d114ac2b445d3418b0a64fb4942c99b58fa41c18fd8e"
+    },
+    {
+      "source_id": "train:1352",
+      "expected": "card_not_working",
+      "text_sha256": "79ec107ecb79df4fd4b48cf9b89ac379bf453c3c1fa37129ec722cc5e7b1668a"
+    },
+    {
+      "source_id": "train:1267",
+      "expected": "card_not_working",
+      "text_sha256": "2f335c98af16a01c1ce7ae3d2e5c14b5c712a75a30d3e26a97c97191b11beb35"
+    },
+    {
+      "source_id": "train:1263",
+      "expected": "card_not_working",
+      "text_sha256": "5ee7fc909cc6c8706ad9ff59cbb5436eb8af89d6825c75933b67efec2e6826f3"
+    },
+    {
+      "source_id": "train:1323",
+      "expected": "card_not_working",
+      "text_sha256": "ebd3850b35c03e46c0e83f1038400df939b34106d0ef521a3a457940f62cc9a2"
+    },
+    {
+      "source_id": "train:1343",
+      "expected": "card_not_working",
+      "text_sha256": "a761d3d43897d8990a1275c9de3869f69dacc1b330cae217d6bd59d0181aabaa"
+    },
+    {
+      "source_id": "train:1296",
+      "expected": "card_not_working",
+      "text_sha256": "870dd6c22f8ea53a4cdc128df79e651eeed8bbb964a18f858a128c5c61428016"
+    },
+    {
+      "source_id": "train:1318",
+      "expected": "card_not_working",
+      "text_sha256": "12cb54b5f3ceab8d0967a28539ad2bdcf14719824e0163c3c51144767638210c"
+    },
+    {
+      "source_id": "train:1291",
+      "expected": "card_not_working",
+      "text_sha256": "f62b6232828b1922e8c1f48b23342bf5fe8616e76dc0d458c0c0ecf9ad7f7eef"
+    },
+    {
+      "source_id": "train:1299",
+      "expected": "card_not_working",
+      "text_sha256": "ac27b69659c03b029fecede140a51ae51b3c67e4f9df21e68e83fe58ba800f5e"
+    },
+    {
+      "source_id": "train:1271",
+      "expected": "card_not_working",
+      "text_sha256": "04949ad67df42566a795d186fbe80f15a64e64683d517caa24a8bf440f23f1f0"
+    },
+    {
+      "source_id": "train:1298",
+      "expected": "card_not_working",
+      "text_sha256": "b91ad6f3270d350c276ad8ea1d2ca9d452e05cef8c6cc72871661f5bf21c6862"
+    },
+    {
+      "source_id": "train:1321",
+      "expected": "card_not_working",
+      "text_sha256": "35305a368b9eb746ddefc474260753eaf833bc54980794e6152d97f26a3064f8"
+    },
+    {
+      "source_id": "train:1308",
+      "expected": "card_not_working",
+      "text_sha256": "3da1cfc1ad39ede9bbf9c18d815fb7495177e92e518ecfff198e32fa40d4fd66"
+    },
+    {
+      "source_id": "train:1333",
+      "expected": "card_not_working",
+      "text_sha256": "2bccf6ebb56e3e97555f8eabc3e7ae42c6fbda2d73793463a3d93013c9364a40"
+    },
+    {
+      "source_id": "train:1259",
+      "expected": "card_not_working",
+      "text_sha256": "1bb2b0915959129aa5b841e04c54e35dada57386c585054a22aa22c9c802f690"
+    },
+    {
+      "source_id": "train:1347",
+      "expected": "card_not_working",
+      "text_sha256": "9d8f1ef6d8cc41b7de36c0c82e22f072dbd5a9dd33c16692f625baaa9b40e0cb"
+    },
+    {
+      "source_id": "train:1292",
+      "expected": "card_not_working",
+      "text_sha256": "fdb55f2b70c9fc7444fc108eb9bf63797f58b92f4d04d221cd19858e9930dc87"
+    },
+    {
+      "source_id": "train:1349",
+      "expected": "card_not_working",
+      "text_sha256": "895c983b78bf7d761d388961a0d59ae135ce02b4b614ffc9f4ada827c01af293"
+    },
+    {
+      "source_id": "train:1315",
+      "expected": "card_not_working",
+      "text_sha256": "7cff94e8ed41851295e8b52e184de0149c16341efcf6d62e36e731d1557caf54"
+    },
+    {
+      "source_id": "train:1266",
+      "expected": "card_not_working",
+      "text_sha256": "8366d133cfa6ebd5eae3c21b17a7f8e8cff230b13ab9c80fc6957285953cff6f"
+    },
+    {
+      "source_id": "train:1245",
+      "expected": "card_not_working",
+      "text_sha256": "fc92f08e1f76ba6628e27eda9480724a6e40b7773d168812735977f1eb0a9481"
+    },
+    {
+      "source_id": "train:1261",
+      "expected": "card_not_working",
+      "text_sha256": "fa3ae9f8519ceed671a97aea8be8d7b66a95f28d17c947ce69d1e4081ed02672"
+    },
+    {
+      "source_id": "train:1334",
+      "expected": "card_not_working",
+      "text_sha256": "255324ec497153f2e61d48186fcbe6f91ff387d3f41065c38067d977da37ba53"
+    },
+    {
+      "source_id": "train:1331",
+      "expected": "card_not_working",
+      "text_sha256": "acbbbf083f15ad0b039f96b60e2cccb6a2165092a24f1bc77fcc765fa24ff949"
+    },
+    {
+      "source_id": "train:1317",
+      "expected": "card_not_working",
+      "text_sha256": "dd7713dcdd1f39906ce90eab6c1b3854248b0bab8ed8107431fc89a9dce147cd"
+    },
+    {
+      "source_id": "train:1309",
+      "expected": "card_not_working",
+      "text_sha256": "bb7afa8a574e734afcf8ffead66a5e8326b5c7f9cec7cc42bd0f7b435e51b7b3"
+    },
+    {
+      "source_id": "train:1353",
+      "expected": "card_not_working",
+      "text_sha256": "75a5cbd1481b06cf868d8644e4366ca707d158d0b917301aeed8c56757e206ce"
+    },
+    {
+      "source_id": "train:1279",
+      "expected": "card_not_working",
+      "text_sha256": "9957811ebde0709e759db0e7bc3c0a82bdf433a22c62e8dddf96039b3ea892ac"
+    },
+    {
+      "source_id": "train:1255",
+      "expected": "card_not_working",
+      "text_sha256": "2caf7c3524fba05603bf999994a3fdf6275e130d6e611210c55e8fb44cc90140"
+    },
+    {
+      "source_id": "train:1340",
+      "expected": "card_not_working",
+      "text_sha256": "09d4e2fb9990dd9380c6b9040cca886ed4af86017f8b9336210ae209b086c45c"
+    },
+    {
+      "source_id": "train:1281",
+      "expected": "card_not_working",
+      "text_sha256": "2ccd9ce18d095f1f8cbc6c33b16e62ff0323535f52e67e0acdb181148954997f"
+    },
+    {
+      "source_id": "train:1320",
+      "expected": "card_not_working",
+      "text_sha256": "745af146770541b14a914e251c4db4b5384eed818bb20ac192525473858bb48d"
+    },
+    {
+      "source_id": "train:1335",
+      "expected": "card_not_working",
+      "text_sha256": "fc88699a13ff22e781f1f4e657a423b2564c0712003fa996fa626b0a378af814"
+    },
+    {
+      "source_id": "train:1251",
+      "expected": "card_not_working",
+      "text_sha256": "0bab212681e6cdd58f0ef5e84d6f48949e83b44faa9696cccc125c7d3140bcf0"
+    },
+    {
+      "source_id": "train:1336",
+      "expected": "card_not_working",
+      "text_sha256": "10e1cb7c8c417ca690fccc0be9d2299e855ca23b8036646d8a88bf703367d4e0"
+    },
+    {
+      "source_id": "train:1264",
+      "expected": "card_not_working",
+      "text_sha256": "6a765006b184039bdcc09f336b6c216ce9e464c2b63c46cfeb76e75532c04f25"
+    },
+    {
+      "source_id": "train:1316",
+      "expected": "card_not_working",
+      "text_sha256": "399d94b8bdf99bb74023097e173cab1faf035065f1173a8eeecf24e292fa23e7"
+    },
+    {
+      "source_id": "train:1338",
+      "expected": "card_not_working",
+      "text_sha256": "daf248ab0a60453f120495fb920a25e802caba886f57ae150ae7df2b86319c3a"
+    },
+    {
+      "source_id": "train:1319",
+      "expected": "card_not_working",
+      "text_sha256": "57eb0b9d64cb1c471dbfea76e7588f254116a0863008f5fed9a09364ab2ae209"
+    },
+    {
+      "source_id": "train:1258",
+      "expected": "card_not_working",
+      "text_sha256": "1e9105f2074616537dde95402043a84286c3d3849706a0dedb22a0d49ebf4ad9"
+    },
+    {
+      "source_id": "train:1342",
+      "expected": "card_not_working",
+      "text_sha256": "7e4b779fa31884edcb6ad7fb64ad41d988b34074199d941b4ff3ceaeef73005c"
+    },
+    {
+      "source_id": "train:1344",
+      "expected": "card_not_working",
+      "text_sha256": "2a5edfdaac3553aeb4af895b646b0c958bdab58ed1a5ade16325e68f7289e73a"
+    },
+    {
+      "source_id": "train:1260",
+      "expected": "card_not_working",
+      "text_sha256": "b63259fc2952850c14ce1a699a61fbd6d07c7185db36adf30f2264bd705103df"
+    },
+    {
+      "source_id": "train:1327",
+      "expected": "card_not_working",
+      "text_sha256": "f86ea9283b1a1d421b0d67c1752fc0f49229d20e8220f7504f4bbbec758ea8c1"
+    },
+    {
+      "source_id": "train:1249",
+      "expected": "card_not_working",
+      "text_sha256": "e4fbdf9ea2fd2703570d23700db9e183cb585aaa799e8dba2c4df27408e78ea7"
+    },
+    {
+      "source_id": "train:1280",
+      "expected": "card_not_working",
+      "text_sha256": "70a2e7cab86482ae4ac8c1ed8532cd2e36823d26ff274578580a6a406a943949"
+    },
+    {
+      "source_id": "train:1272",
+      "expected": "card_not_working",
+      "text_sha256": "4fe3cc0003a15bb466302b3f8cd3ed2d8a23e9853098321129390354b3d6b39a"
+    },
+    {
+      "source_id": "train:1288",
+      "expected": "card_not_working",
+      "text_sha256": "2074efacc74525daa5da42e4d0fa36eccc3d5d5f16d1e4333c4fe4c8f2d083ad"
+    },
+    {
+      "source_id": "train:1313",
+      "expected": "card_not_working",
+      "text_sha256": "0ca4979816f220ebb02a2951293519a2b3c79ca577170b01faf2754d7e630900"
+    },
+    {
+      "source_id": "train:1297",
+      "expected": "card_not_working",
+      "text_sha256": "b62bffbc72aeac913fa7d90f41437c747ae2b97bfc3a34b9f3febd5079795e01"
+    },
+    {
+      "source_id": "train:1324",
+      "expected": "card_not_working",
+      "text_sha256": "09e0a207f060dd85acf724ea1826735d7c7ee4baf50abcfcd9aae2742b0cf120"
+    },
+    {
+      "source_id": "train:1301",
+      "expected": "card_not_working",
+      "text_sha256": "e10927530438e7b0544cbe16a4e37850f8ec34237bc9252918476e88f89a9b0b"
+    },
+    {
+      "source_id": "train:1332",
+      "expected": "card_not_working",
+      "text_sha256": "0cae9504f1f69f1a72978d3bc759a3230b9ca3d6e17be1ae631e4310ac439b1e"
+    },
+    {
+      "source_id": "train:1348",
+      "expected": "card_not_working",
+      "text_sha256": "31bfffff73bba0aae0043cdcfd3160dcd414f4ed531385347aa91f810da8704a"
+    },
+    {
+      "source_id": "train:1306",
+      "expected": "card_not_working",
+      "text_sha256": "037a1f9f86e80946aee2b10373cf59c1de21951f8ab0764a4e93bffabaa3361e"
+    },
+    {
+      "source_id": "train:1311",
+      "expected": "card_not_working",
+      "text_sha256": "e895e3594a3bd627cbc137d6b741301bd754a0ec12b9a27e2ff5d221c03dad55"
+    },
+    {
+      "source_id": "train:1273",
+      "expected": "card_not_working",
+      "text_sha256": "b1d66483e360a1f60a74fa24f764a5a322c46f48424d604063792f302f397ff0"
+    },
+    {
+      "source_id": "train:1351",
+      "expected": "card_not_working",
+      "text_sha256": "280c22b83a382041ef91c0932bb48e75671b581f02554e176086cf3db7416756"
+    },
+    {
+      "source_id": "train:1356",
+      "expected": "card_not_working",
+      "text_sha256": "dd6173267dd75209bbd6494f0aacc1dda876f45c295c0c8101d674e6ccdf3369"
+    },
+    {
+      "source_id": "train:1274",
+      "expected": "card_not_working",
+      "text_sha256": "b9b019815acb446232e622291f7b6b0d1d03637eb1d4b0809c20d98a2f5ab41d"
+    },
+    {
+      "source_id": "train:1329",
+      "expected": "card_not_working",
+      "text_sha256": "b3be9de32a95c8ea56e2e6d24736731f1c9eeee0adcff3b5e262b5c567d20e65"
+    },
+    {
+      "source_id": "train:1275",
+      "expected": "card_not_working",
+      "text_sha256": "c22db108583a5f84211a66500306830c26c447ee5fdfb0f705ceed9ec9c4e745"
+    },
+    {
+      "source_id": "train:1300",
+      "expected": "card_not_working",
+      "text_sha256": "320319bf2a94e350b6364f6af4dda0845350dbfb3416888ecf1223333f6bdbb6"
+    },
+    {
+      "source_id": "train:1312",
+      "expected": "card_not_working",
+      "text_sha256": "6b4368c460bc275f1ef756a6788b7d4c2a5cb481e34e1b48f8b1f4b9d9ba1999"
+    },
+    {
+      "source_id": "train:1345",
+      "expected": "card_not_working",
+      "text_sha256": "50bf2aec5700665ee5c268579eaf3f0fec3cfec08a18e86c0bb990fb0fdbfc4e"
+    },
+    {
+      "source_id": "train:1293",
+      "expected": "card_not_working",
+      "text_sha256": "1197ef8a22e7b547f8451f8f2256cfe39f5f625845c7e5d66da17f7e603f846f"
+    },
+    {
+      "source_id": "train:1354",
+      "expected": "card_not_working",
+      "text_sha256": "d07fd11ed3b3835a919cd9a0c1d8dd8400f8169383bcd8b91210dc3b4d740761"
+    },
+    {
+      "source_id": "train:1328",
+      "expected": "card_not_working",
+      "text_sha256": "4264ee089d3185503885d99b89f5fa05b360980d272d365c40428e4e0c6a82a7"
+    },
+    {
+      "source_id": "train:1294",
+      "expected": "card_not_working",
+      "text_sha256": "06ffb5d381350054cf444ab83a9ff0d8cc01013a55cd5bccd4f1b9a30a87598a"
+    },
+    {
+      "source_id": "train:1330",
+      "expected": "card_not_working",
+      "text_sha256": "0cf4ad09a1395b3626db6873621b90d3a26604814771b1ec97c953133e6d7e01"
+    },
+    {
+      "source_id": "train:1262",
+      "expected": "card_not_working",
+      "text_sha256": "2e4418887d8440f7763810f157ba69d9c974619a3ccc67ce9398197816df3f68"
+    },
+    {
+      "source_id": "train:1248",
+      "expected": "card_not_working",
+      "text_sha256": "aacebca8c182c2c454d2746fc80808cab333bdbc6fafbacadc5f7b1ede6b9109"
+    },
+    {
+      "source_id": "train:1254",
+      "expected": "card_not_working",
+      "text_sha256": "907b4c7e92036535152b7f8ee24345f6da456aec2a05ade7747d81e443e428cc"
+    },
+    {
+      "source_id": "train:1355",
+      "expected": "card_not_working",
+      "text_sha256": "04ed605807d0b3ded10c5e9764c654b735abbe8d878cf66d6607ace7067f809f"
+    },
+    {
+      "source_id": "train:2544",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "87def2b241542d3c40d81fc3c72609abc502c1503fcad16e0c926b250a78d229"
+    },
+    {
+      "source_id": "train:2534",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ff4183e5664bbfa2fa0ee80d632b077f5c0169da0fc6cddf520fcef694973eef"
+    },
+    {
+      "source_id": "train:2526",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "581f041f76f7cc07ef19d6dd95441f1c5108fad4e3c3eb46c4932b00345cb8e7"
+    },
+    {
+      "source_id": "train:2620",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "68540c3cd69433c87f05dbf1c725147b1e91effe2c47a3eac08cb330efcc468c"
+    },
+    {
+      "source_id": "train:2608",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "00eeea68b5e7d7b373aac7960b1f2c15ff65c1bef9cf5e4072cd72a9b7ac1f2f"
+    },
+    {
+      "source_id": "train:2588",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "86a6b2f7ee6baf4ec1c9e2351fa2c27d83b047da9ffb3ed6b9ff25372bec22f0"
+    },
+    {
+      "source_id": "train:2674",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "fed3808a3838ea124a955e651bf5fe0345a028162e56af478e59e28d6771336d"
+    },
+    {
+      "source_id": "train:2569",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "2deacd66ff0c4731f816151da2ce4ecffc40a8a365b09f7e2a7915ac2baaa48a"
+    },
+    {
+      "source_id": "train:2694",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "02c135d7b74f0a80427091e859354b92aa714034923e9edf95e89a77ad61f890"
+    },
+    {
+      "source_id": "train:2512",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "03e3397ef0f8f8886de988e86a24fe2af82a7749f29c93e41eb8dc782e251f9d"
+    },
+    {
+      "source_id": "train:2682",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "d9aa871b787f9d0d23e35a865fd4ddcc4d8df00d916fa4ff45655ef203b45393"
+    },
+    {
+      "source_id": "train:2683",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "6e643ce08a595d6285ea984155fefbbaa7e5b9fb73213b1102e1e7953c22df98"
+    },
+    {
+      "source_id": "train:2696",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "a1311378ae79ed949b550448435b21d2f0a1dadec63dcdc4ee5b244354dd9fb1"
+    },
+    {
+      "source_id": "train:2689",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e41d9bcb791890b2d7bb223a0d317a70cef2584cb1825073a97e3010aec5c987"
+    },
+    {
+      "source_id": "train:2593",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "29a91a7aa608e5404cc21760d589e81ddba57ca7cd3ee5b268fdecf5f1003d2d"
+    },
+    {
+      "source_id": "train:2576",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "17504fac1cafc0722f195bd15def7f54e95983a4ba9782e0c9a09902c3004f07"
+    },
+    {
+      "source_id": "train:2693",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "530dd9731891a82933a0f5cea47a0af11f256ae87a54ffa364e383fee53ca862"
+    },
+    {
+      "source_id": "train:2568",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e13aa7cbc5c0fe2dcf5dc7e8b1762a3ae01bd0b4fcc7d4f19288634ddb421a90"
+    },
+    {
+      "source_id": "train:2686",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "253669c688b45ab366ea3796f9153d21932e5fc00abf812465f7b5d6054e6e41"
+    },
+    {
+      "source_id": "train:2549",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "0b4d73763ff00c860227098875a899c89d296eafea97caaa8a6aa59ea8eb57b3"
+    },
+    {
+      "source_id": "train:2557",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "12bc7bf4bde0f2518d65e25705245787eb6bef099131e2e6b1cdb4cbd3157365"
+    },
+    {
+      "source_id": "train:2563",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "960acf534ba3e80763d0e5357d14502037a5b37c06336d2f95b6bc1db6165aa1"
+    },
+    {
+      "source_id": "train:2538",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "24e0046f433a70a7426b573251e7e808f710b0689d1029d7ac5d06d211898ec4"
+    },
+    {
+      "source_id": "train:2649",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "3314c3bb3cba0b09472834f4cb07773fedcff992a44b63f5163dfccc127a8f22"
+    },
+    {
+      "source_id": "train:2566",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "a6fc0f49c57f05993d76073d552dcf93dcc815bf573d2802d9003b376ccb5233"
+    },
+    {
+      "source_id": "train:2618",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "6ad8ea404a5d68917291c84380d65ded766e983a65aa3edaef1325ca381dfeb7"
+    },
+    {
+      "source_id": "train:2643",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ce2fbf9ee8ddbfd3bbc61026f9a31f03b170be593df5f89528d9de7ba373557a"
+    },
+    {
+      "source_id": "train:2514",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e2ccca3846518044c1f29b5a8635ed9df6c6c0f816c45dacc0c150b8bcae51e2"
+    },
+    {
+      "source_id": "train:2552",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "136b42285e287d390877dbb0ebfce56fe09ebe130c7204d77d632b7b5d1a1356"
+    },
+    {
+      "source_id": "train:2590",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "2ba13bbfe7b0148fff7744bb0657999a98bf570afc99e78c3a4d556b75143af8"
+    },
+    {
+      "source_id": "train:2551",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "aeae3b48fdfe1a1e62c8618592fce8a8cbb814d4f391b779eda4b95f4aef809e"
+    },
+    {
+      "source_id": "train:2622",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "b5b3e6decbaab569a0aef9d524475128d360769539fb3e1730c63de19e31e360"
+    },
+    {
+      "source_id": "train:2571",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "a52b5babecf0d19146b98e98d99cf4f5ccaebaa5de5dd2e0eb1faafed3858937"
+    },
+    {
+      "source_id": "train:2665",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e5a4be071b40fc4f4bac014b26ccbab484fb8102f4663b217c17d3c47f5f842e"
+    },
+    {
+      "source_id": "train:2574",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c2eaae47d0d7ed637213fdefcb58b4880a8c1e12b4aa32c0e28f77b4fb8cdb03"
+    },
+    {
+      "source_id": "train:2545",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1ce75457a40eed7130b76a07b18910badf0386cd3ccc88114e151a5d59d131c9"
+    },
+    {
+      "source_id": "train:2630",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1a153dca5708dc21c042c15e1c33b721383da62cd005a672c1bf5f25bfa20420"
+    },
+    {
+      "source_id": "train:2671",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "b2a1c35d077a5411c65e4c52697dbc83168024a30ee83bb01dc582f54b7b7027"
+    },
+    {
+      "source_id": "train:2619",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c7eb6dd4cc2a5a4e55cf0afa12164cd0710405e438e196f385e9c619b8fca20b"
+    },
+    {
+      "source_id": "train:2685",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "90916e6bbe5694217d7af095161d29bd3c1a086dc65a04e0c7452d973ea906e8"
+    },
+    {
+      "source_id": "train:2558",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "485648960c61fadffb92e8bf7f531ec7d918cb359fe281641700dd7a7a25a4c7"
+    },
+    {
+      "source_id": "train:2564",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "39b1e7db7869155501c4d5c831edc370322be9c48a0e78d3a5b3997bcbd5bcac"
+    },
+    {
+      "source_id": "train:2515",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1537a8c82c8a1c5b9c9f48a894c4436f1f4e51415f71c54f89deedd20c60e352"
+    },
+    {
+      "source_id": "train:2624",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "d993ecbfd673ee3a0ff4cc58a524d8f718c33f5a7033474662bb36437368ee30"
+    },
+    {
+      "source_id": "train:2695",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c82b3e43197f10fb1250b93eea39b5a6c14170f8bf1af92a5867bd2fe14f5ee3"
+    },
+    {
+      "source_id": "train:2594",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "7566bdd14e1e15e86b3673ff42e79b07e56c4c18b2837cb80837ae73d682dc00"
+    },
+    {
+      "source_id": "train:2658",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "fe8cf383dcfd74df51a55760bcb47435b374f3c26d9306e06c4f7f37e314c9e9"
+    },
+    {
+      "source_id": "train:2655",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "2fdbb9ccc17c90b6d8081b21b52433b075cdd23b8919d87526a1c72dda53bdb8"
+    },
+    {
+      "source_id": "train:2676",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c8d1383fcf2a037503457f6908a6d60713639c65a2f8b90433f380a8f2dd5f0d"
+    },
+    {
+      "source_id": "train:2664",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "9b157aa3c0169caaeb5a96087732ed5e69e0509ddce16386e28b3498242748d9"
+    },
+    {
+      "source_id": "train:2520",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "73f02172a5333e982181d906c76152296c07b9e841360ff422bb309272ffa543"
+    },
+    {
+      "source_id": "train:2585",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "08f7e02047cd9f6b7a552788af2608e5cfdb8c7c94929aec810c06ec00fa1295"
+    },
+    {
+      "source_id": "train:2596",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "4f9029c6bb3d7e2328087cfd48bc211e757c3444cb92d455875fa3edfdb92c7e"
+    },
+    {
+      "source_id": "train:2573",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "a0edfa372b7df959846377ed1344803fa19d5629e5e420396e8599e56d3aec7d"
+    },
+    {
+      "source_id": "train:2559",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "358f637d3c3ee7f50df8bd4f3cfbfb13a86a8dad35997b3621a976c842c28260"
+    },
+    {
+      "source_id": "train:2539",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "06f07fb78be5c6b5326f00d23aed68ca2373ee6b106ee1d2594e58a34842b524"
+    },
+    {
+      "source_id": "train:2659",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "db6ae8d7b56b6a0431d4ef1d49de92abf357f8053e90fc864ecce7134e8054cc"
+    },
+    {
+      "source_id": "train:2591",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e7d135bfdbbc855328afbd7506f20c50701cf17ba676cc0b710aed61f795d5d5"
+    },
+    {
+      "source_id": "train:2656",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "0a2bee51cf7e513f79156fbd24065a37d206546a685dde7534a41cfcfb813003"
+    },
+    {
+      "source_id": "train:2555",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e2a8faffbd55714703b35c00601bcd71f8935eae0240ab37d7382e8374853f07"
+    },
+    {
+      "source_id": "train:2636",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c6560d4f066ff56711c80ea7f5138eec22b6045ac824397dc623905940be7dac"
+    },
+    {
+      "source_id": "train:2625",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "66b2d220e141f09ee602ef39f24761fe6c594742ce787163e88ad25146f43cb4"
+    },
+    {
+      "source_id": "train:2523",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "7ff82ca975a6c6436e6651f64836a910e731f8bc93a3b67e8361c5b89c7a88e0"
+    },
+    {
+      "source_id": "train:2595",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "d11eba15007bf16fd5d8ac6451a740213adf8f9c965b29a19a93f9a6ef866246"
+    },
+    {
+      "source_id": "train:2579",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c8900b9fbce78fe3576f066bb4a94967bfe0879acd8df54ae4457f58f014dad8"
+    },
+    {
+      "source_id": "train:2679",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ee605ecd31372900446f3e843c6fb97f5eb351efe0733b7ef7a50df1330bbbc8"
+    },
+    {
+      "source_id": "train:2654",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "219b2d14d1cbfc87efc3fada9a24983dda1ccd311e451eca474cb9017095d4a6"
+    },
+    {
+      "source_id": "train:2680",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "65b12fb0fe3e4b91461a2c4d054d0f6e88bd9aefe3827712353dd8b5f3e1ea5b"
+    },
+    {
+      "source_id": "train:2675",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "72ef0ae880f3a5a52009a9592c9fbe16e08b39ae21a889f8e9f1ee4f6ccd1d8e"
+    },
+    {
+      "source_id": "train:2610",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f9777d1771b945bfbff73df7c8147d57e212116eea86cf9c26c471eef51a2aec"
+    },
+    {
+      "source_id": "train:2611",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "4ab70e4c166954d79d2b51aba0980ef8d17688aa0700570292ebd6d2c08efd90"
+    },
+    {
+      "source_id": "train:2614",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "6c03f4f957367a831ddac09f65ed50a78e41fd19b55a1083d71f055795dd781a"
+    },
+    {
+      "source_id": "train:2522",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "8bfdb6dee956c84675c97d219029e377b5f6bab368408c8087fa5e64c0640e00"
+    },
+    {
+      "source_id": "train:2570",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "7a05c53163ad462804812fa7e1fda93cf9543eadf3f6b425ff591b767d2c3103"
+    },
+    {
+      "source_id": "train:2577",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "115734bf9eb1afbfac84ebb2404850bd4c22dd3d15d1e78d9cba42d51a0fd725"
+    },
+    {
+      "source_id": "train:2662",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "6bbc3d524bbebdcf47dda8dea6c8313e496fde62d2b1260279c036110cac680d"
+    },
+    {
+      "source_id": "train:2554",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "57aff675fcbe273ad69b2d68dc469e42dbf40f6e97720dd8a3217f8d5c7d5a1d"
+    },
+    {
+      "source_id": "train:2641",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c72a1712f8a720ffb66228ccbb5ce2623be9835b28908d764e5a71b810cee043"
+    },
+    {
+      "source_id": "train:2668",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1058e6e7812a2520148207a772a1d193fe8fd9f8eaaa790522cc61ee6862d365"
+    },
+    {
+      "source_id": "train:2642",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "34e3194faafe1015cd54517373909906232e4fb9b1c913bc8572bacd346c8330"
+    },
+    {
+      "source_id": "train:2584",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "d9dabba56e24466bf3590dc4df2e60adae7b99034234196e3d3800dbc7e136e5"
+    },
+    {
+      "source_id": "train:2516",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "13ca57cc34df93479dba1013593180c551a4313f1c9a83b96f3380ca536ef36f"
+    },
+    {
+      "source_id": "train:2511",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f8e2bb8dc93a29a08c59714bee2524882736d1fb134b70bacc744ef493b558b1"
+    },
+    {
+      "source_id": "train:2556",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "98df593a1c65fd00557efa30d5e63bf17d7876a328c324eed4c1ba6710d2e1cb"
+    },
+    {
+      "source_id": "train:2633",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "952f169433768c5a4324514b24af40e8a168f13e2d30f2f4d02c75a3bba7c58d"
+    },
+    {
+      "source_id": "train:2547",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e57382c24d0f0b0a3bf588cd44b876a4611e9552dbe37f3fcc73afe66b9a5cc7"
+    },
+    {
+      "source_id": "train:2661",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "76a9ec16efc154852adcd1a1c1a70eb416da5aa38f612fd3894cf5510b57b2b2"
+    },
+    {
+      "source_id": "train:2691",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "49d70769c194c499444d39109b95b13069c33344f8801b9639e07f75a4bba183"
+    },
+    {
+      "source_id": "train:2697",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "afbd1a6972afd5e87b8c3f028c5035372c1ae53fda481711b0b7e8fc1b65a493"
+    },
+    {
+      "source_id": "train:2530",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "18a1868084b97c6b7ce01f8c29b3203e4ccae37d334c117cf72734b2feb108b3"
+    },
+    {
+      "source_id": "train:2546",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "23b40b5d43a3663248a7bd809575ca97aa11f1b6bcc7793c59cfd17636973f3c"
+    },
+    {
+      "source_id": "train:2687",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "012893504bf9f33f114aa519aa3527805e566147933efb4a84fc85f9b66a1c24"
+    },
+    {
+      "source_id": "train:2599",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "74c6646be7bb1fc63764e31e22d4b937c7955b74f9e6940a9db7768d34aa43d3"
+    },
+    {
+      "source_id": "train:2518",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "9b699672799276073fd41c3b51ff7f776d53cf912e97fca0de9aa9657a0051a8"
+    },
+    {
+      "source_id": "train:2603",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "41529b6096fd1c9e72c459b861ef45ba91106e1eef3462427492d1212b9c00d7"
+    },
+    {
+      "source_id": "train:2598",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "4873394260e72d37cea26ed8dbdb056790cfcec8681b3a427a576301e64d799f"
+    },
+    {
+      "source_id": "train:2578",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "15fc00422151a7baaaa1c3cbc44311debdd8d000f387ccf48d209e24dd5fb59d"
+    },
+    {
+      "source_id": "train:2575",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1c55cf6561df57198289fc79ea1f38818c3c16829fdcb262f77f108b778090d0"
+    },
+    {
+      "source_id": "train:2513",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "90b9521ec11eb7c41dbceb603ea69952cbe0a7c8d673e528230d8a37ce6c3c1d"
+    },
+    {
+      "source_id": "train:2645",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "8197cddc5b37d6fc316aa0efc1f9583603ea7fb9f7d60ccb588b26886b8a9be6"
+    },
+    {
+      "source_id": "train:2525",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "993699bba39f76700c6615ffb83a8d9f73522dcfc2fbb7f6c0720f92e7b813c4"
+    },
+    {
+      "source_id": "train:2532",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1a04491dbc9ffa8f514b387bd6798d7d1c23e65ca0476c860abee7617e7569ed"
+    },
+    {
+      "source_id": "train:2582",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "9df35f006b01a844403e6e494a0f94f2b31c4229e08f97887e44beda0938e8bc"
+    },
+    {
+      "source_id": "train:2678",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "98083b3cf6769d4dfdcabaa59724435d76dfb0947f7d40d55fb0c7ee54ea33cd"
+    },
+    {
+      "source_id": "train:2517",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "3d2ce0e1f3faba54c2d7c70b476860e0149f3552a419abdaea074a3ad4ef5ed2"
+    },
+    {
+      "source_id": "train:2623",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "dc66f4b9152f00ccea903a384a9ee836e6e07c4a2a1b06d51dc1fd5d41c002fd"
+    },
+    {
+      "source_id": "train:2542",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ec3036ca9a808c95c1672b0668c2bb1b508b7c14c659a4b08e750db9c009278d"
+    },
+    {
+      "source_id": "train:2533",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f3a7337a5e203fd07e426b1c8a73317b7e3382ddce28d5eab1925e4d9d4ece01"
+    },
+    {
+      "source_id": "train:2640",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "2322c309ae0eeaccefe3e1fef7da32e79055068b3511f1c2b2c2d793d22cdaa3"
+    },
+    {
+      "source_id": "train:2663",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "150264f34428ef7350916835207d2458d411c647a862c8aeacc3e70ea06964a1"
+    },
+    {
+      "source_id": "train:2560",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "3b5502a89c9e5812cadc7a7f263fac4138049949c8dbcdc0841c2a126d73902c"
+    },
+    {
+      "source_id": "train:2629",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f668e9aaf93d821e8db4bc8b9762df2d99a609f84943cd877e186ae99d8c0087"
+    },
+    {
+      "source_id": "train:2681",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "048706b116ea6fd66d933c29cb9db2516ad6c9699a95418e11c61b2405726c2a"
+    },
+    {
+      "source_id": "train:2561",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "be12ccb8486dd9670cd7a8935e0867b6d3c85a3da943c1489c34e43c15993be1"
+    },
+    {
+      "source_id": "train:2567",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "5f76f26357f37d34e711d57f1e6c3f9cae4144eefc80e0942f431a9fc763b8bc"
+    },
+    {
+      "source_id": "train:2604",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f4aff807e3f7d9613f75862f853e73ae7f3f73f5bcc0ee03d6d465b018b9d63f"
+    },
+    {
+      "source_id": "train:2634",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c04cd8ce872849f22f10a1b956447a2024e6af570a2b49efe482b99a0f321c6e"
+    },
+    {
+      "source_id": "train:2524",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "b714e825e036369938e8dbe37e16a9d473d685c8083867dcae651274baa675e7"
+    },
+    {
+      "source_id": "train:2553",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "3c475ae9de1dca9fc2aca43f2de8a6a5d5cb8616ff93128b636b41ebc7c9806a"
+    },
+    {
+      "source_id": "train:2536",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "12876ff46bececd560953c9e9fbc927daf6d92eb681def3252c37b812a48de71"
+    },
+    {
+      "source_id": "train:2621",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "53dd1ae991f0f010356a3c7f6d816f3cd4e24ab5dec37cbd76cea3ce7528df5a"
+    },
+    {
+      "source_id": "train:2648",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "d4a5e3c8273b629ce73108fb9ba219662bc32514749c33bd2228ad9b334183af"
+    },
+    {
+      "source_id": "train:2543",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "8a1c40d99d02d9ab23e41b74b4d2211ae33f2b7ac8700efe3372c842b9daa45b"
+    },
+    {
+      "source_id": "train:2607",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "b098f29236ffc3e68013bda6f5c79a040dfa958faecece3fc134254f0a33bb2d"
+    },
+    {
+      "source_id": "train:2615",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f0efe1283ed30ec0073d8711fca32ae22987c1c983fd19eafd1d2435d0c39c4f"
+    },
+    {
+      "source_id": "train:2631",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "b67a7ac93f92d554f91644d4c98cb578888c08c80a9c3d3d5c22d637829094ab"
+    },
+    {
+      "source_id": "train:2692",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f8e118db46e28bda4c3b82298b0d60fe415212f4254a1e1154e5139017990b41"
+    },
+    {
+      "source_id": "train:2589",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c629ffad83ac64c348f3b62d9a9d8c20bd4b9b0ada88bec926b1eec3dedc8d16"
+    },
+    {
+      "source_id": "train:2541",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1b1a88f1358aeaea2c8745c372a47ccdabb7b96e2c16807aea827917f10cbd2a"
+    },
+    {
+      "source_id": "train:2638",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "b95d0fcacf44fd31c32ff688c310b1d68f6bb747a68c8d2f6e480e7a16dd41c6"
+    },
+    {
+      "source_id": "train:2572",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e090f618f6d86cf541a628b3b857c21c26e8c405c31f1ed2b701db8c8cee38bd"
+    },
+    {
+      "source_id": "train:2528",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c9a501013f4bc7d12d846884c438e1569a29fe34ae2d986c1b8e40c2326bacae"
+    },
+    {
+      "source_id": "train:2647",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "9d64db46f97d8b6680c77b8777cb9c8d2fc8886895f5d85f7874ca4a02412ad0"
+    },
+    {
+      "source_id": "train:2651",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "333037048944174af20bc07b40a4543ae35a2107bd2cb00611f850aba2f8e4b5"
+    },
+    {
+      "source_id": "train:2644",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "14cc3139c2f8d2edff40e8f9036f6bffcae5342fc3eb51e175ce415628792edf"
+    },
+    {
+      "source_id": "train:2688",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "0974e041681ac47fa5e1ba7a668a32d144115479e5d069d22e384b19cf79612c"
+    },
+    {
+      "source_id": "train:2690",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "6a422ba9eda81b046cfd3bc8e83486ea1beb7bcebf2f566060920a93a4d71583"
+    },
+    {
+      "source_id": "train:2592",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c4c9d7e1bff8c5be10c5b64d74edb5002bd289f5a760b86cf21148227c459343"
+    },
+    {
+      "source_id": "train:2657",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c79c6887dfd813f20cd15eadd37ea9b8e23faa9b0bbcdf816cf807352ed6fccc"
+    },
+    {
+      "source_id": "train:2626",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f83454d8acf178723599d59f6e356dd859a97f6d8061e8e281305eb907195690"
+    },
+    {
+      "source_id": "train:2535",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c7d1628e91a237b5fbb9ecf6b2bfb6f6836ba7577ee5100803318986f7941d59"
+    },
+    {
+      "source_id": "train:2537",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1ee71d61e098a675a6967b632c5ee05aac486073fe365ff2a485235946502a00"
+    },
+    {
+      "source_id": "train:2646",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "258938c2b8b3070fbbfb1795dea465fdf1fcd48a38220cd3de955cd24ef3986a"
+    },
+    {
+      "source_id": "train:2617",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ced9b373b52957e909101f88b80f0418bed6ef5d95f61729296cea101134b5bc"
+    },
+    {
+      "source_id": "train:2635",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "687b36e3cfccf57bc407252772c03882b03390b8f028b5494c034ecac016d372"
+    },
+    {
+      "source_id": "train:2605",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "281722f6bef84a43c6e38654f13792144ac7202bab50df5266f264c12f9f2231"
+    },
+    {
+      "source_id": "train:2670",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "4e61c1fe21fcd5bc31b649f72ca524b10ca1cc9bf80aeb4edcec0c4529406777"
+    },
+    {
+      "source_id": "train:2677",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c9dfb412f4c652d925df62e33d654a1f0f992daa3dfe2343a03062d378e5834c"
+    },
+    {
+      "source_id": "train:2609",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1f1de58a803ce97f579de5d8af98022e2b3a1f833d95dcc8e9d788bd106a8f0d"
+    },
+    {
+      "source_id": "train:2581",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "9ecb1977c403faf3ba1596a6c34ea05ea888387bab98eb16cc50024f337f3d66"
+    },
+    {
+      "source_id": "train:2653",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "2f4d2da9f9c40e663dd4db59efbfc98a14f7895fc664c5a454c64523deec1c2e"
+    },
+    {
+      "source_id": "train:2565",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "9ee56a19c3d2a37a7d346ac4bce24a87e1c90824a1160f9a6be6626518d1532e"
+    },
+    {
+      "source_id": "train:2531",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "5d7f7d243c8f954fd841eb20ef84fa818e94414cfee0cc1fcbfa2275c9be77e6"
+    },
+    {
+      "source_id": "train:2616",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "97d0883e8519dd5f605cf5f85d7bfcb19930a05d124538bd4966dc03c8e3b9c5"
+    },
+    {
+      "source_id": "train:2527",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "00f4b4deebe38710c4c7f3d3d729a779cd98e3f92dddea8f714886196f56ced6"
+    },
+    {
+      "source_id": "train:2550",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "da3575b03220e8f5280ff903cdcb9f6b01fff882c67cd1c9ef5fb93466c9392d"
+    },
+    {
+      "source_id": "train:2597",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "07df2373c6437e963737e8c5411d6f90be50eae576ba7a17d78ea7be5246b4af"
+    },
+    {
+      "source_id": "train:2600",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "73ae9cf36925f5eb671af6f6b38b7c72ae9dc707ad8263cb8c5c7690f9da7299"
+    },
+    {
+      "source_id": "train:2637",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "102437e08b7c7ef97a0fa2949e5d7ddf8cda43831f21a99fadadd6eb39a57e77"
+    },
+    {
+      "source_id": "train:2650",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "aeb071551628a03729602747abbaf79ec8f1bfb5c6eb92d0b14aef2bd88afddf"
+    },
+    {
+      "source_id": "train:2612",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "2cdeabb274bf2f83ba04b1aaa49cfebf8c1b560b47ead1a88a040ca11c612f6e"
+    },
+    {
+      "source_id": "train:2627",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "0b148ea5b70c11abd883a20108c3fbe4eae903e2139632c68d4147e53fa4b9ef"
+    },
+    {
+      "source_id": "train:2639",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "53d0baf8d6a4713dd7f8704b84bfecf51d59b4c2086562511a24e88cb2574826"
+    },
+    {
+      "source_id": "train:2529",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "2391bb72adcc58992228adc12d3f29eba9603dca28f5f40b57c3a7efd1e0a318"
+    },
+    {
+      "source_id": "train:2586",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "510dbe1601e744992b709d46a0d248a0e7ade8fe74bdd24efe72274632800c02"
+    },
+    {
+      "source_id": "train:2519",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "9c98c76d75ca765c552e0445e476861748f2e2ff85d80f23744b59295886f6b4"
+    },
+    {
+      "source_id": "train:2580",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c77090b0534f7082bd95fb3d01c444c013e9da44a866f63496039e753385e9d9"
+    },
+    {
+      "source_id": "train:9419",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "c2d552da0da9f23be1c880e7c2094c1801c4400ecdaf9071d38018b054d45520"
+    },
+    {
+      "source_id": "train:9489",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "094dc464b5ea9eb812cd1e113e4bafea3e6705b12461612460b2dedbe611ea9a"
+    },
+    {
+      "source_id": "train:9492",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "f5a5eb0d3e1abebf08aba65c21f76d1ef0fda61750607f9090d89b637db04a4c"
+    },
+    {
+      "source_id": "train:9395",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "66dc3e210746490ea30102b088d826626250197a6fdbbf1a25d2ee8988b0708b"
+    },
+    {
+      "source_id": "train:9478",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "884d08ac8afa901d2f2fd51c67893c647775ca33ea41bece1d561ec9d9a7a081"
+    },
+    {
+      "source_id": "train:9453",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "6d81ca36df36c8018c0433336206f4696c30c6f4a905100f7600f4de89e3fa0c"
+    },
+    {
+      "source_id": "train:9513",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "78f2d8dfaa441503f38ffdc84790f303c84605feda0c2909d92984a8ff020fb1"
+    },
+    {
+      "source_id": "train:9397",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "13011257ab9bc0510becce415a728f0b23e00ce30d8c8f4b14bb6efe0684ce9e"
+    },
+    {
+      "source_id": "train:9383",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b58fa8ea8acb2e3ce87ee17c63de6f6c4742de79e1fbcc81e2b1b79454807833"
+    },
+    {
+      "source_id": "train:9507",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "34b044a1e91cdb0d30ff5566762ba6d89d23faea39899cdaea947cd8ed9858fc"
+    },
+    {
+      "source_id": "train:9451",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "61eda8312247a7d8b4d7d10eb70df5c5761264d18fa2b913f3506d9892e7b533"
+    },
+    {
+      "source_id": "train:9380",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "fe6ae6786b35cc4a0c02fe612fb81ca1cf5d795d624cafdb3edf992111db08f4"
+    },
+    {
+      "source_id": "train:9366",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b665412022efe9c66f14af286eee4aef7df3e9ebb47e5781f13427b9d919f81e"
+    },
+    {
+      "source_id": "train:9459",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b9417daa7890a9274bf458b2a4caa617c5e307cdaba7ee0f5c02caa3f15fa3f9"
+    },
+    {
+      "source_id": "train:9479",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "60b5fa0702f84ced6bedfa629bc1375a7b08eed5809e4cac7fcc54764c385ada"
+    },
+    {
+      "source_id": "train:9361",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "27222650d67c519f321db1f0ea2b6438ff3d8e33d0f78ace1ae0cde28ca64a48"
+    },
+    {
+      "source_id": "train:9432",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "411215aca4da406bdfb3107485dcf67a7eb37695ae90eb38254968fa244cb7ea"
+    },
+    {
+      "source_id": "train:9357",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "a2b5334e7e95e60d9915ffb2e5b3c654569a0fcc72579285d98a86bd3f8ef373"
+    },
+    {
+      "source_id": "train:9496",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "607a33d14c727196d1a98b4eb5bb4c36bac70a16c5d7c6ed9d62d6104dab785a"
+    },
+    {
+      "source_id": "train:9468",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "8677a27e1e559fc351aed168ab96e7d17fd6df88c4831f6f238c47aedd64c6b4"
+    },
+    {
+      "source_id": "train:9402",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3a30e2be18982b839586fdc0c99409ce48e1a4bcdfc16cc9032e2332b07be01b"
+    },
+    {
+      "source_id": "train:9443",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "28f49b11762e2c6d9e7f580c60b80692e63b31516587b0cd9735beea4e575f49"
+    },
+    {
+      "source_id": "train:9384",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "68d9500150176930e4f16a96dc13aa36525306cf47bf59958ec0794e825e8b3f"
+    },
+    {
+      "source_id": "train:9439",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b3f459854419b03522623e1296528f4acfb28456048c9ec1d81df7a03f1cb9fc"
+    },
+    {
+      "source_id": "train:9484",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "8a2faa2f49c0dfe4155e72efa2a075fc3685be959def83f3e47d41a1a935e77b"
+    },
+    {
+      "source_id": "train:9508",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5c947af882f0313d1ed41210f03026a48aa8c7aaa8438a3bdc9baa45b321c8d5"
+    },
+    {
+      "source_id": "train:9446",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ea2bd1ac304362ae4ad1e4421b25b356dc67ff8aa6e0ae507b03350e242dc28c"
+    },
+    {
+      "source_id": "train:9373",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "c3ca6ef8450b5560b9a6751d29841454444ecd8c85df45fab2579c744c82e551"
+    },
+    {
+      "source_id": "train:9463",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "f8405cb3374851c445ebf18fcb9f1754589b9feb204ac7a89553690c7ec12f0e"
+    },
+    {
+      "source_id": "train:9417",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "e1a4b3f1d762ec7f6b762760b3ee0e7bf941ef10f19fe85c192fadd74c054a9f"
+    },
+    {
+      "source_id": "train:9344",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "1f537723788a6fd08452cf5cbcc1073637b5d32ac0d81510a771cc95d71c5dea"
+    },
+    {
+      "source_id": "train:9430",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "77df662a317a0a991d3bb3bc52d4061c33292035a99f836dd09c50a23aed85f6"
+    },
+    {
+      "source_id": "train:9408",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d78269fcbb8a448a15ff1dbbb6d62c67c04c6c1310c940f03651511592dfbf00"
+    },
+    {
+      "source_id": "train:9415",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "551974c0937ad96c376195f5bce314e7fa57e1b8e9d7a6617acad1ac666a7843"
+    },
+    {
+      "source_id": "train:9355",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "45cc4dd660e198822d1b0bba1fab79a504c64ab646f674b5dfff6caad977bbad"
+    },
+    {
+      "source_id": "train:9509",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "7329e43d06d9e778e1a3170435d39d776c87739354b161610041f4803d2a4777"
+    },
+    {
+      "source_id": "train:9403",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "10b1135a7522fa6d6388bf7375b228eb95ebb743dbb67e221f94d5aabbd84767"
+    },
+    {
+      "source_id": "train:9374",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "adf1015894351f287d059a15144dd8091f5ce1432e182cf3c2f54cf29e0a1dc2"
+    },
+    {
+      "source_id": "train:9340",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "22acecb5bcf28d8c162254eb48f14e004275bec16e7a10e6cdae4c3ec1d669cf"
+    },
+    {
+      "source_id": "train:9370",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b0f095927ebf00da628817866e0454fb939b4ea95526d3e8f42aae0a86f3cc7e"
+    },
+    {
+      "source_id": "train:9372",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "295abf6ebde07fb0fcc5c17db0688c5bd020473eca5fb02d3708675785932166"
+    },
+    {
+      "source_id": "train:9491",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4d486770d9462bae97f9aa37930b4f40eca661db175a4586f5e4988db6c48314"
+    },
+    {
+      "source_id": "train:9420",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "7baee633d1958922534b15c827427bbe1a65b613c782d52806ba5bf17ad27f26"
+    },
+    {
+      "source_id": "train:9412",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3a7725e9610bf7e599145174b11ba5c25f63a17e54a17b5fb3057837a565452e"
+    },
+    {
+      "source_id": "train:9444",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "8cc6c0133e3e230f63ef2ec85798155a90c417e9cfc20c024cc2b8c2398885be"
+    },
+    {
+      "source_id": "train:9448",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d4fd0b18e4ae05bb461e7ab66aa73ab158d86ae90b281ed0c38d3d52029b5350"
+    },
+    {
+      "source_id": "train:9442",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "78e4483de8a6443c56d751f0c49216e479c3ed71934cd01de1d3711e4d736f32"
+    },
+    {
+      "source_id": "train:9396",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "6d63d731554fa7bd688aafbb48999a9d01838bac5c0d27f9934283d3e2e82c79"
+    },
+    {
+      "source_id": "train:9352",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3db0609e6b23d2a9c383bef15ddae690a0d078fef69ad47dd49be5fcca8eb04c"
+    },
+    {
+      "source_id": "train:9377",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "571c03c3b372c16ece36231fb82201640c9e8b1411d504292bb9b680139a7648"
+    },
+    {
+      "source_id": "train:9471",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "a0bb89cc4fd49f99fb91483b475d92181364ccfe7a93ed43ba001ea1c0fe2e24"
+    },
+    {
+      "source_id": "train:9466",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "327e93aa60da964c2ab00de9b2efb63b32074577c3a4e3784892f8df8bc4688f"
+    },
+    {
+      "source_id": "train:9511",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "805429c51f5708fbab4ff642c140cee1697b1c3b751277b15cf36b41a7af0595"
+    },
+    {
+      "source_id": "train:9347",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "f194e16ae576982ecda754b0dc0f0f706819369516753a7e289db55436bd5df3"
+    },
+    {
+      "source_id": "train:9387",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "59061b25bb52b56ac034a46be04948608aaa6d02b292c1aaa1e5d2d5d64e2b7c"
+    },
+    {
+      "source_id": "train:9390",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "a91505fd38adeaf94f29b7308f82837562849c7bb10bf7473af545d5f47e4d85"
+    },
+    {
+      "source_id": "train:9505",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "26f0a8d4d5135c9350cfa33ccf054415eadd3bc0b87911dd17174ffe56805bdb"
+    },
+    {
+      "source_id": "train:9501",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "f5fe891a272405662a7a6be9d0e724e704de36e8637724957188b43b3ca0bddf"
+    },
+    {
+      "source_id": "train:9343",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "37c9f9e2ab4d043714d9ef1dd63f806635aebb8ded1a13c92e39e4c645962526"
+    },
+    {
+      "source_id": "train:9407",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "6def4d24af0b09915fca3f345901644944102183f2a110dc8a015a4f34ea23d7"
+    },
+    {
+      "source_id": "train:9422",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "cebfa4d784902df1bc6c8b87dedc818bc35020a1c5503a422848ba19a5c2886b"
+    },
+    {
+      "source_id": "train:9375",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "25a53becfda4e7f337cd2f2876ad2ec60f88c16de93834b4777b8168d995ca1d"
+    },
+    {
+      "source_id": "train:9465",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "61eb8c386f2cae1f4dbc0f9842d6ed5debd4cc8bb6d72902985086a7fe3cc966"
+    },
+    {
+      "source_id": "train:9363",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5ca1ca72705ffd7a7cc6fd1533f99f7487502d40387b9c0cb4af3c05150af0ee"
+    },
+    {
+      "source_id": "train:9410",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "828ad484cbbce932d4c110d166f79f9bfd6f00db95b35e00628bdea11389b155"
+    },
+    {
+      "source_id": "train:9502",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4722f0e0233690babce3cc04719f66a56621fac8d7d3ac41c9efa51bbc8661de"
+    },
+    {
+      "source_id": "train:9490",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "2f85940e524ceceaf64f6f065f63cf1bdc4aaa1a0819a4dd4b2597e1f45e6758"
+    },
+    {
+      "source_id": "train:9418",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5f0faca6b5486c4d3bf47a85c8d8e083bee5c7cc227bf598aaebc905383036b4"
+    },
+    {
+      "source_id": "train:9423",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3e22566d9f969da121b3a9a677b9c5a0b197ab08e692ce658c42193066e30d93"
+    },
+    {
+      "source_id": "train:9455",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "9afca09029455846123564f47d15cd2a764fe54f05d48a1582898c2fee545320"
+    },
+    {
+      "source_id": "train:9405",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ce289f74b6baf54f16011d604e9f3e060b28415fbb544fb4f46cdebfdadaa712"
+    },
+    {
+      "source_id": "train:9500",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "20027a92871120faf9137291d750b7e7a01d3586aee3a806f1929f1df818c742"
+    },
+    {
+      "source_id": "train:9458",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "26e77b919ae196d1f2067501d454fac110dd0d94ebe78c70193b9d055edc3e91"
+    },
+    {
+      "source_id": "train:9378",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "c6534d4f122656afbbca10cf53e38c753c3c77172b1277869b5157a651eab506"
+    },
+    {
+      "source_id": "train:9460",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "6b7ec009d436c00c646094b336e8a1a56df34cd88d3bb1a3a098f2c8ba4251be"
+    },
+    {
+      "source_id": "train:9481",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "a4f0441c3cd0adf91917a6e3f7b2ed173d6cedce48eb7028647aefcd2deda311"
+    },
+    {
+      "source_id": "train:9404",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "917102a7865da838f966fad14e22c0e7dab861f931e7b26ec0012a9553e8e641"
+    },
+    {
+      "source_id": "train:9475",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "a991468c40fe013ef7771a2a731404db050c9ed713ffe2c4a3c4030c75823f35"
+    },
+    {
+      "source_id": "train:9389",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "1b8234f537c4ddee9a2597e4c2fd49f586cb3b6f49f9642d875c23170fa4493d"
+    },
+    {
+      "source_id": "train:9512",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d593ff181850e806e7965e153ab930ca89d27bbfcc3d4ac0cb2a3227c4850985"
+    },
+    {
+      "source_id": "train:9497",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b5b2a9d108a72988628e5d157074f2ffc1ee729461b4c404f2c12444589105dd"
+    },
+    {
+      "source_id": "train:9454",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b22ea784ff20428fb3714d083d379de9889922a1112d1a9e0092ba846e9ce8cd"
+    },
+    {
+      "source_id": "train:9359",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "f6546c4fe39129d0cbf49cb75003ae4c7a240ed2c164a7cacdf1fc0455f91582"
+    },
+    {
+      "source_id": "train:9369",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "6942fdb8b2ebc6c101d88ba85841501e772fb2e9e8631b2376b581b661c24c96"
+    },
+    {
+      "source_id": "train:9477",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "511fe5e4fc37b44835c4addf3bcb136c4525a5b14c6bc766ce96ceebd1bf20ee"
+    },
+    {
+      "source_id": "train:9388",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3ba56e5ee0f807e1efb481ff2f3e953f1b097c2f7afbb2bd658a8914a9c9b94d"
+    },
+    {
+      "source_id": "train:9437",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "1c1accfc0ff182c81bf8c9fb36d2ee1a5d208f8b919224c89ba3862d533ce51a"
+    },
+    {
+      "source_id": "train:9483",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "304d31c1aae7877141bc501ea978eda0b57ebd7e19d2bc5fe757fe1b8d24102f"
+    },
+    {
+      "source_id": "train:9426",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5e55cab4d740a7f659ec3d865e87377b417989a632d1a8ca57a29d3d599baab6"
+    },
+    {
+      "source_id": "train:9339",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "18371e274a9027441ad631afe263c0f702817b80d7d595fd6716c3a292c50cc2"
+    },
+    {
+      "source_id": "train:9393",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "9eaf1cebe3ce2fde30692aec58567dc0b21d78aee7cca09e1b69008154d9c61b"
+    },
+    {
+      "source_id": "train:9450",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3479d15dddc26c08d4ad222eaa599b58b3f45074337ec168fd4a56e33474d74b"
+    },
+    {
+      "source_id": "train:9495",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3459eb1cd50d399e612833a4463d4ad3992faaef7e2187ff33f89728c58770e4"
+    },
+    {
+      "source_id": "train:9356",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "255a34f355a789415989eb25123a685feb2f88d63a75837e5d4f74748a5f254e"
+    },
+    {
+      "source_id": "train:9474",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ca1f2b6c21a6d2e8ee1ad55d66921fdb64ddf590f28cc664845d7d04432bb8c1"
+    },
+    {
+      "source_id": "train:9367",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3941281a2646ab0b2b8f684fede975c673c9cb8ac0d52cbb7055e080fe79573b"
+    },
+    {
+      "source_id": "train:9487",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "54b8e5fe03529b8337f0c8254a965429797517bf31010d5ea1c4bd59fe8a19c7"
+    },
+    {
+      "source_id": "train:9411",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d76c38d56bffe2c0ea1b7ebf901763bd30e39af65265f2ab9fb9210b129c0f5a"
+    },
+    {
+      "source_id": "train:9394",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "64b0bc33274e8ab768f71deb976c9144d42f9bb9783c861feb1848449f6fc1f2"
+    },
+    {
+      "source_id": "train:9469",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "a41878a7eefda5fbe3f85cc7f36856dd01281f902c70a20f741c8ffc767b47b0"
+    },
+    {
+      "source_id": "train:9506",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "69c0799a7a1c9080ab527b9004b57a76554b0339dc1b9e48023674126637aae9"
+    },
+    {
+      "source_id": "train:9414",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "a664bb9b5acfa7b450cecdacc5e8b9a1ad8a980c9243cb92f6329f48fe7f3176"
+    },
+    {
+      "source_id": "train:9486",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b269ab2a345e9dee3452432ac1c86f2376a2f07e27e29dd6f524f088ed2938bb"
+    },
+    {
+      "source_id": "train:9457",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5408b67bea9833ef8adeb410d4d0097ef81cd316ef12c670fff8a48192ded524"
+    },
+    {
+      "source_id": "train:9413",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "9ce7fd37104f124bbac9fe3f46e5ef26aea0b030b3f5c2e20b401c3144266e4d"
+    },
+    {
+      "source_id": "train:9424",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ad528d61efab80b1f6f035e13deb4b7687b5f7c1c76583620b1c8e58934b6a99"
+    },
+    {
+      "source_id": "train:9445",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "535173fc84ccf2e3e853076ec1eda948edcca59e8944eaf4992ce5f2c3964bfe"
+    },
+    {
+      "source_id": "train:9401",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ab6e8d1cfccf135e1d1998f7025f9cfdc9700431dee3c6c39cf273b422d89a08"
+    },
+    {
+      "source_id": "train:9436",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d6c9df17955e493c4b2586b366c1dec9fb3c5a3f14a271cd94ad66c1d03d232c"
+    },
+    {
+      "source_id": "train:9409",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "bdb265fb604151dacc4ebe927c85fed80348a6c685b5b20fdacf1d214522ea99"
+    },
+    {
+      "source_id": "train:9440",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "e30951725efb60a9b3fa880bd6065f65bcc3d59e15e685645711d8d5cca2d021"
+    },
+    {
+      "source_id": "train:9456",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "f28dbb40f4fbc109ae2cdec2ea1bd76a68dc6da514299a50456a24e0ae4b0128"
+    },
+    {
+      "source_id": "train:9433",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "c707ff5c31b2996e51a260fcdebc296056fd07be2e433ce3f43e052d05fa4d1a"
+    },
+    {
+      "source_id": "train:9464",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "af3707d439f8e6d2139a5b7230f0cf677e81e109d3b2e580a8a1a97844267759"
+    },
+    {
+      "source_id": "train:9494",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "be5765aaa88ff3d7180f26d030029e6b462b117de555f8278f707c6606a017a1"
+    },
+    {
+      "source_id": "train:9342",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "7c140594e2d8485c560bcca9ad39425047d975d6507c1bb4aee77e7856c96955"
+    },
+    {
+      "source_id": "train:9353",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "2dd6b606fe1b2d4684eb473e7652a851c8e4c5949795598b9f288184e67ceb34"
+    },
+    {
+      "source_id": "train:9382",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "9a0cff2d82d0c8fb0caeaf238b45ab7a6c49309c59a5e09bd104b909aae3271d"
+    },
+    {
+      "source_id": "train:9488",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "94763abdadf7e5da4f8b4a32f79ff3c5a7ebcef482dc2ad9837996a4b233cf15"
+    },
+    {
+      "source_id": "train:9341",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b552c90b47208ee3f099101bf1ef0576b552b0c6f02d619ee57c0a3d7023a005"
+    },
+    {
+      "source_id": "train:9447",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "31f6f52f50ef7735b6beefc9a7d7e4bb86d4262723992d70a2a8122b3e4470f4"
+    },
+    {
+      "source_id": "train:9338",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "86060d3e691b0879db63b3f32375e9f11cfe7ef4947defe8df8117572a727242"
+    },
+    {
+      "source_id": "train:9461",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "dd01c3635e0478700f9e1f8248c4b981209eada18a6cd262118f83964f648b8a"
+    },
+    {
+      "source_id": "train:9391",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ee0e11ff22092a37c9de357c6466ab80fe03ea9e59ffcd4f584c7f1c0762cc02"
+    },
+    {
+      "source_id": "train:9498",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "2224384f1a7c0c83d5e0a527c9c86799681de2665c106d711bdd98847cc29de0"
+    },
+    {
+      "source_id": "train:9399",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b8c0c41d482246ceb3c7e445c068428d2b34d344b0d04d9078d8eaadab237934"
+    },
+    {
+      "source_id": "train:9472",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "80ad428ad8721eeae87beec6ba0b6ab009cc7206b7743f086afe0f31833b5374"
+    },
+    {
+      "source_id": "train:9346",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "717e19f8cada5545676ff3c2b29ee1859b2d4e57899a6cff353a3239b50d65b9"
+    },
+    {
+      "source_id": "train:9406",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5b38226b0ebc35620b06afd14466d0af87baccabf20dffb075c942b0126c2e7d"
+    },
+    {
+      "source_id": "train:9428",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "304d082034c49076c6149e39057bb1008649cdaa7e7c7a95d6a874c11136b34f"
+    },
+    {
+      "source_id": "train:9434",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b2ac13e14513f53b4121321f13cef7326933d88fab9ff9ecdcc533fe6bff7960"
+    },
+    {
+      "source_id": "train:9449",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "972a6eda03777979296359a13d9e44aecebea072a46c5bacfcc2e65635035c3f"
+    },
+    {
+      "source_id": "train:9462",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "0f0c01d844e2b53b7c3e61b2a22350ec26fd1d5618390ff2757b003f20fb6024"
+    },
+    {
+      "source_id": "train:9431",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b202a26f8ad63bf47a154f0335ec0e15b9b906f81f956a91217ff22b800e0463"
+    },
+    {
+      "source_id": "train:9360",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4983810e9af236c73ff16364734f032c217082b063bdd3740d4be459f1b97e8f"
+    },
+    {
+      "source_id": "train:9421",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "dcd7e2217c099e0dec2f4e27c3d6259673185f9a3e5e932d19bdf63dfc30b688"
+    },
+    {
+      "source_id": "train:9514",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "fb3c7bb00a2ccc8ef7d86d2742359980129e9ccc85bbd25e736ef9fd6b44863c"
+    },
+    {
+      "source_id": "train:9364",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "12e2c1416b6790ae629b7de332875fb0ba38c2866d5a7023be6cd173aa9ee3a1"
+    },
+    {
+      "source_id": "train:9476",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b03e7cab6cf0ea43effb3167b20f91ba43b5c7eadc2cef75307ee9740e4e5fe1"
+    },
+    {
+      "source_id": "train:9441",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "579a090ee9b609de35f90aa81258e31a7348efbf5dc393b825428a9831f34277"
+    },
+    {
+      "source_id": "train:9438",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5a7e16c848b9dc202989976851b986debce838bd9a648cd607b605c305c78581"
+    },
+    {
+      "source_id": "train:9379",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "164dc9d2d217333076230200327a458f19aab3252b2af0138491d668bd49beed"
+    },
+    {
+      "source_id": "train:9376",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "c3bbf29828edf335c8512662fccab00edbd9ed664e0b5e2db6322dd4d6e28e33"
+    },
+    {
+      "source_id": "train:9368",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4fd5ff8598c18dbaa4940de0c2fd238737797052757cc92cc61f329cf3e44b15"
+    },
+    {
+      "source_id": "train:9480",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "9b3d791e7dc8edf9753f51607b36e926d4bc90667b6eaa7893a5ef5a7b22dbf2"
+    },
+    {
+      "source_id": "train:9348",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "2d8a9f1d7fe0ef69e58c3f17e18d43d4bac375e6b7f05904f140e19e8ae86ad2"
+    },
+    {
+      "source_id": "train:9398",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "17b2686620536fafdecb913cfd60f10c4ff005fc106e74c6cc7a69b6b8c99a51"
+    },
+    {
+      "source_id": "train:9435",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4149495c4145161491df950a4731fb9281a41a076d875d16c9c5723edec00081"
+    },
+    {
+      "source_id": "train:9358",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "307142e55dce3f305c7add76bc4b47055e9cd0d00c7710a2bc82e68a27d9182a"
+    },
+    {
+      "source_id": "train:9400",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "aa2f5091206c786d58ce5a98c7e3097a950c3f7278046107fd438b841338e906"
+    },
+    {
+      "source_id": "train:9467",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "9d1d1b512b69369e9d1d13fa5cfa19a972c6b0e427bb70d22ba98debf7517754"
+    },
+    {
+      "source_id": "train:9503",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "e25449081de1b72fc9fcd4f389d79dec19408305e671c1880b9a52641320351a"
+    },
+    {
+      "source_id": "train:9425",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b3879b307ccd0f2889b73ee3fbf0cfcc6fe9166f5e6307e4f965db9af9afc882"
+    },
+    {
+      "source_id": "train:9365",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5989edcb3dbd48727eb69bfd683888700568690d8066bb462e033cd018df5ce3"
+    },
+    {
+      "source_id": "train:9510",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "8935058ed8a8ac1f31f8cc5597a55a0fb9f0844cca60173ce971e8c96be3923d"
+    },
+    {
+      "source_id": "train:9392",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "00675ce25036fc18102ca46e1aa3a762dbf008402d867d1faf12faa4559128b0"
+    },
+    {
+      "source_id": "train:9381",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "dfe1c42946d4adf133dddaa036a7c9086c6b087da66f642999f4f27611f965ff"
+    },
+    {
+      "source_id": "train:1475",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "d0871f273c28cd0e7d17576b10a4a364b9668f23e5db98daded9342eea3265ce"
+    },
+    {
+      "source_id": "train:1512",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "4baf02f4c17fbdd049880da733b19ac32fe9910756630467f2fae1ab986c7e73"
+    },
+    {
+      "source_id": "train:1485",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "0b1b912653d31df36b1bed665d3b259a3ab3f32bbf5ab9fbb88379a57419df41"
+    },
+    {
+      "source_id": "train:1523",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "4981e9a3df0849ec6ea8ef1b2c6dfdb3b66a3b78470864f4a648b16016fc0c7b"
+    },
+    {
+      "source_id": "train:1537",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "db8bba4e2ce2a9b06c8604e6d86df90cf377eec9fa617c8e3ecdbd0db0548e97"
+    },
+    {
+      "source_id": "train:1538",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "0afa6ecbca343dd23a5cb55ece9740069ac848f4ac4b45630c6e4d87e7fe4ea0"
+    },
+    {
+      "source_id": "train:1492",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "b4da18b656a6ceef22ad36d33f646248b8aa424c910009b6f146b868824db319"
+    },
+    {
+      "source_id": "train:1539",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "1082b7dd013dd12e04ae96658efd0b29e57025f67b91234faf7574d4647b3327"
+    },
+    {
+      "source_id": "train:1513",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c7ba6797c26cf6d6ebb76b2b82ba3f5c90f48e9682222e1712ff5419484023a4"
+    },
+    {
+      "source_id": "train:1476",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "36c0add7c4e16aa0d90ff9338a3e3bf8246aa77755dd3bea66d0f10114303640"
+    },
+    {
+      "source_id": "train:1503",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "84ca41dcc4f2751e653a2cba5abbf321941ecb2113583fb5561046c5fbf60d9d"
+    },
+    {
+      "source_id": "train:1504",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "ce04b7e2b81df1c7c6c71f734e81c36eb93e9f2a9868bdd43e060d94c94c1085"
+    },
+    {
+      "source_id": "train:1479",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "dcdff850d0195d3993ad39de9d1e45346679142bed8fa14267733ec694bc7a54"
+    },
+    {
+      "source_id": "train:1499",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "16f663e858c4f1b67a9d2312d48064bc30dfc33d5c52d83424faf978587850aa"
+    },
+    {
+      "source_id": "train:1477",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "850e80a2e7abbd35abe5ac2c34175535b81b955bd088abb26b7913164921e6d3"
+    },
+    {
+      "source_id": "train:1482",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "be328c6dc2a616197c0a7e8c9d7bfe089faa71d7da3fc101d92dde5d62a4a975"
+    },
+    {
+      "source_id": "train:1531",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "163f0bbf1ae950de5d165880d242d5c503cf1ac4cf18af2a88c8820450af1f49"
+    },
+    {
+      "source_id": "train:1494",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "45fc0c10be451bb3d4d843bf6a43d12bdee54ec334c84c3df631acdaf2e656bd"
+    },
+    {
+      "source_id": "train:1528",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "da51b53386bd38409c0a0d6d3bf84a4d2ba5044e5bb57926dbb12828dea98d61"
+    },
+    {
+      "source_id": "train:1493",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "46af23bc3fce516d6eb503f52257f5b95ba0430df6519de06f8b383fcf730d0e"
+    },
+    {
+      "source_id": "train:1553",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "37c7747fe6ebe5f0cb498a9d5527c7b208bb32ace0ed179cbbe0713fd9ada4bb"
+    },
+    {
+      "source_id": "train:1540",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "854ec7b81d898a414dfd86dab57d5b07822407978377a68ba6510047b76ce35b"
+    },
+    {
+      "source_id": "train:1530",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "33ff487bb36f46ce77ae06895c5241949fcd7aada5a3ad23eb2e298074648a65"
+    },
+    {
+      "source_id": "train:1520",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "d99b0bee504c06b1993af7ca68112126521d7579b33201c492d2a6155b3e0096"
+    },
+    {
+      "source_id": "train:1496",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "3db9fadb53437e37ff6b3167d04eaa892de448044d3015ccfc14b9ef17ba50f8"
+    },
+    {
+      "source_id": "train:1487",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "b6d2b8c2d95fcd3999f631cac04d884c1db23645568e44fbde87407abe3e7c24"
+    },
+    {
+      "source_id": "train:1554",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "4edbbfcdc904ea84a5d6791d02208d094aa200642d30c0ebe833f43000bdc553"
+    },
+    {
+      "source_id": "train:1526",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "f39ae085449944312a71cda214153964968e269d9ace1aa03416aaab76417aa2"
+    },
+    {
+      "source_id": "train:1519",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "0f33a5e6b2611b224b32ca1acdde4161eddae28d35a375bcc5f5a28575e4ef71"
+    },
+    {
+      "source_id": "train:1548",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "9c5218e63b5ce7b80478e4b65c581971ebd6a3052b1ed802dd303271a4653b32"
+    },
+    {
+      "source_id": "train:1551",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "0f685cd167a09c409bba26735082ed7edfdd11627ae3701b3f75d4ff24d55ec5"
+    },
+    {
+      "source_id": "train:1546",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "2fbef974df190cf11c8502a88918a0307a3d852b1872326231b275b849e01eac"
+    },
+    {
+      "source_id": "train:1545",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "1fae648f25584dc9340dfb9ebdc4b3dbedef13de170929ea105744b4e9f86712"
+    },
+    {
+      "source_id": "train:1480",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "2865bf4ea398b2d9a530f21f82e92e0d7130748a4b4510324baac7f47d5b3050"
+    },
+    {
+      "source_id": "train:1501",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "f26cad34a44e896a20c66f5c64c267be71ccba2fe74882a82c918e51981f7b17"
+    },
+    {
+      "source_id": "train:1515",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "0dde8502351033d73044a8e73aac1e0e7171556f676e4fe0e22f86563988100a"
+    },
+    {
+      "source_id": "train:1478",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "36d052e8d7f706440f9bcf4acf4aeea49f250f7f6ece2e6e3f4cd5e916117565"
+    },
+    {
+      "source_id": "train:1532",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "82835136482a9e0b3b211fb73812f33839625ffa3cd64526114bb1428bcfd08a"
+    },
+    {
+      "source_id": "train:1488",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "fa3cd9e9cd5cff82fe46ace675a9af7e28b184999bc6fb2e4e0407b170726d91"
+    },
+    {
+      "source_id": "train:1524",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c79d9818eb1acf2b2c95cd0b74c51ffce6ff6789aa39a9b2401d7262be790644"
+    },
+    {
+      "source_id": "train:1543",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "cb96b93ae7320ebe37c8a7e7eaeb71957ca8b1a62c7d42e39d722736629af7f0"
+    },
+    {
+      "source_id": "train:1508",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "d0be862af413aa3156d977bf16f021da4846fd3e9cd41b29a9bc0e054317e0c4"
+    },
+    {
+      "source_id": "train:1555",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "da5ea6433af729ac691ed5bb321baa45ffc5d267a4798e60e3d944fcfc17506c"
+    },
+    {
+      "source_id": "train:1542",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "ae7a6345163b61200b377c95a87ed9f2509cf253a401cdf130c1d671d3059c77"
+    },
+    {
+      "source_id": "train:1521",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "764877365865147b98fee52a09e4d414fe1ac70890942fef7e985e1054e4db45"
+    },
+    {
+      "source_id": "train:1533",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "399dc1568a852a928b27234f2431045052867e463ac0e62b737e1f78d9dcbbdc"
+    },
+    {
+      "source_id": "train:1534",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "dd4ad77177b2c33de599bb59ea9660494b09211525740eac052d44c67027aeb3"
+    },
+    {
+      "source_id": "train:1527",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "82ab497b82dadc6f1dcb45f5b456ac0a27a8c8edaf6ad7b1dccc0ad5744f04d9"
+    },
+    {
+      "source_id": "train:1518",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "f136cd6ef68b65577256c7c6814f7a32acfacdaf70ac6a37d232be987fb7f357"
+    },
+    {
+      "source_id": "train:1514",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "9af24b67edc2a1129c950f540798869e57ec140f4d5970c0a158b0efbefcb52a"
+    },
+    {
+      "source_id": "train:1516",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "92921ec659fead7dc6d4e7c6af0225faf0aa6f560c2131eb9b7cd2f6a7fee934"
+    },
+    {
+      "source_id": "train:1498",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "fbe3a848cc420f55c9fab623619183b2d3cb98491f7cd9ce939e1cfccaff0909"
+    },
+    {
+      "source_id": "train:1491",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "22c0647d74f5378620b102a86cf9cfd0dd53107ad45e5104b946146db35ab06c"
+    },
+    {
+      "source_id": "train:1529",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "f40bf6cfb12b5de438c69b0398df91f8e43eb21364bf3fac9363a40a58cf001f"
+    },
+    {
+      "source_id": "train:1506",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "a91e30ca69ef980f3b3861eca3a09fe538c6ed42a57cb0f99912a267cbef1bcb"
+    },
+    {
+      "source_id": "train:1502",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "f69d49097327f9b432a12ea8e65f08d1d3caccd8fe189a23a371cc3580ca4557"
+    },
+    {
+      "source_id": "train:1541",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "f0a6f9eefcb3d38743c277e0cc8195587daf563155bc919f4553b522c14df85a"
+    },
+    {
+      "source_id": "train:1550",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "71773d776b1170d874d250a3caed3f50c89b79094f92727e17508138617d26ed"
+    },
+    {
+      "source_id": "train:1497",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "fa909cd7e853c6b73f67e376c43850c3f96e28e2d4312a81ac01504b3fa86158"
+    },
+    {
+      "source_id": "train:1510",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "1706aee2017e390fd689677b61cd5c53c387610283f1fb6de03b23370b7844a1"
+    },
+    {
+      "source_id": "train:1500",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c43b89b58bfe5d245f807727585bb7e3278619d2c60d9edcc107b423dcdd9ccd"
+    },
+    {
+      "source_id": "train:1547",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "e871bdeb9bbe36044e67d2a1345ca473ac8d42dd7397d1318e51c0f316f9200a"
+    },
+    {
+      "source_id": "train:5994",
+      "expected": "pending_transfer",
+      "text_sha256": "6b1ea1b2e60e805c7c79e6a4fd9e239511f3be5cb3efe526691cfad04eadbcb8"
+    },
+    {
+      "source_id": "train:6083",
+      "expected": "pending_transfer",
+      "text_sha256": "a4167a006e94462d2256cad67126e9dfb6e85d59ee8b18433b34ad5157741c60"
+    },
+    {
+      "source_id": "train:6132",
+      "expected": "pending_transfer",
+      "text_sha256": "ccd9cdd66cadbce18197124f3ebe6b9399fca92911cd57d3bf429cae805ce254"
+    },
+    {
+      "source_id": "train:5993",
+      "expected": "pending_transfer",
+      "text_sha256": "7e9c56207bdd3190836a306089def598370706544b25b895ee8827f5e412709c"
+    },
+    {
+      "source_id": "train:6065",
+      "expected": "pending_transfer",
+      "text_sha256": "dd0746c7a777c80407498c2999a3cf2ef33ab369c6049e2edf8e625751aa42fd"
+    },
+    {
+      "source_id": "train:5998",
+      "expected": "pending_transfer",
+      "text_sha256": "fc0995acf8dd607eabe8b8dd744f6045a204a67e01732834fb57b27e6a34496e"
+    },
+    {
+      "source_id": "train:6046",
+      "expected": "pending_transfer",
+      "text_sha256": "07fb37a2f04cdc667b93467aa2781f848dea9af6b2a831e0e800ef217920d5ec"
+    },
+    {
+      "source_id": "train:6096",
+      "expected": "pending_transfer",
+      "text_sha256": "59cbfcae4988144cbecd26f813cad708b470b925874e8b5f6313ec3f4ab6fc88"
+    },
+    {
+      "source_id": "train:6090",
+      "expected": "pending_transfer",
+      "text_sha256": "e173ea2c8e45bfd82aab9390e17929f9fc4b18ccd14e2dfdc38a55e7d70dac1a"
+    },
+    {
+      "source_id": "train:6095",
+      "expected": "pending_transfer",
+      "text_sha256": "4678ffdb1a218caa918cc76a7bfcc4d451c298a04ab0d5a3d2f7a1b9f164fef9"
+    },
+    {
+      "source_id": "train:6109",
+      "expected": "pending_transfer",
+      "text_sha256": "2ddc28a63b2c5fcc47031cd343a8f4e0fc4644969915838ff9bfb810982a5a25"
+    },
+    {
+      "source_id": "train:6031",
+      "expected": "pending_transfer",
+      "text_sha256": "f6687928b29b8092ab4b918769b8f4e99afac2a3463e006dc5837dab57712f55"
+    },
+    {
+      "source_id": "train:6107",
+      "expected": "pending_transfer",
+      "text_sha256": "0439fddc4dfbb48785317a548a08cb5b670530cfa50372cfd38de0d55b54974f"
+    },
+    {
+      "source_id": "train:6048",
+      "expected": "pending_transfer",
+      "text_sha256": "771c5556655afc520515e6a3effdce9ecff9fbcc5b82f81809d2cb42f5fbb4e0"
+    },
+    {
+      "source_id": "train:6028",
+      "expected": "pending_transfer",
+      "text_sha256": "cf063aa40b5e78b1299797be395103daf68efffc9fcbb290d9ac3b5fcb6988ea"
+    },
+    {
+      "source_id": "train:6102",
+      "expected": "pending_transfer",
+      "text_sha256": "e854abbaa679047dd825a60fd56c5364cb01695848049601b84ec88d5188929d"
+    },
+    {
+      "source_id": "train:6049",
+      "expected": "pending_transfer",
+      "text_sha256": "97ede150d4c323517a801e5afc7474971f7b8e73ac6f4cec12457cdd70d1eb60"
+    },
+    {
+      "source_id": "train:5991",
+      "expected": "pending_transfer",
+      "text_sha256": "906e6404b4d478b4248072d14202b0bceafb5a6bdca396e15bf0c1baf44576c6"
+    },
+    {
+      "source_id": "train:6099",
+      "expected": "pending_transfer",
+      "text_sha256": "f4d7778c349530721dc156a060a742cc575984da7e9aaf679d58cfdae5615505"
+    },
+    {
+      "source_id": "train:6061",
+      "expected": "pending_transfer",
+      "text_sha256": "e1e72dda354adc236f2f81334e243e6b5287eac3e4821be10e0e89b3e82afe5f"
+    },
+    {
+      "source_id": "train:6021",
+      "expected": "pending_transfer",
+      "text_sha256": "0f7be131a361afdb70348fb3e939e2166b30d6e39afffea9af53c504603ddc28"
+    },
+    {
+      "source_id": "train:6103",
+      "expected": "pending_transfer",
+      "text_sha256": "2f6d56f4a5e29a6a6c962007c53dd4116f269b59f9fa2cd31218fe24b99819e4"
+    },
+    {
+      "source_id": "train:6024",
+      "expected": "pending_transfer",
+      "text_sha256": "de0137d078212704b1f24bee93f826bc79f018c23fb2b13492ed600865d11eff"
+    },
+    {
+      "source_id": "train:6041",
+      "expected": "pending_transfer",
+      "text_sha256": "143a59786a747330120c7920d485746d258e70a1afddb357d8446f7dd502c86c"
+    },
+    {
+      "source_id": "train:5996",
+      "expected": "pending_transfer",
+      "text_sha256": "53fafb49baeff5a456964ecbd36026ffe0c3db28106e64662125e7c214b11391"
+    },
+    {
+      "source_id": "train:6106",
+      "expected": "pending_transfer",
+      "text_sha256": "045afae39af23bde5b9ec420e205128ed3defd0f620b4c4849ce4d0eb7f540fd"
+    },
+    {
+      "source_id": "train:6088",
+      "expected": "pending_transfer",
+      "text_sha256": "f124ff592b803e024159af937d0d3f572990f372a106da3fbca16b55150b461c"
+    },
+    {
+      "source_id": "train:5989",
+      "expected": "pending_transfer",
+      "text_sha256": "8f2adcd18b03df6455bdff12825fc3d290f570024c5b50fb3660d2ffe13389b4"
+    },
+    {
+      "source_id": "train:6022",
+      "expected": "pending_transfer",
+      "text_sha256": "cb6b4c76feea8d19a93d2c737ac548ee225265fdc3fb8ae6faaec35725bab95c"
+    },
+    {
+      "source_id": "train:6026",
+      "expected": "pending_transfer",
+      "text_sha256": "8f1222ea67a6c9c8f423984569a09d9a685c0d4f26dfd531583ab835f02bba8f"
+    },
+    {
+      "source_id": "train:6052",
+      "expected": "pending_transfer",
+      "text_sha256": "189a56bc3a13f8d5958b08543c2f49413d040695dcafe7351df0f6d0127115c8"
+    },
+    {
+      "source_id": "train:5995",
+      "expected": "pending_transfer",
+      "text_sha256": "46999886fa02087e0bc3aa7515b7561379a68f965f2d2cc0338cfb3e49649b8d"
+    },
+    {
+      "source_id": "train:6100",
+      "expected": "pending_transfer",
+      "text_sha256": "d955902f3436e8a26f1bb741d10af4b28d7d18259aab5e1e95f643b72ddb0430"
+    },
+    {
+      "source_id": "train:6074",
+      "expected": "pending_transfer",
+      "text_sha256": "3e607816ff4f4082747b92f207f9f9b0b8e168d6941bbdb8b57fd9593b02d064"
+    },
+    {
+      "source_id": "train:6123",
+      "expected": "pending_transfer",
+      "text_sha256": "bf9535b8f87c1a544542bfe270fc6ed71947488ad73c97dec816fb3958a11cd9"
+    },
+    {
+      "source_id": "train:6014",
+      "expected": "pending_transfer",
+      "text_sha256": "f0d415d3d566c8ccab293fd228d494bf1a35135fb86ea4aeecc16a3c67e96371"
+    },
+    {
+      "source_id": "train:6089",
+      "expected": "pending_transfer",
+      "text_sha256": "7c06858c5db454b930950b2c0f6b7bed1b06192520c624dd80ea130ce93faccf"
+    },
+    {
+      "source_id": "train:5999",
+      "expected": "pending_transfer",
+      "text_sha256": "85b347e84e2308233859dbeef1905684cc5366ad5c7a5f703614af1ab3ab007c"
+    },
+    {
+      "source_id": "train:6127",
+      "expected": "pending_transfer",
+      "text_sha256": "9a618eb5e19ad1e5b2ce9e6e1dfe44848febab9375af9cbb7ed9004dad9a02a3"
+    },
+    {
+      "source_id": "train:6004",
+      "expected": "pending_transfer",
+      "text_sha256": "50e3a75af194c5e1a27ef7284814e7498d04f11531db3d3491b033e1b6044f9d"
+    },
+    {
+      "source_id": "train:6051",
+      "expected": "pending_transfer",
+      "text_sha256": "e35d2dac7833235192bbb2f6648427e6492ce828b61c96f134021a551cd10bc8"
+    },
+    {
+      "source_id": "train:6017",
+      "expected": "pending_transfer",
+      "text_sha256": "d945466aaf000feaf9f9807667877f32f61d94f1ef4b796747493d234b8d44b6"
+    },
+    {
+      "source_id": "train:6037",
+      "expected": "pending_transfer",
+      "text_sha256": "b19dd1656b74664733265add833909a6d1667a76f979879b297c7efbcb6252c6"
+    },
+    {
+      "source_id": "train:6134",
+      "expected": "pending_transfer",
+      "text_sha256": "64793dd4e103849d7f4edc9d339252a5f0c96a78ac0f3ed68d3277add196032a"
+    },
+    {
+      "source_id": "train:6058",
+      "expected": "pending_transfer",
+      "text_sha256": "5dfa9bcc7150ba49d93102f4de6fb5de255bcfe3fece0d472139b86e86a01727"
+    },
+    {
+      "source_id": "train:6097",
+      "expected": "pending_transfer",
+      "text_sha256": "4f2c2b267e1027a0fde02e18a36bb41d4712aef6395d7b838ea90d4f9a779a98"
+    },
+    {
+      "source_id": "train:6126",
+      "expected": "pending_transfer",
+      "text_sha256": "bdf22ae783c8e2c1743090ed19ce6077166a9b7aa6614f603c3386c037611a21"
+    },
+    {
+      "source_id": "train:6006",
+      "expected": "pending_transfer",
+      "text_sha256": "7fa2a594bab452c227ec89c60ca3c482efe744d0668c6c6927f70d45095491d0"
+    },
+    {
+      "source_id": "train:6086",
+      "expected": "pending_transfer",
+      "text_sha256": "23306833ea1d5e46e8ffdf240f0c3a269f1f69557f5680bd1b1a26f186b89bee"
+    },
+    {
+      "source_id": "train:6044",
+      "expected": "pending_transfer",
+      "text_sha256": "dceba963290f265f81d7190a9a1d949057a12f67a9b013ba815b0da1f9d88afb"
+    },
+    {
+      "source_id": "train:6010",
+      "expected": "pending_transfer",
+      "text_sha256": "ce30e75c98330f4bcf277aa7f108367e492722a702ec26f2a7bee1f1c34a2d5f"
+    },
+    {
+      "source_id": "train:6039",
+      "expected": "pending_transfer",
+      "text_sha256": "61b0dba43fc1c1e1dec064a8b6c61d235cbc3d16931c32ad82e601790b525c29"
+    },
+    {
+      "source_id": "train:6122",
+      "expected": "pending_transfer",
+      "text_sha256": "40ab9da9fc63d87008ca7ec0dce172a77d9fc1abc8d9d29403f0dbc8c3ae35e3"
+    },
+    {
+      "source_id": "train:6033",
+      "expected": "pending_transfer",
+      "text_sha256": "ea1d873d3e08dda581bcb2cea27dda7bdc092bfdbcd3b616ca1a96060c16057d"
+    },
+    {
+      "source_id": "train:6023",
+      "expected": "pending_transfer",
+      "text_sha256": "d0ea52ae50c787f7c2a4ae600b1b9098d35053dfe96889df8b1dc7c46d6232bf"
+    },
+    {
+      "source_id": "train:6066",
+      "expected": "pending_transfer",
+      "text_sha256": "be9efd310f2a63541e36b4f9fefaa60e111045207ed6e3724d07e52b03f919fb"
+    },
+    {
+      "source_id": "train:6036",
+      "expected": "pending_transfer",
+      "text_sha256": "3b8809209ebbbefc4f8919d7db28a53744ea9c93c202767323c9f82da21cdc23"
+    },
+    {
+      "source_id": "train:6078",
+      "expected": "pending_transfer",
+      "text_sha256": "4e0fea3ae1bc1d317cc108306628223b618df1a604160b4ae329476278886176"
+    },
+    {
+      "source_id": "train:6111",
+      "expected": "pending_transfer",
+      "text_sha256": "2103499b20a2e3bbb198b047a1ba7ba3bc8700e92107cc216a81d8f6e1c56da5"
+    },
+    {
+      "source_id": "train:6053",
+      "expected": "pending_transfer",
+      "text_sha256": "3b0da4cc79cb198a17e1f98503a4ce064e02c1d8f726f9d412afb65030df4e9a"
+    },
+    {
+      "source_id": "train:6068",
+      "expected": "pending_transfer",
+      "text_sha256": "f702771734e412bbf00fc0a16233b5c8dc5acaeda215a50530d2a14ccb1c2539"
+    },
+    {
+      "source_id": "train:6121",
+      "expected": "pending_transfer",
+      "text_sha256": "cf143c6f3215101e9afe6ef94a7e8204512389b913aa6133db52a6fe373545b1"
+    },
+    {
+      "source_id": "train:6020",
+      "expected": "pending_transfer",
+      "text_sha256": "2bddf723620a5c257ee8bf866144e50dc5e01bc11d934199b8301e7ab253e96f"
+    },
+    {
+      "source_id": "train:6113",
+      "expected": "pending_transfer",
+      "text_sha256": "371f6010498098d172bc5aa6de6fb8ff7c244a340e070a5a213b841d253089bd"
+    },
+    {
+      "source_id": "train:6115",
+      "expected": "pending_transfer",
+      "text_sha256": "536f336a405b161534b337e5cf7181980e752e0debb66d66e28a76ccc06fbb24"
+    },
+    {
+      "source_id": "train:6117",
+      "expected": "pending_transfer",
+      "text_sha256": "d3bad24b5cb37bf25cb944a0f99040833caddd853b64ef785a850f795edeca37"
+    },
+    {
+      "source_id": "train:6070",
+      "expected": "pending_transfer",
+      "text_sha256": "71d341385246e11bb9625f0a95fbfdc3f60109a2f86f33fdfcfe6839a76b1f6c"
+    },
+    {
+      "source_id": "train:6002",
+      "expected": "pending_transfer",
+      "text_sha256": "b1d2c6047d89b27d433cd7d96fdc935c3753373b425781820a4911a130cfc3e1"
+    },
+    {
+      "source_id": "train:6000",
+      "expected": "pending_transfer",
+      "text_sha256": "4adf6def4c266c3f189ad7da4cd33018a1df43016bd807e97d98fda3ade81261"
+    },
+    {
+      "source_id": "train:6063",
+      "expected": "pending_transfer",
+      "text_sha256": "7f631286cf799e5bf8676bf0e2747cdec69b37e0a20d23d08951650aaad03d35"
+    },
+    {
+      "source_id": "train:6071",
+      "expected": "pending_transfer",
+      "text_sha256": "0d659ca0b154894ed58f6a3d8fa899de308871000ddbe3a9ac9b78beb1ffe2ec"
+    },
+    {
+      "source_id": "train:6057",
+      "expected": "pending_transfer",
+      "text_sha256": "fe62798fc9ff1c38da85d7d5ceb95bed03f149a9f3e2d728aa9898402990ca59"
+    },
+    {
+      "source_id": "train:6013",
+      "expected": "pending_transfer",
+      "text_sha256": "11125f656451159d637e58a1a6abc1fc9936e7cba662c5120732b481fbf2e1de"
+    },
+    {
+      "source_id": "train:6093",
+      "expected": "pending_transfer",
+      "text_sha256": "be8063a403e177f47c94388ef80da7bef395e51484cb53dddd99f10b6da2a67a"
+    },
+    {
+      "source_id": "train:6035",
+      "expected": "pending_transfer",
+      "text_sha256": "cf0bc0ade92eb7166d01113bc80f129cede6c544b61ce9e75bfc63e1c7e5fe1a"
+    },
+    {
+      "source_id": "train:6110",
+      "expected": "pending_transfer",
+      "text_sha256": "99ee35b005bc2c19bb0e3e778c6f01e8819ff3e7f0626897f682ca790a3fe724"
+    },
+    {
+      "source_id": "train:6032",
+      "expected": "pending_transfer",
+      "text_sha256": "41a55952da1b4d98b280baabed4a08a526c6ad28ca75dc6d0b1dc58cbc1564bc"
+    },
+    {
+      "source_id": "train:6047",
+      "expected": "pending_transfer",
+      "text_sha256": "b27dbb79db3a3fcefc0e0c1ca4bddc33b0d02cde0c7cb49ebbb26a9d4148c33c"
+    },
+    {
+      "source_id": "train:6015",
+      "expected": "pending_transfer",
+      "text_sha256": "0b4718974a2a90691e80d9ff4c32bc475b31ed31cf1b6fecd198c03a26663c8e"
+    },
+    {
+      "source_id": "train:6091",
+      "expected": "pending_transfer",
+      "text_sha256": "d652d789d48aaef4ee8220b8cfe48ccd6b6d3805ac06c921968309556a90c6f2"
+    },
+    {
+      "source_id": "train:6098",
+      "expected": "pending_transfer",
+      "text_sha256": "28f106392ab41572e3b5040644e9415bb40e7cc9166dce9025b1af8d7083ea35"
+    },
+    {
+      "source_id": "train:6136",
+      "expected": "pending_transfer",
+      "text_sha256": "a2f27a9f3e274d75d3eee43529e66d88efcb13143b939d2f999f93c634690136"
+    },
+    {
+      "source_id": "train:6114",
+      "expected": "pending_transfer",
+      "text_sha256": "6009d72b57d1340c840ab8a82785e26d2cf57fe5020f6d6f60d9518507671c63"
+    },
+    {
+      "source_id": "train:6128",
+      "expected": "pending_transfer",
+      "text_sha256": "bb6b52ee23b40bacef692b8ec3986e5d72f118fc57659be049f0aae61f6515e1"
+    },
+    {
+      "source_id": "train:6008",
+      "expected": "pending_transfer",
+      "text_sha256": "29cc098299a5a04d553b69ed3675c10e8e9307f47fb4b9509bd2f4670f16ad35"
+    },
+    {
+      "source_id": "train:6080",
+      "expected": "pending_transfer",
+      "text_sha256": "55ff98eefe12c568efcb5bb44d81daca67f261241de4d9023bafd91681e625f7"
+    },
+    {
+      "source_id": "train:6073",
+      "expected": "pending_transfer",
+      "text_sha256": "d4392799f0eb3dd34f83ddfeedf150dbf225b01abbbefc3459fab2cc6e7ef33a"
+    },
+    {
+      "source_id": "train:6135",
+      "expected": "pending_transfer",
+      "text_sha256": "9403ae367d4016e31896e87d3a9e1bbb8706363628c0e99ae33ff0987cffc053"
+    },
+    {
+      "source_id": "train:6082",
+      "expected": "pending_transfer",
+      "text_sha256": "26b180190648652f9a2075e333d7f4c669b6c9d700c23b42903ebc9744a9e392"
+    },
+    {
+      "source_id": "train:6060",
+      "expected": "pending_transfer",
+      "text_sha256": "82af50f7196c545974b4a5608a60602968094fd5e3a4b2c2fd8a94cc53937d09"
+    },
+    {
+      "source_id": "train:6042",
+      "expected": "pending_transfer",
+      "text_sha256": "f3b78020dd0bdd7666cb60d9e3dc52ff43db361f5c1c94aa039a335d461b9243"
+    },
+    {
+      "source_id": "train:6101",
+      "expected": "pending_transfer",
+      "text_sha256": "d1a4b0a084d5b935c86f2a92f3f14f8a5fd7d53f5999a45ab5fb5b0836dbbc38"
+    },
+    {
+      "source_id": "train:6001",
+      "expected": "pending_transfer",
+      "text_sha256": "78a43d59e7a55e478e8bbd18edd82567be010429ed3a7852a13bd7c8eca315b0"
+    },
+    {
+      "source_id": "train:6034",
+      "expected": "pending_transfer",
+      "text_sha256": "48ec173c827f2ae009f8b4ce3533ed43c34ba68313473ac3ea604d8b2ee22a1a"
+    },
+    {
+      "source_id": "train:6069",
+      "expected": "pending_transfer",
+      "text_sha256": "7a5941813164bc997d2ad6e8b1da18d3436421ec81ce222e37a7053e9ba8dbb9"
+    },
+    {
+      "source_id": "train:6059",
+      "expected": "pending_transfer",
+      "text_sha256": "a0de99dc7b921731dfa8372f68d65b3cbec8d811481e9034beca7c2e10459413"
+    },
+    {
+      "source_id": "train:6087",
+      "expected": "pending_transfer",
+      "text_sha256": "61f7096470a40d885443a58fcca2466b0f57cbd0c3ec15067a432fd397aaba02"
+    },
+    {
+      "source_id": "train:6054",
+      "expected": "pending_transfer",
+      "text_sha256": "f073015abe7173711c323371925a49e5bfd22c35e008bf45eab0f94c7fcbd98b"
+    },
+    {
+      "source_id": "train:6055",
+      "expected": "pending_transfer",
+      "text_sha256": "5dd5c3dd13008497b687e3d72b784fac29e37c9dabba8d35a96d529db3fd53de"
+    },
+    {
+      "source_id": "train:5992",
+      "expected": "pending_transfer",
+      "text_sha256": "df8798d9df1df237e2a0331b47f423f27a2f5af7ea88ea04ae1db5e63e3b1846"
+    },
+    {
+      "source_id": "train:6120",
+      "expected": "pending_transfer",
+      "text_sha256": "0a6c62585f379f9c95544a6f6417caf22f06128ae4bbc703aa8680487d8d837a"
+    },
+    {
+      "source_id": "train:6064",
+      "expected": "pending_transfer",
+      "text_sha256": "890850541152fa2d758d0767527d111df72c05e1e1fc78a63578adec13063d15"
+    },
+    {
+      "source_id": "train:6075",
+      "expected": "pending_transfer",
+      "text_sha256": "da4ed5a5507d070ef3badd96516503d665ee2ed36ccdf7db0f76ca97fe367db1"
+    },
+    {
+      "source_id": "train:6009",
+      "expected": "pending_transfer",
+      "text_sha256": "621a13bbdb0e87c037d7104f7b1ec4f124dacbe6b860fc3d2d77a3adcd0327bb"
+    },
+    {
+      "source_id": "train:6119",
+      "expected": "pending_transfer",
+      "text_sha256": "29fe33d70763621d9990020e33d261c6c5b039b08ac9a7151578e01c12ddc230"
+    },
+    {
+      "source_id": "train:6112",
+      "expected": "pending_transfer",
+      "text_sha256": "97f4b9e37d42db674ef8a55b19372978b62406e74c3ffc4096b64492d1697249"
+    },
+    {
+      "source_id": "train:6019",
+      "expected": "pending_transfer",
+      "text_sha256": "55e903d2d0a102cff54892aa164ce69b19f40831ec19ea26b5a4d52820994c02"
+    },
+    {
+      "source_id": "train:6029",
+      "expected": "pending_transfer",
+      "text_sha256": "df356a1446538e9081b356fc00d16443fd5433a39b61b24b165a217673a3ee22"
+    },
+    {
+      "source_id": "train:6025",
+      "expected": "pending_transfer",
+      "text_sha256": "458ab75d6258eab45c00d29a6844ffacb061035db3069421ba8d64f1d5ad0eaf"
+    },
+    {
+      "source_id": "train:6104",
+      "expected": "pending_transfer",
+      "text_sha256": "aa354600996749e228a0094d6053a98d1837ddd243e24ef44da3763c3af8c8d1"
+    },
+    {
+      "source_id": "train:6005",
+      "expected": "pending_transfer",
+      "text_sha256": "2644542ec742802cb64283d3493901eee9cc5b79add011865dba6644e29662cf"
+    },
+    {
+      "source_id": "train:6038",
+      "expected": "pending_transfer",
+      "text_sha256": "a48fc755cd29917113fa69c5069b259868e8b93e096a1151ca0cdc2caf4d12e4"
+    },
+    {
+      "source_id": "train:6076",
+      "expected": "pending_transfer",
+      "text_sha256": "224ba941303b48e13569595f0c46213de53c20757f6ce2e3b637583252406b72"
+    },
+    {
+      "source_id": "train:6124",
+      "expected": "pending_transfer",
+      "text_sha256": "e576319dea9a787d0c777419daeef32c63465455d4776db00c9b103338fc025c"
+    },
+    {
+      "source_id": "train:6094",
+      "expected": "pending_transfer",
+      "text_sha256": "41c16cc1790b9fee6a27093d4946f8ae492f69494d5af0b8b1cc1f42af03d7c9"
+    },
+    {
+      "source_id": "train:6105",
+      "expected": "pending_transfer",
+      "text_sha256": "5ed163020eb9c4514993ac3ca66f0b85505fc8b1d99942fb8298ae2a1d475433"
+    },
+    {
+      "source_id": "train:6050",
+      "expected": "pending_transfer",
+      "text_sha256": "9d46097ef6f43264f557b224138081905dd3e5f830ba39b7499cce74ea7ea39a"
+    },
+    {
+      "source_id": "train:6108",
+      "expected": "pending_transfer",
+      "text_sha256": "14d460b0098b525ab15c627dee0d303ae6b6bde62a4c4191f18fa27befd83ad7"
+    },
+    {
+      "source_id": "train:6003",
+      "expected": "pending_transfer",
+      "text_sha256": "45c5892f2dfae392244b1c27866b5834c8d491de95fb286ca8ca3e2818d2b0d5"
+    },
+    {
+      "source_id": "train:5997",
+      "expected": "pending_transfer",
+      "text_sha256": "56c5c783b878e3b259859431ba98db48a489e6b1ae04cbad0d5bffef1dada091"
+    },
+    {
+      "source_id": "train:6027",
+      "expected": "pending_transfer",
+      "text_sha256": "b90a5e5acc9d343c961868609d4451c083538e55f5f09549561719ed74f0249d"
+    },
+    {
+      "source_id": "train:6045",
+      "expected": "pending_transfer",
+      "text_sha256": "35b77cca93ee068c9e76e64e1227b8905513c15e3305f75cbac4d599c2e9aa7b"
+    },
+    {
+      "source_id": "train:6030",
+      "expected": "pending_transfer",
+      "text_sha256": "d8bc357cf011af75d42ed6f43ac6e38a9f8d287159dd4299b01510a377379019"
+    },
+    {
+      "source_id": "train:6133",
+      "expected": "pending_transfer",
+      "text_sha256": "e79513439c41a4e1cd8a8cee0ce0ee11fbd91302a1008b462ed576155cbb809c"
+    },
+    {
+      "source_id": "train:6085",
+      "expected": "pending_transfer",
+      "text_sha256": "244767f38d12e9c13ef554d70af5900a66af3af4f8853023f3b8a26544978aef"
+    },
+    {
+      "source_id": "train:6043",
+      "expected": "pending_transfer",
+      "text_sha256": "833a0fffd20b4d92674505f351f6848c39603a38c039210010dc4880a49dae0c"
+    },
+    {
+      "source_id": "train:6067",
+      "expected": "pending_transfer",
+      "text_sha256": "14295dc36c79c5e27d828154a1095303524e5704b06300c7044ce1f19556e59b"
+    },
+    {
+      "source_id": "train:6077",
+      "expected": "pending_transfer",
+      "text_sha256": "21d84eb75962eec80b5ea90bd2b6505a631a42b86d0066c0c6602b6aca17712b"
+    }
+  ],
+  "development": [
+    {
+      "source_id": "train:28",
+      "expected": "card_arrival",
+      "text_sha256": "2c86371ac4f35d720b03e590ad306fa34966bf863d28bff78c143d71f747e4fd"
+    },
+    {
+      "source_id": "train:104",
+      "expected": "card_arrival",
+      "text_sha256": "796bdb59bad6d2888912b3ef37497df8524035542c02eeea0655f3c84f28c42a"
+    },
+    {
+      "source_id": "train:58",
+      "expected": "card_arrival",
+      "text_sha256": "2669d9ca769f7f07e8888db15ada18993aac2c56da49d23914557b55e209fc35"
+    },
+    {
+      "source_id": "train:145",
+      "expected": "card_arrival",
+      "text_sha256": "c09d2562abe48193a5208352764d04360b5fb2549ba1139a72819dacacae0242"
+    },
+    {
+      "source_id": "train:40",
+      "expected": "card_arrival",
+      "text_sha256": "ac3c2da7b03701891cb0f1d870454130c663448666399f09f8cbeb5a2dc3f845"
+    },
+    {
+      "source_id": "train:64",
+      "expected": "card_arrival",
+      "text_sha256": "bb1588d00bdd4fc8b9a0ab40f88be67bb58f68438c3699e50d050570bfb6f0c0"
+    },
+    {
+      "source_id": "train:94",
+      "expected": "card_arrival",
+      "text_sha256": "5e0db881de16673477c74023539e62299a22c77848495bc08913065e7cb91f92"
+    },
+    {
+      "source_id": "train:8",
+      "expected": "card_arrival",
+      "text_sha256": "97c8645c438da585c36e96e7662a6de9d47107e96b6bb97693834d04939c315c"
+    },
+    {
+      "source_id": "train:1",
+      "expected": "card_arrival",
+      "text_sha256": "05d4e9537c2b6a940bb3c24196b480269a20ca49a71569620ae6df2ac8609580"
+    },
+    {
+      "source_id": "train:48",
+      "expected": "card_arrival",
+      "text_sha256": "b336544da30ca31980a0d4eb9f8087d4c53d2f16f5a20d4d7d8d0706da01d404"
+    },
+    {
+      "source_id": "train:35",
+      "expected": "card_arrival",
+      "text_sha256": "3a2caaefaf04dfcaafef5ff95a7e0bde967231cdd35427ef11a48ff692abc367"
+    },
+    {
+      "source_id": "train:80",
+      "expected": "card_arrival",
+      "text_sha256": "d3150efd092a2f1de572a69498908079271eb2ccd8539faefc9c8817915aec75"
+    },
+    {
+      "source_id": "train:134",
+      "expected": "card_arrival",
+      "text_sha256": "fbda1fbfef26be84412de144b2dbc3268ad1c10e1b5a8852e640db5938ec94c6"
+    },
+    {
+      "source_id": "train:5",
+      "expected": "card_arrival",
+      "text_sha256": "9aee6e6a3f7007e1b76d53fc6bd6d5bc4b2f8c03b4c4011d2fd5c54babf14414"
+    },
+    {
+      "source_id": "train:3",
+      "expected": "card_arrival",
+      "text_sha256": "62ece05505acfba304a931e9d594f974ae91f02109035de6f6c254080f8ad666"
+    },
+    {
+      "source_id": "train:11",
+      "expected": "card_arrival",
+      "text_sha256": "ba781878e47229c3f409fd90b7191be57254c4192ab7f2196a82cb1fdc6512ea"
+    },
+    {
+      "source_id": "train:25",
+      "expected": "card_arrival",
+      "text_sha256": "3532762a7804687d4a96845447dc6f8f9649b51652a91c468a0d6997ea220107"
+    },
+    {
+      "source_id": "train:9",
+      "expected": "card_arrival",
+      "text_sha256": "ec6649a22d5e8672897746635a5f30653cded000eb5607e7591da776cdcc0643"
+    },
+    {
+      "source_id": "train:112",
+      "expected": "card_arrival",
+      "text_sha256": "cd56aaf5796f9dfbaca602ba53345b6d7f956e64085e6d9893610706dce868a0"
+    },
+    {
+      "source_id": "train:34",
+      "expected": "card_arrival",
+      "text_sha256": "33935e3982df6675d72eb38cdfcef6c691aff16bdc32216a3c08289537bb84c4"
+    },
+    {
+      "source_id": "train:1305",
+      "expected": "card_not_working",
+      "text_sha256": "088fdd335641886f970672c029d0adeeb43d5e97fcea4dd29c8a5bb4e36dd10a"
+    },
+    {
+      "source_id": "train:1285",
+      "expected": "card_not_working",
+      "text_sha256": "071120cfbe3e93330eb57ba30bc4eaa86c4ea5833cea40d14ebfedba11741e87"
+    },
+    {
+      "source_id": "train:1268",
+      "expected": "card_not_working",
+      "text_sha256": "9c7caa15394f276fe40350ed75af12951a65207667884bcafecede72e1ff8d7f"
+    },
+    {
+      "source_id": "train:1350",
+      "expected": "card_not_working",
+      "text_sha256": "ded1d69440b228648bfb757355715755a10092299dd843e9d36dba4373c4e9a5"
+    },
+    {
+      "source_id": "train:1256",
+      "expected": "card_not_working",
+      "text_sha256": "c945b10bf841f647f911fb12c44d466048b97a08dcef5cd6aedd2c09f1d78706"
+    },
+    {
+      "source_id": "train:1304",
+      "expected": "card_not_working",
+      "text_sha256": "2f45c67a48c1eb4bda2ebc2d4aa920d80570346a8e1b738946c7dfa2c20ea087"
+    },
+    {
+      "source_id": "train:1325",
+      "expected": "card_not_working",
+      "text_sha256": "1b5fb1712e5e97bd5ffc7c188282e82a2e7ee428351f9dceaca0b92001ce46aa"
+    },
+    {
+      "source_id": "train:1286",
+      "expected": "card_not_working",
+      "text_sha256": "e85659f3a2e89ad7ef65ed46915b441752d7c0b92be40cf9de3807dbb17713f6"
+    },
+    {
+      "source_id": "train:1283",
+      "expected": "card_not_working",
+      "text_sha256": "9d70363cc77350f1c38016e7bb04555b9c763e9deea2fe7453c47258ec81b775"
+    },
+    {
+      "source_id": "train:1322",
+      "expected": "card_not_working",
+      "text_sha256": "bac53c7eadd7c44b004ef59963de7c37e108e87fd71b349bb5f4907b4115725c"
+    },
+    {
+      "source_id": "train:1276",
+      "expected": "card_not_working",
+      "text_sha256": "457f2fb80703c81fc456e79295a9443695ae84c99712b5ad2aa89cb097db6e4b"
+    },
+    {
+      "source_id": "train:1253",
+      "expected": "card_not_working",
+      "text_sha256": "7d4d991afa41c7187b97eefdcc19a27f0c71ebf0779613476d7b061d35c7fa4d"
+    },
+    {
+      "source_id": "train:1278",
+      "expected": "card_not_working",
+      "text_sha256": "58a28ccf630fde19dc219d75ab16ebc748303c451069191604e6d2c3e10f9125"
+    },
+    {
+      "source_id": "train:1303",
+      "expected": "card_not_working",
+      "text_sha256": "aca705c52aaba8075e05fd9b35979fc725c6396d7f39a1af42de37e157ba9070"
+    },
+    {
+      "source_id": "train:1270",
+      "expected": "card_not_working",
+      "text_sha256": "605b545b6e8153a4ce89d7bf962b8c2160f54160dcc58ebd7f4dac53bea28d68"
+    },
+    {
+      "source_id": "train:1265",
+      "expected": "card_not_working",
+      "text_sha256": "eef78b66b18de6ea3cafb4e11076100492fdd40091242e4c70362087359acd9e"
+    },
+    {
+      "source_id": "train:1252",
+      "expected": "card_not_working",
+      "text_sha256": "58421efb12334d0e4ae1ff9effad0af87eb2091f271a976aef5a09caac3f2586"
+    },
+    {
+      "source_id": "train:1326",
+      "expected": "card_not_working",
+      "text_sha256": "f65e4bae9f7d8e6940dc5ca16ee1bf56cf6fb470784a1832ac53f631e4482ea3"
+    },
+    {
+      "source_id": "train:1247",
+      "expected": "card_not_working",
+      "text_sha256": "c0e063e2464a846720056755a765447d114e126058ab8b0aaf8b2736b689e0ff"
+    },
+    {
+      "source_id": "train:1346",
+      "expected": "card_not_working",
+      "text_sha256": "d1346127fca05e578600d54bec041a7b06a4803d1727f08fd4ee32c54110388c"
+    },
+    {
+      "source_id": "train:2684",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "444a760cb6fd5d59a7adde10f8f7cbbeaa0447a6d524ea65dd0b60b2434e6164"
+    },
+    {
+      "source_id": "train:2660",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ff67957978615a90cce14bfe5ece616da4fc4bfd6a04ac6273eab07b1c50627b"
+    },
+    {
+      "source_id": "train:2562",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ab6bf3b190d7190d41d4b414432446cbf15057a3c9da93889222c219fa23d070"
+    },
+    {
+      "source_id": "train:2613",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f713a0abb80825a635e423e08d8af8593ece3f1c640e328edd1ebeb694b8df0f"
+    },
+    {
+      "source_id": "train:2521",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c7322c058c106d66f9bf5791b9c334a05977c47f3b4a29e2d6254ad1f55aa9e2"
+    },
+    {
+      "source_id": "train:2583",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "51ff6e39d4c64e106404cf605fde11702284d78ef5c94c323c9777f8eb9a2b90"
+    },
+    {
+      "source_id": "train:2601",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f51cded4e7802394908dea0b025d4fd4221328ce7407525dcf9abd8467868195"
+    },
+    {
+      "source_id": "train:2606",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "7ac6b835e162c6af10d4b84f6d4b44bb415de509210ef0c501d3d4401c7ee70f"
+    },
+    {
+      "source_id": "train:2672",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1ae6d8978edafec57854cb0bc6eaef8429001f6367990931ae3f83728c91e904"
+    },
+    {
+      "source_id": "train:2673",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "68e5341920ed32594fdcb125045e8c0eb8af00a60a66ecb0203b9494c705f5f7"
+    },
+    {
+      "source_id": "train:2587",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "c867a885c4da64720a94c3e5089537838ec0c2659a693b296dd4d8cb74c0a9a8"
+    },
+    {
+      "source_id": "train:2669",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "fac9dbc006205ac61741f50884d19ee5f9ec7ed6922f13784703d9dde818a963"
+    },
+    {
+      "source_id": "train:2666",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "13bc2f82fa25247bc03fc794f55a344cf8f037d781e2a7c7d138b70f077b2336"
+    },
+    {
+      "source_id": "train:2548",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "04097d7e3a5eb60dc7b2ba0c0e417b7eaaf29abca98762103b010ebe27e6bd2c"
+    },
+    {
+      "source_id": "train:2652",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ca112cff67d224c6ddb7be784483cc8464f52bd0dca23db2f3a7992e9484ec95"
+    },
+    {
+      "source_id": "train:2540",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e3f8078e08c0b13557d39cb8ee5834a7c4741105396f172d10434e52812a800e"
+    },
+    {
+      "source_id": "train:2632",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "621bb80841544c6a6b5ad705ecb7543b53482b9eef9c3cf839b155d3f9ff22bd"
+    },
+    {
+      "source_id": "train:2628",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "53dc577d8443a75255bf509352681ce5285611e71bee64021bae51eea8d1ad83"
+    },
+    {
+      "source_id": "train:2667",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "4d59bace75d5a723b05e04daecbfddfb5f12a477d1a94700866b53ea75a4896d"
+    },
+    {
+      "source_id": "train:2602",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "5ba24cd6f657388b2cad0ab65b83d1ea5943d616b4440ce1a20447b723fb032f"
+    },
+    {
+      "source_id": "train:9473",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d16e842d5767a0f9136963eaa9982afb1e0e54039da82e9394d5f947d4033fc1"
+    },
+    {
+      "source_id": "train:9385",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5fe4182ba3b50548aa649c88d06c980e0596602d44d0d35742a4503937a1e564"
+    },
+    {
+      "source_id": "train:9416",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d516dee0aa905f365f312f1b1e636839ab6bc30f8c773ae02be41a942140edca"
+    },
+    {
+      "source_id": "train:9427",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "23b5325ccd601e1332841cadc390666d8399d1f00da0b66900ecf34748ecbdd7"
+    },
+    {
+      "source_id": "train:9452",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5ea82663a7417fdc4f27856c6d8b85251525b7dbe7ec712cd548278d999f0bfa"
+    },
+    {
+      "source_id": "train:9362",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "c64ea99cfc98720f65af6d73c1b49d4bf10a99d47fb45e8731811512b51e6cd6"
+    },
+    {
+      "source_id": "train:9493",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "6e4b053231f07034a50ed4c1b1f17c3d0433beec1aba46bf041ce504ee42ac59"
+    },
+    {
+      "source_id": "train:9351",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "a9d095b6d6b78cb66fce1b23b9eeed62dc3264e3df0b071611b951612d231dc9"
+    },
+    {
+      "source_id": "train:9354",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b27a65e2273da2aa4128751871616b87b9b98e847cfbeb6e1bec955467bdde40"
+    },
+    {
+      "source_id": "train:9470",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "f184e8b84ee0e3b1ce5b8b17a3e141697392d93473c06c675dbe9564af9c448f"
+    },
+    {
+      "source_id": "train:9485",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "307460ed5ca9d96c621a9d19b72a2c6358dece7eb16e6cf263cceae9bb3f4c72"
+    },
+    {
+      "source_id": "train:9371",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "019f3908d2ed5379ee8605bc742f6ff5b03916a9a05ec19edb70715dbb991e85"
+    },
+    {
+      "source_id": "train:9499",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "dce20dbb62a3e77cbca08fded87cb8db843b1d17740dd053c0f660f80409a186"
+    },
+    {
+      "source_id": "train:9345",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "472dd58a444198ec1690066c220904b5917c8984dd6bce8da2cb69a6ed3536c5"
+    },
+    {
+      "source_id": "train:9504",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "77558733143312fe44834c8fe4a41f14f0cd6792f58a60d57dac17517c7607b0"
+    },
+    {
+      "source_id": "train:9349",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "1f15e958efba977f0cafb70e3e98ca9e9fd3bba0493bb1d3f55ed630d7a48cdf"
+    },
+    {
+      "source_id": "train:9482",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "91d1398b7898d4b8d500dd0db36a67ff794c2af7b1d9a4c86405bd0f2b109c74"
+    },
+    {
+      "source_id": "train:9350",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "f0bed422990433ca71aa7c06dd2297ca51d8d014157827212588fc09e5070500"
+    },
+    {
+      "source_id": "train:9386",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b281be07a7e294c58530661a7da9a13ec2ab5e47e85a25767abaabfd513cc161"
+    },
+    {
+      "source_id": "train:9429",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "0bdf08924e579c58d66a57fc9cd142076fc27c348dfc84c148d810881ddc9af9"
+    },
+    {
+      "source_id": "train:1481",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "8e855a0f38ed22d7648f93706e247167b95faf71e32bffbbea89d50efc22ad1c"
+    },
+    {
+      "source_id": "train:1483",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "984d7f364aa559c3ecec88b6260fe11153f9db087475187aafe8321796be14a2"
+    },
+    {
+      "source_id": "train:1536",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "be000c0450dbe5e67dba5fa2e04a8dc5a146c7b6c86b85088cf3a817bf822dd2"
+    },
+    {
+      "source_id": "train:1556",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "40fb7e49145ca6156697f35984e0dab51c5d40384d2712b79b8a0082c19fad94"
+    },
+    {
+      "source_id": "train:1484",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c38446a6deca502f0171ac1cc9b6d61c302d18e30cb6b381b111dcc3d43a4d3b"
+    },
+    {
+      "source_id": "train:1505",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c38daebed36bdde2b4fba71da39247dff28ad839b32d2706b843bf1ea1af0325"
+    },
+    {
+      "source_id": "train:1522",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "fde19a9052b40005b9f8f815a087696417f151e26604cc33490bf4ef7c4ce010"
+    },
+    {
+      "source_id": "train:1509",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "15e9a204d52dae49e2b82a30945e3d61a28bf81477c29c8c4198373d3abaec52"
+    },
+    {
+      "source_id": "train:1549",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "73cd49d8bb9e7659cd27f43e107b4802004c2667d63a80bfd692d1079e327740"
+    },
+    {
+      "source_id": "train:1490",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "a6749fb6765b16b8316f65d887ca02eaf4e54532795a2fa66ff6aee1e9b9af2b"
+    },
+    {
+      "source_id": "train:1552",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "4533f3c290be5aa8b7dada4c511f413e0ed554741aeaf43d559475748e048c5d"
+    },
+    {
+      "source_id": "train:1511",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "3f3ccbef003091e917f710a4a3321779fad2f278a7ad6cd838953f79ac8f0135"
+    },
+    {
+      "source_id": "train:1535",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "688a916a28f2ed09a6b5b6848f1ce0435b8b441a02e6cfff62e16177963f7c50"
+    },
+    {
+      "source_id": "train:1489",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "0421ff78cb602cd78858d592c4fd0aa397faa48b217005c60f94352efc14d5a6"
+    },
+    {
+      "source_id": "train:1517",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "cf54ac00161189a762b6d2e3e210cf0cb43eecb8d5c922edb10394138ae909db"
+    },
+    {
+      "source_id": "train:1525",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "2552441bc2a0065609a5aedbf3d23ea27886d8049786d2e510521d487f7a217b"
+    },
+    {
+      "source_id": "train:1495",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "74dc8cc1470502720851f369fd84c6bcb0ce0545fb9ee81dd80590640171f2d8"
+    },
+    {
+      "source_id": "train:1486",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "baa6f0630ad4b2750e464427c8beacc7035851ed7ca349f4db5a3d90b1e26f8e"
+    },
+    {
+      "source_id": "train:1507",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c561baaa9d3df434d9a5609f17614699a81c4e6050acd8d88c71da9bce8e549f"
+    },
+    {
+      "source_id": "train:1544",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "8705e3bf53df4862186ae1c3f1c4be5f594919d4685ff60ecab5c4944918e036"
+    },
+    {
+      "source_id": "train:6016",
+      "expected": "pending_transfer",
+      "text_sha256": "ece295a2c03b88a07450f00cd07ec22c9b6df175f1e8213e21cd3d04671c1c5c"
+    },
+    {
+      "source_id": "train:5990",
+      "expected": "pending_transfer",
+      "text_sha256": "3b34a142074ea9970de78b57473dfa2942a6a4edf63379eb869ff2b1c0c499f7"
+    },
+    {
+      "source_id": "train:6062",
+      "expected": "pending_transfer",
+      "text_sha256": "4d3e6fbb80fb36473dc921de808f371c66d11bb8890d4e0ec74f305ad277f57f"
+    },
+    {
+      "source_id": "train:6072",
+      "expected": "pending_transfer",
+      "text_sha256": "15abbf28dafa2c6ab8f51c60b4817dc630e4a6a7c0551a04b4d56a80bb86d3cf"
+    },
+    {
+      "source_id": "train:6125",
+      "expected": "pending_transfer",
+      "text_sha256": "87af633c57b5a7db03de6c1c570541b1e8849e3049456fb8090e63fda267784d"
+    },
+    {
+      "source_id": "train:6040",
+      "expected": "pending_transfer",
+      "text_sha256": "48879b2086730b134f024e4b3b9a7cf89d3866dc1897880024450a282e430fc0"
+    },
+    {
+      "source_id": "train:6011",
+      "expected": "pending_transfer",
+      "text_sha256": "382eee8b063349d0ebc94221d4779b024966e485af7c68659505fef0e02b7a4a"
+    },
+    {
+      "source_id": "train:6018",
+      "expected": "pending_transfer",
+      "text_sha256": "21bc1096e19791a945acf00227461a8fb86aafed82a9bb99058b48f81758af85"
+    },
+    {
+      "source_id": "train:6007",
+      "expected": "pending_transfer",
+      "text_sha256": "0303911333486916b1063adf77b9ce03b90c0158fb03df70473433bd0253140a"
+    },
+    {
+      "source_id": "train:6081",
+      "expected": "pending_transfer",
+      "text_sha256": "3b12c1c7da5db535c20f66d9f4fa3023b2e700c0df1f5deec39ebc2d179204d0"
+    },
+    {
+      "source_id": "train:6056",
+      "expected": "pending_transfer",
+      "text_sha256": "768cb36e9e6db6143b7ac614afdb6d7b98632cba8aab8b7b156bb6f8122e6ea0"
+    },
+    {
+      "source_id": "train:6116",
+      "expected": "pending_transfer",
+      "text_sha256": "4a7efaef6272213f6447ebc2adb7d539b8376e5164480675702cb47bbe6fa792"
+    },
+    {
+      "source_id": "train:6130",
+      "expected": "pending_transfer",
+      "text_sha256": "7f2ca09d86597dd8c57a8743934a5464aac3fcc183e0ebb11a03db0d60f75711"
+    },
+    {
+      "source_id": "train:6118",
+      "expected": "pending_transfer",
+      "text_sha256": "dc629cff9a5d4fa7cbf9673853b35070a3c2b61dda2c91ed2972ab1b0bc021b1"
+    },
+    {
+      "source_id": "train:6092",
+      "expected": "pending_transfer",
+      "text_sha256": "d23f8b692ae01f52dbca0db971dbf23c6c0c2ccae6f82ae9088613779d24ed9f"
+    },
+    {
+      "source_id": "train:6129",
+      "expected": "pending_transfer",
+      "text_sha256": "25f2fb3a40207c389e9961a8f9ecd79812d934996b837f8a4ab40f8a2f0c6771"
+    },
+    {
+      "source_id": "train:6084",
+      "expected": "pending_transfer",
+      "text_sha256": "874b11a0df13f438b50a00079417524fe0f59ad2c480a27d6084e5d9a92ccf60"
+    },
+    {
+      "source_id": "train:6079",
+      "expected": "pending_transfer",
+      "text_sha256": "68838098f2ccbd118e5b527dd5c57dfa76b9ca02224a047ad2b06be1e8ac7732"
+    },
+    {
+      "source_id": "train:6131",
+      "expected": "pending_transfer",
+      "text_sha256": "224c6f215a775f5d4aee8debf080ea07e6fbbc05e4a8d1892d56d72b07e730d5"
+    },
+    {
+      "source_id": "train:6012",
+      "expected": "pending_transfer",
+      "text_sha256": "68a53c57b4ca7be137bd8edb0c97070e746e071f6cfa3d5b035fe286695d2732"
+    }
+  ],
+  "test": [
+    {
+      "source_id": "test:0",
+      "expected": "card_arrival",
+      "text_sha256": "1f21633d90fe7165bfc51235c625a23967e82a25dbb0eb89cc158c5ca0df7929"
+    },
+    {
+      "source_id": "test:1",
+      "expected": "card_arrival",
+      "text_sha256": "cc64375b33ec5f6dfa3641c61f3435ae8a82c95828476e1161dabcd0d10cfb06"
+    },
+    {
+      "source_id": "test:2",
+      "expected": "card_arrival",
+      "text_sha256": "ca88126f21eac1cf71d928f899384295f73e2661267b767a00215cc07bd1fd04"
+    },
+    {
+      "source_id": "test:3",
+      "expected": "card_arrival",
+      "text_sha256": "28027d418c6bf9953d4f186f6c01e732c4c38a605c8a54082b7d21d246c5f329"
+    },
+    {
+      "source_id": "test:4",
+      "expected": "card_arrival",
+      "text_sha256": "01f6a3f64ff3dc2991b7917e349347b09e7a072836fe16b456ab0f8c6b39b89d"
+    },
+    {
+      "source_id": "test:5",
+      "expected": "card_arrival",
+      "text_sha256": "03bbf02c4ab48425fb098ca22b32e27401cfefc40fa1ce047c5163c85849ad46"
+    },
+    {
+      "source_id": "test:6",
+      "expected": "card_arrival",
+      "text_sha256": "ec4bf658b017c088db8e614e6d20ea0c631557b8853a7ec125cf653a664aa286"
+    },
+    {
+      "source_id": "test:7",
+      "expected": "card_arrival",
+      "text_sha256": "42571d78b7078520b38c9261af379c72cc75fc78f463f3c6d828ae49d33365af"
+    },
+    {
+      "source_id": "test:8",
+      "expected": "card_arrival",
+      "text_sha256": "d865b4fddda8867c73783bae6ae8da89e02459b5dfdd91008dde27f651a4afa6"
+    },
+    {
+      "source_id": "test:9",
+      "expected": "card_arrival",
+      "text_sha256": "cab6032260b0df899be119c541676428b7a05a2e17f62557ed59965b289cbc3b"
+    },
+    {
+      "source_id": "test:10",
+      "expected": "card_arrival",
+      "text_sha256": "da9de248fcd4ac24764dd379475133132c46d240650dae69d016790cad25e150"
+    },
+    {
+      "source_id": "test:11",
+      "expected": "card_arrival",
+      "text_sha256": "37ff73989ab995eb270589925da10c12feeb2c8c3ec684e197f1ede8d5eef5ed"
+    },
+    {
+      "source_id": "test:12",
+      "expected": "card_arrival",
+      "text_sha256": "afa09717fd1bac2479c8dc667b92f09b38d4f7140b74410b966a2ab6d98f6f2e"
+    },
+    {
+      "source_id": "test:13",
+      "expected": "card_arrival",
+      "text_sha256": "c3be7814d5be60227017d39d04a5fbbc3a527c1ee830f1197df869797cffcbfd"
+    },
+    {
+      "source_id": "test:14",
+      "expected": "card_arrival",
+      "text_sha256": "73ad49a62fa493ad2238cc326ed488989f00e886f0413b4e1ed3a19ef25d65f4"
+    },
+    {
+      "source_id": "test:15",
+      "expected": "card_arrival",
+      "text_sha256": "e888cbaeb7f2ad83790e04797b4f2b4ed22ded2b5c5e417a54475ed449cfb040"
+    },
+    {
+      "source_id": "test:16",
+      "expected": "card_arrival",
+      "text_sha256": "ec92b3d7872be8860c8a68633b1b0b9eef0149fb49ee11ca8c9a0fb0174c56df"
+    },
+    {
+      "source_id": "test:17",
+      "expected": "card_arrival",
+      "text_sha256": "b5792419216efefffd4beb1c4813f3e43058cde31db43a2b657cff66f5216014"
+    },
+    {
+      "source_id": "test:18",
+      "expected": "card_arrival",
+      "text_sha256": "fd030ebcbabde7e72ed7c271193034f6f87c10a948793ae686f109426c4e2d63"
+    },
+    {
+      "source_id": "test:19",
+      "expected": "card_arrival",
+      "text_sha256": "eb3a651cb8ff30ed4c469061e1e0a0391b7bb30beafa48a0bc769cc3a52eb6cb"
+    },
+    {
+      "source_id": "test:20",
+      "expected": "card_arrival",
+      "text_sha256": "0c479cca38be078a2d5ffa187d31e790d9a1d65a3c5b1d9b8af60ae99148ea71"
+    },
+    {
+      "source_id": "test:21",
+      "expected": "card_arrival",
+      "text_sha256": "af4c2e3e0b5333572ea2d23a9987aeb418a51f12873723752456357dcd3a901a"
+    },
+    {
+      "source_id": "test:22",
+      "expected": "card_arrival",
+      "text_sha256": "eb9d64f904f27c599e586c8a613343114c4d5294229d48a29f38b542f6e196cb"
+    },
+    {
+      "source_id": "test:23",
+      "expected": "card_arrival",
+      "text_sha256": "af5bf52777ded2f0bd2b73e4656701ae9ff87a3fb977d60c2d10bb1699f4ddd8"
+    },
+    {
+      "source_id": "test:24",
+      "expected": "card_arrival",
+      "text_sha256": "6a77e4c996d0aa3727f9c6fc4e4e9b31d9b0b040ee755808968a8413c0cd5af6"
+    },
+    {
+      "source_id": "test:25",
+      "expected": "card_arrival",
+      "text_sha256": "21eb0e14d9e5e68144b0fb89bef976036281304c35408444f845a6163efba3c0"
+    },
+    {
+      "source_id": "test:26",
+      "expected": "card_arrival",
+      "text_sha256": "3b2d2c35297ebbcb24a83da141508eff20a7bd546deb854f04b6a19817271313"
+    },
+    {
+      "source_id": "test:27",
+      "expected": "card_arrival",
+      "text_sha256": "3d61be521e17a4155de9916ae53cf942e4e42c3c780477fae6eaadbf0ecaf5c8"
+    },
+    {
+      "source_id": "test:28",
+      "expected": "card_arrival",
+      "text_sha256": "01bbefc9768aa9b6aa4f1e568011829f3b0a5ec72d8756c4b6ddbdd8a6bc59a0"
+    },
+    {
+      "source_id": "test:29",
+      "expected": "card_arrival",
+      "text_sha256": "d1161f7f5909fbb80f2ff1cdd793e1c3db76afa5b9061a450994589254674228"
+    },
+    {
+      "source_id": "test:30",
+      "expected": "card_arrival",
+      "text_sha256": "7819fb5715f00f641d8631b4136795a19e6bce84a25d5907be59c14614a87f0c"
+    },
+    {
+      "source_id": "test:31",
+      "expected": "card_arrival",
+      "text_sha256": "64efa533b0712f371a5f22190a4f58314c01128bc2020b969986a009cfa81977"
+    },
+    {
+      "source_id": "test:32",
+      "expected": "card_arrival",
+      "text_sha256": "d7b14366bc5818c212c8729e72e42b88093c0281a458b235197a9cae9793a223"
+    },
+    {
+      "source_id": "test:33",
+      "expected": "card_arrival",
+      "text_sha256": "081721203f3aacea23abb80bac64e777eb206a2d8847c2eb5bbddaac9fb8ca50"
+    },
+    {
+      "source_id": "test:34",
+      "expected": "card_arrival",
+      "text_sha256": "326cd60d36cfb99ec12ce0f186c73956141359c743e43d69a86cf1e51f2c828b"
+    },
+    {
+      "source_id": "test:35",
+      "expected": "card_arrival",
+      "text_sha256": "c9b0e4d6abf2a4f55d37fe60dea1608175a807f0d12af5d0fbbdfd61108bcd2a"
+    },
+    {
+      "source_id": "test:36",
+      "expected": "card_arrival",
+      "text_sha256": "b389ac4852662b2f2b35248b3ece66b03640145865554b4e003f3f445d360f4a"
+    },
+    {
+      "source_id": "test:37",
+      "expected": "card_arrival",
+      "text_sha256": "009518bced041f04946cf9ba8003838f157209d9ade88179dd44ecb40f805ee5"
+    },
+    {
+      "source_id": "test:38",
+      "expected": "card_arrival",
+      "text_sha256": "2a34d7ab9e1abab906d4eb4f26569598b70a06eb19c67228da99ad5d3be7f1fc"
+    },
+    {
+      "source_id": "test:39",
+      "expected": "card_arrival",
+      "text_sha256": "871e7aff3b7fd80b394e2c1e979885b0608d86d021b765bb25561c1e02ca54db"
+    },
+    {
+      "source_id": "test:360",
+      "expected": "card_not_working",
+      "text_sha256": "c16f0beb8d66d5bc5ed6716638d0ad8b29aba86720f76d7918e9629a81043a52"
+    },
+    {
+      "source_id": "test:361",
+      "expected": "card_not_working",
+      "text_sha256": "2eae163cee99a34270ab82f341d7a56071abc2622f7b1abf32da24310a1af92c"
+    },
+    {
+      "source_id": "test:362",
+      "expected": "card_not_working",
+      "text_sha256": "3e1ddc37c29af58b12230f03d5622b43b561551a32c1caa9bdedccf2fde36c3f"
+    },
+    {
+      "source_id": "test:363",
+      "expected": "card_not_working",
+      "text_sha256": "ce77bd7c885455d24cadaf50f8e6397723d903ed6e8ff43d156fbc94646daa3f"
+    },
+    {
+      "source_id": "test:364",
+      "expected": "card_not_working",
+      "text_sha256": "1718a31cb4a7d96b61ad76cdc895e63db4aca3c5ec7ccf5029cd412652ddd29f"
+    },
+    {
+      "source_id": "test:365",
+      "expected": "card_not_working",
+      "text_sha256": "d2a5427edbe5b077e19ffd29477201e0c4494b1bc4c6aeb90a240eeca95f759b"
+    },
+    {
+      "source_id": "test:366",
+      "expected": "card_not_working",
+      "text_sha256": "62763f29260e58c655af25bcf6e4b52f3e6c968ace7d3827ad8e2d4871fe4c9a"
+    },
+    {
+      "source_id": "test:367",
+      "expected": "card_not_working",
+      "text_sha256": "ab8e054a4163342975743449de6ba18258c50765108b07ec9b42ea31c4c1ab38"
+    },
+    {
+      "source_id": "test:368",
+      "expected": "card_not_working",
+      "text_sha256": "cbdca8fdb4a8c45253cd966da8c3189a62f55b429da0c5d299a578c08871dc84"
+    },
+    {
+      "source_id": "test:369",
+      "expected": "card_not_working",
+      "text_sha256": "2d94afab597accef6b112e94076778993c093ce42909dfff1057ae3bebd35256"
+    },
+    {
+      "source_id": "test:370",
+      "expected": "card_not_working",
+      "text_sha256": "9b253219dcd8cf7df47a41fc0dc389380db412eeed5fad2e4934642572635ab5"
+    },
+    {
+      "source_id": "test:371",
+      "expected": "card_not_working",
+      "text_sha256": "4d3506b2653b27d4b0042c10af48889d874fa393b85a99d7b51f37caff0ed258"
+    },
+    {
+      "source_id": "test:372",
+      "expected": "card_not_working",
+      "text_sha256": "5af179d05413ee1d5865b4889e9fcb754b4c0553add36958ce663648e05835ca"
+    },
+    {
+      "source_id": "test:373",
+      "expected": "card_not_working",
+      "text_sha256": "c599180e3d8c7428de11b65f2f3e670dbebfd1c83cd54374d9a8c13bc3b5da75"
+    },
+    {
+      "source_id": "test:374",
+      "expected": "card_not_working",
+      "text_sha256": "e912299d5e3c27410cb2a0f9fa8c7e1b9c4118204caac960c112819ca87ea2a4"
+    },
+    {
+      "source_id": "test:375",
+      "expected": "card_not_working",
+      "text_sha256": "3b6a9bc7cb110d42e5ab4b0c6908dd649289540c02bd6875718dc9fb72b8827d"
+    },
+    {
+      "source_id": "test:376",
+      "expected": "card_not_working",
+      "text_sha256": "040c3d586adc7f44015b6bd6dac6361320d4e3428d8dba616afbb2dfe927ac35"
+    },
+    {
+      "source_id": "test:377",
+      "expected": "card_not_working",
+      "text_sha256": "8b67769f1b73b491cffbbcb0fa3c5e7174d2d0f0923e603fd1eef6dc7988ffbe"
+    },
+    {
+      "source_id": "test:378",
+      "expected": "card_not_working",
+      "text_sha256": "d1524d773a66a272659c6f495fad96645d875b8aad4d4d166cc4401a80e1d51b"
+    },
+    {
+      "source_id": "test:379",
+      "expected": "card_not_working",
+      "text_sha256": "49a0c088f41bac6387e08b025a0bde7a5792d35ded83d339c93df700e8680392"
+    },
+    {
+      "source_id": "test:380",
+      "expected": "card_not_working",
+      "text_sha256": "b3dfce25ad2b32b183e0aa642812de92737bc879fcac0ab3f750d376b79624dc"
+    },
+    {
+      "source_id": "test:381",
+      "expected": "card_not_working",
+      "text_sha256": "72bca818982a97bb3b0140144c6db48fd3939bd00885aaebc4034a38d78a494c"
+    },
+    {
+      "source_id": "test:382",
+      "expected": "card_not_working",
+      "text_sha256": "b84f7e516e46058eea5d60643ad9cbdf067530213c2add1c2e6e23ac7fc79cd7"
+    },
+    {
+      "source_id": "test:383",
+      "expected": "card_not_working",
+      "text_sha256": "b4b224f11d8ce460c81647108ec5a7ba0edf561d2a9ccb2db94b5a9848f022c6"
+    },
+    {
+      "source_id": "test:384",
+      "expected": "card_not_working",
+      "text_sha256": "01f0357cc9410c3504bce9d9ec4b61dfc1becb0bde83ce275807ff2cfdd9408d"
+    },
+    {
+      "source_id": "test:385",
+      "expected": "card_not_working",
+      "text_sha256": "579b4bc9d4888cb4119c552cb2e5a0c6852d839482ccd5c186ec3731ffac030c"
+    },
+    {
+      "source_id": "test:386",
+      "expected": "card_not_working",
+      "text_sha256": "af0fa15bbcabab79854b2b3a08d6ccf22c8ec3f8b2099f7531ac81c2616363dc"
+    },
+    {
+      "source_id": "test:387",
+      "expected": "card_not_working",
+      "text_sha256": "9fb73159cdc1d027670cee3d917a7f07904a595411f55b9fca832a51fb17a2f0"
+    },
+    {
+      "source_id": "test:388",
+      "expected": "card_not_working",
+      "text_sha256": "711a76ba7fabca3d15a697ab20eb780fc3dad5b2e4fc074a52211518495076eb"
+    },
+    {
+      "source_id": "test:389",
+      "expected": "card_not_working",
+      "text_sha256": "e2a046a450473fda25a0dce256b0f15e248aa07deed0d4b8ce9b035f280d969a"
+    },
+    {
+      "source_id": "test:390",
+      "expected": "card_not_working",
+      "text_sha256": "370f560fd82791edf7610e6b8c9b42d733bde401169dd9f1a871b252ed4c5abb"
+    },
+    {
+      "source_id": "test:391",
+      "expected": "card_not_working",
+      "text_sha256": "afff390fd58c72e375dbffddfad0ad61f5d18cadf5dab95826af53b4654fb4bd"
+    },
+    {
+      "source_id": "test:392",
+      "expected": "card_not_working",
+      "text_sha256": "4e6fc340788f398010ffd4e1090576d81bdea115a809be3d8eea369f8be5b890"
+    },
+    {
+      "source_id": "test:393",
+      "expected": "card_not_working",
+      "text_sha256": "ccbcf388306738e7a3543f99196838caadde83b42fa090d7f83966040569c659"
+    },
+    {
+      "source_id": "test:394",
+      "expected": "card_not_working",
+      "text_sha256": "327f87dbe46a0da40305d0972ae5f3147414db78851528bd8dc3cb909809ba62"
+    },
+    {
+      "source_id": "test:395",
+      "expected": "card_not_working",
+      "text_sha256": "5f66690995e1cd50dd589f8e5ded1bbe532a296fc9b761567de83066b603f945"
+    },
+    {
+      "source_id": "test:396",
+      "expected": "card_not_working",
+      "text_sha256": "09a4fc4cbbf0f33333d1839b636d7995eeb41d8992995314dd53536b3797ba6e"
+    },
+    {
+      "source_id": "test:397",
+      "expected": "card_not_working",
+      "text_sha256": "49971cf1d87908d872d96abc0f742e5eb0f0208150930ae3b9b964ea9711cac8"
+    },
+    {
+      "source_id": "test:398",
+      "expected": "card_not_working",
+      "text_sha256": "5b2ef538e934f758eb056e065d5e8afa6626bbd6b7649bf977653f13756ec9a5"
+    },
+    {
+      "source_id": "test:399",
+      "expected": "card_not_working",
+      "text_sha256": "91d614a2369d614ec4d78473ffee94c2df724a4ed6cb577afd75e6bd5d95148b"
+    },
+    {
+      "source_id": "test:440",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "bec6b2240d9a38363205eeaaf55aca72f7d7af8f2e39033ac6ed5d098bc467fd"
+    },
+    {
+      "source_id": "test:441",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "6655cce7f80feded7a37d479abeff315f0572b15eb4e3c795f156ad9fd9ae80e"
+    },
+    {
+      "source_id": "test:442",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "2eb2118776c428847a82b83bd136412d1bc37451a0a3f239f957553a7eb18fc6"
+    },
+    {
+      "source_id": "test:443",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "77d3d4e6c8bc8cb098198c6091029f213ab6379b6c0a4eae1ad468abca013bbe"
+    },
+    {
+      "source_id": "test:444",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "838192ee2cc716865c38c9d1408c21e272ae3f41ad26b4b5ef3c218b81ad5df7"
+    },
+    {
+      "source_id": "test:445",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "3974feaea2557a54d572e7f96de68892afd301f063d5dc9cd57a3d4e8f16469f"
+    },
+    {
+      "source_id": "test:446",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "a62726322e09c6eb3b7f354336b034a40813d9068974671d0ccd1e6fef001556"
+    },
+    {
+      "source_id": "test:447",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "0cf090c57024daa7fa474ca2cb34cede534e5d0597fb358c034d89a0904f65f2"
+    },
+    {
+      "source_id": "test:448",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "faffeeed5a143e3c33ab3c16388fe95a6fda8b56581d1975803643b15c5fb37f"
+    },
+    {
+      "source_id": "test:449",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "04944ddc90cb3d548adf6d4162c00303f8d3d5399eb3f1c0e0cd4db448650d78"
+    },
+    {
+      "source_id": "test:450",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "361a399366fadc1d2e27d00964e23dff8627f9d69c85b777f1d1a92b1291b2e5"
+    },
+    {
+      "source_id": "test:451",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "b4697e67bc9eaf2043c8aeecd3f023959c3d90a5d3d3ac81781cf72cc88b8cba"
+    },
+    {
+      "source_id": "test:452",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "d6a497db8c6be5abaffb426acc47bfb06c86274018e883adc9e9f0368c1fab73"
+    },
+    {
+      "source_id": "test:453",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "e45d2d74f091665a1a3aaa9da46d465bb10fb0f95bff8c638b6e52d2f520a5d6"
+    },
+    {
+      "source_id": "test:454",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "a2ee3981cadcf45ab752128fcebcd156c721f8d7004578ef35d15cb9b407a329"
+    },
+    {
+      "source_id": "test:455",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "9ba8bf39875e830c8b01fc6d374cf6cc321e47d23a6e75595327be7995f1c7e4"
+    },
+    {
+      "source_id": "test:456",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "abdf7dd9315d019f106138067abce6bf6fb1e299ea83d5916657837954f21444"
+    },
+    {
+      "source_id": "test:457",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "0cf9c06002654f47b937eccabaf34f0d4bc3f499c1e76481dc82f2398fbc6b85"
+    },
+    {
+      "source_id": "test:458",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "06cfd1f28843c41a7a519eef25cd7e6d4e5274c1a6d191093989fd31626bdc0c"
+    },
+    {
+      "source_id": "test:459",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "56c755ccce85110be1efe1b2ab0e9cb78690f4d24af77f09f35bf2015d6e0f69"
+    },
+    {
+      "source_id": "test:460",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "ff46f5a3cd77650dc59ab71b18133a0ba16a15b73582292e0097abf013e11aec"
+    },
+    {
+      "source_id": "test:461",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "a69df3bdca8d84e3056ed804db18ec041a6bf7c4735f09e059e08c410a8b629e"
+    },
+    {
+      "source_id": "test:462",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c7c59fcea4a11bbd9f6f59a15797f13c4861b768504c5c36680a13f0f358f5a5"
+    },
+    {
+      "source_id": "test:463",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "cdfe9e9ac712035f5dbf5601683a31b2d6a97b029e14a601849169c85822aefe"
+    },
+    {
+      "source_id": "test:464",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c7c7f3b40720796e31b54b120e30df1db8d337390aac16a44ee4e2847e82f1cf"
+    },
+    {
+      "source_id": "test:465",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "bd9675fc8ae6d6a500eba5172600c6d15a47b32d71f46c60bb31a24d7e34dc90"
+    },
+    {
+      "source_id": "test:466",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "67168037625ab9aab99d68a751d318291501777dd8c8c6de317be712135e66a8"
+    },
+    {
+      "source_id": "test:467",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "67b44bd8f82682d6536132c0ab357c081ce58e0e4040d6c0661de554ea33f900"
+    },
+    {
+      "source_id": "test:468",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "9d5a2933c614118515128ecc4ccd65283fab4251fb6aeeb461cacd746febdace"
+    },
+    {
+      "source_id": "test:469",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "1459598401e389f86a133477b3055e885cd055b77ee4b3645bd849ef970fc316"
+    },
+    {
+      "source_id": "test:470",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "53a706580ae71c4edbca0d5381a1a5543189d61a4fbfb5c5b6ebd5e3b1ea546d"
+    },
+    {
+      "source_id": "test:471",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "8a00b2b3da95cc5d3e8eaf3fcc453e9bf736987aee1f66504e4ebeeab98a00eb"
+    },
+    {
+      "source_id": "test:472",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "46a336f80cd1deea000ed8387fb3fe62e1494eaecea7d8cc3e18c7c66d1c661e"
+    },
+    {
+      "source_id": "test:473",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "a62c99bdb9a357230a57742a71a2fa14f5009de2a54fb170a7fdd9542b9b3cea"
+    },
+    {
+      "source_id": "test:474",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "51d64d4a987929738d9b3df71fc9e2a96b9afce434cd7d1dc07f20def39d6fe0"
+    },
+    {
+      "source_id": "test:475",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "10340029b0e73afef2709c49b824504e27bc4218b9a1b04b0df0e68a21869106"
+    },
+    {
+      "source_id": "test:476",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "c17e267f440bddc0368e584130da8e251c8dbb91869ed7a5cc217c99573f7d0c"
+    },
+    {
+      "source_id": "test:477",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "a7f5cb17a3599ba31d06166ae52e11bad5e14c85747ad2d9a8a03a5eed41f88b"
+    },
+    {
+      "source_id": "test:478",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "d55d4fd8add5b76f2a15958d7b571af7f706e08fb18b5ed2369f765197182d37"
+    },
+    {
+      "source_id": "test:479",
+      "expected": "lost_or_stolen_card",
+      "text_sha256": "9775d68b951ff21589239d9025df084f4d0945659c90c233e5883963fb252dc4"
+    },
+    {
+      "source_id": "test:800",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ab8dbfd567d14eb44c4fe0da213abbbdf81d506fde493dde6d8841bf2706bc2e"
+    },
+    {
+      "source_id": "test:801",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "4f3b2e4782c9e56916317bb37a592d651ae390c1a160b9a2598cba75fc8b48f7"
+    },
+    {
+      "source_id": "test:802",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "d8856b9d728fd2ecba5f559543e0cb6391d66423a8d0e80482e70fbe251442db"
+    },
+    {
+      "source_id": "test:803",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "22ccceaee8d0579f8677d2177829d719b293ca22b3cb6fe87e63085559848e05"
+    },
+    {
+      "source_id": "test:804",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "008542727bb7e5ee9f6d3c4e86cb32f1f94ee6ff4f4b73cb938e793f32749136"
+    },
+    {
+      "source_id": "test:805",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "4e870f83b52928f51151ca0a3dffd86547a59490ab2de2abca6fe03eafa75ae2"
+    },
+    {
+      "source_id": "test:806",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "94f48456e477a0dcc7fe0a225bf805e18f4653a6117a02cdf60bfcb94241aa1b"
+    },
+    {
+      "source_id": "test:807",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "a705d4082abe3e1c40e730f3205a12c56a3059583c66093c1cd237826fa29d37"
+    },
+    {
+      "source_id": "test:808",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e6a23ffbeb74110fc645ccbe5fbb8398fbad46ac876889bec97036bd3c704ba8"
+    },
+    {
+      "source_id": "test:809",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "fc3ad149a59e69e6e30a7c94ed72b5b2eae0632e4ab794ee2eb909c2771052b4"
+    },
+    {
+      "source_id": "test:810",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "fb86202a8d440ed113d646f8ab791e8649a23c2e286b41326f25c70515f3a2d6"
+    },
+    {
+      "source_id": "test:811",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ab68b5384f1afd83f5267cbc6aba87e401d8fe323054b30c8291493d5b72d2c7"
+    },
+    {
+      "source_id": "test:812",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "97951db9688d348c43f15dd207dad904e79f2d737c83369e5432818b1cada7f9"
+    },
+    {
+      "source_id": "test:813",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "1d518887369df9bcf466506352959ba62ab910990e1cc411d43d19cbfbbb8094"
+    },
+    {
+      "source_id": "test:814",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "eacbfb4280a0620960693642f528b8e77d035d3b9c8ec6d1b04358512b9b2c30"
+    },
+    {
+      "source_id": "test:815",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "97d22f705fac9d250acc53b45a6cd8ff392064f7f5932ae302f80de69181685b"
+    },
+    {
+      "source_id": "test:816",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "836b5828a6afd3cb8b77c95f9c01306724b81756228a33081674a11024184317"
+    },
+    {
+      "source_id": "test:817",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f51cacaf4d00403f4605ae3315cd354b40ebca0dcb51d1cd3105e0cb7726ddb8"
+    },
+    {
+      "source_id": "test:818",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "910d310455b88e512fe06b694da933547791dae424e69ccc3caa2f299f317623"
+    },
+    {
+      "source_id": "test:819",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "e7b3a40d34bd30b51b75105ae585243a197c4d7796ffcee5da30fa2a350c951a"
+    },
+    {
+      "source_id": "test:820",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "9c3fa1ecc856c3f9b968cd0892c3f7a66937a98d47eb4d0370641656773f14b0"
+    },
+    {
+      "source_id": "test:821",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "306033243b2376b13f8e9d52f0e111b70b68f72925bab46e31bde2bb8447e662"
+    },
+    {
+      "source_id": "test:822",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "61a9947318370efbdb97f4b5a0d2b41750d6e2b4d7e25597267d5b183e7a1b51"
+    },
+    {
+      "source_id": "test:823",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "89672e6b011283c0929f855dc77e056e3d1f6197fbd86ad5b435609082702583"
+    },
+    {
+      "source_id": "test:824",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ee4f6709c17e33fce4931b6180a2aa69ac77c08f25c8da0508e2d5d946ff7a2c"
+    },
+    {
+      "source_id": "test:825",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "2c8d6127a6f7e4f6a2c6910af16d50685c87b2360b636d45a2377d250605d97b"
+    },
+    {
+      "source_id": "test:826",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "f2ae4337cc068595123d6b6a48dbc9d9cb48648b3ae565ef2bff947c210847a3"
+    },
+    {
+      "source_id": "test:827",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "cf32e355851c4a9bc53fd60bcf04d70cabd54a3b5a51c7c4ae03183011bb55b2"
+    },
+    {
+      "source_id": "test:828",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "0853f87624cb98334309e3b65399e41ad2bde1d81f1dae85bb7d5b7adba5ddfc"
+    },
+    {
+      "source_id": "test:829",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "550df5b855543d7273626f20682a3cf7cfcfd6f94d4606748e67677863e29442"
+    },
+    {
+      "source_id": "test:830",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "cdd0d0adf412232ec9eb0e71933314959ce04eb9e66d551f260b5ed9247b6eb0"
+    },
+    {
+      "source_id": "test:831",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "24cefaddda090d4b4fca9dff268ba025e20a0486aae06e57dd5c00c7dcdc3d93"
+    },
+    {
+      "source_id": "test:832",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "4d725c540e0a274e58a8127bab74f884d63f205e03f9255f082fb3ba96b45ea0"
+    },
+    {
+      "source_id": "test:833",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "01cd07241eeb5e023d04f0aec96ba53bf9babfc5467160133cd7468d56375ca8"
+    },
+    {
+      "source_id": "test:834",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "fea96219d327f1bfa1ef67cb35bec50d6e700ce85deb8565a302d0a5578bff95"
+    },
+    {
+      "source_id": "test:835",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "ccf1549c171462c0ee99081aecc322d8e4c190c40f51917c0dfc2a179eee1718"
+    },
+    {
+      "source_id": "test:836",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "d1ee31845c410867623a09c85a97f1dae0528026f4b43a60fabc06821bc38518"
+    },
+    {
+      "source_id": "test:837",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "fcfa018a99b204b73be0f1ee54810f54fc2c75d5d2b76efe07ba4963d647885e"
+    },
+    {
+      "source_id": "test:838",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "edee6258f7809074267abb102a1d5eb107f53205643e82678bfb73d816cb4a0d"
+    },
+    {
+      "source_id": "test:839",
+      "expected": "card_payment_fee_charged",
+      "text_sha256": "45d948201e7febd4e53e2eecedcca7e5f325e50668f3dcddba2211be994356e8"
+    },
+    {
+      "source_id": "test:1840",
+      "expected": "pending_transfer",
+      "text_sha256": "d39d95feb5a7e0bd4c038a484966b09da3badda00047a9777d73371fe33226b5"
+    },
+    {
+      "source_id": "test:1841",
+      "expected": "pending_transfer",
+      "text_sha256": "3d6cc5685b870a80a56c900e8ea570f0bd191c52f4b00ad79824c2fcbcc99d96"
+    },
+    {
+      "source_id": "test:1842",
+      "expected": "pending_transfer",
+      "text_sha256": "71553728851ec392e68e20cbe38d6c9425ccc9d4752650909970f25ee6e8b967"
+    },
+    {
+      "source_id": "test:1843",
+      "expected": "pending_transfer",
+      "text_sha256": "c3adbe6f04720a84c83775034e203abcf59da717915ca1090aba3bbceb57e4e3"
+    },
+    {
+      "source_id": "test:1844",
+      "expected": "pending_transfer",
+      "text_sha256": "4d7002210da72dbabc9627e868209c55a5bb12ee712bdeed1ad8b17f3dc9004a"
+    },
+    {
+      "source_id": "test:1845",
+      "expected": "pending_transfer",
+      "text_sha256": "ef2c3f98d07503e5fa282a928ad5d9eb524e0778989f7922fac813c9e2a4c590"
+    },
+    {
+      "source_id": "test:1846",
+      "expected": "pending_transfer",
+      "text_sha256": "8c278ef4a5fce82a024f8cbefeef89a423add90168b5336c26299d5a713b4be1"
+    },
+    {
+      "source_id": "test:1847",
+      "expected": "pending_transfer",
+      "text_sha256": "362b58f86a40b0ece9506c3173fd4127b6e6340b2186e036f11bdd53de40c0ec"
+    },
+    {
+      "source_id": "test:1848",
+      "expected": "pending_transfer",
+      "text_sha256": "f7a3ef03049688c81f5c27553a40f93cad429c72a818fc82265f5e8911f53852"
+    },
+    {
+      "source_id": "test:1849",
+      "expected": "pending_transfer",
+      "text_sha256": "4adfd800d7367a2c8cc7a5e0e0ea87d745652a832e08a38766fdaea4b72ffa46"
+    },
+    {
+      "source_id": "test:1850",
+      "expected": "pending_transfer",
+      "text_sha256": "b0348a4bbfc0cc11c95aafb084be4e974db0229f5a854279ca73130cfbc4a4f5"
+    },
+    {
+      "source_id": "test:1851",
+      "expected": "pending_transfer",
+      "text_sha256": "c1cbb25e0642e91a8d359b55c751a7e5d416a39e356e91a643f273b4709ba8b3"
+    },
+    {
+      "source_id": "test:1852",
+      "expected": "pending_transfer",
+      "text_sha256": "1bf260c9d110a64ac326eb5f835e4e2e31e37c5fd1ff3aa3066029db7971b0d2"
+    },
+    {
+      "source_id": "test:1853",
+      "expected": "pending_transfer",
+      "text_sha256": "a0dfc58372d564d38c0b694150002e5ca87b6682dd14699ea72888509060a129"
+    },
+    {
+      "source_id": "test:1854",
+      "expected": "pending_transfer",
+      "text_sha256": "8983066970087fea0042284c4babbba891a5ba35c5ae7a92421ddea632b8b898"
+    },
+    {
+      "source_id": "test:1855",
+      "expected": "pending_transfer",
+      "text_sha256": "7d08f78eebf4655bce6439485be04387abd349325bc12c45054e67bbfe5df148"
+    },
+    {
+      "source_id": "test:1856",
+      "expected": "pending_transfer",
+      "text_sha256": "d9d62549d7e02bc6de4a0c53773a8fd4357c5f151a26bde69eab3fc6259c1a5c"
+    },
+    {
+      "source_id": "test:1857",
+      "expected": "pending_transfer",
+      "text_sha256": "a69b18b5ac17244228172e257d3c973f6a0765de8c9d36f74297aa326f91256a"
+    },
+    {
+      "source_id": "test:1858",
+      "expected": "pending_transfer",
+      "text_sha256": "28400bc86dc4958d91aeb9679703606fe3029d52157400a80067b98611c6c68f"
+    },
+    {
+      "source_id": "test:1859",
+      "expected": "pending_transfer",
+      "text_sha256": "761311909d7cfeaa3f210768fa251f2d14afa375074bad11aa415668f9034666"
+    },
+    {
+      "source_id": "test:1860",
+      "expected": "pending_transfer",
+      "text_sha256": "ae286ce02da11516eb3cef90f48e5e31c5b3cc8f3595099ab3a664deac2245b2"
+    },
+    {
+      "source_id": "test:1861",
+      "expected": "pending_transfer",
+      "text_sha256": "a51eb915b49083c879405077554012447e63ec045b6694443108f7dcc5e03e6e"
+    },
+    {
+      "source_id": "test:1862",
+      "expected": "pending_transfer",
+      "text_sha256": "3fbadec152e2214b53c4147d015bd0afe3613ce7aa223531577ce6183e3bc629"
+    },
+    {
+      "source_id": "test:1863",
+      "expected": "pending_transfer",
+      "text_sha256": "ce67247e5b63e81ec8d3e700f8952802c0554d7069552ad47458f8891eca855b"
+    },
+    {
+      "source_id": "test:1864",
+      "expected": "pending_transfer",
+      "text_sha256": "2f337b154c952923bf25985110df384f86cda89dafb352135f16132719c78d12"
+    },
+    {
+      "source_id": "test:1865",
+      "expected": "pending_transfer",
+      "text_sha256": "95ec668d28f6b31a34e0ce1c87c70f61a4b874f8008538339af4e99bac0f1d19"
+    },
+    {
+      "source_id": "test:1866",
+      "expected": "pending_transfer",
+      "text_sha256": "b4a3c4777990d764a42572511dc65a7876aa27239626cdc7cd97f1f07bc3c5cb"
+    },
+    {
+      "source_id": "test:1867",
+      "expected": "pending_transfer",
+      "text_sha256": "42dc80db25fdfb42a1fb1fc521690a5d663bc31bac96b4e88ec59dbe73f513a7"
+    },
+    {
+      "source_id": "test:1868",
+      "expected": "pending_transfer",
+      "text_sha256": "e2d92ce55fbef83ab110d18b4f71f63619e3670ff91d77a761773ad6167da9df"
+    },
+    {
+      "source_id": "test:1869",
+      "expected": "pending_transfer",
+      "text_sha256": "f3907e2675b932abae0a196a663a1417fa042912a6ee09f2bc4a0141a9e9853b"
+    },
+    {
+      "source_id": "test:1870",
+      "expected": "pending_transfer",
+      "text_sha256": "d11078881146286c6abc0dc4b897c8051c01c306321d24eb2937d253e5b032f3"
+    },
+    {
+      "source_id": "test:1871",
+      "expected": "pending_transfer",
+      "text_sha256": "3156f9c9e8226ddee5b7827c93c9f87452ff19aaf7749909fb1db4465768add2"
+    },
+    {
+      "source_id": "test:1872",
+      "expected": "pending_transfer",
+      "text_sha256": "1e0ad71f96995e699e12a9a9830bdbf5e5b33bc7d3ccfb93eb2e8df7621a5c79"
+    },
+    {
+      "source_id": "test:1873",
+      "expected": "pending_transfer",
+      "text_sha256": "45fa89e310892798409d8fb2c3cb81c4569fea2401c207ba6144984b5adeefe3"
+    },
+    {
+      "source_id": "test:1874",
+      "expected": "pending_transfer",
+      "text_sha256": "5efd797d2c641766a4f88f53e936d4be00a09315c467a0abf237ad6c721fc5a7"
+    },
+    {
+      "source_id": "test:1875",
+      "expected": "pending_transfer",
+      "text_sha256": "8999b22f5f50402a23a26cd3882a85f44c30d9e1ca08385609351c7e7321cb98"
+    },
+    {
+      "source_id": "test:1876",
+      "expected": "pending_transfer",
+      "text_sha256": "2e6622ffeeff8868008a0177d62e5a0c4219d68f896883d0471bbdc4be763a6d"
+    },
+    {
+      "source_id": "test:1877",
+      "expected": "pending_transfer",
+      "text_sha256": "34f552cea4bba2e54313ff4f51aa07eb43b9f145d90cc7af9569d2566acbeb59"
+    },
+    {
+      "source_id": "test:1878",
+      "expected": "pending_transfer",
+      "text_sha256": "51788b6022f75a171ac9c60a878625c10cc7e66fb0b84328eaecaae7687e9a98"
+    },
+    {
+      "source_id": "test:1879",
+      "expected": "pending_transfer",
+      "text_sha256": "deeb7aca4ac5a70d44aa3ae73889b27e91282fc6eb108de9b567dff879013b22"
+    },
+    {
+      "source_id": "test:2880",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "e8af5477ac9942767bf49e9284b4e1e6bb3811c3f4ff2d6f7381796b32833e87"
+    },
+    {
+      "source_id": "test:2881",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "6d1a9c21f343b75d799bc38d2a027888f5511cfaef99b6192987c1d57b9d7ae5"
+    },
+    {
+      "source_id": "test:2882",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d9280eb9b2d32eac31b2725b83c3a32bd5cd4ce59205d3ecf6f899188943aacb"
+    },
+    {
+      "source_id": "test:2883",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4e34ac9caba344dd2887b527168f85153cfffdc0fd232d0a6b0aa1ed570ca195"
+    },
+    {
+      "source_id": "test:2884",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4b26994daefefb6a423b7a6677b42895255505c9ea670d719acf2d19ee86953b"
+    },
+    {
+      "source_id": "test:2885",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "0a36feaa7858965fb03677122bc87185e9e272a7a67993fb2c7dbae60bc32a9a"
+    },
+    {
+      "source_id": "test:2886",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4df86d937cf2d4ff8ab7a370688b00a3710267e847bf5f2c87e47f5d8a5512a6"
+    },
+    {
+      "source_id": "test:2887",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "efc9c3583a8176b2ba04337809c791279c8b23870cb0ae6cf48931d9f2c4bff3"
+    },
+    {
+      "source_id": "test:2888",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "32858a226314ee8ed4414a7b6655aec95a0d50dd10ba1a2e49bc169ba6a4699e"
+    },
+    {
+      "source_id": "test:2889",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "cd81f4e3eaf7ce94446c09ccb620f66ff5d68e5de3ab29ef5a9974408705a7fa"
+    },
+    {
+      "source_id": "test:2890",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "fd119d715de5e2a12c0f276e4fa6b7aa2633071d220454b92d7a05622de7dd1e"
+    },
+    {
+      "source_id": "test:2891",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "d728abffa2b6b920b06f2c8fe7fa702ac496fb55fcdb1005b3ce6bbb8703f0e4"
+    },
+    {
+      "source_id": "test:2892",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "06e7bd5db26ad04c24aa97b9b5515c39efbe6f99f3383cde320df15c9c75eb6f"
+    },
+    {
+      "source_id": "test:2893",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "338224fd7cb462ffd8199ac7afd2955caa2fa183eb0e888aed9ec713515b1b73"
+    },
+    {
+      "source_id": "test:2894",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "dd84312b98955c2154a3bdbd78aae7aa5e2cc0720876172b2c6d4148df9b6113"
+    },
+    {
+      "source_id": "test:2895",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4a3b513f0f672f042fba863cb101d20c85b1bd70f9f088817abd1bb1eb044ec9"
+    },
+    {
+      "source_id": "test:2896",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "902617e5deee6cfe3ade79d36a869b90be8b2b57cccfdb571ebdd11bc5d158bd"
+    },
+    {
+      "source_id": "test:2897",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ce9a82d6e438f9293c3df14a2ebf14b5bc33a74434616b44b5027e1e77d5bb33"
+    },
+    {
+      "source_id": "test:2898",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "1c05454359083238c6c499d82dd3dcc56af4cf579c12b3fa772b075eda44a410"
+    },
+    {
+      "source_id": "test:2899",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "e51d0a708134392195592f0247e3ed81c722e5f2bb4e594b3a5853f87220157f"
+    },
+    {
+      "source_id": "test:2900",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "2e17633e1fe3b855b769528ed33d2bb05bfef301919540b523d974ff392ca2ca"
+    },
+    {
+      "source_id": "test:2901",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "e30e206c3f41a5b7635e4ba4e346f21c8c58c76a2382df16f2df72836299aca9"
+    },
+    {
+      "source_id": "test:2902",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "8019a4cdcb41e489794a50d2b4905589abe2c72376f1ab1b2323dc949a6b8f79"
+    },
+    {
+      "source_id": "test:2903",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "5bbc44e6eb24b6155f4ce6b362785749638fbc2e574b09930e84fa6497c900f1"
+    },
+    {
+      "source_id": "test:2904",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "22fddfc868417768c3904378528fed57fb820a2c7ec21b292ec4b7605b81c2b4"
+    },
+    {
+      "source_id": "test:2905",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "e0cad19db5ebb292b8024b32a2d2598ef63c2112d444eaa6b2b007433bbf0124"
+    },
+    {
+      "source_id": "test:2906",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ab0c67fa79bf8151a7ac125e5e4ffe322f690a82ac763c6ccb6d2451f7d63b28"
+    },
+    {
+      "source_id": "test:2907",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "ee2235c2f72ec12350077d6cc0736aa070a4606cd18eda32bc90e64bfa243518"
+    },
+    {
+      "source_id": "test:2908",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4be3b7c3f55a218b0b990cc589975aa22c442347bf0588cd74af2f5885b2f1d7"
+    },
+    {
+      "source_id": "test:2909",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4b189c7ef4304035fc639dbb97b0680cb640d3d1257dcd9f82534074d9f5ca8d"
+    },
+    {
+      "source_id": "test:2910",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "3b0d3711387754b1ebff147ff2a97947974c0a194155359aa28059b23076067b"
+    },
+    {
+      "source_id": "test:2911",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "595e44b2979baf9fca22cdca61b751f2d2071990e0e9e7a610622d61c8be791a"
+    },
+    {
+      "source_id": "test:2912",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "4dea9d61c4f088805ca9c247dffcd61f0fd5010b37eb5593f297562daa46b976"
+    },
+    {
+      "source_id": "test:2913",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "c0e4eb045c89e84680c9e4096893893325fd04a90eec3a37bae71f2ac30173a7"
+    },
+    {
+      "source_id": "test:2914",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "66a5f70f227a822ab30ed6aac7864f66e56196b0309da48710689bde888028d3"
+    },
+    {
+      "source_id": "test:2915",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "7d2481590c472032c87713f284a92dd6ac41d6090dcaa7c96e0f2f5f081c0f3a"
+    },
+    {
+      "source_id": "test:2916",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "de6f4970e8e0698baac837df312937ed7b1b291fd7c79c9f83371db2c2f248f0"
+    },
+    {
+      "source_id": "test:2917",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "66503ac309d23621111df8eeadd1ef4a3e24c244904202fde96c87df1110d260"
+    },
+    {
+      "source_id": "test:2918",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "b0544df787052b12d0d59e47f4c38574723084263f7304c3296406272ea8cc70"
+    },
+    {
+      "source_id": "test:2919",
+      "expected": "cash_withdrawal_charge",
+      "text_sha256": "88dc01986cd9f639be76a6c7fed3df064e1d928a189b5be0f6dc884ebe5641f5"
+    }
+  ]
+}

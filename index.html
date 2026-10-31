@@ -1002,7 +1002,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 
 <!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">Start with the task you need to run locally</h2><p>Choose an approach for your inputs, labels, and hardware, then compare results on your own data.</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Local text classification in Python</b><span>Compare a traditional classifier with typed decision models, and keep a review path.</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>Local decision models on Apple silicon</b><span>Choose a method and backend for fixed choices and your available hardware.</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>Workflow routing with LLM fallback</b><span>Make the local routing decision before escalating uncertain requests.</span></a><a href="/guides/local-routing-tools/" data-track="guide_open"><b>Compare local routing tools</b><span>JevStyle, Semantic Router, scikit-learn and SetFit: interfaces and fit.</span></a><a href="/use-cases/local-vision-decisions/" data-track="guide_open"><b>Local receipt and screenshot decisions</b><span>An image request with the PyTorch build and a verification path.</span></a><a href="/guides/replace-label-only-llm-calls/" data-track="guide_open"><b>Replace label-only LLM calls</b><span>Define options, measure errors and coverage, and retain fallback.</span></a></div></section><!--/discovery:task-entrypoints-->
 <!--discovery:home-guide--><section id="project-guide" class="growth-guides" aria-labelledby="project-guide-heading"><div class="s3-head"><h2 id="project-guide-heading">Choose a model. Check the evidence.</h2><p>JevStyle is an open-source toolkit for local classification, routing, and scoring. Its small decision models return probabilities for predefined options.</p></div><div class="guide-grid"><a href="/models/compare/"><b>Compare local models</b><span>Choose 0.8B or 2B by input, backend, and weight size.</span></a><a href="/benchmarks/"><b>Benchmarks and reproduction</b><span>Read published self-runs with protocols, sources, and limitations.</span></a></div><div class="project-faq"><h3>Can JevStyle run offline?</h3><p>After installing dependencies and downloading the model, you can process inputs locally. The online demo and hosted API are separate services and receive inputs sent to them.</p><h3>Which model should I use?</h3><p>Start with 0.8B v3 for text and compare 2B v4 on your own examples. Image input requires the 2B v4 PyTorch backend; MLX and GGUF builds are text-only.</p><h3>Does it generate chat replies?</h3><p>It returns probabilities for yes/no, choice, and ordered-score questions, rather than free-form replies. Keep human or LLM fallback for uncertain decisions.</p><p><a href="/about/">About the project and maintainer</a> · <a href="/api/">Hosted API reference</a></p></div></section><!--/discovery:home-guide-->
-<!--discovery:current-facts--><section class="current-project-facts" id="current-facts" aria-labelledby="current-facts-heading"><div><h2 id="current-facts-heading">Current releases and service availability</h2><p class="facts-date">Reviewed: <time datetime="2026-10-29">2026-10-29</time></p></div><dl><div><dt>Releases</dt><dd>The Python package is <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>. <a href="/models/2b-v4/">2B v4 was released on 2026-10-27</a>: PyTorch supports text and images; MLX and GGUF builds are text-only. The default local text model is <a href="/models/0-8b-v3/">0.8B v3</a>.</dd></div><div><dt>Hosted API</dt><dd><strong>The hosted API runs 2B v4 Q4_K_M for text only, processing one request at a time.</strong> Local models and the Hugging Face demo are separate entry points; hosted-service availability does not determine whether a local model works.</dd></div><div><dt>Maintainer</dt><dd><a href="/about/">Chaoliang Yan</a> (GitHub: lawrence3699). JevStyle is independent and is not affiliated with or endorsed by TypeSafe.</dd></div><div><dt>Training provenance</dt><dd>2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. The Python package does not bundle the raw teacher response datasets. See <a href="/models/2b-v4/#results">the model and training sources</a>.</dd></div></dl></section><!--/discovery:current-facts-->
+<!--discovery:current-facts--><section class="current-project-facts" id="current-facts" aria-labelledby="current-facts-heading"><div><h2 id="current-facts-heading">Current releases and service availability</h2><p class="facts-date">Reviewed: <time datetime="2026-10-29">2026-10-29</time></p></div><dl><div><dt>Releases</dt><dd>The Python package is <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>. <a href="/models/2b-v4/">2B v4 was released on 2026-10-27</a>: PyTorch supports text and images; MLX and GGUF builds are text-only. The default local text model is <a href="/models/0-8b-v3/">0.8B v3</a>.</dd></div><div><dt>Hosted API</dt><dd><strong>The hosted API runs 2B v4 for text only, processing one request at a time.</strong> Local models and the Hugging Face demo are separate entry points; hosted-service availability does not determine whether a local model works.</dd></div><div><dt>Maintainer</dt><dd><a href="/about/">Chaoliang Yan</a> (GitHub: lawrence3699). JevStyle is independent and is not affiliated with or endorsed by TypeSafe.</dd></div><div><dt>Training provenance</dt><dd>2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. The Python package does not bundle the raw teacher response datasets. See <a href="/models/2b-v4/#results">the model and training sources</a>.</dd></div></dl></section><!--/discovery:current-facts-->
   <section class="final-cta" id="get-started" aria-labelledby="finalH">
     <div><h2 id="finalH" data-i18n="final.h">Start with one decision</h2><p data-i18n="final.p">Use the hosted API, or run the same kind of model on your own machine.</p></div>
     <div class="acts"><a class="pill dark lg" href="/register/" data-track="api_key_open" data-i18n="h3.key">Get a free API key</a><a class="pill soft lg" href="/models/" data-i18n="final.models">Explore models</a></div>
@@ -1340,7 +1340,7 @@ const I18N = {
   "mt.note": "Inference is temporarily unavailable. Check the console service status before sending requests.",
   "api.k": "Hosted API",
   "api.h": "2B v4, hosted for free",
-  "api.p": "Send text and typed questions to the hosted Jev-Style 2B v4 Q4_K_M model and receive probabilities for every option. The service processes one request at a time.",
+  "api.p": "Send text and typed questions to the hosted Jev-Style 2B v4 model and receive probabilities for every option. The service processes one request at a time.",
   "api.indep": "Independent project · not affiliated with TypeSafe",
   "ex.h": "One request, every option scored",
   "ex.aside": "Real production response · Oct 8, 2026",
@@ -1372,7 +1372,7 @@ const I18N = {
   "pf.3": "Model compute at 7.9k input tokens",
   "pf.4": "inference worker",
   "pf.5": "Top answers identical to FP32 (BF16 serving, JevBench + sample tickets)",
-  "pf.same": "The API runs the GGUF Q4_K_M build of Jev-Style 2B v4.",
+  "pf.same": "The API serves Jev-Style 2B v4 for text.",
   "pf.model": "See the model",
   "uc.h": "Use cases",
   "uc.sub": "Demos recorded with the open Jev-Style v3 models",
@@ -1405,7 +1405,7 @@ const I18N = {
   "faq.q3": "Is this affiliated with TypeSafe or Jev?",
   "faq.a3": "No. JevStyle is an independent project by Chaoliang Yan (UNSW). It is not affiliated with TypeSafe AI or its Jev models. The model weights are Apache-2.0.",
   "faq.q4": "Which model is served?",
-  "faq.a4": "Jev-Style 2B v4 (jev-style-2b-decision-v4), using the text-only GGUF Q4_K_M build on Apple silicon. One worker processes requests sequentially. Each request accepts up to 8,000 input tokens.",
+  "faq.a4": "Jev-Style 2B v4 (jev-style-2b-decision-v4), for text only. One worker processes requests sequentially. Each request accepts up to 8,000 input tokens.",
   "faq.q5": "What happens when I hit a limit?",
   "faq.a5": "You get HTTP 429 (with Retry-After when shared capacity is busy). Failed and rejected requests are not charged.",
   "faq.q6": "How long can a request be?",
@@ -1442,7 +1442,7 @@ const I18N = {
   "pr.gh": "Source code",
   "pr.mcp": "jev-style server",
   "pr.weights": "Open weights",
-  "pm.h": "Powered by Jev-Style 2B v4 Q4_K_M",
+  "pm.h": "Powered by Jev-Style 2B v4",
   "pm.p": "The same open weights you can download, served on GPUs and free to call.",
   "pm.badge": "Hosted · free tier",
   "pm.d": "A 2B decision model. Give it text and typed questions, and it scores every option in one pass.",
@@ -1860,7 +1860,7 @@ const I18N = {
   "mt.note": "推理服务暂时不可用，请先在控制台查看服务状态。",
   "api.k": "托管 API",
   "api.h": "2B v4，免费托管",
-  "api.p": "将文本和带类型的问题发送给托管的 Jev-Style 2B v4 Q4_K_M 模型，为每个选项获取概率。服务一次处理一个请求。",
+  "api.p": "将文本和带类型的问题发送给托管的 Jev-Style 2B v4 模型，为每个选项获取概率。服务一次处理一个请求。",
   "api.indep": "独立项目 · 与 TypeSafe 无关",
   "ex.h": "一次请求，每个选项都有分数",
   "ex.aside": "线上真实响应 · 2026 年 10 月 8 日",
@@ -1892,7 +1892,7 @@ const I18N = {
   "pf.3": "输入 7.9k token 时的模型计算时间",
   "pf.4": "推理工作进程",
   "pf.5": "首选答案与 FP32 一致（BF16 线上推理，JevBench + 示例工单）",
-  "pf.same": "API 使用 Jev-Style 2B v4 的 GGUF Q4_K_M 版本。",
+  "pf.same": "API 使用 Jev-Style 2B v4，仅支持文本。",
   "pf.model": "查看模型",
   "uc.h": "应用场景",
   "uc.sub": "演示录制自开源的 Jev-Style v3 模型",
@@ -1925,7 +1925,7 @@ const I18N = {
   "faq.q3": "和 TypeSafe 或 Jev 有关系吗？",
   "faq.a3": "没有。JevStyle 是 Chaoliang Yan（UNSW）的独立项目，与 TypeSafe AI 及其 Jev 模型无关。模型权重采用 Apache-2.0 许可。",
   "faq.q4": "线上用的是哪个模型？",
-  "faq.a4": "Jev-Style 2B v4（jev-style-2b-decision-v4），使用 Apple silicon 上的 GGUF Q4_K_M 版本，仅支持文本。单个工作进程依次处理请求，每次最多 8,000 个输入 token。",
+  "faq.a4": "Jev-Style 2B v4（jev-style-2b-decision-v4），仅支持文本。单个工作进程依次处理请求，每次最多 8,000 个输入 token。",
   "faq.q5": "超出限额会怎样？",
   "faq.a5": "返回 HTTP 429（全站繁忙时带 Retry-After）。失败和被拒绝的请求不扣额度。",
   "faq.q6": "单次请求最多能多长？",
@@ -1962,7 +1962,7 @@ const I18N = {
   "pr.gh": "源代码",
   "pr.mcp": "已收录 jev-style",
   "pr.weights": "开源权重",
-  "pm.h": "由 Jev-Style 2B v4 Q4_K_M 驱动",
+  "pm.h": "由 Jev-Style 2B v4 驱动",
   "pm.p": "就是你可以下载的那份开源权重，跑在 GPU 上，免费调用。",
   "pm.badge": "托管 · 免费额度",
   "pm.d": "一个 2B 决策模型。给它文本和带类型的问题，一次前向就给每个选项打分。",

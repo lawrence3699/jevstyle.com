@@ -30,6 +30,10 @@ except ZoneInfoNotFoundError:  # Windows may not ship an IANA timezone database.
     PT = None
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 MAX_SAFE_INTEGER = 2**53 - 1
+DISCOVERY_PATHS = (
+    "guides/local-routing-tools/", "use-cases/local-vision-decisions/",
+    "guides/replace-label-only-llm-calls/",
+)
 OAUTH_CODES = {"invalid_grant", "invalid_client", "unauthorized_client", "invalid_scope", "temporarily_unavailable", "invalid_request"}
 ERROR_CODES = OAUTH_CODES | {"collection_error", "http_error", "network_error", "response_too_large", "invalid_json", "invalid_response",
     "not_configured", "invalid_token_response", "invalid_metric", "invalid_count", "invalid_ctr", "invalid_position", "invalid_row",
@@ -262,8 +266,60 @@ class SearchClient:
         return result
 
 
+def discovery_audit(token, transport, start, end, now):
+    """Fixed-property, owner-only diagnostics; never changes the core totals.
+
+    Empty responses remain unknown. Only an explicit API totals row may report
+    zero. Query rows are evidence for returned queries, never full page totals.
+    """
+    headers = {"Authorization": "Bearer " + token, "Content-Type": "application/json"}
+    analytics = API_BASE + urllib.parse.quote(SITE, safe="") + "/searchAnalytics/query"
+    out = {"schema_version": 1, "observed_at": now.astimezone(timezone.utc).isoformat(),
+           "requested_window": {"start": start, "end": end, "data_state": "final", "timezone": "America/Los_Angeles"},
+           "privacy": "Private owner-only diagnostics; do not publish in static assets.", "pages": []}
+    for path in DISCOVERY_PATHS:
+        url = SITE + path
+        page = {"url": url, "index": None, "summary": None, "date_rows": [], "query_rows": [], "errors": []}
+        try:
+            inspected = transport("https://searchconsole.googleapis.com/v1/urlInspection/index:inspect",
+                json.dumps({"inspectionUrl": url, "siteUrl": SITE, "languageCode": "en-US"}).encode(), headers)
+            inspection = inspected.get("inspectionResult")
+            status = inspection.get("indexStatusResult") if isinstance(inspection, dict) else None
+            if not isinstance(status, dict) or status.get("verdict") not in {"PASS", "FAIL", "NEUTRAL", "VERDICT_UNSPECIFIED"}:
+                raise CollectionError("invalid_response")
+            page["index"] = {key: status.get(key) if isinstance(status.get(key), str) else None for key in
+                ("verdict", "coverageState", "robotsTxtState", "indexingState", "pageFetchState", "lastCrawlTime", "googleCanonical", "userCanonical")}
+        except CollectionError as exc:
+            page["errors"].append(exc.report("index"))
+        for dimensions in ([], ["date"], ["query"]):
+            stage = dimensions[0] if dimensions else "totals"
+            try:
+                payload = transport(analytics, json.dumps({"startDate": start, "endDate": end,
+                    "type": "web", "dataState": "final", "aggregationType": "byPage", "dimensions": dimensions,
+                    "rowLimit": 1000, "dimensionFilterGroups": [{"filters": [{"dimension": "page", "operator": "equals", "expression": url}]}]}).encode(), headers)
+                if payload.get("responseAggregationType", "byPage") != "byPage":
+                    raise CollectionError("unexpected_aggregation")
+                rows = payload.get("rows", [])
+                if not isinstance(rows, list) or len(rows) > (1000 if dimensions else 1):
+                    raise CollectionError("invalid_rows")
+                if dimensions:
+                    parsed = [parse_row(row, stage, start, end) for row in rows]
+                    if len({row["label"] for row in parsed}) != len(parsed):
+                        raise CollectionError("duplicate_row")
+                    page[stage + "_rows"] = sorted(parsed, key=lambda row: row["label"]) if stage == "date" else parsed
+                elif rows:
+                    if not isinstance(rows[0], dict) or rows[0].get("keys") not in (None, []):
+                        raise CollectionError("invalid_totals")
+                    page["summary"] = {**metrics(rows[0]), "source": "page_total_api"}
+            except CollectionError as exc:
+                page["errors"].append(exc.report(stage))
+        page["latest_returned_final_date"] = max((row["label"] for row in page["date_rows"]), default=None)
+        out["pages"].append(page)
+    return out
+
+
 def collect(environ: dict | None = None, transport=request_json, now: datetime | None = None,
-            *, site_url=SITE, days=28, page_size=25000, max_pages=4) -> dict:
+            *, site_url=SITE, days=28, page_size=25000, max_pages=4, include_discovery_audit=False) -> dict:
     """Collect private data. Tests inject transport; no credential discovery occurs."""
     if not 1 <= days <= 90:
         raise ValueError("days must be in 1..90")
@@ -354,6 +410,10 @@ def collect(environ: dict | None = None, transport=request_json, now: datetime |
         out["state"] = "empty" if not out["errors"] else "partial_error"
     if not ready:
         out["empty_reason"] = "No final rows returned. This does not distinguish zero traffic, processing, property history or provider omissions."
+    if include_discovery_audit:
+        if site_url != SITE:
+            raise ValueError("Discovery audit is fixed to the JevStyle property")
+        out["discovery_audit"] = discovery_audit(token, transport, start, end, now)
     return out
 
 
