@@ -15,7 +15,7 @@ DISCORD = 'https://discord.gg/udfvMu2GM'
 ZH_PAGES = {'/': '/zh/', '/about/': '/zh/about/', '/contact/': '/zh/contact/'}
 LABELS = {
     'en': {
-        'models': 'Models', 'use': 'Use cases', 'eval': 'Evaluation', 'dev': 'Developers', 'company': 'Company',
+        'models': 'Models', 'use': 'Use cases', 'eval': 'Evaluation', 'pricing': 'Pricing', 'dev': 'Developers', 'company': 'Company',
         'docs': 'API docs', 'guides': 'Guides', 'console': 'Console', 'about': 'About', 'updates': 'Updates',
         'contact': 'Contact', 'login': 'Log in', 'key': 'Get API key', 'menu': 'Menu', 'all_models': 'All models',
         'compare': 'Compare models', 'all_use': 'All use cases', 'all_guides': 'All guides', 'tc': 'Local text classification',
@@ -24,7 +24,7 @@ LABELS = {
         'note': 'JevStyle is independent and not affiliated with TypeSafe AI (Jev) or the Laya authors. Code and weights: Apache-2.0.',
     },
     'zh': {
-        'models': '模型', 'use': '应用场景', 'eval': '评测', 'dev': '开发者', 'company': '公司',
+        'models': '模型', 'use': '应用场景', 'eval': '评测', 'pricing': '价格', 'dev': '开发者', 'company': '公司',
         'docs': 'API 文档', 'guides': '教程', 'console': '控制台', 'about': '关于我们', 'updates': '更新记录',
         'contact': '联系我们', 'login': '登录', 'key': '获取 API key', 'menu': '菜单', 'all_models': '全部模型',
         'compare': '模型对照', 'all_use': '全部场景', 'all_guides': '全部教程', 'tc': '本地文本分类',
@@ -59,7 +59,7 @@ def dropdown(label, items):
 
 def nav_items(lang):
     t = LABELS[lang]
-    return link('/models/', t['models']) + link('/use-cases/', t['use']) + link('/benchmarks/', t['eval']) + dropdown(t['dev'], developer_links(lang)) + dropdown(t['company'], company_links(lang))
+    return link('/models/', t['models']) + link('/use-cases/', t['use']) + link('/benchmarks/', t['eval']) + link('/pricing/', t['pricing']) + dropdown(t['dev'], developer_links(lang)) + dropdown(t['company'], company_links(lang))
 
 
 def home_nav(lang):
@@ -68,14 +68,14 @@ def home_nav(lang):
 
 def home_mobile_nav(lang):
     t = LABELS[lang]
-    items = [('/models/', t['models']), ('/use-cases/', t['use']), ('/benchmarks/', t['eval']), ('/api/', t['docs']), ('/guides/', t['guides']), (local('/about/', lang), t['about']), ('/updates/', t['updates']), (local('/contact/', lang), t['contact'])]
+    items = [('/models/', t['models']), ('/use-cases/', t['use']), ('/benchmarks/', t['eval']), ('/pricing/', t['pricing']), ('/api/', t['docs']), ('/guides/', t['guides']), (local('/about/', lang), t['about']), ('/updates/', t['updates']), (local('/contact/', lang), t['contact'])]
     links = ''.join(f'<a href="{href}" style="--i:{i}">{text}</a>' for i, (href, text) in enumerate(items))
     return f'<nav aria-label="Mobile">{links}</nav>'
 
 
 def mobile_panel(lang):
     t = LABELS[lang]
-    items = [('/register/', t['key'], ' data-track="api_key_open"'), ('/models/', t['models'], ''), ('/use-cases/', t['use'], ''), ('/benchmarks/', t['eval'], ''), *developer_links(lang), *company_links(lang), ('/login/', t['login'], '')]
+    items = [('/register/', t['key'], ' data-track="api_key_open"'), ('/models/', t['models'], ''), ('/use-cases/', t['use'], ''), ('/benchmarks/', t['eval'], ''), ('/pricing/', t['pricing'], ''), *developer_links(lang), *company_links(lang), ('/login/', t['login'], '')]
     return f'<details class="sc-burger"><summary aria-label="{t["menu"]}"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M3.5 7.5h13M3.5 12.5h13"/></svg></summary><div class="sc-burger-panel">{"".join(link(*item) for item in items)}</div></details>'
 
 
@@ -102,7 +102,7 @@ def footer_columns(lang):
     columns = [
         (t['models'], [('/models/', t['all_models']), ('/models/2b-v4/', 'Jev-Style 2B v4'), ('/models/0-8b-v3/', 'Jev-Style 0.8B v3'), ('/models/compare/', t['compare']), ('/benchmarks/', t['eval'])]),
         (t['guides'], [('/use-cases/', t['all_use']), ('/guides/', t['all_guides']), ('/guides/local-text-classification/', t['tc']), ('/guides/local-decision-models/', t['dm']), ('/guides/local-routing-tools/', t['rt']), ('/use-cases/local-vision-decisions/', t['img']), ('/guides/replace-label-only-llm-calls/', t['label'])]),
-        (t['dev'], [('/api/', t['docs']), ('/register/', t['key']), ('/console/', t['console']), ('/api/limits.html', t['limits']), (GITHUB, 'GitHub ↗'), (PYPI, 'PyPI ↗'), (HF, 'Hugging Face ↗')]),
+        (t['dev'], [('/api/', t['docs']), ('/register/', t['key']), ('/console/', t['console']), ('/api/limits.html', t['limits']), ('/pricing/', t['pricing']), (GITHUB, 'GitHub ↗'), (PYPI, 'PyPI ↗'), (HF, 'Hugging Face ↗')]),
         (t['company'], [*[(href, text) for href, text, _ in company_links(lang)], (DISCORD, 'Discord ↗'), ('/api/terms.html', t['terms']), ('/privacy/', t['privacy'])]),
     ]
     return ''.join(f'<div class="sc-fcol"><p>{title}</p>{"".join(link(href, text) for href, text in items)}</div>' for title, items in columns)

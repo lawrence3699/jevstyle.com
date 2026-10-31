@@ -141,6 +141,14 @@ def privacy_page():
     page('privacy/index.html', 'en', 'Privacy | JevStyle', 'How JevStyle handles local inference, hosted API requests, accounts, website analytics, and the Hugging Face demo.', body, '/privacy/')
 
 
+def pricing_page():
+    api = FACTS['hostedApi']
+    body = f'''<div class="sp-hero"><p class="eyebrow">Pricing</p><h1>Pricing and license</h1><p class="lead">The hosted API is free, and the published weights are open. There are no paid plans.</p></div>
+<div class="sp-grid two"><article class="sp-card"><h3>Hosted API</h3><p>Free. Each account gets {api['dailyQuota']:,} requests a day. Text only, up to {api['inputTokenLimit']:,} input tokens per request, one request at a time.</p><p>Limits may change, and there is no SLA.</p><div class="actions"><a class="button" href="/register/" data-track="api_key_open">Get API key</a><a class="button secondary" href="/api/limits.html">Limits</a></div></article><article class="sp-card"><h3>Open weights</h3><p>Free to download and run on your own hardware, with no API key.</p><p>PyTorch, MLX and GGUF builds are available. Their inputs differ by model.</p><div class="actions"><a class="button" href="/models/">Explore models</a><a class="button secondary" href="/models/compare/">Compare models</a></div></article></div>
+<section class="sp-section sp-doc" aria-labelledby="license-h"><h2 id="license-h">The license, in plain terms</h2><p>Project code and published weights are licensed under Apache-2.0. Keep the license and notice files that come with each distribution.</p><p>Each model card records its base model, training sources, and limitations. Review those notes before commercial use. {html.escape(FACTS['trainingProvenance'])}</p><p>The hosted service does not guarantee your downstream compliance. Read the <a href="/api/terms.html">terms</a>, or <a href="/contact/">contact us</a> with questions.</p></section>'''
+    page('pricing/index.html', 'en', 'Pricing and license | JevStyle', 'The JevStyle hosted API is free with per-account limits. Published weights are Apache-2.0 and run on your own hardware.', body, '/pricing/')
+
+
 def about_page(lang):
     latest = FACTS['latest2bModel']
     if lang == 'zh':
@@ -221,6 +229,7 @@ def main():
     index_page('guides/index.html', '/guides/', 'Guides', 'Guides for local decisions', 'Choose an approach, compare the tools, and measure the result on your own data.', 'Guides for local classification and routing | JevStyle', 'Practical guides for local text classification, decision models, routing tools, label-only LLM calls, and evaluation.', GUIDES)
     updates_page()
     privacy_page()
+    pricing_page()
     for lang in ('en', 'zh'):
         contact_page(lang)
         about_page(lang)

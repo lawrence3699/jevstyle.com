@@ -30,4 +30,4 @@ jobs:
           node --check admin/discovery.js
           node --check admin/search-performance.js
           node --check admin/search-monitor.js
-          git diff --exit-code -- index.html zh about contact privacy updates use-cases guides models benchmarks api sitemap.xml llms.txt
+          git diff --exit-code -- index.html zh about contact privacy pricing updates use-cases guides models benchmarks api sitemap.xml llms.txt

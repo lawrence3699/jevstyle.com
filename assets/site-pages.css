@@ -69,3 +69,4 @@ a.sp-card:hover{border-color:var(--accent);color:var(--ink)}
   .sp-model{grid-template-columns:1fr;padding:18px}
   .sp-model .sp-meta{justify-self:start}
 }
+.sp-grid + .sp-section{margin-top:48px;padding-top:40px;border-top:1px solid var(--line)}
