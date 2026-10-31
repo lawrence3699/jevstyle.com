@@ -202,7 +202,9 @@ a.pill { text-decoration: none; }
 .menu-btn svg { width: 18px; height: 18px; }
 
 @media (max-width: 860px) {
-  .shell { grid-template-columns: 1fr; }
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .content code { overflow-wrap: anywhere; }
+  .content table { display: block; overflow-x: auto; }
   .side {
     position: fixed; left: 0; top: var(--hdr); z-index: 35;
     width: min(280px, 86vw); transform: translateX(-105%);

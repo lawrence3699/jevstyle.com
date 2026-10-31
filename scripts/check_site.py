@@ -87,6 +87,8 @@ def main():
         assert page.metas.get('description'), f'{rel}: description missing'
         assert page.metas.get('og:image') == 'https://jevstyle.com/assets/social-card.png', rel
         assert 'noindex' not in (page.metas.get('robots') or ''), rel
+        assert 'sc-nav' in source and 'sc-foot' in source, f'{rel}: shared header or footer missing'
+        assert '/api/terms.html' in source and '/privacy/' in source, f'{rel}: legal links missing'
         for link in page.links:
             url = urlsplit(link)
             if url.netloc == 'jevstyle.com':

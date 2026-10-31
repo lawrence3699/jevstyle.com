@@ -3,17 +3,19 @@
 > Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.
 
 Maintainer: Chaoliang Yan. Code and weights: Apache-2.0.
-Hosted API: operational, 2B v4 Q4_K_M, text only, one request at a time. Reviewed 2026-10-29. Local models and hosted demos are separate.
+Hosted API: 2B v4 Q4_K_M, text only, one request at a time. Reviewed 2026-10-29. Live status: https://api.jevstyle.com/healthz. Local models and hosted demos are separate.
 Current Python package: 0.6.2. Local default: 0.8B v3; --release 2b selects 2B v4 (released 2026-10-27).
 2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.
 Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. This does not imply affiliation or endorsement.
 
 ## Official pages
 
-- [About JevStyle: local decision models and maintainer | JevStyle](https://jevstyle.com/about/)
+- [About JevStyle: small decision models you can run yourself | JevStyle](https://jevstyle.com/about/)
 - [JevStyle benchmarks: accuracy, latency and evaluation protocols | JevStyle](https://jevstyle.com/benchmarks/)
+- [Contact JevStyle | JevStyle](https://jevstyle.com/contact/)
 - [Claude Code tool-call guard with a local model | JevStyle](https://jevstyle.com/guides/claude-code-guard/)
 - [Evaluate local decision models and choose a threshold | JevStyle](https://jevstyle.com/guides/decision-evaluation/)
+- [Guides for local classification and routing | JevStyle](https://jevstyle.com/guides/)
 - [Local decision models for classification and routing | JevStyle](https://jevstyle.com/guides/local-decision-models/)
 - [Local AI routing tools: JevStyle, Semantic Router and classifier alternatives | JevStyle](https://jevstyle.com/guides/local-routing-tools/)
 - [Local text classification in Python: baselines, decisions and review | JevStyle](https://jevstyle.com/guides/local-text-classification/)
@@ -22,10 +24,15 @@ Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1
 - [Jev-Style 0.8B v3: small local text decision model | JevStyle](https://jevstyle.com/models/0-8b-v3/)
 - [Jev-Style 2B v4: local text and image decisions | JevStyle](https://jevstyle.com/models/2b-v4/)
 - [Compare JevStyle models: 0.8B v3 vs 2B v4 | JevStyle](https://jevstyle.com/models/compare/)
+- [Local decision models and downloads | JevStyle](https://jevstyle.com/models/)
+- [Privacy | JevStyle](https://jevstyle.com/privacy/)
+- [Model and package updates | JevStyle](https://jevstyle.com/updates/)
+- [Local AI use cases: classification and routing | JevStyle](https://jevstyle.com/use-cases/)
 - [Local LLM routing and intent classification | JevStyle](https://jevstyle.com/use-cases/local-llm-routing/)
 - [Local yes/no image decisions for receipts and screenshots | JevStyle](https://jevstyle.com/use-cases/local-vision-decisions/)
 - [Local support ticket classification and routing | JevStyle](https://jevstyle.com/use-cases/support-ticket-classification/)
-- [关于 JevStyle：本地决策模型与维护者 | JevStyle](https://jevstyle.com/zh/about/)
+- [关于 JevStyle：可自行运行的小型决策模型 | JevStyle](https://jevstyle.com/zh/about/)
+- [联系 JevStyle | JevStyle](https://jevstyle.com/zh/contact/)
 
 ## Source and packages
 
