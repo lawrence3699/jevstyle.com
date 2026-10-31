@@ -109,6 +109,12 @@
       var questions = table(['题目 / 固定问题', '状态', '正文提及', '官网引用', '请求数']);
       g.questions.forEach(function (q) {
         var tr = el('tr'), td = el('td', q.id, 'geo-question'); td.appendChild(el('small', q.question)); tr.appendChild(td);
+        if (Array.isArray(q.verified_site_sources)) q.verified_site_sources.forEach(function (source, index) {
+          if (typeof source!=='string' || !/^https:\/\/jevstyle\.com\/(?:$|guides\/|use-cases\/|models\/|benchmarks\/|about\/|zh\/about\/|api\/)/.test(source)) return;
+          var url;try { url=new URL(source); } catch (e) { return; }
+          if (url.hostname!=='jevstyle.com' || url.protocol!=='https:' || url.username || url.password || url.search || url.hash) return;
+          var link=el('a','已核实官网来源'+(q.verified_site_sources.length>1?' '+(index+1):''));link.href=url.href;link.target='_blank';link.rel='noopener';td.appendChild(el('br'));td.appendChild(link);
+        });
         if (q.environment_deviation) td.appendChild(el('small',q.environment_deviation.description));
         [labels[q.status] || q.status, flag(q.brand_mentioned), flag(q.site_cited), q.attempts].forEach(function (v) { tr.appendChild(el('td', v)); }); questions.body.appendChild(tr);
       });

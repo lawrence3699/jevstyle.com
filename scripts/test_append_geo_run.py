@@ -70,6 +70,20 @@ class AppendContracts(unittest.TestCase):
         self.assertEqual(value["rounds"][-1]["runner_kind"], "interactive_agent")
         self.assertEqual(report["validation"], "passed")
 
+    def test_public_sources_are_sitemap_only_without_tracking_or_account_paths(self):
+        _, row = self.complete(flags=(True, True, False))
+        row['citations'] = [
+            {'url':'https://jevstyle.com/use-cases/local-vision-decisions/?session=PRIVATE_QUERY#PRIVATE_FRAGMENT'},
+            {'url':'https://jevstyle.com/console/?session=PRIVATE_QUERY'},
+            {'url':'https://example.org/private-conversation/PRIVATE_EXTERNAL'},
+        ]
+        value, _ = append(self.snapshot, self.run, self.root)
+        exported = value['rounds'][-1]['providers'][1]['discovery']['questions'][0]
+        self.assertEqual(exported['verified_site_sources'], ['https://jevstyle.com/use-cases/local-vision-decisions/'])
+        public = json.dumps(value)
+        for private in ('PRIVATE_QUERY','PRIVATE_FRAGMENT','PRIVATE_EXTERNAL','https://jevstyle.com/console/'):
+            self.assertNotIn(private, public)
+
     def test_api_and_unreviewed_templates_cannot_be_imported(self):
         for field, bad in (("acquisition_mode", "api"), ("review_ready", False), ("protocol", "different")):
             value = copy.deepcopy(self.run); value[field] = bad

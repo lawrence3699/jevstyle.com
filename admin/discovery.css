@@ -44,9 +44,11 @@
 .admin-nav { display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 18px 0 28px; font-size: 14px; }
 .admin-nav a { color: var(--ink2); }
 .discovery .geo-error { padding: 16px; border: 1px solid var(--line); border-radius: 10px; }
+.discovery .experiment-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 620px) {
   .discovery .geo-measure { grid-template-columns: 94px minmax(20px, 1fr) 116px; gap: 7px; font-size: 12px; }
   .discovery .data-sources { grid-template-columns: 1fr; }
   .discovery .geo-controls label { flex: 1; min-width: 130px; }
   .discovery .geo-controls select { width: 100%; }
+  .discovery .experiment-grid { grid-template-columns: 1fr; }
 }

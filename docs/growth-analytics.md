@@ -110,6 +110,8 @@ After changing homepage data or copy, run:
 
 ```sh
 python3 scripts/prerender_home.py
+python3 scripts/build_site.py
+python3 scripts/build_routing_experiment.py
 python3 scripts/build_discovery.py
 python3 scripts/check_site.py
 ```
