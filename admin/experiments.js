@@ -14,7 +14,7 @@
       root.replaceChildren();
       var note=el('div',null,'geo-summary');note.appendChild(el('p','六类银行客服请求 · 同一组 240 条独立测试 · Apple M1 Max / 64 GiB · 2026-11-01（悉尼）项目自测'));
       note.appendChild(el('p','传统分类器使用 738 条标注训练；JevStyle 使用选项描述，不做任务微调。开发集另有 120 条。监督条件不同，不能当作通用模型排名。','note'));root.appendChild(note);
-      var grid=el('div',null,'grid');
+      var grid=el('div',null,'grid experiment-grid');
       methods.forEach(function (method) {
         var d=report.results[method[0]].test, card=el('div',null,'card');card.appendChild(el('h3',method[1]));
         card.appendChild(el('div',pct(d.correct/d.count),'v'));card.appendChild(el('p',d.correct+'/'+d.count+' 正确 · warm 中位 '+d.warm_latency_ms.median.toFixed(3)+' ms · p95 '+d.warm_latency_ms.p95.toFixed(3)+' ms','note'));

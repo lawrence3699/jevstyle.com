@@ -140,6 +140,13 @@ citation requires its captured target URL in `citations[].url`. Captured target
 URLs cannot contradict a false flag. With `citation_coverage: partial` or
 `unavailable`, unverified negative citation outcomes must remain `null`.
 
+New public question summaries may include `verified_site_sources`: only captured
+JevStyle targets that also appear in the current public sitemap. The exporter
+removes query strings and fragments and omits external URLs and account paths.
+The admin can link to the cited public page without publishing raw AI text,
+provider sessions, tracking identifiers or private source exports. Existing
+rounds remain unchanged.
+
 Unreadable, blocked and unexecuted question results must have `answer: null` and
 all three outcome flags explicitly `null`. Unknown never becomes false or zero.
 `actual_attempts` must equal the complete log; a `not_run` question has zero.
