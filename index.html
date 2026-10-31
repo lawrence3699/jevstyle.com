@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap">
 <style>
 :root{
   --bg:#FFFFFF; --ink:#0D0D0F; --ink2:#5E5E66; --ink3:#6B6B73; --line:#ECECEF; --soft:#F3F3F5; --soft2:#E4E4E8; --cell:#FFFFFF;
@@ -886,7 +886,6 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 
 .api-reference-note{color:var(--ink2);line-height:1.6;max-width:850px;margin:-12px 0 24px}.project-faq{max-width:850px;line-height:1.7;margin-top:28px}.project-faq h3{font-size:20px;margin:24px 0 8px}.project-faq p{color:var(--ink2);margin-bottom:14px}.project-faq a{text-decoration:underline;text-underline-offset:3px}
 
-.current-project-facts{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px clamp(32px,4vw,64px);padding:56px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.6}.current-project-facts h2{font-size:clamp(20px,1.8vw,24px);line-height:1.25}.current-project-facts dl{margin:0}.current-project-facts dl>div{display:grid;grid-template-columns:9.5em minmax(0,1fr);gap:4px 16px;padding:14px 0;border-top:1px solid var(--line)}.current-project-facts dl>div:first-child{border-top:0;padding-top:0}.current-project-facts dt{color:var(--ink3)}.current-project-facts dd{margin:0;color:var(--ink2)}.current-project-facts strong{font-weight:500;color:var(--ink)}.current-project-facts a{text-decoration:underline;text-underline-offset:3px}.current-project-facts .facts-date{margin-top:8px;font-size:12px;color:var(--ink3)}@media (max-width:860px){.current-project-facts{grid-template-columns:minmax(0,1fr)}.current-project-facts dl>div{grid-template-columns:minmax(0,1fr)}}
 
 </style>
 <link rel="alternate" hreflang="en" href="https://jevstyle.com/">
@@ -931,38 +930,25 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
   <section class="h3" id="hero" aria-labelledby="heroTitle">
     <div class="h3-main">
     <h1 id="heroTitle"><em>Local</em> classification and routing for AI agents</h1>
-    <p class="h3-sub" data-i18n="h3.sub">Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon.</p>
+    <p class="h3-sub" data-i18n="h3.sub">Small open models that score your options in one call. Run them yourself, or use the free API.</p>
     <div class="h3-nums">
       <dl class="om-stats" id="omStats"><!--prerender:omStats--><div><dt>downloads</dt><dd>59,397</dd></div><div><dt>likes</dt><dd>91</dd></div><div><dt>models</dt><dd>7</dd></div><!--/prerender:omStats--></dl>
-      <p class="stats-note"><span data-i18n="om.note">Hugging Face file-request counts, not unique users.</span> <a href="https://huggingface.co/docs/hub/models-download-stats" data-i18n="om.note.how">How they are counted</a></p>
+      <p class="stats-note" data-i18n="om.note">Hugging Face file requests, not unique users.</p>
     </div>
     <div class="h3-acts">
       <a class="pill dark lg" href="/register/" data-track="api_key_open" data-i18n="h3.key">Get a free API key</a>
       <a class="pill soft lg" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="start.demo">Try demo</a>
-      <a class="pill soft lg" href="/models/#run" data-track="quickstart_open" data-i18n="start.local">Run locally</a>
+      <a class="more" href="/models/#run" data-track="quickstart_open"><span data-i18n="start.local">Run locally</span> <span class="ar" aria-hidden="true">&rarr;</span></a>
     </div>
-    <p class="h3-status"><span class="api-status" hidden><i aria-hidden="true"></i><span></span></span></p>
+    <div class="h3-foot"><span class="api-status" hidden><i aria-hidden="true"></i><span></span></span><ul class="proof" data-i18n-aria="pr.label"><li><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face</a></li><li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener">PyPI</a></li><li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub</a></li><li>Apache-2.0</li></ul></div>
     </div>
-    <aside class="h3-news" aria-labelledby="h3NewsH"><div class="h3-news-head"><h2 id="h3NewsH" data-i18n="news.h">Latest updates</h2><a href="/updates/" data-i18n="news.all">All updates</a></div><ol class="h3-news-list" id="h3News"><!--prerender:h3News--><li><time datetime="2026-10-28">2026-10-28</time><span>Package</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.2">jev-style 0.6.2</a></li><li><time datetime="2026-10-28">2026-10-28</time><span>Package</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.1">jev-style 0.6.1: faster local workflows</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>Model</span><a href="/models/2b-v4/">Jev-Style 2B v4</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>Package</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.0">jev-style 0.6.0</a></li><li><time datetime="2026-10-17">2026-10-17</time><span>Package</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.5.0">jev-style 0.5.0</a></li><!--/prerender:h3News--></ol></aside>
+    <div class="h3-demo"><div class="tick" id="tick" aria-hidden="true"></div></div>
   </section>
 
-  <section class="ann" id="announcement" aria-labelledby="annH">
-    <div class="ann-top"><p class="ann-k" data-i18n="ann.k">Announcement</p><time datetime="2026-10-27">2026-10-27</time></div>
-    <div class="ann-body">
-      <div><h2 id="annH" data-i18n="ann.h">Jev-Style 2B v4 reads images</h2><p data-i18n="ann.p">Our first model with image input, through its PyTorch build.</p><a class="pill" href="/models/2b-v4/" data-i18n="ann.a">Read about 2B v4</a></div>
-      <div class="tick" id="tick" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <ul class="proof" data-i18n-aria="pr.label">
-    <li><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener"><b>Hugging Face</b><span data-i18n="om.k">Open models</span></a></li>
-    <li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener"><b>PyPI</b><span data-i18n="pr.pypi">jev-style package</span></a></li>
-    <li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener"><b>GitHub</b><span data-i18n="pr.gh">Source code</span></a></li>
-    <li><span><b>Apache-2.0</b><span data-i18n="pr.weights">Open weights</span></span></li>
-  </ul>
+  <aside class="h3-news" aria-labelledby="h3NewsH"><div class="h3-news-head"><h2 id="h3NewsH" data-i18n="news.h">Latest updates</h2><a href="/updates/" data-i18n="news.all">All updates</a></div><ol class="h3-news-list" id="h3News"><!--prerender:h3News--><li><time datetime="2026-10-28">2026-10-28</time><span>Package</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.2">jev-style 0.6.2</a></li><li><time datetime="2026-10-28">2026-10-28</time><span>Package</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.1">jev-style 0.6.1: faster local workflows</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>Model</span><a href="/models/2b-v4/">Jev-Style 2B v4</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>Package</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.0">jev-style 0.6.0</a></li><!--/prerender:h3News--></ol></aside>
 
   <section id="try" aria-labelledby="tryH">
-    <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">One request, every option scored</h2><p data-i18n="try.p">One support ticket, three questions, one call.</p></div>
+    <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">One request, every option scored</h2></div>
     <div class="tabs ftabs" id="tyTabs" role="tablist" data-i18n-aria="ex.h"></div>
     <div class="feat" id="tyPanel" role="tabpanel"><!--prerender:tyPanel--><div class="static-example"><h3>A probability for each option</h3><p>“I was billed twice. Please refund one charge.”</p><pre>{"refund": {"type": "noul", "instructions": "The customer asks for money back."}}</pre><p>Illustrative output: refund probability 0.967. Results depend on the model and input.</p></div><!--/prerender:tyPanel--></div>
     <p class="feat-meta"><span data-i18n="ty.state">One state for all three questions</span>: <q>Hi, I was billed twice for my March plan. Please refund one of them today.</q></p>
@@ -971,19 +957,19 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
   <section class="duo3" id="start" aria-label="Get started" data-i18n-aria="res.h">
     <article class="cta3">
       <h2 data-i18n="fc.key.h">Use the hosted API</h2>
-      <ul class="chk"><li data-i18n="fc.key.1">10,000 free requests a day per account</li><li data-i18n="fc.key.2">Text input, up to 8,000 tokens per request</li></ul>
+      <p class="cta-line" data-i18n="go.key">10,000 free requests a day</p>
       <div class="acts"><a class="pill dark" href="/register/" data-track="api_key_open" data-i18n="h3.key">Get a free API key</a><a class="pill soft" href="/api/" data-i18n="duo.api.docs">API docs</a></div>
     </article>
     <article class="cta3">
       <h2 data-i18n="fc.api.h">Try it in your browser</h2>
-      <ul class="chk"><li data-i18n="fc.api.1">No installation or API key</li><li data-i18n="fc.api.2">Text and image examples on Hugging Face</li></ul>
+      <p class="cta-line" data-i18n="go.demo">No install, no API key</p>
       <div class="acts"><a class="pill dark" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="h3.cta">Try the live demo</a></div>
     </article>
     <article class="cta3">
       <h2 data-i18n="fc.os.h">Run it yourself</h2>
-      <ul class="chk"><li data-i18n="fc.os.1">Apache-2.0 weights</li><li data-i18n="fc.os.2">CPU, CUDA and Apple silicon</li></ul>
+      <p class="cta-line" data-i18n="go.local">CPU, CUDA and Apple silicon</p>
       <div class="snip"><pre id="pipCode">pip install "jev-style[torch]"</pre><button type="button" class="cbtn" id="pipCopy" data-i18n="copy">Copy</button></div>
-      <div class="acts"><a class="pill dark hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="/models/#run" data-i18n="chip.qs">Quickstart</a></div>
+      <div class="acts"><a class="pill dark" href="/models/#run" data-i18n="chip.qs">Quickstart</a></div>
     </article>
   </section>
 
@@ -1000,11 +986,11 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
     <div class="car-track bench3" id="carTrack"><!--prerender:carTrack--><div class="static-bench"><p>Jev-Style 2B v4: JevBench v1.4.1 public accuracy 74.9%; Decision Index 0.3 public score 44.37.</p><p>Single self-runs, not official board ranks. Hardware, test protocols, confidence intervals, and limitations: <a href="/models/2b-v4/">read the model guide</a>.</p></div><!--/prerender:carTrack--></div>
   </section>
 
-<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">Start with the task you need to run locally</h2><p>Choose an approach for your inputs, labels, and hardware, then compare results on your own data.</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Local text classification in Python</b><span>Compare a traditional classifier with typed decision models, and keep a review path.</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>Local decision models on Apple silicon</b><span>Choose a method and backend for fixed choices and your available hardware.</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>Workflow routing with LLM fallback</b><span>Make the local routing decision before escalating uncertain requests.</span></a><a href="/guides/local-routing-tools/" data-track="guide_open"><b>Compare local routing tools</b><span>JevStyle, Semantic Router, scikit-learn and SetFit: interfaces and fit.</span></a><a href="/use-cases/local-vision-decisions/" data-track="guide_open"><b>Local receipt and screenshot decisions</b><span>An image request with the PyTorch build and a verification path.</span></a><a href="/guides/replace-label-only-llm-calls/" data-track="guide_open"><b>Replace label-only LLM calls</b><span>Define options, measure errors and coverage, and retain fallback.</span></a></div></section><!--/discovery:task-entrypoints-->
-<!--discovery:home-guide--><section id="project-guide" class="growth-guides" aria-labelledby="project-guide-heading"><div class="s3-head"><h2 id="project-guide-heading">Choose a model. Check the evidence.</h2><p>JevStyle is an open-source toolkit for local classification, routing, and scoring. Its small decision models return probabilities for predefined options.</p></div><div class="guide-grid"><a href="/models/compare/"><b>Compare local models</b><span>Choose 0.8B or 2B by input, backend, and weight size.</span></a><a href="/benchmarks/"><b>Benchmarks and reproduction</b><span>Read published self-runs with protocols, sources, and limitations.</span></a></div><div class="project-faq"><h3>Can JevStyle run offline?</h3><p>After installing dependencies and downloading the model, you can process inputs locally. The online demo and hosted API are separate services and receive inputs sent to them.</p><h3>Which model should I use?</h3><p>Start with 0.8B v3 for text and compare 2B v4 on your own examples. Image input requires the 2B v4 PyTorch backend; MLX and GGUF builds are text-only.</p><h3>Does it generate chat replies?</h3><p>It returns probabilities for yes/no, choice, and ordered-score questions, rather than free-form replies. Keep human or LLM fallback for uncertain decisions.</p><p><a href="/about/">About the project and maintainer</a> · <a href="/api/">Hosted API reference</a></p></div></section><!--/discovery:home-guide-->
-<!--discovery:current-facts--><section class="current-project-facts" id="current-facts" aria-labelledby="current-facts-heading"><div><h2 id="current-facts-heading">Current releases and service availability</h2><p class="facts-date">Reviewed: <time datetime="2026-10-29">2026-10-29</time></p></div><dl><div><dt>Releases</dt><dd>The Python package is <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>. <a href="/models/2b-v4/">2B v4 was released on 2026-10-27</a>: PyTorch supports text and images; MLX and GGUF builds are text-only. The default local text model is <a href="/models/0-8b-v3/">0.8B v3</a>.</dd></div><div><dt>Hosted API</dt><dd><strong>The hosted API runs 2B v4 for text only, processing one request at a time.</strong> Local models and the Hugging Face demo are separate entry points; hosted-service availability does not determine whether a local model works.</dd></div><div><dt>Maintainer</dt><dd><a href="/about/">Chaoliang Yan</a> (GitHub: lawrence3699). JevStyle is independent and is not affiliated with or endorsed by TypeSafe.</dd></div><div><dt>Training provenance</dt><dd>2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. The Python package does not bundle the raw teacher response datasets. See <a href="/models/2b-v4/#results">the model and training sources</a>.</dd></div></dl></section><!--/discovery:current-facts-->
+<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">Start with your task</h2></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Local text classification in Python</b></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>Local decision models on Apple silicon</b></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>Workflow routing with LLM fallback</b></a><a href="/guides/local-routing-tools/" data-track="guide_open"><b>Compare local routing tools</b></a><a href="/use-cases/local-vision-decisions/" data-track="guide_open"><b>Local receipt and screenshot decisions</b></a><a href="/guides/replace-label-only-llm-calls/" data-track="guide_open"><b>Replace label-only LLM calls</b></a></div></section><!--/discovery:task-entrypoints-->
+<!--discovery:home-guide--><section id="project-guide" class="home-notes" aria-labelledby="project-guide-heading"><h2 id="project-guide-heading">Questions</h2><details class="qa"><summary>Can JevStyle run offline?</summary><p>Yes. After installing dependencies and downloading a model, inputs stay on your machine. The online demo and hosted API are separate services and receive what you send them.</p></details><details class="qa"><summary>Which model should I use?</summary><p>Start with 0.8B v3 for text, then compare 2B v4 on your own examples. Image input needs the 2B v4 PyTorch build; MLX and GGUF builds are text-only.</p></details><details class="qa"><summary>Does it write chat replies?</summary><p>No. It returns probabilities for yes/no, choice, and ordered-score questions. Send uncertain cases to a person or a larger model.</p></details></section><!--/discovery:home-guide-->
+<!--discovery:current-facts--><section class="home-notes" id="current-facts" aria-labelledby="current-facts-heading"><h2 id="current-facts-heading">Project facts</h2><details class="qa"><summary>Releases</summary><p>The Python package is <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>. <a href="/models/2b-v4/">2B v4 was released on 2026-10-27</a>: PyTorch supports text and images; MLX and GGUF builds are text-only. The default local text model is <a href="/models/0-8b-v3/">0.8B v3</a>.</p></details><details class="qa"><summary>Hosted API</summary><p><strong>The hosted API runs 2B v4 for text only, processing one request at a time.</strong> Local models and the Hugging Face demo are separate entry points; hosted-service availability does not determine whether a local model works.</p></details><details class="qa"><summary>Maintainer</summary><p><a href="/about/">Chaoliang Yan</a> (GitHub: lawrence3699). JevStyle is independent and is not affiliated with or endorsed by TypeSafe.</p></details><details class="qa"><summary>Training provenance</summary><p>2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. The Python package does not bundle the raw teacher response datasets. See <a href="/models/2b-v4/#results">the model and training sources</a>.</p></details><p class="facts-date">Reviewed: <time datetime="2026-10-29">2026-10-29</time></p></section><!--/discovery:current-facts-->
   <section class="final-cta" id="get-started" aria-labelledby="finalH">
-    <div><h2 id="finalH" data-i18n="final.h">Start with one decision</h2><p data-i18n="final.p">Use the hosted API, or run the same kind of model on your own machine.</p></div>
+    <div><h2 id="finalH" data-i18n="final.h">Start with one decision</h2></div>
     <div class="acts"><a class="pill dark lg" href="/register/" data-track="api_key_open" data-i18n="h3.key">Get a free API key</a><a class="pill soft lg" href="/models/" data-i18n="final.models">Explore models</a></div>
   </section>
 </main>
@@ -1254,7 +1240,6 @@ const I18N = {
   "copy": "Copy",
   "copied": "Copied",
   "snap": "Stats as of ",
-  "up": "higher is better",
   "down": "lower is better",
   "hf": "Open on Hugging Face",
   "newer": "See 2B v4",
@@ -1420,10 +1405,10 @@ const I18N = {
   "n3.models": "Open models",
   "n3.login": "Log in",
   "h3.title": "Local classification and routing for AI agents",
-  "h3.sub": "Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon.",
+  "h3.sub": "Small open models that score your options in one call. Run them yourself, or use the free API.",
   "h3.cta": "Try the live demo",
   "h3.key": "Get a free API key",
-  "om.note": "Hugging Face file-request counts, not unique users.",
+  "om.note": "Hugging Face file requests, not unique users.",
   "om.note.how": "How they are counted",
   "fc.key.h": "Use the hosted API",
   "fc.key.1": "10,000 free requests a day per account",
@@ -1566,7 +1551,11 @@ const I18N = {
   "ann.k": "Announcement",
   "ann.h": "Jev-Style 2B v4 reads images",
   "ann.p": "Our first model with image input, through its PyTorch build.",
-  "ann.a": "Read about 2B v4"
+  "ann.a": "Read about 2B v4",
+  "go.key": "10,000 free requests a day",
+  "go.demo": "No install, no API key",
+  "go.local": "CPU, CUDA and Apple silicon",
+  "h3.meta": "Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon."
  },
  "zh": {
   "guide.0.h": "本地大模型路由",
@@ -1774,7 +1763,6 @@ const I18N = {
   "copy": "复制",
   "copied": "已复制",
   "snap": "数据更新于 ",
-  "up": "越高越好",
   "down": "越低越好",
   "hf": "在 Hugging Face 打开",
   "newer": "查看 2B v4",
@@ -1940,10 +1928,10 @@ const I18N = {
   "n3.models": "开源模型",
   "n3.login": "登录",
   "h3.title": "AI Agent 的本地分类与路由",
-  "h3.sub": "在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。",
+  "h3.sub": "小型开放模型，一次调用给每个选项打分。可本地运行，也可用免费 API。",
   "h3.cta": "直接体验 Demo",
   "h3.key": "免费获取 API key",
-  "om.note": "Hugging Face 文件请求次数，并非独立用户数。",
+  "om.note": "Hugging Face 文件请求次数，非独立用户。",
   "om.note.how": "统计口径",
   "fc.key.h": "使用托管 API",
   "fc.key.1": "每个账号每天免费 10,000 次请求",
@@ -2086,7 +2074,11 @@ const I18N = {
   "ann.k": "公告",
   "ann.h": "Jev-Style 2B v4 可以读图",
   "ann.p": "第一个支持图片输入的模型（PyTorch 版）。",
-  "ann.a": "了解 2B v4"
+  "ann.a": "了解 2B v4",
+  "go.key": "每天 10,000 次免费请求",
+  "go.demo": "无需安装和 API key",
+  "go.local": "CPU、CUDA 和 Apple silicon",
+  "h3.meta": "在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。"
  }
 };
 let lang = location.pathname.startsWith('/zh/') ? 'zh' : 'en';   // English by default; 中文 only when the visitor picks it
@@ -2334,8 +2326,8 @@ function renderBench(){
   $('carTrack').innerHTML = items.filter(it => famVis(fam(it.open)) && HOME.includes(it.lab)).sort((a,b) => HOME.indexOf(a.lab) - HOME.indexOf(b.lab)).map((it,i) => {
     const mx = Math.max(it.me, it.base);
     const row = (cls, name, v) => `<div class="${cls}"><span>${esc(name)}</span><span class="tk"><i style="width:${(v/mx*100).toFixed(1)}%"></i></span><span>${it.fmt(v)}</span></div>`;
-    const ov = `<div class="ov"><b class="big" data-cu="${it.fmt(it.me)}">${it.fmt(it.me)}</b><div class="cmp${it.wide ? ' wide' : ''}">${row('a', it.who, it.me)}${row('b', it.vs, it.base)}<p>${t(it.up ? 'up' : 'down')}</p></div></div>`;
-    return `<a class="bcard" href="#${it.open}" data-open="${it.open}">${media('bench-'+i, it.pal, '', ov)}<h3 class="card-t">${esc(t(it.lab))}</h3><p class="meta"><span>${it.model}</span></p></a>`;
+    const ov = `<div class="ov"><b class="big" data-cu="${it.fmt(it.me)}">${it.fmt(it.me)}</b><div class="cmp${it.wide ? ' wide' : ''}">${row('a', it.who, it.me)}${row('b', it.vs, it.base)}${it.up ? '' : `<p>${t('down')}</p>`}</div></div>`;
+    return `<a class="bcard" href="#${it.open}" data-open="${it.open}">${media('bench-'+i, it.pal, '', ov)}<h3 class="card-t">${esc(t(it.lab))}</h3></a>`;
   }).join('');
   paintArt($('carTrack'));
 }
@@ -2888,7 +2880,7 @@ function renderUseCases(){
     const act = d
       ? `<button type="button" class="more" data-demo="${di}"><span>${esc(t('uc.see'))}</span> <span class="ar" aria-hidden="true">→</span><span class="sr-only"> · ${esc(t('uc.' + u.k + '.h'))}</span></button>`
       : `<a class="more" href="${u.href}"><span>${esc(t('uc.try'))}</span> <span class="ar" aria-hidden="true">→</span><span class="sr-only"> · ${esc(t('uc.' + u.k + '.h'))}</span></a>`;
-    return `<article class="uc3-card">${m}<p class="uc3-type">${esc(u.type)}</p><h3>${esc(t('uc.' + u.k + '.h'))}</h3><p class="uc3-p">${esc(t('uc.' + u.k + '.p'))}</p>${act}${u.guide ? `<a class="more" style="display:block;margin-top:14px" href="${u.guide}" data-track="guide_open">${lang === 'zh' ? '阅读完整教程' : 'Read the full guide'} →</a>` : ''}</article>`;
+    return `<article class="uc3-card">${m}<h3>${esc(t('uc.' + u.k + '.h'))}</h3><p class="uc3-p">${esc(t('uc.' + u.k + '.p'))}</p>${act}</article>`;
   });
   $('ucGrid').innerHTML = cards.slice(0, UC_FEAT).join('');
   $('ucMore').innerHTML = cards.slice(UC_FEAT).join('');

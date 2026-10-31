@@ -13,7 +13,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'index.html'
-UPDATES_SHOWN = 5
+UPDATES_SHOWN = 4
 
 
 def fragment(doc, ident, content):
@@ -55,7 +55,7 @@ def render(source, translations, data, lang):
     markup = re.sub(r'(<meta property="og:url" content=")[^"]+', lambda m: m[1] + url, markup)
     markup = re.sub(r'<title>.*?</title>', '<title>' + html.escape(t['title3']) + '</title>', markup)
     for attr in ['name="description"', 'property="og:description"']:
-        markup = re.sub(r'(<meta ' + attr + r' content=")[^"]*', lambda m: m[1] + html.escape(t['h3.sub'], quote=True), markup)
+        markup = re.sub(r'(<meta ' + attr + r' content=")[^"]*', lambda m: m[1] + html.escape(t['h3.meta'], quote=True), markup)
     markup = re.sub(r'(<meta property="og:title" content=")[^"]*', lambda m: m[1] + html.escape(t['title3'], quote=True), markup)
     markup = re.sub(r'(<button[^>]*id="langBtn"[^>]*>)[^<]*', lambda m: m[1] + ('English' if lang == 'zh' else '中文'), markup)
     uses = [('/use-cases/support-ticket-classification/', '工单分类' if lang=='zh' else 'Support ticket classification', '一次请求判断团队、退款诉求与紧急程度。' if lang=='zh' else 'Classify the team, refund request, and urgency in one call.'), ('/guides/claude-code-guard/', 'Agent 工具调用审核' if lang=='zh' else 'Agent tool-call review', '用本地模型与明确规则辅助决定允许、询问或拒绝。' if lang=='zh' else 'Use a local model and explicit rules to allow, ask, or deny.')]
@@ -80,12 +80,12 @@ def main():
         translations = json.loads(subprocess.check_output(['node','-e',js], input=obj.encode('utf-8')))
     facts = json.loads((ROOT / 'assets/project-facts.json').read_text())
     assert facts['hostedApi']['status'] == 'operational', 'Review translated API copy before changing status.'
-    translations['en'].update({'h3.em':'Local', 'ann.k':'Announcement', 'ann.h':'Jev-Style 2B v4 reads images', 'ann.p':'Our first model with image input, through its PyTorch build.', 'ann.a':'Read about 2B v4'})
-    translations['zh'].update({'om.s.dl':'下载', 'om.s.likes':'点赞', 'om.s.m':'模型', 'h3.em':'本地', 'ann.k':'公告', 'ann.h':'Jev-Style 2B v4 可以读图', 'ann.p':'第一个支持图片输入的模型（PyTorch 版）。', 'ann.a':'了解 2B v4'})
-    translations['en'].update({'news.h':'Latest updates', 'news.all':'All updates', 'uc.all':'All use cases', 'bench.all':'Full evaluation', 'final.h':'Start with one decision', 'final.p':'Use the hosted API, or run the same kind of model on your own machine.', 'final.models':'Explore models', 'f.contact':'Contact', 'nav.about':'About'})
-    translations['zh'].update({'news.h':'最新动态', 'news.all':'全部更新', 'uc.all':'全部场景', 'bench.all':'完整评测', 'final.h':'从一个判断开始', 'final.p':'使用托管 API，或在自己的机器上运行同类模型。', 'final.models':'查看模型', 'f.contact':'联系我们', 'nav.about':'关于我们'})
-    translations['en'].update({'title3':'Local Text Classification and AI Routing in Python | JevStyle', 'h3.title':'Local classification and routing for AI agents', 'h3.sub':'Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon.'})
-    translations['zh'].update({'title3':'Python 本地文本分类与 AI 路由模型 | JevStyle', 'h3.title':'AI Agent 的本地分类与路由', 'h3.sub':'在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。'})
+    translations['en'].update({'h3.em':'Local', 'go.key':'10,000 free requests a day', 'go.demo':'No install, no API key', 'go.local':'CPU, CUDA and Apple silicon', 'om.note':'Hugging Face file requests, not unique users.'})
+    translations['zh'].update({'om.s.dl':'下载', 'om.s.likes':'点赞', 'om.s.m':'模型', 'h3.em':'本地', 'go.key':'每天 10,000 次免费请求', 'go.demo':'无需安装和 API key', 'go.local':'CPU、CUDA 和 Apple silicon', 'om.note':'Hugging Face 文件请求次数，非独立用户。'})
+    translations['en'].update({'news.h':'Latest updates', 'news.all':'All updates', 'uc.all':'All use cases', 'bench.all':'Full evaluation', 'final.h':'Start with one decision', 'final.models':'Explore models', 'f.contact':'Contact', 'nav.about':'About'})
+    translations['zh'].update({'news.h':'最新动态', 'news.all':'全部更新', 'uc.all':'全部场景', 'bench.all':'完整评测', 'final.h':'从一个判断开始', 'final.models':'查看模型', 'f.contact':'联系我们', 'nav.about':'关于我们'})
+    translations['en'].update({'title3':'Local Text Classification and AI Routing in Python | JevStyle', 'h3.title':'Local classification and routing for AI agents', 'h3.sub':'Small open models that score your options in one call. Run them yourself, or use the free API.', 'h3.meta':'Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon.'})
+    translations['zh'].update({'title3':'Python 本地文本分类与 AI 路由模型 | JevStyle', 'h3.title':'AI Agent 的本地分类与路由', 'h3.sub':'小型开放模型，一次调用给每个选项打分。可本地运行，也可用免费 API。', 'h3.meta':'在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。'})
     source = re.sub(r'const I18N = .*?;\s*let lang', lambda _: 'const I18N = '+json.dumps(translations, ensure_ascii=False, indent=1)+';\nlet lang', source, count=1, flags=re.S)
     data = json.loads(re.search(r'<script id="site-data" type="application/json">(.*?)</script>', source, re.S).group(1))
     SOURCE.write_text(render(source, translations, data, 'en'))

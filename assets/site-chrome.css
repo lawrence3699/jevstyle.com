@@ -1,19 +1,16 @@
-/* One frame, type voice and header and footer for every public page. The home, guide and API stylesheets name their colours differently, so these fall back in order. */
+/* One width, type voice and header and footer for every public page. The home, guide and API stylesheets name their colours differently, so these fall back in order. */
 :root{
-  --frame:1184px;--pad:32px;--hdr:64px;--line:#E4E4E8;--line2:#D4D4DA;
-  --serif:"Iowan Old Style","Iowan Old Style BT","Palatino Linotype",Palatino,Georgia,"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Microsoft YaHei",serif;
+  --frame:1920px;--pad:clamp(20px,3.4vw,64px);--hdr:64px;--line:#E4E4E8;--line2:#D4D4DA;
+  --serif:"Instrument Serif","Iowan Old Style",Georgia,"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Microsoft YaHei",serif;
   --sc-bg:var(--bg,#fff);--sc-ink2:var(--ink2,var(--muted,#5e5e66));--sc-soft:var(--soft,#f3f3f5);
+  --sc-mark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 8'%3E%3Ccircle cx='4' cy='4' r='3' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M7.4 4h7' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--line2:#3A3A40}}
 :root[data-theme="dark"]{--line2:#3A3A40}
-@media(max-width:1099px){:root{--pad:24px}}
-@media(max-width:680px){:root{--pad:20px}}
-/* The frame's side rules would sit on the window edge below this width. */
-@media(max-width:1231px){main.wrap.v3,.page,.shell{border-inline:0!important}}
 
-/* Small uppercase label with a square bullet. */
-.eyebrow,.sp-label,.ann-k,.h3-news-head h2,.om-stats dt{display:flex;align-items:center;gap:8px;margin:0;font:500 11.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--sc-ink2)}
-.eyebrow::before,.sp-label::before,.ann-k::before,.h3-news-head h2::before,.om-stats dt::before{content:"";flex:none;width:6px;height:6px;background:currentColor;opacity:.4}
+/* Small uppercase label, marked with the logo's ring and tail. */
+.eyebrow,.sp-label,.h3-news-head h2,.om-stats dt{display:flex;align-items:center;gap:8px;margin:0;font:500 11.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--sc-ink2)}
+.eyebrow::before,.sp-label::before,.h3-news-head h2::before,.om-stats dt::before{content:"";flex:none;width:15px;height:8px;background:currentColor;opacity:.6;-webkit-mask:var(--sc-mark) center/contain no-repeat;mask:var(--sc-mark) center/contain no-repeat}
 .eyebrow{margin-bottom:16px}
 
 .sc-nav{display:flex;align-items:center;gap:0}
