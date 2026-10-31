@@ -48,7 +48,7 @@ snapshot = collect()  # Reads the three GSC_* environment variables only.
 # server-side admin check as /control/v1/admin/stats.
 ```
 
-`collect(environ, transport, now, *, site_url, days, page_size, max_pages)` can be
+`collect(environ, transport, now, *, site_url, days, page_size, max_pages, include_discovery_audit=False)` can be
 injected for deterministic offline tests. The default site is JevStyle and the
 default window is 28 calendar days ending yesterday in Google Search Console's
 Pacific timezone. Every performance dataset uses `dataState=final`; unavailable
@@ -84,6 +84,29 @@ current US DST rule for dates from 2007 onward. Prefer an up-to-date IANA
 database when available, and review that fallback if US law changes. See
 [Python timezone data portability](https://docs.python.org/3/library/zoneinfo.html#data-sources)
 and [NIST's current DST rules](https://www.nist.gov/pml/time-and-frequency-division/popular-links/daylight-saving-time-dst).
+
+## Fixed-page discovery diagnostics
+
+The private Windows integration enables `include_discovery_audit=True` during
+its existing 24-hour collection. This does not request new OAuth scopes. The
+optional `snapshot.discovery_audit` checks exactly three task URLs under the
+fixed JevStyle property: local routing tools, local image decisions, and
+replacing label-only LLM calls. It uses the official read-only URL Inspection
+API and final Web Search Analytics with an exact page filter and `byPage`
+aggregation. Each page has separate index status, crawl time, totals, returned
+date/query rows and safe stage errors. Query rows are capped at 1,000 per page;
+an empty query response does not establish zero nonbrand traffic.
+
+An explicit page-total row with zero impressions is a measured zero. A missing
+row or failed stage stays unknown; no missing dates are filled. Diagnostic
+errors do not replace or alter the independent property totals. The existing
+owner-only API returns the encrypted snapshot, and the admin UI displays the
+three page checks after authorization. These values must never be embedded in
+static public JSON or GitHub artifacts.
+
+Reference: [URL Inspection API](https://developers.google.com/webmaster-tools/v1/urlInspection.index/inspect).
+This reports Google's index, not whether a consumer AI app retrieved or cited a
+page. An indexed page can have little search exposure and no observed AI mention.
 
 ## Payload contract (schema version 1)
 

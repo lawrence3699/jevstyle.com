@@ -11,6 +11,7 @@ import argparse
 import copy
 import hashlib
 import json
+import xml.etree.ElementTree as ET
 import os
 import re
 import tempfile
@@ -123,6 +124,23 @@ def target_source(url, kind):
     return False
 
 
+def published_site_sources(row):
+    """Only already-public sitemap URLs; strip all query/fragment tracking.
+
+    No provider session URL, external URL, account path or raw answer enters the
+    public export. Older rounds are left untouched by this optional field.
+    """
+    sitemap = Path(__file__).resolve().parents[1] / "sitemap.xml"
+    allowed = {element.text for element in ET.parse(sitemap).iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")}
+    urls = set()
+    for citation in row.get("citations", []):
+        parsed = urlparse(citation["url"])
+        canonical = "https://jevstyle.com" + (parsed.path or "/")
+        if target_source(citation["url"], "site_cited") and canonical in allowed:
+            urls.add(canonical)
+    return sorted(urls)
+
+
 def review(row):
     for field in FIELDS:
         require(field in row and (row[field] is None or type(row[field]) is bool), field + " must be explicit boolean/null")
@@ -211,6 +229,10 @@ def export_provider(raw, root, start, end, file_hashes):
         public = {"id": qid, "question": PROMPTS[qid], "status": status, "original_status": status,
                   "attempts": len(history), "primary_eligible": status == "substantive", "observed_at": observed}
         public.update({field: row[field] for field in FIELDS})
+        if readable:
+            sources = published_site_sources(row)
+            if sources:
+                public["verified_site_sources"] = sources
         if "environment_deviation" in row:
             deviation = row["environment_deviation"]
             require(deviation in ENVIRONMENT_DEVIATIONS, "Unknown environment deviation code")
