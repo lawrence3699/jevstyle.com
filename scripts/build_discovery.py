@@ -27,7 +27,7 @@ def slot(doc, key, content, before=None):
 
 def public_pages():
     paths = [ROOT/'index.html', ROOT/'zh/index.html', ROOT/'about/index.html', ROOT/'zh/about/index.html', ROOT/'contact/index.html', ROOT/'zh/contact/index.html']
-    for folder in ('use-cases', 'guides', 'models', 'benchmarks', 'updates', 'privacy'):
+    for folder in ('use-cases', 'guides', 'models', 'benchmarks', 'updates', 'privacy', 'pricing'):
         paths += list((ROOT/folder).rglob('*.html'))
     paths += [p for p in (ROOT/'api').glob('*.html') if p.name not in ('docs.html', 'apply.html', 'usage.html')]
     return sorted(set(paths))
