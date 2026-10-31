@@ -28,10 +28,19 @@
     <loc>https://jevstyle.com/benchmarks/</loc>
   </url>
   <url>
+    <loc>https://jevstyle.com/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/contact/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/contact/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/contact/" />
+  </url>
+  <url>
     <loc>https://jevstyle.com/guides/claude-code-guard/</loc>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/decision-evaluation/</loc>
+  </url>
+  <url>
+    <loc>https://jevstyle.com/guides/</loc>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/local-decision-models/</loc>
@@ -61,6 +70,18 @@
     <loc>https://jevstyle.com/models/compare/</loc>
   </url>
   <url>
+    <loc>https://jevstyle.com/models/</loc>
+  </url>
+  <url>
+    <loc>https://jevstyle.com/privacy/</loc>
+  </url>
+  <url>
+    <loc>https://jevstyle.com/updates/</loc>
+  </url>
+  <url>
+    <loc>https://jevstyle.com/use-cases/</loc>
+  </url>
+  <url>
     <loc>https://jevstyle.com/use-cases/local-llm-routing/</loc>
   </url>
   <url>
@@ -74,6 +95,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/about/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/about/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/about/" />
+  </url>
+  <url>
+    <loc>https://jevstyle.com/zh/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/contact/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/contact/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/contact/" />
   </url>
   <url>
     <loc>https://jevstyle.com/zh/</loc>

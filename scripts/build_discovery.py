@@ -26,8 +26,8 @@ def slot(doc, key, content, before=None):
 
 
 def public_pages():
-    paths = [ROOT/'index.html', ROOT/'zh/index.html', ROOT/'about/index.html', ROOT/'zh/about/index.html']
-    for folder in ('use-cases', 'guides', 'models', 'benchmarks'):
+    paths = [ROOT/'index.html', ROOT/'zh/index.html', ROOT/'about/index.html', ROOT/'zh/about/index.html', ROOT/'contact/index.html', ROOT/'zh/contact/index.html']
+    for folder in ('use-cases', 'guides', 'models', 'benchmarks', 'updates', 'privacy'):
         paths += list((ROOT/folder).rglob('*.html'))
     paths += [p for p in (ROOT/'api').glob('*.html') if p.name not in ('docs.html', 'apply.html', 'usage.html')]
     return sorted(set(paths))
@@ -114,9 +114,6 @@ def main():
             doc = slot(doc, 'task-entrypoints', task_entrypoints(zh), before='  <section id="build-guides"')
             doc = slot(doc, 'home-guide', home_content(zh), before='  <section id="about">')
             doc = slot(doc, 'current-facts', current_facts(zh), before='  <section id="about">')
-        if 'class="site-footer"' in doc and '/about/' not in url:
-            nav = '<nav class="project-resource-nav" aria-label="Project resources"><a href="/guides/local-text-classification/">Local text classification</a> · <a href="/guides/local-decision-models/">Decision models</a> · <a href="/guides/local-routing-tools/">Compare routing tools</a> · <a href="/use-cases/local-vision-decisions/">Image decisions</a> · <a href="/guides/replace-label-only-llm-calls/">Label-only calls</a> · <a href="/models/compare/">Compare models</a> · <a href="/benchmarks/">Benchmarks</a> · <a href="/about/">About</a></nav>'
-            doc = slot(doc, 'resource-links', nav, before='<footer class="site-footer">')
         path.write_text(doc)
     ns, xh = 'http://www.sitemaps.org/schemas/sitemap/0.9', 'http://www.w3.org/1999/xhtml'
     ET.register_namespace('',ns); ET.register_namespace('xhtml',xh)
@@ -125,13 +122,13 @@ def main():
         item = ET.SubElement(root,'{'+ns+'}url')
         url = page_url(path)
         ET.SubElement(item,'{'+ns+'}loc').text = url
-        if path in (ROOT/'index.html',ROOT/'zh/index.html',ROOT/'about/index.html',ROOT/'zh/about/index.html'):
-            suffix = 'about/' if '/about/' in url else ''
+        if path in (ROOT/'index.html',ROOT/'zh/index.html',ROOT/'about/index.html',ROOT/'zh/about/index.html',ROOT/'contact/index.html',ROOT/'zh/contact/index.html'):
+            suffix = 'about/' if '/about/' in url else 'contact/' if '/contact/' in url else ''
             for language, dest in [('en',BASE+'/'+suffix),('zh-CN',BASE+'/zh/'+suffix),('x-default',BASE+'/'+suffix)]:
                 ET.SubElement(item,'{'+xh+'}link',rel='alternate',hreflang=language,href=dest)
     ET.indent(root)
     ET.ElementTree(root).write(ROOT/'sitemap.xml',encoding='utf-8',xml_declaration=True)
-    lines = ['# JevStyle','', '> '+FACTS['description'], '', 'Maintainer: '+FACTS['maintainer']+'. Code and weights: Apache-2.0.', 'Hosted API: operational, 2B v4 Q4_K_M, text only, one request at a time. Reviewed '+FACTS['reviewed']+'. Local models and hosted demos are separate.', 'Current Python package: '+FACTS['packageVersion']+'. Local default: 0.8B v3; --release 2b selects 2B v4 (released '+FACTS['latest2bReleased']+').', '2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.', FACTS['trainingProvenance'], '', '## Official pages','']
+    lines = ['# JevStyle','', '> '+FACTS['description'], '', 'Maintainer: '+FACTS['maintainer']+'. Code and weights: Apache-2.0.', 'Hosted API: 2B v4 Q4_K_M, text only, one request at a time. Reviewed '+FACTS['reviewed']+'. Live status: https://api.jevstyle.com/healthz. Local models and hosted demos are separate.', 'Current Python package: '+FACTS['packageVersion']+'. Local default: 0.8B v3; --release 2b selects 2B v4 (released '+FACTS['latest2bReleased']+').', '2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.', FACTS['trainingProvenance'], '', '## Official pages','']
     for path in pages:
         if '/api/' in str(path) or path == ROOT/'zh/index.html':
             continue

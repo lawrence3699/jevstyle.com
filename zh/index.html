@@ -958,6 +958,8 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 <meta property="og:image:alt" content="JevStyle: local classification and routing for AI agents">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/home-growth.css">
+<link rel="stylesheet" href="/assets/site-chrome.css">
+<script src="/assets/site-chrome.js" defer></script>
 <script src="/assets/journey.js" defer></script>
 <meta name="twitter:title" content="Python 本地文本分类与 AI 路由模型 | JevStyle">
 <meta name="twitter:description" content="在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。">
@@ -971,13 +973,7 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
     <a class="brand" href="#top"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="10" r="5.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="10" r="1.9" fill="currentColor"/><path d="M13.6 10H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="bn">JevStyle</span></a>
-    <nav class="nav" aria-label="Primary">
-      <a href="#try" data-i18n="n3.api">工作原理</a>
-      <a href="#use-cases" data-i18n="n3.uc">应用场景</a>
-      <a href="#open-models" data-i18n="n3.models">开源模型</a>
-      <a href="/api/" data-i18n="nav.docs">文档</a>
-      <a href="/console/" data-i18n="nav.console">控制台</a>
-    </nav>
+    <!--chrome:nav--><nav class="nav sc-nav" aria-label="主导航"><a href="/models/">模型</a><a href="/use-cases/">应用场景</a><a href="/benchmarks/">评测</a><details class="sc-dd"><summary>开发者</summary><div class="sc-dd-menu"><a href="/api/">API 文档</a><a href="/guides/">教程</a><a href="/console/">控制台</a><a href="https://github.com/lawrence3699/jev-style" data-track="github_open">GitHub ↗</a><a href="https://pypi.org/project/jev-style/">PyPI ↗</a><a href="https://huggingface.co/chaoliangUNSW" data-track="model_open">Hugging Face ↗</a><a href="https://discord.gg/udfvMu2GM">Discord ↗</a></div></details><details class="sc-dd"><summary>公司</summary><div class="sc-dd-menu"><a href="/zh/about/">关于我们</a><a href="/updates/">更新记录</a><a href="/zh/contact/">联系我们</a></div></details></nav><!--/chrome:nav-->
     <button type="button" class="icon-btn" id="searchBtn" data-i18n-aria="search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.6 3.6" stroke-linecap="round"/></svg></button>
     <span class="sp"></span>
     <button type="button" class="pill soft" id="langBtn">English</button>
@@ -987,26 +983,19 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
   </div>
 </header>
 <div class="mnav" id="mnav" hidden>
-  <nav aria-label="Mobile">
-    <a href="#try" data-i18n="n3.api" style="--i:0">工作原理</a>
-    <a href="#use-cases" data-i18n="n3.uc" style="--i:1">应用场景</a>
-    <a href="#open-models" data-i18n="n3.models" style="--i:2">开源模型</a>
-    <a href="#developers" data-i18n="nav.dev" style="--i:3">快速开始</a>
-    <a href="/api/" data-i18n="nav.docs" style="--i:4">文档</a>
-    <a href="/console/" data-i18n="nav.console" style="--i:5">控制台</a>
-    <a href="/zh/about/" data-i18n="nav.about" style="--i:6">说明</a>
-  </nav>
+  <!--chrome:mobile-nav--><nav aria-label="Mobile"><a href="/models/" style="--i:0">模型</a><a href="/use-cases/" style="--i:1">应用场景</a><a href="/benchmarks/" style="--i:2">评测</a><a href="/api/" style="--i:3">API 文档</a><a href="/guides/" style="--i:4">教程</a><a href="/zh/about/" style="--i:5">关于我们</a><a href="/updates/" style="--i:6">更新记录</a><a href="/zh/contact/" style="--i:7">联系我们</a></nav><!--/chrome:mobile-nav-->
   <div class="mnav-acts"><a class="pill dark" href="/register/" data-track="api_key_open" data-i18n="nav.getkey">获取 API key</a><a class="pill soft" href="/login/" data-i18n="n3.login">登录</a><a class="pill soft" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=header" data-track="demo_open" data-i18n="start.demo">体验 Demo</a><a class="pill soft hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft dc" href="https://discord.gg/udfvMu2GM" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a></div>
 </div>
 
 <main id="top" class="wrap v3">
   <section class="h3" id="hero" aria-labelledby="heroTitle" data-sx="exit">
+    <div class="h3-main">
     <h1 id="heroTitle">AI Agent 的本地分类与路由</h1>
     <p class="h3-sub" data-i18n="h3.sub">在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。</p>
     <div class="h3-acts">
       <a class="pill dark lg" href="/register/" data-track="api_key_open" data-i18n="h3.key">免费获取 API key</a>
       <a class="pill soft lg" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="start.demo">体验 Demo</a>
-      <a class="pill soft lg" href="#developers" data-track="quickstart_open" data-i18n="start.local">本地运行</a>
+      <a class="pill soft lg" href="/models/#run" data-track="quickstart_open" data-i18n="start.local">本地运行</a>
       <div class="dd" id="docsDd">
         <button type="button" class="pill soft lg" id="docsBtn" aria-expanded="false" aria-controls="docsMenu"><span data-i18n="nav.docs">文档</span><svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button>
         <div class="dd-menu" id="docsMenu" hidden>
@@ -1021,6 +1010,8 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
       <p class="stats-note"><span data-i18n="om.note">Hugging Face 文件请求次数，并非独立用户数。</span> <a href="https://huggingface.co/docs/hub/models-download-stats" data-i18n="om.note.how">统计口径</a></p>
     </div>
     <p class="h3-status"><span class="api-status" hidden><i aria-hidden="true"></i><span></span></span></p>
+    </div>
+    <aside class="h3-news" aria-labelledby="h3NewsH"><div class="h3-news-head"><h2 id="h3NewsH" data-i18n="news.h">最新动态</h2><a href="/updates/" data-i18n="news.all">全部更新</a></div><ol class="h3-news-list" id="h3News"><!--prerender:h3News--><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.2">jev-style 0.6.2</a></li><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.1">jev-style 0.6.1：更快上手本地工作流</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>模型</span><a href="/models/2b-v4/">Jev-Style 2B v4</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.0">jev-style 0.6.0</a></li><!--/prerender:h3News--></ol></aside>
     <div class="tick" id="tick" aria-hidden="true"></div>
     <ul class="proof" data-i18n-aria="pr.label">
       <li><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener"><b>Hugging Face</b><span data-i18n="om.k">开源模型</span></a></li>
@@ -1035,103 +1026,6 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
     <div class="tabs ftabs" id="tyTabs" role="tablist" data-i18n-aria="ex.h"></div>
     <div class="feat" id="tyPanel" role="tabpanel"><!--prerender:tyPanel--><div class="static-example"><h3>每个选项都有概率</h3><p>“I was billed twice. Please refund one charge.”</p><pre>{"refund": {"type": "noul", "instructions": "The customer asks for money back."}}</pre><p>示例输出：退款概率 0.967。实际结果取决于模型与输入。</p></div><!--/prerender:tyPanel--></div>
     <p class="feat-meta"><span data-i18n="ty.state">三个问题共用一段 state</span>: <q>Hi, I was billed twice for my March plan. Please refund one of them today.</q></p>
-  </section>
-
-  <section id="api-code" aria-labelledby="codeH">
-    <div class="s3-head"><h2 id="codeH" data-i18n="code.h">托管 API 文档</h2></div>
-<!--discovery:api-summary--><p class="api-reference-note">托管 API 使用 2B v4 Q4_K_M，仅支持文本，最多 8,000 个输入 token，一次处理一个请求。 核对日期：2026-10-29.</p><!--/discovery:api-summary-->
-    <dl class="kstats" id="kStats">
-      <div><dt data-i18n="k3.free">每个账号的每日额度</dt><dd>10,000</dd></div>
-      <div><dt data-i18n="k3.lat">托管 API 状态</dt><dd id="kApiStatus">—</dd></div>
-      <div><dt data-i18n="k3.tok">每次输入 token</dt><dd>8,000</dd></div>
-      <div><dt data-i18n="k3.out">每个选项一个，无需解析文本</dt><dd data-i18n="k3.out.v">概率</dd></div>
-    </dl>
-    <div class="ac-main">
-      <div class="tabs" id="apTabs" role="tablist" data-i18n-aria="code.h"></div>
-      <div class="code" id="apPanel" role="tabpanel"><div class="code-head"><span id="apFile"></span><span class="run" id="apRun" hidden></span><button type="button" class="cbtn" id="apCopy" data-i18n="copy">复制</button></div><pre class="wrapc" id="apCode"></pre></div>
-    </div>
-    <div class="trust"><ul class="chk"><li data-i18n="tr.1">不存储请求内容</li><li data-i18n="tr.2">失败请求不计次</li><li data-i18n="tr.3">开源本地模型仍可使用</li></ul><a class="more" href="/api/endpoints.html"><span data-i18n="code.ref">完整接口文档</span> <span class="ar" aria-hidden="true">&rarr;</span></a></div>
-  </section>
-
-  <section id="use-cases" aria-labelledby="ucH">
-    <span id="demos" class="sr-only"></span>
-    <div class="s3-head"><h2 id="ucH" data-i18n="uc.h">应用场景</h2></div>
-    <div class="uc3 uc3-feat" id="ucGrid"><!--prerender:ucGrid--><article class="uc3-card static-model"><h3><a href="/use-cases/support-ticket-classification/">工单分类</a></h3><p>一次请求判断团队、退款诉求与紧急程度。</p></article><article class="uc3-card static-model"><h3><a href="/guides/claude-code-guard/">Agent 工具调用审核</a></h3><p>用本地模型与明确规则辅助决定允许、询问或拒绝。</p></article><!--/prerender:ucGrid--></div>
-    <div class="dmore-row" id="ucMoreRow"><button type="button" class="pill soft dmore" id="ucMoreBtn" aria-expanded="false" aria-controls="ucMoreBody"><span data-i18n="uc.more">更多场景</span><span class="dmn">(<span id="ucMoreN"></span>)</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button></div>
-    <div class="dmore-body" id="ucMoreBody" hidden><div class="uc3" id="ucMore"></div></div>
-  </section>
-
-  <div class="half" id="modelsHalf">
-    <section id="open-models" class="half-head hh-m om-big" aria-labelledby="omH" data-sx="enter">
-      <div>
-        <p class="half-k m"><i aria-hidden="true"></i><span data-i18n="om.k">开源模型</span></p>
-        <h2 id="omH" data-i18n="om3.h">也可以自己运行</h2>
-        <div class="hh-acts"><a class="pill dark lg hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft lg" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft lg" href="#developers" data-i18n="chip.qs">快速开始</a></div>
-      </div>
-</section>
-
-    <section id="switcher" data-i18n-aria="sec.models" data-sx="enter">
-      <div class="tabs mtabs" id="mTabs" role="tablist" data-i18n-aria="sec.models" hidden></div>
-      <div class="stage">
-        <div class="fx-wrap" id="fxWrap">
-          <canvas id="fx" aria-hidden="true"></canvas>
-          <span class="lab l" id="labL" aria-hidden="true"></span><span class="lab r" id="labR" aria-hidden="true"></span>
-          <div class="fx-cap" id="fxCap" aria-hidden="true"></div>
-          <button type="button" class="fx-pause" id="fxPause" aria-pressed="false"></button>
-        </div>
-        <div class="stage-info" id="stInfo" role="tabpanel" hidden>
-          <div>
-            <h3 class="st-name" id="stName"></h3>
-            <p class="st-one" id="stOne"></p>
-            <div class="st-acts"><button type="button" class="pill dark" id="stOpen" data-open="v3-2b"><span data-i18n="details">详情</span> <span class="ar" aria-hidden="true">→</span></button><a class="pill soft" id="stHF" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a></div>
-          </div>
-          <dl class="specs" id="stSpecs"></dl>
-        </div>
-      </div>
-    </section>
-
-    <section id="models">
-      <div class="sec-head"><h2 data-i18n="sec.models">模型</h2><div class="filters" id="mFilters"></div></div>
-      <div class="mgrid" id="mGrid"><!--prerender:mGrid--><article class="mcard static-model"><h3><a href="/models/2b-v4/">Jev-Style-2B-Decision-v4</a></h3><p>2B 规模、能看图的决策模型，一次前向给每个选项打分。</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4">Transformers BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4-GGUF">GGUF F16 / Q8_0 / Q4_K_M</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4-MLX">MLX BF16 / 8-bit</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3">Jev-Style-2B-Decision-v3</a></h3><p>2B 模型，长输入决策，一次前向给每个选项打分。</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3">Transformers BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3-GGUF">GGUF F16 / Q8_0 / Q4_K_M</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3-MLX">MLX BF16 / 8-bit</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Cascade-9B">Jev-Style-Cascade-9B</a></h3><p>我们的 2B 先作答；没有把握的题交给 alibiserikbay 的 JevK5-9B。</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Cascade-9B">Cascade config (no weights)</a></p></article><article class="mcard static-model"><h3><a href="/models/0-8b-v3/">Jev-Style-0.8B-Decision-v3</a></h3><p>0.8B 模型，支持长输入与多语言的决策。</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3">Transformers BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3-GGUF">GGUF F16 / Q8_0 / Q4_K_M</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-0.8B-Decision-v3-MLX">MLX BF16 / 8-bit</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2">Jev-Style-Qwen3.5-2B-Decision v2</a></h3><p>概率校准的英文分类模型。</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2">HF BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-GGUF">GGUF Q4_K_M / Q8_0 / BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-v2-MLX-bf16">MLX BF16</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya">MacJev-322M-4K-Laya</a></h3><p>本地 Mac agent 的决策模型。</p><p><a href="https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya">PyTorch FP32</a> · <a href="https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya-MLX">MLX FP32</a> · <a href="https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya-GGUF">GGUF F16</a></p></article><article class="mcard static-model"><h3><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF">Jev-Style-Qwen3.5-2B-Decision v1</a></h3><p>首个版本，已由 v3（0.8B）和 v4（2B）取代。</p><p><a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-GGUF">GGUF Q4_K_M / Q8_0 / BF16</a> · <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-Qwen3.5-2B-Decision-MLX-bf16">MLX BF16</a></p></article><!--/prerender:mGrid--></div>
-      <details class="repos" id="downloads">
-        <summary><span id="repoSum"></span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></summary>
-        <span id="releases" class="sr-only"></span>
-        <div class="dl-list" id="dlList"></div>
-        <p class="dl-note" data-i18n="dl.note">每 3 小时自动从 Hugging Face API 同步一次；浏览器能访问 Hugging Face 时显示实时数据。平台统计本身最多可能延迟一天。</p>
-      </details>
-    </section>
-
-    <section id="benchmarks" class="car">
-      <div class="sec-head"><h2 data-i18n="sec.bench">评测</h2></div>
-      <div class="car-track bench3" id="carTrack"><!--prerender:carTrack--><div class="static-bench"><p>Jev-Style 2B v4: JevBench v1.4.1 public accuracy 74.9%; Decision Index 0.3 public score 44.37.</p><p>Single self-runs, not official board ranks. Hardware, test protocols, confidence intervals, and limitations: <a href="/models/2b-v4/">read the model guide</a>.</p></div><!--/prerender:carTrack--></div>
-    </section>
-
-    <section id="developers">
-      <div class="sec-head"><h2 data-i18n="sec.dev">快速开始</h2><a class="more" id="qsRepo" href="https://github.com/lawrence3699/jev-style#quick-start" target="_blank" rel="noopener"><span data-i18n="dev.repo">打开仓库</span> <span class="ne" aria-hidden="true">↗</span></a></div>
-      <div class="dev-body">
-        <div class="tabs" id="qsTabs" role="tablist" data-i18n-aria="sec.dev"></div>
-        <div class="code" id="qsPanel" role="tabpanel">
-          <div class="code-head"><span id="qsFile"></span><button type="button" class="cbtn" id="copyBtn" data-i18n="copy">复制</button></div>
-          <pre id="qsCode"><!--prerender:qsCode--># Python 3.10+; run inside a virtual environment.
-python -m pip install &quot;jev-style[torch]&quot;
-jev-style serve --release 2b --backend torch
-# Open http://127.0.0.1:8765
-# For Apple silicon text-only: install &quot;jev-style[mlx]&quot; and use --backend mlx.<!--/prerender:qsCode--></pre>
-        </div>
-      </div>
-    </section>
-
-  </div>
-
-<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">从你的任务开始</h2><p>先按输入、标签和运行环境选择方法，再在自己的数据上比较结果。</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Python 本地文本分类</b><span>比较传统分类器与决策模型，保留低置信度回退。</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>本地决策模型与 Apple silicon</b><span>按固定选项、后端和硬件选择运行方式。</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>请求路由与大模型回退</b><span>先在本地选择工作流，再处理需要升级的请求。</span></a><a href="/guides/local-routing-tools/" data-track="guide_open"><b>本地路由工具选型</b><span>比较 JevStyle、Semantic Router、scikit-learn 和 SetFit。</span></a><a href="/use-cases/local-vision-decisions/" data-track="guide_open"><b>收据与截图的本地判断</b><span>PyTorch 图片请求示例，以及人工核验边界。</span></a><a href="/guides/replace-label-only-llm-calls/" data-track="guide_open"><b>替换只返回标签的 LLM 调用</b><span>明确选项、测量错误与覆盖率，并保留回退。</span></a></div></section><!--/discovery:task-entrypoints-->
-  <section id="build-guides" class="growth-guides" aria-labelledby="guidesH">
-    <div class="s3-head"><h2 id="guidesH" data-i18n="learn.h">将 JevStyle 接入你的项目</h2><p data-i18n="learn.p">从完整教程、可运行案例和模型选择开始。</p></div>
-    <div class="guide-grid">
-      <a href="/use-cases/local-llm-routing/" data-track="guide_open"><b data-i18n="guide.0.h">本地大模型路由</b><span data-i18n="guide.0.p">在本地选择路由，将不确定的决策交给大模型。</span></a>
-      <a href="/use-cases/support-ticket-classification/" data-track="guide_open"><b data-i18n="guide.1.h">客服工单分类</b><span data-i18n="guide.1.p">一次请求判断负责团队、退款诉求与紧急程度。</span></a>
-      <a href="/guides/claude-code-guard/" data-track="guide_open"><b data-i18n="guide.2.h">Claude Code 调用审核</b><span data-i18n="guide.2.p">通过本地模型和明确规则检查工具调用。</span></a>
-      <a href="/guides/decision-evaluation/" data-track="guide_open"><b data-i18n="guide.3.h">评估你自己的数据</b><span data-i18n="guide.3.p">衡量准确率、校准、覆盖率和延迟。</span></a>
-    </div>
   </section>
 
   <section class="duo3" id="start" aria-label="Get started" data-i18n-aria="res.h">
@@ -1149,44 +1043,33 @@ jev-style serve --release 2b --backend torch
       <h2 data-i18n="fc.os.h">自己运行</h2>
       <ul class="chk"><li data-i18n="fc.os.1">Apache-2.0 权重</li><li data-i18n="fc.os.2">支持 CPU、CUDA 和 Apple silicon</li></ul>
       <div class="snip"><pre id="pipCode">pip install "jev-style[torch]"</pre><button type="button" class="cbtn" id="pipCopy" data-i18n="copy">复制</button></div>
-      <div class="acts"><a class="pill dark hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="#developers" data-i18n="chip.qs">快速开始</a></div>
+      <div class="acts"><a class="pill dark hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="/models/#run" data-i18n="chip.qs">快速开始</a></div>
     </article>
   </section>
 
+  <section id="use-cases" aria-labelledby="ucH">
+    <span id="demos" class="sr-only"></span>
+    <div class="s3-head"><h2 id="ucH" data-i18n="uc.h">应用场景</h2><p><a class="more" href="/use-cases/"><span data-i18n="uc.all">全部场景</span> <span class="ar" aria-hidden="true">&rarr;</span></a></p></div>
+    <div class="uc3 uc3-feat" id="ucGrid"><!--prerender:ucGrid--><article class="uc3-card static-model"><h3><a href="/use-cases/support-ticket-classification/">工单分类</a></h3><p>一次请求判断团队、退款诉求与紧急程度。</p></article><article class="uc3-card static-model"><h3><a href="/guides/claude-code-guard/">Agent 工具调用审核</a></h3><p>用本地模型与明确规则辅助决定允许、询问或拒绝。</p></article><!--/prerender:ucGrid--></div>
+    <div class="dmore-row" id="ucMoreRow"><button type="button" class="pill soft dmore" id="ucMoreBtn" aria-expanded="false" aria-controls="ucMoreBody"><span data-i18n="uc.more">更多场景</span><span class="dmn">(<span id="ucMoreN"></span>)</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button></div>
+    <div class="dmore-body" id="ucMoreBody" hidden><div class="uc3" id="ucMore"></div></div>
+  </section>
+
+  <section id="benchmarks" class="car">
+    <div class="sec-head"><h2 data-i18n="sec.bench">评测</h2><a class="more" href="/benchmarks/"><span data-i18n="bench.all">完整评测</span> <span class="ar" aria-hidden="true">&rarr;</span></a></div>
+    <div class="car-track bench3" id="carTrack"><!--prerender:carTrack--><div class="static-bench"><p>Jev-Style 2B v4: JevBench v1.4.1 public accuracy 74.9%; Decision Index 0.3 public score 44.37.</p><p>Single self-runs, not official board ranks. Hardware, test protocols, confidence intervals, and limitations: <a href="/models/2b-v4/">read the model guide</a>.</p></div><!--/prerender:carTrack--></div>
+  </section>
+
+<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">从你的任务开始</h2><p>先按输入、标签和运行环境选择方法，再在自己的数据上比较结果。</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Python 本地文本分类</b><span>比较传统分类器与决策模型，保留低置信度回退。</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>本地决策模型与 Apple silicon</b><span>按固定选项、后端和硬件选择运行方式。</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>请求路由与大模型回退</b><span>先在本地选择工作流，再处理需要升级的请求。</span></a><a href="/guides/local-routing-tools/" data-track="guide_open"><b>本地路由工具选型</b><span>比较 JevStyle、Semantic Router、scikit-learn 和 SetFit。</span></a><a href="/use-cases/local-vision-decisions/" data-track="guide_open"><b>收据与截图的本地判断</b><span>PyTorch 图片请求示例，以及人工核验边界。</span></a><a href="/guides/replace-label-only-llm-calls/" data-track="guide_open"><b>替换只返回标签的 LLM 调用</b><span>明确选项、测量错误与覆盖率，并保留回退。</span></a></div></section><!--/discovery:task-entrypoints-->
 <!--discovery:home-guide--><section id="project-guide" class="growth-guides" aria-labelledby="project-guide-heading"><div class="s3-head"><h2 id="project-guide-heading">选择模型，核对结果</h2><p>JevStyle 是用于本地分类、路由和评分的开源工具；小型决策模型为预定义选项返回概率。</p></div><div class="guide-grid"><a href="/models/compare/"><b>模型选择对照（英文）</b><span>比较 0.8B 与 2B 的输入、后端和权重大小。</span></a><a href="/benchmarks/"><b>评测与复现（英文）</b><span>查看公开自测结果、协议、出处和限制。</span></a></div><div class="project-faq"><h3>可以离线运行吗？</h3><p>安装依赖并下载模型后，可以在本机处理输入。在线 Demo 和托管 API 是独立服务；使用它们会将输入发送到相应服务。</p><h3>应该选择哪个模型？</h3><p>文本任务可以从 0.8B v3 开始，在自己的数据上对照测试 2B v4。图片输入需要 2B v4 的 PyTorch 后端；MLX 和 GGUF 构建仅支持文本。</p><h3>它会生成聊天回复吗？</h3><p>它为是/否、多选和有序评分问题返回概率，不生成自由文本回复。把不确定的情况交给人工或现有大模型。</p><p><a href="/zh/about/">关于项目与维护者</a> · <a href="/api/">托管 API 文档</a></p></div></section><!--/discovery:home-guide-->
 <!--discovery:current-facts--><section class="current-project-facts" id="current-facts" aria-labelledby="current-facts-heading"><div><h2 id="current-facts-heading">当前版本与服务状态</h2><p class="facts-date">核对日期: <time datetime="2026-10-29">2026-10-29</time></p></div><dl><div><dt>版本</dt><dd>Python 软件包为 <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>。<a href="/models/2b-v4/">2B v4 已于 2026-10-27 发布</a>：PyTorch 支持文本与图片，MLX 和 GGUF 仅支持文本。默认本地文本模型为 <a href="/models/0-8b-v3/">0.8B v3</a>。</dd></div><div><dt>托管 API</dt><dd><strong>托管 API 使用 2B v4 Q4_K_M，仅支持文本，一次处理一个请求。</strong>本地模型与 Hugging Face Demo 是独立入口，托管服务的状态不代表本地模型不可用。</dd></div><div><dt>维护者</dt><dd><a href="/zh/about/">Chaoliang Yan（严超亮）</a>，GitHub：lawrence3699。项目与 TypeSafe 无隶属或背书关系。</dd></div><div><dt>训练出处</dt><dd>2B v4 部分训练使用 TypeSafe Jev 1.14 公共 API 生成的软标签。Python 软件包不附带教师的原始回答数据集。参见<a href="/models/2b-v4/#results">模型与训练来源</a>。</dd></div></dl></section><!--/discovery:current-facts-->
-  <section id="about">
-    <div class="about">
-      <div class="ab-left">
-        <h2 class="ab-h" data-i18n="sec.about">说明</h2>
-        <p class="ab-lead" data-sx="scrub"><span data-i18n="ab.lead" class="scrub">我在做一系列小模型：每个只负责一类判断，给出校准过的概率，小到能在你自己的电脑上运行。</span><span class="ab-sig" data-i18n="ab.sig">严超亮 · UNSW</span></p>
-      </div>
-      <div class="ab-contact" id="contact">
-        <h3 class="typein" id="ctaH" data-i18n="ab.ch">联系我</h3>
-        <p class="cta-p"><span><span data-i18n="cta.p">欢迎实习、工作和科研合作机会：</span><span class="mail" id="email"><!--prerender:email-->yanchaoliang369@gmail.com<!--/prerender:email--></span><span data-i18n="cta.end">。</span></span></p>
-        <div class="cta-acts">
-          <button type="button" class="pill soft" id="copyEmail" data-i18n="final.mail">复制邮箱</button>
-          <a class="pill soft" href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span class="ne" aria-hidden="true">↗</span></a>
-          <a class="pill soft dc" href="https://discord.gg/udfvMu2GM" target="_blank" rel="noopener">Discord <span class="ne" aria-hidden="true">↗</span></a>
-        </div>
-      </div>
-    </div>
+  <section class="final-cta" id="get-started" aria-labelledby="finalH">
+    <div><h2 id="finalH" data-i18n="final.h">从一个判断开始</h2><p data-i18n="final.p">使用托管 API，或在自己的机器上运行同类模型。</p></div>
+    <div class="acts"><a class="pill dark lg" href="/register/" data-track="api_key_open" data-i18n="h3.key">免费获取 API key</a><a class="pill soft lg" href="/models/" data-i18n="final.models">查看模型</a></div>
   </section>
 </main>
 
-<footer class="wrap foot">
-  <div class="fcols">
-    <div class="fcol"><p class="fh" data-i18n="f.models">模型</p><button type="button" data-open="v4-2b">Jev-Style 2B v4</button><button type="button" data-open="v3-2b">Jev-Style 2B v3</button><button type="button" data-open="cascade-9b">Jev-Style Cascade 9B</button><button type="button" data-open="v3">Jev-Style 0.8B v3</button><button type="button" data-open="macjev">MacJev 322M</button><button type="button" data-open="v2">Decision 2B v2</button><button type="button" data-open="v1">Decision 2B v1</button></div>
-    <div class="fcol"><p class="fh" data-i18n="ng.api">API</p><a href="#try" data-i18n="nav.overview">概览</a><a href="/api/" data-i18n="nav.docs">文档</a><a href="/register/" data-i18n="nav.getkey">获取 API key</a><a href="/console/" data-i18n="nav.console">控制台</a><a href="/console/#playground" data-i18n="nav.play">在线试用</a><a href="/api/limits.html" data-i18n="nav.limits">限额</a><a href="#use-cases" data-i18n="n3.uc">应用场景</a></div>
-    <div class="fcol"><p class="fh" data-i18n="f.dev">开发者</p><a href="#developers" data-track="quickstart_open" data-i18n="chip.qs">快速开始</a><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener">PyPI <span aria-hidden="true">↗</span></a><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span aria-hidden="true">↗</span></a></div>
-    <div class="fcol"><p class="fh" data-i18n="f.comm">社区</p><a class="dc" href="https://discord.gg/udfvMu2GM" target="_blank" rel="noopener">Discord <span aria-hidden="true">↗</span></a><a href="/zh/about/" data-i18n="nav.about">说明</a><a href="#contact" data-i18n="f.contact">联系</a></div>
-  </div>
-  <div class="fbot">
-    <p class="fnote" data-i18n="foot">独立项目，与 TypeSafe AI（Jev）及 Laya 作者无关。权重 Apache-2.0。</p>
-    <span class="fcopy"><span class="bn">JevStyle</span> © 2026</span>
-    <button type="button" class="pill soft" id="langBtn2"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3c2.2 2.4 2.2 11.6 0 14M10 3c-2.2 2.4-2.2 11.6 0 14"/></svg><span></span></button>
-  </div>
-<!--language-fallback--><noscript><a href="/">English</a></noscript><!--/language-fallback--></footer>
+<!--chrome:footer--><footer class="foot sc-foot"><div class="sc-foot-in"><div class="sc-fcols"><div class="sc-fcol"><p>模型</p><a href="/models/">全部模型</a><a href="/models/2b-v4/">Jev-Style 2B v4</a><a href="/models/0-8b-v3/">Jev-Style 0.8B v3</a><a href="/models/compare/">模型对照</a><a href="/benchmarks/">评测</a></div><div class="sc-fcol"><p>教程</p><a href="/use-cases/">全部场景</a><a href="/guides/">全部教程</a><a href="/guides/local-text-classification/">本地文本分类</a><a href="/guides/local-decision-models/">本地决策模型</a><a href="/guides/local-routing-tools/">路由工具对照</a><a href="/use-cases/local-vision-decisions/">图片判断</a><a href="/guides/replace-label-only-llm-calls/">替换标签类调用</a></div><div class="sc-fcol"><p>开发者</p><a href="/api/">API 文档</a><a href="/register/">获取 API key</a><a href="/console/">控制台</a><a href="/api/limits.html">限额</a><a href="https://github.com/lawrence3699/jev-style">GitHub ↗</a><a href="https://pypi.org/project/jev-style/">PyPI ↗</a><a href="https://huggingface.co/chaoliangUNSW">Hugging Face ↗</a></div><div class="sc-fcol"><p>公司</p><a href="/zh/about/">关于我们</a><a href="/updates/">更新记录</a><a href="/zh/contact/">联系我们</a><a href="https://discord.gg/udfvMu2GM">Discord ↗</a><a href="/api/terms.html">条款</a><a href="/privacy/">隐私</a></div></div><div class="sc-fbot"><p>JevStyle 独立运营，与 TypeSafe AI（Jev）及 Laya 作者无隶属关系。代码和权重使用 Apache-2.0 许可证。</p><span>JevStyle © 2026</span><a class="sc-lang" href="/" lang="en">English</a></div></div></footer><!--/chrome:footer-->
 
 <div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-labelledby="srchLab">
   <div class="srch-scrim" id="srchScrim"></div>
@@ -1340,9 +1223,6 @@ const I18N = {
   "nav.dev": "Quickstart",
   "nav.road": "Roadmap",
   "nav.about": "About",
-  "sec.about": "About",
-  "ab.lead": "I build small models that each make one kind of decision: calibrated, and small enough to run on your own machine.",
-  "ab.sig": "Chaoliang Yan · UNSW",
   "ab.h1": "Why small",
   "ab.p1": "A decision needs a label and a probability, not a paragraph. A model built for one job can stay small (322M–2B parameters): fast, private and cheap to run.",
   "ab.h2": "How I measure",
@@ -1403,9 +1283,6 @@ const I18N = {
   "dl30": "downloads · 30 days",
   "dev.repo": "Open repository",
   "cta.h": "Get started with JevStyle",
-  "cta.p": "Open to internships, jobs and research collaborations: ",
-  "cta.end": ".",
-  "final.mail": "Copy email",
   "f.models": "Models",
   "f.formats": "Formats",
   "f.research": "Research",
@@ -1436,7 +1313,6 @@ const I18N = {
   "m4s": "English Laya 12.0%",
   "copy": "Copy",
   "copied": "Copied",
-  "foot": "Independent project, not affiliated with TypeSafe AI (Jev) or the Laya authors. Weights: Apache-2.0.",
   "snap": "Stats as of ",
   "up": "higher is better",
   "down": "lower is better",
@@ -1598,7 +1474,6 @@ const I18N = {
   "om.h": "Open weights you can run anywhere",
   "om.p": "Apache-2.0 decision models on Hugging Face in Transformers, GGUF and MLX formats, plus a pip package that serves them on your own machine.",
   "dl.allrepos": "All {n} repositories",
-  "ab.ch": "Get in touch",
   "title3": "Local Text Classification and AI Routing in Python | JevStyle",
   "n3.api": "How it works",
   "n3.uc": "Use cases",
@@ -1739,7 +1614,14 @@ const I18N = {
   "om.s.likes": "likes",
   "run.send": "Sending",
   "run.ok": "Recorded example · {s} s GPU time",
-  "run.see": "See response"
+  "run.see": "See response",
+  "news.h": "Latest updates",
+  "news.all": "All updates",
+  "uc.all": "All use cases",
+  "bench.all": "Full evaluation",
+  "final.h": "Start with one decision",
+  "final.p": "Use the hosted API, or run the same kind of model on your own machine.",
+  "final.models": "Explore models"
  },
  "zh": {
   "guide.0.h": "本地大模型路由",
@@ -1855,10 +1737,7 @@ const I18N = {
   "nav.bench": "评测",
   "nav.dev": "快速开始",
   "nav.road": "路线图",
-  "nav.about": "说明",
-  "sec.about": "说明",
-  "ab.lead": "我在做一系列小模型：每个只负责一类判断，给出校准过的概率，小到能在你自己的电脑上运行。",
-  "ab.sig": "严超亮 · UNSW",
+  "nav.about": "关于我们",
   "ab.h1": "为什么做小模型",
   "ab.p1": "做判断只需要一个标签和一个概率，不需要长篇回答。只做一件事的模型可以很小（322M–2B 参数）：更快、更私密，也更便宜。",
   "ab.h2": "怎么评测",
@@ -1919,16 +1798,13 @@ const I18N = {
   "dl30": "次下载 · 近 30 天",
   "dev.repo": "打开仓库",
   "cta.h": "开始使用 JevStyle",
-  "cta.p": "欢迎实习、工作和科研合作机会：",
-  "cta.end": "。",
-  "final.mail": "复制邮箱",
   "f.models": "模型",
   "f.formats": "格式",
   "f.research": "研究",
   "f.dev": "开发者",
   "f.comm": "社区",
   "f.calib": "校准",
-  "f.contact": "联系",
+  "f.contact": "联系我们",
   "f.demo": "在线试用",
   "prev": "上一个",
   "next": "下一个",
@@ -1952,7 +1828,6 @@ const I18N = {
   "m4s": "英文 Laya 12.0%",
   "copy": "复制",
   "copied": "已复制",
-  "foot": "独立项目，与 TypeSafe AI（Jev）及 Laya 作者无关。权重 Apache-2.0。",
   "snap": "数据更新于 ",
   "up": "越高越好",
   "down": "越低越好",
@@ -2114,7 +1989,6 @@ const I18N = {
   "om.h": "开源权重，随处运行",
   "om.p": "Apache-2.0 许可的决策模型，在 Hugging Face 上提供 Transformers、GGUF 和 MLX 格式，另有 pip 包可以在你自己的机器上运行。",
   "dl.allrepos": "全部 {n} 个仓库",
-  "ab.ch": "联系我",
   "title3": "Python 本地文本分类与 AI 路由模型 | JevStyle",
   "n3.api": "工作原理",
   "n3.uc": "应用场景",
@@ -2255,7 +2129,14 @@ const I18N = {
   "om.s.likes": "个赞",
   "run.send": "发送中",
   "run.ok": "已记录的示例 · GPU 计算 {s} 秒",
-  "run.see": "查看响应"
+  "run.see": "查看响应",
+  "news.h": "最新动态",
+  "news.all": "全部更新",
+  "uc.all": "全部场景",
+  "bench.all": "完整评测",
+  "final.h": "从一个判断开始",
+  "final.p": "使用托管 API，或在自己的机器上运行同类模型。",
+  "final.models": "查看模型"
  }
 };
 let lang = location.pathname.startsWith('/zh/') ? 'zh' : 'en';   // English by default; 中文 only when the visitor picks it
@@ -2347,26 +2228,6 @@ function words(el, text){
 }
 
 /* ---------- hero: model switcher (countdown tabs) driving the live stage ---------- */
-const LANES = {
-  'v4-2b':{w:[.6,.16,.08,.06,.04,.03,.015,.01,.005], y:[.16,.25,.34,.43,.52,.61,.7,.79,.88], tint:'#C9D3FF'},   // site_v4.py
-  'v3-2b':{w:[.58,.17,.09,.06,.04,.03,.015,.01,.005], y:[.16,.25,.34,.43,.52,.61,.7,.79,.88], tint:'#BFEAFF'},
-  v3:{w:[.44,.18,.1,.08,.06,.05,.04,.03,.02], y:[.16,.25,.34,.43,.52,.61,.7,.79,.88], tint:'#E6DAFF'},
-  macjev:{w:[.68,.31,.01], y:[.34,.56,.74], tint:'#D4E1FF'},
-  v2:{w:[.86,.14], y:[.4,.64], tint:'#FFDCC8'},
-  v1:{w:[.46,.3,.14,.07,.03], y:[.24,.38,.52,.66,.8], tint:'#D6F0DC'},
-  'cascade-9b':{w:[.36,.11,.04,.02,.3,.1,.04,.03], y:[.14,.21,.28,.35,.6,.67,.74,.81], tint:'#FFE7A3'},   // patch_9b.py: two bands, settled by the 2B (53%) / sent to 9B (47%)
-};
-const LABELS = {'v4-2b':['Jev-Style','2B v4'], 'v3-2b':['Jev-Style','2B v3'], v3:['Jev-Style','0.8B v3'], macjev:['MacJev','322M'], v2:['Decision','2B v2'], v1:['Decision','2B v1'], 'cascade-9b':['Cascade','2B → 9B']};
-const HERO = {i:0, auto:!REDUCED, vis:true};
-function renderHeroTabs(){
-  keepFocus($('mTabs'), () => $('mTabs').innerHTML = VIS().map((f,i) => `<button type="button" role="tab" class="tab" id="hm-${f.id}" data-hm="${i}" aria-controls="stInfo" aria-selected="${i===HERO.i}" tabindex="${i===HERO.i ? 0 : -1}"><span class="cd" aria-hidden="true"></span>${esc(display(f))}</button>`).join(''));
-  HERO.id = VIS()[HERO.i].id; $('stInfo').setAttribute('aria-labelledby', 'hm-' + HERO.id);
-  heroArm();
-}
-function heroArm(){
-  clearTimeout(HERO.tm);
-  if (HERO.auto && HERO.vis && !FX.paused && VIS().length > 1) HERO.tm = setTimeout(() => { HERO.i = (HERO.i + 1) % VIS().length; renderHeroTabs(); heroStage(true); }, 6000);
-}
 function countUp(el, text){
   const m = String(text).match(/^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/);
   if (!m || REDUCED){ el.textContent = text; return; }
@@ -2378,145 +2239,11 @@ function countUp(el, text){
 const dlAll = r => r.downloadsAllTime ?? r.downloads ?? 0, dl30 = r => r.downloads ?? 0;
 const famDl = f => f.repos.reduce((s,r) => s + dlAll(r), 0);
 const onHub = r => r.downloads != null || !!r.createdAt;   // patch_2b.py: repos not on the Hub yet (planned release) stay out of Downloads/Releases
-function heroSpecs(f){
-  const dl = famDl(f);
-  if (f.v4) return [[t('k.params'), f.params], [t('s.input'), f.context], [t('s.di4'), f.v4.di.index.toFixed(2)], [t('s.vis4'), f.v4.vision.index.toFixed(2)], dl ? [t('s.dlall'), dl.toLocaleString('en-US')] : [t('s.jb'), pct(f.v4.jevbench.acc)]];   // site_v4.py
-  if (f.bench) return [[t('k.params'), f.params], [t('s.input'), f.context], [t('s.optcap'), t('s.nocap')], [t('s.jb'), pct(f.bench.jevbench.acc)], dl ? [t('s.dlall'), dl.toLocaleString('en-US')] : [t('formats'), f.repos.map(r => r.format.split(' ')[0]).join(' · ')]];
-  const c9 = f.cascade && f.cascade.jevbench;   // patch_9b.py
-  if (c9) return [[t('s.tiers'), f.params], [t('s.input'), f.context], [t('s.jbpub'), pct(c9.acc)], [t('s.settled'), pct(c9.settled_by_2b / c9.items, 0)], [t('s.ece'), c9.ece.toFixed(3)]];
-  const top = f.metrics && f.metrics.find(m => m.better==='up');
-  const head = f.id === 'v2'
-    ? [t('s.acc11'), pct(DATA.eval.v2.overview.v2.accuracy)]
-    : top
-      ? [t('m.'+top.key), pct(top.model)]
-      : (f.headline && f.headline[0] ? [t(f.headline[0][1]), f.headline[0][0]] : [t('formats'), f.repos.map(r => r.format.split(' ')[0]).join(' · ')]);
-  return [[t('k.params'), f.params], [t('s.input'), f.context || '—'], [t('s.langs'), f.langs], head, dl ? [t('s.dlall'), dl.toLocaleString('en-US')] : [t('formats'), f.repos.map(r => r.format.split(' ')[0]).join(' · ')]];
-}
-function renderSpecs(f){
-  $('stSpecs').innerHTML = heroSpecs(f).map(([k,v]) => `<div><dt>${esc(k)}</dt><dd data-v="${esc(v)}"${String(v).length > 9 ? ' class="txt"' : ''}>${esc(v)}</dd></div>`).join('');
-}
-function heroStage(animate){
-  const f = VIS()[HERO.i];
-  $('stName').textContent = display(f); $('stOne').textContent = t('one.'+f.id);
-  $('stOpen').dataset.open = f.id; $('stHF').href = HF + f.repos[0].repo;
-  renderSpecs(f);
-  $('fxCap').innerHTML = [`${f.context ? f.context+' TOKENS' : 'TEXT'}${f.v4 ? ' + IMAGES' : ''} IN`, f.cascade ? '2B ANSWERS FIRST' : 'ONE FORWARD PASS', f.cascade ? 'UNSURE → 9B' : f.id === 'macjev' ? 'P(ANSWER) OUT' : (f.id === 'v3' || f.id === 'v3-2b' || f.id === 'v4-2b') ? 'EVERY OPTION SCORED' : 'P(OPTION) OUT'].map(x => `<span>${x}</span>`).join('');
-  renderLabels(f.id);
-  fxConfig(f.id, !animate);
-  if (animate){
-    $('stInfo').classList.remove('swap-in'); void $('stInfo').offsetWidth; $('stInfo').classList.add('swap-in');
-    $('stSpecs').querySelectorAll('dd').forEach(dd => countUp(dd, dd.dataset.v));
-  }
-}
 
 /* ---------- featured canvas: tokens stream through one lens into weighted answers ---------- */
-const FX = {parts:[], stars:[], W:0, H:0, t0:0, last:0, vis:true, paused:false, ctx:null, cfg:null, from:null, laneY:null, lt0:0};
-function fxReset(p, init){
-  const H = FX.H, r = Math.random();
-  p.y0 = H*(.06 + Math.random()*.88);
-  const w = (FX.cfg || LANES.macjev).w; let k = 0, q = r; while (k < w.length-1 && (q -= w[k]) > 0) k++; p.lane = k;
-  p.t = init ? Math.random()*2 : 0;
-  p.v = .00017 + Math.random()*.00013;
-  p.s = Math.random() < .12 ? 2.2 : 1.35;
-  p.warm = Math.random() < .16;
-  p.j = (Math.random()-.5)*H*.06; p.jf = (Math.random()-.5)*6;
-  return p;
-}
-function fxSetup(){
-  const cv = $('fx'), W = $('fxWrap').clientWidth, H = $('fxWrap').clientHeight;
-  if (!W || !H) return;
-  const dpr = Math.min(1.5, window.devicePixelRatio || 1);
-  Object.assign(FX, {W, H});
-  cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
-  FX.ctx = cv.getContext('2d'); FX.ctx.setTransform(dpr,0,0,dpr,0,0);
-  FX.ctx.fillStyle = '#06070C'; FX.ctx.fillRect(0,0,W,H);
-  const r = rng('stars');
-  FX.stars = Array.from({length: Math.round(W*H/2400)}, () => ({x:r()*W, y:r()*H, a:.03 + r()*.08, ph:r()*6.28, sp:.0006 + r()*.0016, s:r() < .1 ? 1.6 : 1}));
-  FX.from = null;
-  FX.parts = Array.from({length: Math.min(900, Math.max(360, Math.round(W*H/760)))}, () => fxReset({}, true));
-}
-const qz = (a,b,c,u) => (1-u)*(1-u)*a + 2*(1-u)*u*b + u*u*c;
-function fxFrame(now){
-  const c = FX.ctx; if (!c) return;
-  const {W, H} = FX, fx = W*.5, fy = H*.5;
-  const dt = Math.min(48, now - (FX.last || now)); FX.last = now;
-  const age = now - FX.t0, amb = Math.min(1, age/3200), flow = Math.min(1, age/1400);
-  const cfg = FX.cfg || LANES.macjev, lk = Math.min(1, Math.max(0, (now - FX.lt0)/900)), le = lk*lk*(3-2*lk);
-  FX.laneY = cfg.y.map((y,i) => { const to = y*H; if (!FX.from) return to; const fr = FX.from[Math.min(i, FX.from.length-1)]; return fr + (to-fr)*le; });
-  c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
-  c.fillStyle = 'rgba(6,7,12,.24)'; c.fillRect(0,0,W,H);
-  c.globalCompositeOperation = 'lighter'; c.fillStyle = '#FFFFFF';
-  for (const s of FX.stars){ c.globalAlpha = amb*s.a*(.6 + .4*Math.sin(now*s.sp + s.ph)); c.fillRect(s.x, s.y, s.s, s.s); }
-  for (const p of FX.parts){
-    p.t += Math.max(0, p.v*dt); if (p.t >= 2) fxReset(p, false);
-    if (p.t < 1){ p.x = qz(-12, W*.3, fx, p.t); p.y = qz(p.y0, p.y0, fy + p.jf, p.t); }
-    else { const u = p.t - 1, ly = FX.laneY[Math.min(p.lane, FX.laneY.length-1)] + p.j; p.x = qz(fx, W*.68, W + 12, u); p.y = qz(fy + p.jf, ly, ly, u); }
-  }
-  for (const warm of [false, true]){
-    c.fillStyle = warm ? '#FFD3AE' : cfg.tint;
-    for (const p of FX.parts){ if (p.warm !== warm) continue; c.globalAlpha = flow*(p.t < 1 ? .4 + .55*p.t : .95 - .45*(p.t - 1)); c.fillRect(p.x, p.y, p.s, p.s); }
-  }
-  const rad = 44*(1 + .08*Math.sin(now/650)), g = c.createRadialGradient(fx, fy, 0, fx, fy, rad);
-  g.addColorStop(0,'rgba(210,225,255,.09)'); g.addColorStop(1,'rgba(210,225,255,0)');
-  c.globalAlpha = flow; c.fillStyle = g; c.fillRect(fx-rad, fy-rad, rad*2, rad*2);
-  c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
-}
-function fxLoop(now){
-  if (FX.vis && !FX.paused && !document.hidden && !openId && $('srch').hidden && $('mnav').hidden && $('vbox').hidden) fxFrame(now); else FX.last = 0;
-  requestAnimationFrame(fxLoop);
-}
-function fxStill(){ FX.t0 = -1e5; FX.last = 0; for (let i=0;i<120;i++) fxFrame(i*16); }
-const ICON_PAUSE = '<svg viewBox="0 0 14 14" aria-hidden="true"><rect x="3" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="8" y="2" width="3" height="10" rx="1" fill="currentColor"/></svg>';
 const ICON_PLAY = '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2.5v9l7.5-4.5z" fill="currentColor"/></svg>';
-function setPaused(on){
-  FX.paused = on; document.documentElement.classList.toggle('still', on);
-  const b = $('fxPause'); b.setAttribute('aria-pressed', String(on)); b.innerHTML = on ? ICON_PLAY : ICON_PAUSE; b.setAttribute('aria-label', t(on ? 'play' : 'pause'));
-  if (on){ HERO.auto = false; heroArm(); previewsOff(); }
-  featArm();
-}
-function fxStart(){
-  fxSetup();
-  if (REDUCED){ fxStill(); return; }
-  FX.t0 = performance.now(); requestAnimationFrame(fxLoop);
-}
-function fxConfig(id, instant){
-  const cfg = LANES[id] || LANES.macjev;
-  FX.from = (instant || REDUCED || !FX.laneY) ? null : FX.laneY.slice();
-  FX.cfg = cfg; FX.lt0 = performance.now();
-  FX.parts.forEach(p => { if (p.lane >= cfg.w.length) p.lane = cfg.w.length - 1; });
-  if (REDUCED && FX.ctx) fxStill();
-}
-function renderLabels(id){
-  const [a, b] = LABELS[id] || [id, ''];
-  const mk = (el, s, left) => el.innerHTML = [...s].map((ch,i,arr) => `<span style="--d:${150 + (left ? arr.length-1-i : i)*80}ms">${ch === ' ' ? '&nbsp;' : esc(ch)}</span>`).join('');
-  mk($('labL'), a, true); mk($('labR'), b, false);
-}
-function fxScroll(){
-  if (REDUCED) return;
-  const r = $('fxWrap').getBoundingClientRect(), d = Math.min(56, FX.W*.05);
-  const p = Math.min(1, Math.max(0, (innerHeight*.2 - r.top) / Math.max(1, r.height))), e = p*p*(3-2*p);
-  $('labL').style.transform = `translate(${-e*d}px,-50%)`; $('labR').style.transform = `translate(${e*d}px,-50%)`;
-  $('labL').style.opacity = $('labR').style.opacity = String(1 - e*.75);
-}
 
 /* ---------- sections ---------- */
-let mFilter = 'all', mAnim = false;
-function renderModels(){
-  const rel = VIS().map(f => ({...f, kind:'released'})), plan = DATA.planned.map(x => ({...x, kind:'planned'}));
-  const counts = {all:rel.length + plan.length, released:rel.length, planned:plan.length};
-  keepFocus($('mFilters'), () => $('mFilters').innerHTML = ['all','released','planned'].map(k => `<button type="button" class="fbtn" data-mf="${k}" aria-pressed="${mFilter===k}">${t('side.'+k)} <span>${counts[k]}</span></button>`).join(''));
-  const list = [...rel, ...plan].filter(m => mFilter==='all' || m.kind===mFilter);
-  $('mGrid').innerHTML = list.map((m,i) => {
-    const planned = m.kind === 'planned', name = planned ? m.name : display(m);
-    const tag = planned ? t('cat.plan') : t(m.status==='latest' ? 'b.latest' : 'b.archived');
-    const ov = `<div class="ov"><span class="ovtag">${tag}</span><b class="big">${esc(m.params)}</b></div>`;
-    const chips = planned ? '' : `<div class="fchips">${m.repos.filter(repoVis).map(r => `<a href="${HF+r.repo}" target="_blank" rel="noopener">${esc(r.chip || r.format.split(' ')[0])} <span aria-hidden="true">↗</span></a>`).join('')}</div>`;
-    const meta = planned ? ''
-      : `<p class="meta"><b>${t('cat.model')}</b><span>${relDate(m)}</span>${m.repos.some(onHub) ? `<span class="num">↓ ${famDl(m).toLocaleString('en-US')}<span class="sr-only"> ${t('dl.unit')}</span></span>` : `<span>${t('dl.soon')}</span>`}</p>`;
-    return `<article class="mcard hov${planned ? ' plan' : ''}${mAnim ? ' in' : ''}" style="--i:${i}">${media('model-'+m.id, planned ? 'plan' : m.id, 'wide', ov)}<div class="mbody"><h3 class="card-t">${planned ? esc(name) : `<a class="mt" href="${MODEL_PAGES[m.id] || (HF + m.repos[0].repo)}">${esc(name)}</a>`}</h3>${chips}${meta}</div></article>`;
-  }).join('');
-  paintArt($('mGrid'));
-}
 
 const MODEL_PAGES = {'v4-2b':'/models/2b-v4/', v3:'/models/0-8b-v3/'};
 const SPOT_ID = 'v4-2b';
@@ -2524,11 +2251,11 @@ const jbRef = (f, k) => f.bench.jevbench.board.find(b => b.key === k).acc;
 const BENCH_NAME = {'v4-2b':'Jev-Style 2B v4', 'v3-2b':'Jev-Style 2B v3', v3:'Jev-Style 0.8B v3'};   // JevBench labels: never "Decision 2B" (FlyMy.AI's model)
 
 /* ---------- demos: featured tiles (autoplay while on screen), "More demos" expander with cards (hover preview), lightbox ---------- */
-let DLIST = null, moreOpen = false, featIO = null;
+let DLIST = null, moreOpen = false, featIO = null, visSeen = '';
 const DEMOS = () => DLIST || (DLIST = (l => [...l.filter(d => d.featured), ...l.filter(d => !d.featured)])(DATA.demos || []));   // lightbox order = page order
 const dtxt = (d, k) => d[k + '_' + lang] || d[k + '_en'] || '';
 const fmtDur = s => { s = Math.max(0, Math.round(+s || 0)); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
-const quiet = () => REDUCED || FX.paused;   // no video motion under reduced motion or the #fxPause 'still' state
+const quiet = () => REDUCED;   // no video motion under reduced motion
 const ICON_EXPAND = '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M8.5 2.5h3v3M5.5 11.5h-3v-3M11.5 2.5 8 6M2.5 11.5 6 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const FEAT_ON = new Set();   // featured tiles currently on screen
 function vidSources(v, d){
@@ -2610,17 +2337,11 @@ function stepDemo(k){ const n = DEMOS().length; if ($('vbox').hidden || n < 2) r
 /* ---------- downloads: totals + one bar per repository ---------- */
 const LIVE = {ok:false, src:null, at:null};
 function renderDownloads(){
-  const fams = Object.fromEntries(DATA.families.map(f => [f.id, display(f)]));
-  // Totals cover every published repository; only the list below hides repos with no downloads yet.
-  const hub = [...DATA.families.flatMap(f => f.repos.map(r => ({...r, fid:f.id}))), ...(DATA.extra || [])].filter(onHub);
-  const repos = hub.filter(repoVis).sort((a,b) => dlAll(b) - dlAll(a) || a.repo.localeCompare(b.repo));
-  const tot = hub.reduce((s,r) => s + dlAll(r), 0), t30 = hub.reduce((s,r) => s + dl30(r), 0), likes = hub.reduce((s,r) => s + (r.likes || 0), 0);
+  // Totals cover every published repository.
+  const hub = [...DATA.families.flatMap(f => f.repos), ...(DATA.extra || [])].filter(onHub);
+  const tot = hub.reduce((s,r) => s + dlAll(r), 0), likes = hub.reduce((s,r) => s + (r.likes || 0), 0);
   const published = DATA.families.filter(f => f.repos.some(onHub)).length;
-  const max = Math.max(1, ...repos.map(dlAll));
   $('omStats').innerHTML = [[tot, t('om.s.dl')], [likes, t('om.s.likes')], [published, t('om.s.m')]].map(([v, k]) => `<div><dt>${esc(k)}</dt><dd>${v.toLocaleString('en-US')}</dd></div>`).join('');
-  $('dlList').innerHTML = repos.map((r,i) => `<a class="dl-row" href="${HF+r.repo}" target="_blank" rel="noopener" style="--i:${i}"><span class="dl-name"><b>${esc(r.repo.split('/')[1])}</b><small>${esc(r.format)} · ${esc(fams[r.fid] || t('new'))}${r.createdAt ? ' · ' + fmtDate(r.createdAt) : ''}</small></span><span class="dl-bar"><i style="--w:${dlAll(r) ? Math.max(2, dlAll(r)/max*100).toFixed(1) : 0}%"></i></span><span class="dl-num"><b>${dlAll(r).toLocaleString('en-US')}<span class="sr-only"> ${t('dl.unit')}</span></b><small>${t('dl.30s')} · ${dl30(r).toLocaleString('en-US')}</small></span></a>`).join('');
-  $('repoSum').textContent = t('dl.allrepos').replace('{n}', repos.length);
-
 }
 const guessFormat = id => /gguf/i.test(id) ? 'GGUF' : /mlx/i.test(id) ? 'MLX' : 'HF';
 function applyStats(list, src, at){
@@ -2632,14 +2353,8 @@ function applyStats(list, src, at){
   LIVE.ok = true; LIVE.src = src; LIVE.at = at;
   const changed = before !== JSON.stringify(DATA.families.map(f => f.repos.map(r => [dlAll(r), dl30(r), r.likes]))) || DATA.extra.length;
   if (changed){
-    const keepAnim = mAnim; mAnim = false;
-    if (visKey() !== HERO.vk){
-      HERO.vk = visKey(); const j = VIS().findIndex(f => f.id === HERO.id); HERO.i = j >= 0 ? j : heroDefault();
-      renderHeroTabs(); heroStage(false); renderBench(); renderQS(false); applyVisibility();
-      if (!$('srch').hidden) renderSearch();
-    }
-    renderModels(); renderSpecs(VIS()[HERO.i]); drawDrawer();
-    mAnim = keepAnim; setupReveal();
+    if (visKey() !== visSeen){ visSeen = visKey(); renderBench(); applyVisibility(); if (!$('srch').hidden) renderSearch(); }
+    drawDrawer(); setupReveal();
   }
   renderDownloads();
 }
@@ -2857,29 +2572,12 @@ python jev_decision_client.py --url http://127.0.0.1:8080 \\
   --options negative positive`},
 ];
 const QS_FOR = {'v4-2b':'pip', 'v3-2b':'b2t', v3:'v3t', macjev:'mj', v2:'v2g', 'cascade-9b':'c9'};
-let qsActive = 'start-torch', qsAuto = false, qsVis = false;
 function hl(code){
   return esc(code).split('\n').map(line => {
     const i = line.indexOf('#'); let head = i>=0 ? line.slice(0,i) : line; const tail = i>=0 ? `<span class="c1">${line.slice(i)}</span>` : '';
     head = head.replace(/(&quot;.*?&quot;)|\b(from|import|print|python|hf|cd|llama-server|git|sh|pip)\b/g, (m, s, k) => s ? `<span class="s2">${s}</span>` : `<span class="k">${k}</span>`);   // one pass (patch_9b.py)
     return head + tail;
   }).join('\n');
-}
-function renderQS(swap){
-  if (!QSV().some(x => x.id === qsActive)) qsActive = (QSV()[0] || QS[0]).id;
-  const q = QS.find(x => x.id===qsActive);
-  keepFocus($('qsTabs'), () => $('qsTabs').innerHTML = QSV().map(x => `<button type="button" role="tab" class="tab" id="qs-${x.id}" data-qs="${x.id}" aria-controls="qsPanel" aria-selected="${x.id===qsActive}" tabindex="${x.id===qsActive ? 0 : -1}"><span class="cd" aria-hidden="true"></span>${esc(x.label)}</button>`).join(''));
-  $('qsPanel').setAttribute('aria-labelledby', 'qs-' + qsActive);
-  $('qsFile').textContent = q.file;
-  $('qsCode').innerHTML = hl(q.code);
-  if (swap){ $('qsCode').classList.remove('swap'); void $('qsCode').offsetWidth; $('qsCode').classList.add('swap'); }
-  $('qsRepo').href = q.url || HF + q.repo;
-  qsArm();
-}
-function qsArm(){
-  $('qsTabs').querySelectorAll('.tab.run').forEach(b => b.classList.remove('run'));
-  const b = $('qsTabs').querySelector('[aria-selected="true"]');
-  if (b && qsAuto && qsVis){ void b.offsetWidth; b.classList.add('run'); }
 }
 
 /* ---------- charts (drawer) ---------- */
@@ -3026,8 +2724,9 @@ function searchItems(){
   return [
     ...VIS().map(f => ({label:display(f), sub:t('cat.model'), open:f.id})),
     ...VIS().flatMap(f => f.repos).filter(repoVis).map(r => ({label:r.repo.split('/')[1], sub:r.format, href:HF+r.repo})),
-    ...DATA.planned.map(x => ({label:x.name, sub:t('cat.plan'), hash:'#models'})),
-    ...[['#try','ex.h'],['#api-code','code.h'],['#use-cases','uc.h'],['#open-models','om.k'],['#models','sec.models'],['#downloads','nav.dl'],['#benchmarks','nav.bench'],['#developers','nav.dev'],['#start','fc.api.h'],['#about','nav.about'],['#contact','f.contact']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
+    ...DATA.planned.map(x => ({label:x.name, sub:t('cat.plan'), href:'/models/'})),
+    ...[['#try','ex.h'],['#use-cases','uc.h'],['#benchmarks','nav.bench'],['#start','fc.api.h']].map(([h,k]) => ({label:t(k), sub:t('page'), hash:h})),
+    ...[['/models/','sec.models'],['/api/','nav.docs'],['/updates/','news.h'],[lang === 'zh' ? '/zh/about/' : '/about/','nav.about'],[lang === 'zh' ? '/zh/contact/' : '/contact/','f.contact']].map(([href,k]) => ({label:t(k), sub:t('page'), href})),
   ];
 }
 function renderSearch(){
@@ -3058,7 +2757,7 @@ function setMenu(open){
 }
 
 /* ---------- reveal (below-the-fold only) and heading sweep ---------- */
-let revIO, sweepSet = false;
+let revIO;
 function setupReveal(){
   if (REDUCED || !('IntersectionObserver' in window)) return;
   revIO = revIO || new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.remove('pre'); e.target.querySelectorAll('dd[data-v]').forEach(d => countUp(d, d.dataset.v)); e.target.querySelectorAll('[data-cu]').forEach(d => countUp(d, d.dataset.cu)); revIO.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
@@ -3066,9 +2765,6 @@ function setupReveal(){
     if (el.classList.contains('rv') || el.getBoundingClientRect().top < innerHeight) return;
     el.classList.add('rv','pre'); el.style.transitionDelay = (el.parentElement && el.parentElement.id === 'kStats' ? i%4 * 110 : (i%3)*80) + 'ms'; revIO.observe(el);
   }));
-  if (sweepSet) return; sweepSet = true;
-  const tio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('go'); tio.unobserve(e.target); } }), {rootMargin:'0px 0px -15% 0px'});
-  if ($('ctaH').getBoundingClientRect().top > innerHeight) tio.observe($('ctaH'));
 }
 
 /* ---------- hosted API half (2026-10-08): live example, code tabs, status, theme ---------- */
@@ -3098,66 +2794,6 @@ const EX_RES = `{
   "usage": {"input_tokens": 144, "output_tokens": 0},
   "latency_ms": 29.7
 }`;
-const API_CODE = [
- {id:'curl', label:'curl', file:'shell', cm:'#', code:`curl https://api.jevstyle.com/v1/systemone \\
-  -H "Authorization: Bearer $JEV_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "state": "Hi, I was billed twice for my March plan. Please refund one of them today.",
-    "questions": {
-      "refund": {"type": "noul", "instructions": "The customer asks for money back."},
-      "team": {"type": "choice", "instructions": "Which team should handle this?",
-               "criteria": {"billing": "charges, refunds, invoices",
-                            "tech": "bugs, outages", "sales": null}},
-      "urgency": {"type": "score", "instructions": "How urgent is it?",
-                  "criteria": ["can wait", "this week", "today"]}
-    }
-  }'`},
- {id:'py', label:'Python', file:'python · requests', cm:'#', code:`import os, requests
-
-resp = requests.post(
-    "https://api.jevstyle.com/v1/systemone",
-    headers={"Authorization": f"Bearer {os.environ['JEV_API_KEY']}"},
-    json={
-        "state": "Hi, I was billed twice for my March plan. Please refund one of them today.",
-        "questions": {
-            "refund": {"type": "noul", "instructions": "The customer asks for money back."},
-            "team": {"type": "choice", "instructions": "Which team should handle this?",
-                     "criteria": {"billing": "charges, refunds, invoices",
-                                  "tech": "bugs, outages", "sales": None}},
-            "urgency": {"type": "score", "instructions": "How urgent is it?",
-                        "criteria": ["can wait", "this week", "today"]},
-        },
-    },
-    timeout=30,
-)
-resp.raise_for_status()
-answers = resp.json()["answers"]
-print(answers["team"]["choice"], answers["refund"]["noul"])   # billing 0.967`},
- {id:'js', label:'JavaScript', file:'call.mjs · Node 18+', cm:'//', code:`// Server-side only: keep your key out of browser code.
-const res = await fetch("https://api.jevstyle.com/v1/systemone", {
-  method: "POST",
-  headers: {
-    "Authorization": \`Bearer \${process.env.JEV_API_KEY}\`,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    state: "Hi, I was billed twice for my March plan. Please refund one of them today.",
-    questions: {
-      refund: { type: "noul", instructions: "The customer asks for money back." },
-      team: { type: "choice", instructions: "Which team should handle this?",
-              criteria: { billing: "charges, refunds, invoices", tech: "bugs, outages", sales: null } },
-      urgency: { type: "score", instructions: "How urgent is it?",
-                 criteria: ["can wait", "this week", "today"] },
-    },
-  }),
-});
-if (!res.ok) throw new Error(\`HTTP \${res.status}\`);
-const { answers } = await res.json();
-console.log(answers.team.choice, answers.urgency.score);   // billing 1.63`},
- {id:'res', lk:'code.res', file:'200 OK · application/json', json:true, code:EX_RES},
-];
-let apActive = 'curl';
 // one highlighted line per block span, so long lines wrap with a hanging indent instead of scrolling sideways
 const STR = String.raw`"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|` + '`(?:[^`\\\\]|\\\\.)*`';
 const KW = String.raw`\b(import|from|const|await|if|throw|new|print|curl|None|null|true|false)\b`;
@@ -3178,41 +2814,11 @@ function hlLine(s, re, json){
 }
 const codeLines = (code, re, json) => code.split('\n').map((l, i) => `<span class="ln" style="--h:${(l.match(/^ */)[0].length + 4)}ch;--i:${i}">${hlLine(l, re, json) || ' '}</span>`).join('');
 const p3 = v => (+v).toFixed(3);
-function renderApiCode(swap){
-  const q = API_CODE.find(x => x.id === apActive);
-  keepFocus($('apTabs'), () => $('apTabs').innerHTML = API_CODE.map(x => `<button type="button" role="tab" class="tab" id="ap-${x.id}" data-ap="${x.id}" aria-controls="apPanel" aria-selected="${x.id===apActive}" tabindex="${x.id===apActive ? 0 : -1}">${esc(x.lk ? t(x.lk) : x.label)}</button>`).join(''));
-  $('apPanel').setAttribute('aria-labelledby', 'ap-' + apActive);
-  $('apFile').textContent = q.file;
-  $('apCode').classList.remove('typing');
-  $('apCode').innerHTML = q.json ? codeLines(q.code, RE_JSON, true) : codeLines(q.code, RE_CODE[q.cm], false);
-  if (swap){ $('apCode').classList.remove('typing', 'swap'); void $('apCode').offsetWidth; $('apCode').classList.add('swap'); }
-  const run = $('apRun'); run.hidden = !apPlayed || apActive === 'res';
-  if (apPlayed && !APRUN.busy) run.innerHTML = runDone();
-}
 /* the request types in once when the code first comes into view, then the 200 shows the response's own GPU time (latency_ms 29.7) */
-let apPlayed = false;
-const APRUN = {busy:false};
-const runDone = () => `<i class="ok" aria-hidden="true"></i><span>${esc(t('run.ok').replace('{s}', '0.03'))}</span><button type="button" class="run-see" data-ap="res">${esc(t('run.see'))} <span aria-hidden="true">&rarr;</span></button>`;
-function apPlay(){
-  if (apPlayed) return; apPlayed = true;
-  const pre = $('apCode'), run = $('apRun');
-  if (REDUCED){ renderApiCode(false); return; }
-  pre.classList.remove('swap', 'typing'); void pre.offsetWidth; pre.classList.add('typing');
-  const n = pre.querySelectorAll('.ln').length;
-  APRUN.busy = true;
-  setTimeout(() => {
-    if (apActive === 'res'){ APRUN.busy = false; return; }
-    run.hidden = false; run.innerHTML = `<i aria-hidden="true"></i><span>${esc(t('run.send'))}</span><b>0.00 s</b>`;
-    const b = run.querySelector('b'), t0 = performance.now();
-    const step = now => { const k = Math.min(1, (now - t0) / 300); b.textContent = (0.03 * k).toFixed(2) + ' s'; if (k < 1) requestAnimationFrame(step); else { APRUN.busy = false; renderApiCode(false); } };
-    requestAnimationFrame(step);
-  }, n * 45 + 380);
-}
 // live status: inference_ready:true -> "API operational"; any other answer -> "Inference unavailable"; no answer (network, CORS, timeout) -> no pill
 const API_UP = {s:null};
 function renderStatus(){
   const note = document.querySelector('.maint'); if (note) note.hidden = API_UP.s === 'up';
-  $('kApiStatus').textContent = API_UP.s ? t(API_UP.s === 'up' ? 'st.up' : 'st.down') : '—';
   document.querySelectorAll('.api-status').forEach(el => {
     el.hidden = !API_UP.s; if (!API_UP.s) return;
     el.dataset.state = API_UP.s; el.lastElementChild.textContent = t(API_UP.s === 'up' ? 'st.up' : 'st.down');
@@ -3229,13 +2835,6 @@ async function apiHealth(){
   renderStatus();
 }
 // "Downloads" and "Recent releases" now live in the collapsed "All N repositories" list; old #downloads / #releases links open it
-function reposFromHash(h){
-  if (h !== 'downloads' && h !== 'releases') return false;
-  const d = $('downloads'); d.open = true;
-  requestAnimationFrame(() => d.scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth'}));
-  return true;
-}
-function reposBars(){ if (REDUCED) return; const l = $('dlList'); l.classList.add('pre'); void l.offsetWidth; requestAnimationFrame(() => l.classList.remove('pre')); }
 
 
 /* ---------- v3: tabbed noul / choice / score feature built from the real request/response ---------- */
@@ -3308,7 +2907,7 @@ function tickPlay(){
     const ex = tickBuild(); $('tkTxt').textContent = ex.state; $('tkT').textContent = 'GPU ' + ex.s + ' s'; el.classList.add('done'); return;
   }
   const live = () => run === TICK.run;
-  const later = (fn, ms) => { TICK.tm = setTimeout(() => { if (!live()) return; if (!TICK.vis || document.hidden || FX.paused){ later(fn, 400); return; } fn(); }, ms); };
+  const later = (fn, ms) => { TICK.tm = setTimeout(() => { if (!live()) return; if (!TICK.vis || document.hidden){ later(fn, 400); return; } fn(); }, ms); };
   const playOne = i => {
     const ex = tickBuild(i), txt = $('tkTxt'), clock = $('tkT');
     el.classList.remove('done', 'out');
@@ -3348,15 +2947,11 @@ const repoVis = r => dlAll(r) > 0 || (!!r.fresh && onHub(r));   // site_v4.py: f
 const famVis = f => !!f && f.repos.some(repoVis);
 const VIS = () => DATA.families.filter(famVis);
 const repoOf = id => DATA.families.flatMap(f => f.repos).find(r => r.repo === id);
-const qsFam = q => q.repo ? DATA.families.find(f => f.repos.some(r => r.repo === q.repo)) : fam('v4-2b');
-const QS_HOME = ['start-torch', 'start-mac', 'pip'];   // home page tabs; every model's own snippet is still in its drawer
-const QSV = () => QS.filter(q => { const r = q.repo && repoOf(q.repo); return QS_HOME.includes(q.id) && famVis(qsFam(q)) && (!r || repoVis(r)); });
 const visKey = () => VIS().map(f => f.id).join() + '|' + DATA.families.flatMap(f => f.repos).filter(repoVis).map(r => r.repo).join();
 function applyVisibility(){
   document.querySelectorAll('footer [data-open], [data-fam]').forEach(el => { const f = fam(el.dataset.fam || el.dataset.open); if (f) el.hidden = !famVis(f); });
   document.querySelectorAll('footer [data-repo]').forEach(el => { const r = repoOf(el.dataset.repo); if (r) el.hidden = !repoVis(r); });
 }
-function heroDefault(){ const v = VIS(), i = v.findIndex(f => f.id === 'v4-2b'); return i >= 0 ? i : 0; }
 
 /* ---------- v3: use cases (four open a recorded demo, two point to the Playground) ---------- */
 const UCS = [
@@ -3403,14 +2998,11 @@ function applyText(){
   $('langBtn').textContent = lang==='zh' ? 'English' : '中文';
   $('langBtn').setAttribute('aria-label', lang==='zh' ? 'Switch to English' : '切换到中文');
   $('langBtn').lang = lang==='zh' ? 'en' : 'zh-CN';
-  $('langBtn2').lastElementChild.textContent = t('lang.name');
-  $('langBtn2').setAttribute('aria-label', $('langBtn').getAttribute('aria-label'));
   document.title = t('title3');
-  const pb = $('fxPause'); pb.innerHTML = FX.paused ? ICON_PLAY : ICON_PAUSE; pb.setAttribute('aria-label', t(FX.paused ? 'play' : 'pause'));
 }
 function renderAll(){
   applyText(); words($('heroTitle'), t('h3.title'));
-  renderHeroTabs(); heroStage(false); renderUseCases(); renderModels(); renderDownloads(); renderBench(); renderQS(false); renderTypes(false); renderApiCode(false); renderStatus(); applyVisibility(); drawDrawer(); tickBuild(); tickPlay(); ucWatch();
+  renderUseCases(); renderDownloads(); renderBench(); renderTypes(false); renderStatus(); applyVisibility(); drawDrawer(); tickBuild(); tickPlay(); ucWatch();
   if (!$('srch').hidden) renderSearch();
   if (!$('vbox').hidden) vbFill();
   scrubWords(); sxCollect(); sxFrame();
@@ -3426,29 +3018,22 @@ document.querySelectorAll('.bn').forEach(e => e.textContent = DATA.brand);
 document.querySelectorAll('.hf').forEach(a => a.href = HF + DATA.author);
 document.querySelectorAll('.dc').forEach(a => a.href = DATA.discord);
 document.querySelectorAll('[data-repo]').forEach(a => a.href = HF + a.dataset.repo);
-$('email').textContent = DATA.email;
 $('menuBtn').innerHTML = ICON_MENU;
 
 document.addEventListener('click', e => {
   if (e.target.closest('#docsBtn')){ setDocs($('docsMenu').hidden); return; }
   if (!$('docsMenu').hidden && !e.target.closest('#docsMenu')) setDocs(false);
   const so = e.target.closest('[data-sopen]'); if (so){ closeSearch(); openDrawer(so.dataset.sopen); return; }
-  const sh = e.target.closest('[data-shash]'); if (sh){ closeSearch(); if (!reposFromHash(sh.dataset.shash.slice(1))) document.querySelector(sh.dataset.shash)?.scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth'}); return; }
+  const sh = e.target.closest('[data-shash]'); if (sh){ closeSearch(); document.querySelector(sh.dataset.shash)?.scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth'}); return; }
   if (e.target.closest('#srch a')){ closeSearch(); return; }
   if (e.target.closest('.fchips a')) return;
-  const hm = e.target.closest('[data-hm]'); if (hm){ HERO.auto = false; HERO.i = +hm.dataset.hm; renderHeroTabs(); heroStage(true); return; }
-  const mf = e.target.closest('[data-mf]'); if (mf){ mFilter = mf.dataset.mf; mAnim = true; renderModels(); return; }
   const dm = e.target.closest('[data-demo]'); if (dm){ openDemo(+dm.dataset.demo); return; }
   const o = e.target.closest('[data-open]'); if (o){ e.preventDefault(); openDrawer(o.dataset.open); return; }
-  if (e.target.closest('a[href="#downloads"], a[href="#releases"]')) $('downloads').open = true;
   const dmm = e.target.closest('[data-demo-media]'); if (dmm){ openDemo(+dmm.dataset.demoMedia); return; }
-  const ap = e.target.closest('[data-ap]'); if (ap){ apActive = ap.dataset.ap; renderApiCode(true); return; }
   const ty = e.target.closest('[data-ty]'); if (ty){ tyActive = ty.dataset.ty; renderTypes(true); return; }
-  const q = e.target.closest('[data-qs]'); if (q){ qsAuto = false; qsActive = q.dataset.qs; renderQS(true); return; }
   if (e.target.closest('#mnav a')) setMenu(false);
 });
 $('langBtn').addEventListener('click', () => setLang(lang==='zh' ? 'en' : 'zh'));
-$('langBtn2').addEventListener('click', () => setLang(lang==='zh' ? 'en' : 'zh'));
 $('menuBtn').addEventListener('click', () => setMenu($('mnav').hidden));
 $('searchBtn').addEventListener('click', openSearch);
 $('srchScrim').addEventListener('click', closeSearch);
@@ -3466,68 +3051,44 @@ $('vbScrim').addEventListener('click', closeDemo);
 $('vbPrev').addEventListener('click', () => stepDemo(-1));
 $('vbNext').addEventListener('click', () => stepDemo(1));
 document.addEventListener('visibilitychange', featArm);
-$('copyBtn').addEventListener('click', e => copy(QS.find(x => x.id===qsActive).code, e.currentTarget, $('qsCode')));
-$('copyEmail').addEventListener('click', e => copy(DATA.email, e.currentTarget, $('email')));
 $('ring')?.addEventListener('animationend', e => { if (e.animationName === 'ring') carGo(CAR.i + 1); });
 $('carNext')?.addEventListener('click', () => { carStop(); carGo(CAR.i + 1); });
 $('carPrev')?.addEventListener('click', () => { carStop(); carGo(CAR.i - 1); });
 ['pointerdown','wheel','focusin'].forEach(ev => $('carTrack').addEventListener(ev, carStop, {passive:true}));
-$('fxPause').addEventListener('click', e => { e.preventDefault(); setPaused(!FX.paused); });
-$('switcher').addEventListener('focusin', e => { if (HERO.auto && e.target !== $('fxPause')){ HERO.auto = false; heroArm(); } });
-$('developers').addEventListener('focusin', () => { if (qsAuto){ qsAuto = false; qsArm(); } });
-[$('mTabs'), $('qsTabs'), $('apTabs'), $('tyTabs')].forEach(list => list.addEventListener('keydown', e => {
-  const tabs = [...list.querySelectorAll('[role=tab]')], i = tabs.indexOf(document.activeElement);
-  const n = {ArrowRight:i+1, ArrowLeft:i-1, Home:0, End:tabs.length-1, ...(list === $('qsTabs') ? {ArrowDown:i+1, ArrowUp:i-1} : {})}[e.key];
+$('tyTabs').addEventListener('keydown', e => {
+  const tabs = [...$('tyTabs').querySelectorAll('[role=tab]')], i = tabs.indexOf(document.activeElement);
+  const n = {ArrowRight:i+1, ArrowLeft:i-1, Home:0, End:tabs.length-1}[e.key];
   if (i < 0 || n === undefined) return;
   e.preventDefault();
-  const b = tabs[(n + tabs.length) % tabs.length], key = list === $('mTabs') ? 'hm' : list === $('apTabs') ? 'ap' : list === $('tyTabs') ? 'ty' : 'qs', val = b.dataset[key];
-  b.click(); list.querySelector(`[data-${key}="${val}"]`)?.focus();
-}));
-addEventListener('hashchange', () => { const h = location.hash.slice(1); if (fam(h)) openDrawer(h); else reposFromHash(h); });
-$('docsDd').addEventListener('focusout', e => { if (!$('docsDd').contains(e.relatedTarget)) setDocs(false); });
-$('apCopy').addEventListener('click', e => copy(API_CODE.find(x => x.id === apActive).code, e.currentTarget, $('apCode')));
-$('pipCopy').addEventListener('click', e => copy('pip install jev-style', e.currentTarget, $('pipCode')));
-$('downloads').addEventListener('toggle', () => { if ($('downloads').open) reposBars(); });
-$('carTrack').addEventListener('scroll', () => { if (CAR.auto) return; const tr = $('carTrack'), w = tr.firstElementChild.offsetWidth + 24; CAR.i = Math.round(tr.scrollLeft / w); }, {passive:true});
-$('mTabs').addEventListener('animationend', e => {
-  if (!e.target.classList.contains('cd')) return;
-  HERO.i = (HERO.i + 1) % VIS().length; renderHeroTabs(); heroStage(true);
+  const b = tabs[(n + tabs.length) % tabs.length], val = b.dataset.ty;
+  b.click(); $('tyTabs').querySelector(`[data-ty="${val}"]`)?.focus();
 });
+addEventListener('hashchange', () => { const h = location.hash.slice(1); if (fam(h)) openDrawer(h); });
+$('docsDd').addEventListener('focusout', e => { if (!$('docsDd').contains(e.relatedTarget)) setDocs(false); });
+$('pipCopy').addEventListener('click', e => copy('pip install jev-style', e.currentTarget, $('pipCode')));
+$('carTrack').addEventListener('scroll', () => { if (CAR.auto) return; const tr = $('carTrack'), w = tr.firstElementChild.offsetWidth + 24; CAR.i = Math.round(tr.scrollLeft / w); }, {passive:true});
 $('tyTabs').addEventListener('animationend', e => {
   if (!e.target.classList.contains('cd')) return;
   tyActive = TY[(TY.indexOf(tyActive) + 1) % TY.length]; renderTypes(true);
 });
 $('try').addEventListener('focusin', () => { if (tyAuto){ tyAuto = false; tyArm(); } });
 $('try').addEventListener('pointerdown', () => { if (tyAuto){ tyAuto = false; tyArm(); } });
-$('qsTabs').addEventListener('animationend', e => {
-  if (!e.target.classList.contains('cd')) return;
-  const V = QSV(), i = V.findIndex(x => x.id===qsActive); qsActive = V[(i+1) % V.length].id; renderQS(true);
-});
-
 const redraw = () => drawDrawer();
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', redraw);
 new MutationObserver(redraw).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
 if ('ResizeObserver' in window){
-  let fz, fw = 0, fh = 0;
-  new ResizeObserver(() => { const w = $('fxWrap').clientWidth, h = $('fxWrap').clientHeight; if (w === fw && h === fh) return; const first = !fw; fw = w; fh = h; if (first) return; clearTimeout(fz); fz = setTimeout(() => { fxSetup(); if (REDUCED) fxStill(); }, 100); }).observe($('fxWrap'));
   let rz, lastW = 0;
   new ResizeObserver(() => { if (document.body.clientWidth === lastW) return; lastW = document.body.clientWidth; clearTimeout(rz); rz = setTimeout(() => { drawDrawer(); if (innerWidth > 1023) setMenu(false); }, 100); }).observe(document.body);
 }
 
 const SX = {els:[], cards:[]};   // filled by sxCollect() in renderAll()
-HERO.i = heroDefault(); HERO.vk = visKey();
+visSeen = visKey();
 renderAll();
 if ('IntersectionObserver' in window){
-  new IntersectionObserver(es => { FX.vis = HERO.vis = es[es.length-1].isIntersecting; heroArm(); }).observe($('fxWrap'));
-  new IntersectionObserver(es => { if (es[0].isIntersecting){ $('fxWrap').classList.add('go'); } }, {rootMargin:'0px 0px -10% 0px'}).observe($('fxWrap'));
   new IntersectionObserver(es => { CAR.vis = es[es.length-1].isIntersecting; carArm(); }, {threshold:.35}).observe($('benchmarks'));
-  new IntersectionObserver(es => { qsVis = es[es.length-1].isIntersecting; qsArm(); }, {threshold:.35}).observe($('developers'));
   new IntersectionObserver(es => { TICK.vis = es[es.length-1].isIntersecting; }).observe($('tick'));
   new IntersectionObserver(es => { tyVis = es[es.length-1].isIntersecting; tyArm(); }, {threshold:.35}).observe($('try'));
-  const aio = new IntersectionObserver(es => { if (es[es.length-1].isIntersecting){ apPlay(); aio.disconnect(); } }, {threshold:.35});
-  aio.observe($('apPanel'));
-} else { $('fxWrap').classList.add('go'); apPlayed = true; renderApiCode(false); }
-if (!REDUCED) $('fxWrap').classList.add('anim');
+}
 
 /* Apple-style scroll motion: each [data-sx] element gets --p in 0..1 from its place in the viewport.
    exit  - the hero sinks and fades as it scrolls away; enter - the model banner grows to full size;
@@ -3563,12 +3124,9 @@ function sxFrame(){
   SX.cards.forEach(c => { const r = c.getBoundingClientRect(); if (r.top > H * 1.5 || r.bottom < 0) return; c.style.setProperty('--p', clamp((H - r.top) / (H * .55)).toFixed(3)); });
 }
 let ticking = false;
-addEventListener('scroll', () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; fxScroll(); sxFrame(); $('hdr').classList.toggle('scrolled', scrollY > 4); }); }, {passive:true});
+addEventListener('scroll', () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; sxFrame(); $('hdr').classList.toggle('scrolled', scrollY > 4); }); }, {passive:true});
 addEventListener('resize', () => requestAnimationFrame(sxFrame), {passive:true});
 
-fxStart();
-setTimeout(() => $('stSpecs').querySelectorAll('dd').forEach(dd => countUp(dd, dd.dataset.v)), REDUCED ? 0 : 450);
-fxScroll();
 setupReveal();
 if ('IntersectionObserver' in window && !REDUCED && $('tyAns').getBoundingClientRect().top > innerHeight){
   $('tyAns').classList.add('pre');
@@ -3577,8 +3135,10 @@ if ('IntersectionObserver' in window && !REDUCED && $('tyAns').getBoundingClient
 }
 liveStats();
 apiHealth();
-const h = location.hash.slice(1), OLD = {api:'try', resources:'start', production:'api-code', spotlight:'models', timeline:'models'};
-if (fam(h)) openDrawer(h); else if (OLD[h]) requestAnimationFrame(() => $(OLD[h]).scrollIntoView()); else reposFromHash(h);
+// Sections that moved to their own pages keep working from old links.
+const h = location.hash.slice(1), OLD = {api:'try', resources:'start'};
+const MOVED = {models:'/models/', 'open-models':'/models/', switcher:'/models/', spotlight:'/models/', timeline:'/models/', downloads:'/models/', releases:'/updates/', developers:'/models/#run', 'api-code':'/api/', production:'/api/', 'build-guides':'/guides/', about:lang === 'zh' ? '/zh/about/' : '/about/', contact:lang === 'zh' ? '/zh/contact/' : '/contact/'};
+if (MOVED[h]) location.replace(MOVED[h]); else if (fam(h)) openDrawer(h); else if (OLD[h]) requestAnimationFrame(() => $(OLD[h]).scrollIntoView());
 })();
 </script>
 
