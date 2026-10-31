@@ -12,7 +12,7 @@
   "reviewed": "2026-10-29",
   "hostedApi": {
     "status": "operational",
-    "model": "Jev-Style Decision 2B v4 Q4_K_M",
+    "model": "Jev-Style Decision 2B v4",
     "dailyQuota": 10000,
     "inputTokenLimit": 8000,
     "textOnly": true,
