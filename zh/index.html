@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap">
 <style>
 :root{
   --bg:#FFFFFF; --ink:#0D0D0F; --ink2:#5E5E66; --ink3:#6B6B73; --line:#ECECEF; --soft:#F3F3F5; --soft2:#E4E4E8; --cell:#FFFFFF;
@@ -886,7 +886,6 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 
 .api-reference-note{color:var(--ink2);line-height:1.6;max-width:850px;margin:-12px 0 24px}.project-faq{max-width:850px;line-height:1.7;margin-top:28px}.project-faq h3{font-size:20px;margin:24px 0 8px}.project-faq p{color:var(--ink2);margin-bottom:14px}.project-faq a{text-decoration:underline;text-underline-offset:3px}
 
-.current-project-facts{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px clamp(32px,4vw,64px);padding:56px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.6}.current-project-facts h2{font-size:clamp(20px,1.8vw,24px);line-height:1.25}.current-project-facts dl{margin:0}.current-project-facts dl>div{display:grid;grid-template-columns:9.5em minmax(0,1fr);gap:4px 16px;padding:14px 0;border-top:1px solid var(--line)}.current-project-facts dl>div:first-child{border-top:0;padding-top:0}.current-project-facts dt{color:var(--ink3)}.current-project-facts dd{margin:0;color:var(--ink2)}.current-project-facts strong{font-weight:500;color:var(--ink)}.current-project-facts a{text-decoration:underline;text-underline-offset:3px}.current-project-facts .facts-date{margin-top:8px;font-size:12px;color:var(--ink3)}@media (max-width:860px){.current-project-facts{grid-template-columns:minmax(0,1fr)}.current-project-facts dl>div{grid-template-columns:minmax(0,1fr)}}
 
 </style>
 <link rel="alternate" hreflang="en" href="https://jevstyle.com/">
@@ -931,38 +930,25 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
   <section class="h3" id="hero" aria-labelledby="heroTitle">
     <div class="h3-main">
     <h1 id="heroTitle">AI Agent 的<em>本地</em>分类与路由</h1>
-    <p class="h3-sub" data-i18n="h3.sub">在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。</p>
+    <p class="h3-sub" data-i18n="h3.sub">小型开放模型，一次调用给每个选项打分。可本地运行，也可用免费 API。</p>
     <div class="h3-nums">
       <dl class="om-stats" id="omStats"><!--prerender:omStats--><div><dt>下载</dt><dd>59,397</dd></div><div><dt>点赞</dt><dd>91</dd></div><div><dt>模型</dt><dd>7</dd></div><!--/prerender:omStats--></dl>
-      <p class="stats-note"><span data-i18n="om.note">Hugging Face 文件请求次数，并非独立用户数。</span> <a href="https://huggingface.co/docs/hub/models-download-stats" data-i18n="om.note.how">统计口径</a></p>
+      <p class="stats-note" data-i18n="om.note">Hugging Face 文件请求次数，非独立用户。</p>
     </div>
     <div class="h3-acts">
       <a class="pill dark lg" href="/register/" data-track="api_key_open" data-i18n="h3.key">免费获取 API key</a>
       <a class="pill soft lg" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="start.demo">体验 Demo</a>
-      <a class="pill soft lg" href="/models/#run" data-track="quickstart_open" data-i18n="start.local">本地运行</a>
+      <a class="more" href="/models/#run" data-track="quickstart_open"><span data-i18n="start.local">本地运行</span> <span class="ar" aria-hidden="true">&rarr;</span></a>
     </div>
-    <p class="h3-status"><span class="api-status" hidden><i aria-hidden="true"></i><span></span></span></p>
+    <div class="h3-foot"><span class="api-status" hidden><i aria-hidden="true"></i><span></span></span><ul class="proof" data-i18n-aria="pr.label"><li><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face</a></li><li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener">PyPI</a></li><li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener">GitHub</a></li><li>Apache-2.0</li></ul></div>
     </div>
-    <aside class="h3-news" aria-labelledby="h3NewsH"><div class="h3-news-head"><h2 id="h3NewsH" data-i18n="news.h">最新动态</h2><a href="/updates/" data-i18n="news.all">全部更新</a></div><ol class="h3-news-list" id="h3News"><!--prerender:h3News--><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.2">jev-style 0.6.2</a></li><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.1">jev-style 0.6.1：更快上手本地工作流</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>模型</span><a href="/models/2b-v4/">Jev-Style 2B v4</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.0">jev-style 0.6.0</a></li><li><time datetime="2026-10-17">2026-10-17</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.5.0">jev-style 0.5.0</a></li><!--/prerender:h3News--></ol></aside>
+    <div class="h3-demo"><div class="tick" id="tick" aria-hidden="true"></div></div>
   </section>
 
-  <section class="ann" id="announcement" aria-labelledby="annH">
-    <div class="ann-top"><p class="ann-k" data-i18n="ann.k">公告</p><time datetime="2026-10-27">2026-10-27</time></div>
-    <div class="ann-body">
-      <div><h2 id="annH" data-i18n="ann.h">Jev-Style 2B v4 可以读图</h2><p data-i18n="ann.p">第一个支持图片输入的模型（PyTorch 版）。</p><a class="pill" href="/models/2b-v4/" data-i18n="ann.a">了解 2B v4</a></div>
-      <div class="tick" id="tick" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <ul class="proof" data-i18n-aria="pr.label">
-    <li><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener"><b>Hugging Face</b><span data-i18n="om.k">开源模型</span></a></li>
-    <li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener"><b>PyPI</b><span data-i18n="pr.pypi">jev-style 包</span></a></li>
-    <li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener"><b>GitHub</b><span data-i18n="pr.gh">源代码</span></a></li>
-    <li><span><b>Apache-2.0</b><span data-i18n="pr.weights">开源权重</span></span></li>
-  </ul>
+  <aside class="h3-news" aria-labelledby="h3NewsH"><div class="h3-news-head"><h2 id="h3NewsH" data-i18n="news.h">最新动态</h2><a href="/updates/" data-i18n="news.all">全部更新</a></div><ol class="h3-news-list" id="h3News"><!--prerender:h3News--><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.2">jev-style 0.6.2</a></li><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.1">jev-style 0.6.1：更快上手本地工作流</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>模型</span><a href="/models/2b-v4/">Jev-Style 2B v4</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.0">jev-style 0.6.0</a></li><!--/prerender:h3News--></ol></aside>
 
   <section id="try" aria-labelledby="tryH">
-    <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">一次请求，每个选项都有分数</h2><p data-i18n="try.p">一张客服工单，三个问题，一次调用。</p></div>
+    <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">一次请求，每个选项都有分数</h2></div>
     <div class="tabs ftabs" id="tyTabs" role="tablist" data-i18n-aria="ex.h"></div>
     <div class="feat" id="tyPanel" role="tabpanel"><!--prerender:tyPanel--><div class="static-example"><h3>每个选项都有概率</h3><p>“I was billed twice. Please refund one charge.”</p><pre>{"refund": {"type": "noul", "instructions": "The customer asks for money back."}}</pre><p>示例输出：退款概率 0.967。实际结果取决于模型与输入。</p></div><!--/prerender:tyPanel--></div>
     <p class="feat-meta"><span data-i18n="ty.state">三个问题共用一段 state</span>: <q>Hi, I was billed twice for my March plan. Please refund one of them today.</q></p>
@@ -971,19 +957,19 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
   <section class="duo3" id="start" aria-label="Get started" data-i18n-aria="res.h">
     <article class="cta3">
       <h2 data-i18n="fc.key.h">使用托管 API</h2>
-      <ul class="chk"><li data-i18n="fc.key.1">每个账号每天免费 10,000 次请求</li><li data-i18n="fc.key.2">文本输入，单次最多 8,000 个 token</li></ul>
+      <p class="cta-line" data-i18n="go.key">每天 10,000 次免费请求</p>
       <div class="acts"><a class="pill dark" href="/register/" data-track="api_key_open" data-i18n="h3.key">免费获取 API key</a><a class="pill soft" href="/api/" data-i18n="duo.api.docs">API 文档</a></div>
     </article>
     <article class="cta3">
       <h2 data-i18n="fc.api.h">在浏览器中直接体验</h2>
-      <ul class="chk"><li data-i18n="fc.api.1">无需安装或 API Key</li><li data-i18n="fc.api.2">在 Hugging Face 体验文本和图片案例</li></ul>
+      <p class="cta-line" data-i18n="go.demo">无需安装和 API key</p>
       <div class="acts"><a class="pill dark" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="h3.cta">直接体验 Demo</a></div>
     </article>
     <article class="cta3">
       <h2 data-i18n="fc.os.h">自己运行</h2>
-      <ul class="chk"><li data-i18n="fc.os.1">Apache-2.0 权重</li><li data-i18n="fc.os.2">支持 CPU、CUDA 和 Apple silicon</li></ul>
+      <p class="cta-line" data-i18n="go.local">CPU、CUDA 和 Apple silicon</p>
       <div class="snip"><pre id="pipCode">pip install "jev-style[torch]"</pre><button type="button" class="cbtn" id="pipCopy" data-i18n="copy">复制</button></div>
-      <div class="acts"><a class="pill dark hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener">Hugging Face <span class="ne" aria-hidden="true">↗</span></a><a class="pill soft" href="/models/#run" data-i18n="chip.qs">快速开始</a></div>
+      <div class="acts"><a class="pill dark" href="/models/#run" data-i18n="chip.qs">快速开始</a></div>
     </article>
   </section>
 
@@ -1000,11 +986,11 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
     <div class="car-track bench3" id="carTrack"><!--prerender:carTrack--><div class="static-bench"><p>Jev-Style 2B v4: JevBench v1.4.1 public accuracy 74.9%; Decision Index 0.3 public score 44.37.</p><p>Single self-runs, not official board ranks. Hardware, test protocols, confidence intervals, and limitations: <a href="/models/2b-v4/">read the model guide</a>.</p></div><!--/prerender:carTrack--></div>
   </section>
 
-<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">从你的任务开始</h2><p>先按输入、标签和运行环境选择方法，再在自己的数据上比较结果。</p></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Python 本地文本分类</b><span>比较传统分类器与决策模型，保留低置信度回退。</span></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>本地决策模型与 Apple silicon</b><span>按固定选项、后端和硬件选择运行方式。</span></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>请求路由与大模型回退</b><span>先在本地选择工作流，再处理需要升级的请求。</span></a><a href="/guides/local-routing-tools/" data-track="guide_open"><b>本地路由工具选型</b><span>比较 JevStyle、Semantic Router、scikit-learn 和 SetFit。</span></a><a href="/use-cases/local-vision-decisions/" data-track="guide_open"><b>收据与截图的本地判断</b><span>PyTorch 图片请求示例，以及人工核验边界。</span></a><a href="/guides/replace-label-only-llm-calls/" data-track="guide_open"><b>替换只返回标签的 LLM 调用</b><span>明确选项、测量错误与覆盖率，并保留回退。</span></a></div></section><!--/discovery:task-entrypoints-->
-<!--discovery:home-guide--><section id="project-guide" class="growth-guides" aria-labelledby="project-guide-heading"><div class="s3-head"><h2 id="project-guide-heading">选择模型，核对结果</h2><p>JevStyle 是用于本地分类、路由和评分的开源工具；小型决策模型为预定义选项返回概率。</p></div><div class="guide-grid"><a href="/models/compare/"><b>模型选择对照（英文）</b><span>比较 0.8B 与 2B 的输入、后端和权重大小。</span></a><a href="/benchmarks/"><b>评测与复现（英文）</b><span>查看公开自测结果、协议、出处和限制。</span></a></div><div class="project-faq"><h3>可以离线运行吗？</h3><p>安装依赖并下载模型后，可以在本机处理输入。在线 Demo 和托管 API 是独立服务；使用它们会将输入发送到相应服务。</p><h3>应该选择哪个模型？</h3><p>文本任务可以从 0.8B v3 开始，在自己的数据上对照测试 2B v4。图片输入需要 2B v4 的 PyTorch 后端；MLX 和 GGUF 构建仅支持文本。</p><h3>它会生成聊天回复吗？</h3><p>它为是/否、多选和有序评分问题返回概率，不生成自由文本回复。把不确定的情况交给人工或现有大模型。</p><p><a href="/zh/about/">关于项目与维护者</a> · <a href="/api/">托管 API 文档</a></p></div></section><!--/discovery:home-guide-->
-<!--discovery:current-facts--><section class="current-project-facts" id="current-facts" aria-labelledby="current-facts-heading"><div><h2 id="current-facts-heading">当前版本与服务状态</h2><p class="facts-date">核对日期: <time datetime="2026-10-29">2026-10-29</time></p></div><dl><div><dt>版本</dt><dd>Python 软件包为 <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>。<a href="/models/2b-v4/">2B v4 已于 2026-10-27 发布</a>：PyTorch 支持文本与图片，MLX 和 GGUF 仅支持文本。默认本地文本模型为 <a href="/models/0-8b-v3/">0.8B v3</a>。</dd></div><div><dt>托管 API</dt><dd><strong>托管 API 使用 2B v4，仅支持文本，一次处理一个请求。</strong>本地模型与 Hugging Face Demo 是独立入口，托管服务的状态不代表本地模型不可用。</dd></div><div><dt>维护者</dt><dd><a href="/zh/about/">Chaoliang Yan（严超亮）</a>，GitHub：lawrence3699。项目与 TypeSafe 无隶属或背书关系。</dd></div><div><dt>训练出处</dt><dd>2B v4 部分训练使用 TypeSafe Jev 1.14 公共 API 生成的软标签。Python 软件包不附带教师的原始回答数据集。参见<a href="/models/2b-v4/#results">模型与训练来源</a>。</dd></div></dl></section><!--/discovery:current-facts-->
+<!--discovery:task-entrypoints--><section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">从你的任务开始</h2></div><div class="guide-grid"><a href="/guides/local-text-classification/" data-track="guide_open"><b>Python 本地文本分类</b></a><a href="/guides/local-decision-models/" data-track="guide_open"><b>本地决策模型与 Apple silicon</b></a><a href="/use-cases/local-llm-routing/" data-track="guide_open"><b>请求路由与大模型回退</b></a><a href="/guides/local-routing-tools/" data-track="guide_open"><b>本地路由工具选型</b></a><a href="/use-cases/local-vision-decisions/" data-track="guide_open"><b>收据与截图的本地判断</b></a><a href="/guides/replace-label-only-llm-calls/" data-track="guide_open"><b>替换只返回标签的 LLM 调用</b></a></div></section><!--/discovery:task-entrypoints-->
+<!--discovery:home-guide--><section id="project-guide" class="home-notes" aria-labelledby="project-guide-heading"><h2 id="project-guide-heading">常见问题</h2><details class="qa"><summary>可以离线运行吗？</summary><p>可以。安装依赖并下载模型后，输入都在本机处理。在线 Demo 和托管 API 是独立服务，会收到你发送的内容。</p></details><details class="qa"><summary>应该选哪个模型？</summary><p>文本任务从 0.8B v3 开始，再用自己的数据对比 2B v4。图片输入需要 2B v4 的 PyTorch 版；MLX 和 GGUF 仅支持文本。</p></details><details class="qa"><summary>它会生成聊天回复吗？</summary><p>不会。它为是/否、多选和有序评分问题返回概率。不确定的情况交给人工或大模型。</p></details></section><!--/discovery:home-guide-->
+<!--discovery:current-facts--><section class="home-notes" id="current-facts" aria-labelledby="current-facts-heading"><h2 id="current-facts-heading">项目信息</h2><details class="qa"><summary>版本</summary><p>Python 软件包为 <a href="https://pypi.org/project/jev-style/0.6.2/">jev-style 0.6.2</a>。<a href="/models/2b-v4/">2B v4 已于 2026-10-27 发布</a>：PyTorch 支持文本与图片，MLX 和 GGUF 仅支持文本。默认本地文本模型为 <a href="/models/0-8b-v3/">0.8B v3</a>。</p></details><details class="qa"><summary>托管 API</summary><p><strong>托管 API 使用 2B v4，仅支持文本，一次处理一个请求。</strong>本地模型与 Hugging Face Demo 是独立入口，托管服务的状态不代表本地模型不可用。</p></details><details class="qa"><summary>维护者</summary><p><a href="/zh/about/">Chaoliang Yan（严超亮）</a>，GitHub：lawrence3699。项目与 TypeSafe 无隶属或背书关系。</p></details><details class="qa"><summary>训练出处</summary><p>2B v4 部分训练使用 TypeSafe Jev 1.14 公共 API 生成的软标签。Python 软件包不附带教师的原始回答数据集。参见<a href="/models/2b-v4/#results">模型与训练来源</a>。</p></details><p class="facts-date">核对日期: <time datetime="2026-10-29">2026-10-29</time></p></section><!--/discovery:current-facts-->
   <section class="final-cta" id="get-started" aria-labelledby="finalH">
-    <div><h2 id="finalH" data-i18n="final.h">从一个判断开始</h2><p data-i18n="final.p">使用托管 API，或在自己的机器上运行同类模型。</p></div>
+    <div><h2 id="finalH" data-i18n="final.h">从一个判断开始</h2></div>
     <div class="acts"><a class="pill dark lg" href="/register/" data-track="api_key_open" data-i18n="h3.key">免费获取 API key</a><a class="pill soft lg" href="/models/" data-i18n="final.models">查看模型</a></div>
   </section>
 </main>
@@ -1254,7 +1240,6 @@ const I18N = {
   "copy": "Copy",
   "copied": "Copied",
   "snap": "Stats as of ",
-  "up": "higher is better",
   "down": "lower is better",
   "hf": "Open on Hugging Face",
   "newer": "See 2B v4",
@@ -1420,10 +1405,10 @@ const I18N = {
   "n3.models": "Open models",
   "n3.login": "Log in",
   "h3.title": "Local classification and routing for AI agents",
-  "h3.sub": "Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon.",
+  "h3.sub": "Small open models that score your options in one call. Run them yourself, or use the free API.",
   "h3.cta": "Try the live demo",
   "h3.key": "Get a free API key",
-  "om.note": "Hugging Face file-request counts, not unique users.",
+  "om.note": "Hugging Face file requests, not unique users.",
   "om.note.how": "How they are counted",
   "fc.key.h": "Use the hosted API",
   "fc.key.1": "10,000 free requests a day per account",
@@ -1566,7 +1551,11 @@ const I18N = {
   "ann.k": "Announcement",
   "ann.h": "Jev-Style 2B v4 reads images",
   "ann.p": "Our first model with image input, through its PyTorch build.",
-  "ann.a": "Read about 2B v4"
+  "ann.a": "Read about 2B v4",
+  "go.key": "10,000 free requests a day",
+  "go.demo": "No install, no API key",
+  "go.local": "CPU, CUDA and Apple silicon",
+  "h3.meta": "Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon."
  },
  "zh": {
   "guide.0.h": "本地大模型路由",
@@ -1774,7 +1763,6 @@ const I18N = {
   "copy": "复制",
   "copied": "已复制",
   "snap": "数据更新于 ",
-  "up": "越高越好",
   "down": "越低越好",
   "hf": "在 Hugging Face 打开",
   "newer": "查看 2B v4",
@@ -1940,10 +1928,10 @@ const I18N = {
   "n3.models": "开源模型",
   "n3.login": "登录",
   "h3.title": "AI Agent 的本地分类与路由",
-  "h3.sub": "在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。",
+  "h3.sub": "小型开放模型，一次调用给每个选项打分。可本地运行，也可用免费 API。",
   "h3.cta": "直接体验 Demo",
   "h3.key": "免费获取 API key",
-  "om.note": "Hugging Face 文件请求次数，并非独立用户数。",
+  "om.note": "Hugging Face 文件请求次数，非独立用户。",
   "om.note.how": "统计口径",
   "fc.key.h": "使用托管 API",
   "fc.key.1": "每个账号每天免费 10,000 次请求",
@@ -2086,7 +2074,11 @@ const I18N = {
   "ann.k": "公告",
   "ann.h": "Jev-Style 2B v4 可以读图",
   "ann.p": "第一个支持图片输入的模型（PyTorch 版）。",
-  "ann.a": "了解 2B v4"
+  "ann.a": "了解 2B v4",
+  "go.key": "每天 10,000 次免费请求",
+  "go.demo": "无需安装和 API key",
+  "go.local": "CPU、CUDA 和 Apple silicon",
+  "h3.meta": "在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。"
  }
 };
 let lang = location.pathname.startsWith('/zh/') ? 'zh' : 'en';   // English by default; 中文 only when the visitor picks it
@@ -2334,8 +2326,8 @@ function renderBench(){
   $('carTrack').innerHTML = items.filter(it => famVis(fam(it.open)) && HOME.includes(it.lab)).sort((a,b) => HOME.indexOf(a.lab) - HOME.indexOf(b.lab)).map((it,i) => {
     const mx = Math.max(it.me, it.base);
     const row = (cls, name, v) => `<div class="${cls}"><span>${esc(name)}</span><span class="tk"><i style="width:${(v/mx*100).toFixed(1)}%"></i></span><span>${it.fmt(v)}</span></div>`;
-    const ov = `<div class="ov"><b class="big" data-cu="${it.fmt(it.me)}">${it.fmt(it.me)}</b><div class="cmp${it.wide ? ' wide' : ''}">${row('a', it.who, it.me)}${row('b', it.vs, it.base)}<p>${t(it.up ? 'up' : 'down')}</p></div></div>`;
-    return `<a class="bcard" href="#${it.open}" data-open="${it.open}">${media('bench-'+i, it.pal, '', ov)}<h3 class="card-t">${esc(t(it.lab))}</h3><p class="meta"><span>${it.model}</span></p></a>`;
+    const ov = `<div class="ov"><b class="big" data-cu="${it.fmt(it.me)}">${it.fmt(it.me)}</b><div class="cmp${it.wide ? ' wide' : ''}">${row('a', it.who, it.me)}${row('b', it.vs, it.base)}${it.up ? '' : `<p>${t('down')}</p>`}</div></div>`;
+    return `<a class="bcard" href="#${it.open}" data-open="${it.open}">${media('bench-'+i, it.pal, '', ov)}<h3 class="card-t">${esc(t(it.lab))}</h3></a>`;
   }).join('');
   paintArt($('carTrack'));
 }
@@ -2888,7 +2880,7 @@ function renderUseCases(){
     const act = d
       ? `<button type="button" class="more" data-demo="${di}"><span>${esc(t('uc.see'))}</span> <span class="ar" aria-hidden="true">→</span><span class="sr-only"> · ${esc(t('uc.' + u.k + '.h'))}</span></button>`
       : `<a class="more" href="${u.href}"><span>${esc(t('uc.try'))}</span> <span class="ar" aria-hidden="true">→</span><span class="sr-only"> · ${esc(t('uc.' + u.k + '.h'))}</span></a>`;
-    return `<article class="uc3-card">${m}<p class="uc3-type">${esc(u.type)}</p><h3>${esc(t('uc.' + u.k + '.h'))}</h3><p class="uc3-p">${esc(t('uc.' + u.k + '.p'))}</p>${act}${u.guide ? `<a class="more" style="display:block;margin-top:14px" href="${u.guide}" data-track="guide_open">${lang === 'zh' ? '阅读完整教程' : 'Read the full guide'} →</a>` : ''}</article>`;
+    return `<article class="uc3-card">${m}<h3>${esc(t('uc.' + u.k + '.h'))}</h3><p class="uc3-p">${esc(t('uc.' + u.k + '.p'))}</p>${act}</article>`;
   });
   $('ucGrid').innerHTML = cards.slice(0, UC_FEAT).join('');
   $('ucMore').innerHTML = cards.slice(UC_FEAT).join('');
