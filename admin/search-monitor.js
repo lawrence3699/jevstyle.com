@@ -15,11 +15,33 @@
     var connect=el('button','连接 Google（只读）','btn primary'), refresh=el('button','立即采集','btn'), reload=el('button','刷新状态','btn'), disconnect=el('button','断开连接','btn');
     [connect,refresh,reload,disconnect].forEach(function (b) { b.type='button'; actions.appendChild(b); });
     var notice=el('p','首次连接需要管理员在 Google 页面同意只读 Search Console 权限；无需导入 CSV。凭据仅保存在后端，不进入网页源码或 GitHub。','note'); status.appendChild(notice);
+    var diagnostics=el('div'); root.appendChild(diagnostics);
     var display=el('div'); root.appendChild(display);
     var current=null, busy=false, renderKey=null, actionError=null;
     var callbackMessages={invalid_state:'授权会话已失效，请重新连接。',access_denied:'Google 授权未获同意。',scope_required:'需要同意 Search Console 只读权限。',offline_access_required:'Google 未提供离线授权，请重新连接并同意权限。',property_access_required:'此 Google 账号没有本站 Search Console 资源的读取权限。',api_not_enabled:'请先在该 Google 项目启用 Search Console API，再重新连接。',oauth_failed:'Google 连接尚未完成，请重新连接或检查后端状态。'};
     var callbackCode=new URLSearchParams(global.location.search||'').get('gsc');
     function time(t) { return t && Number.isFinite(Date.parse(t)) ? new Date(t).toLocaleString('zh-CN',{hour12:false}) : '未发生'; }
+    function renderDiagnostics(snapshot) {
+      diagnostics.replaceChildren();
+      var audit=snapshot && snapshot.discovery_audit;
+      if (!audit || audit.schema_version!==1 || !Array.isArray(audit.pages)) return;
+      var allowed=['https://jevstyle.com/guides/local-routing-tools/','https://jevstyle.com/use-cases/local-vision-decisions/','https://jevstyle.com/guides/replace-label-only-llm-calls/'];
+      var panel=el('div',null,'card'); panel.appendChild(el('h3','新专题：Google 收录与搜索曝光'));
+      var window=audit.requested_window||{};
+      panel.appendChild(el('p','检查于 '+time(audit.observed_at)+' · '+String(window.start||'未知')+' 至 '+String(window.end||'未知')+' · Web 最终数据 · 太平洋时间','note'));
+      panel.appendChild(el('p','收录不等于获得曝光。无返回值显示未测量；只有 Google 明确返回的零值才显示 0。查询词可能匿名或省略，不能据此推断非品牌曝光为零。','note'));
+      var wrap=el('div',null,'geo-table'), table=el('table'), head=el('thead'), tr=el('tr'), body=el('tbody');
+      ['页面','索引状态','最近抓取','展示 / 点击','返回的查询词','最新返回日期'].forEach(function (text) { var th=el('th',text);th.scope='col';tr.appendChild(th); });head.appendChild(tr);table.appendChild(head);
+      audit.pages.filter(function (page) { return page && allowed.indexOf(page.url)>=0; }).forEach(function (page) {
+        var row=el('tr'), first=el('td'), link=el('a',page.url.replace('https://jevstyle.com',''));link.href=page.url;first.appendChild(link);row.appendChild(first);
+        var index=page.index, total=page.summary;
+        var valid=total && Number.isSafeInteger(total.impressions) && total.impressions>=0 && Number.isSafeInteger(total.clicks) && total.clicks>=0;
+        var terms=Array.isArray(page.query_rows)?page.query_rows:null;
+        [index ? (index.verdict==='PASS'?'已收录':index.coverageState||'尚未确认收录'):'未取得',time(index && index.lastCrawlTime),valid?total.impressions+' / '+total.clicks:'未测量',terms && terms.length?terms.length+' 条（仅返回行）':'未返回，无法判定',page.latest_returned_final_date||'未返回'].forEach(function (text) { row.appendChild(el('td',text)); });
+        if (Array.isArray(page.errors) && page.errors.length) first.appendChild(el('p','部分检查失败；保留已取得值','note'));
+        body.appendChild(row);
+      });table.appendChild(body);wrap.appendChild(table);panel.appendChild(wrap);diagnostics.appendChild(panel);
+    }
     async function request(path, method) {
       var options={credentials:'include',cache:'no-store',method:method||'GET'};
       if (method==='POST') { options.headers={'Content-Type':'application/json'}; options.body='{}'; }
@@ -31,7 +53,7 @@
         try { var errorBody=await res.json(); errorCode=typeof errorBody.error==='string'?errorBody.error:errorBody.error && errorBody.error.code; } catch (e) {}
       }
       if (res.status===401 || (res.status===403 && errorCode!=='origin_forbidden')) {
-        display.replaceChildren(); current=null; renderKey=null;
+        display.replaceChildren(); diagnostics.replaceChildren(); current=null; renderKey=null;
         if (global.JevAdminAuthorizationLost) global.JevAdminAuthorizationLost(res.status);
         throw new Error('管理员会话已失效，请重新登录。');
       }
@@ -59,6 +81,7 @@
       var key=d.snapshot?JSON.stringify([d.snapshot.observed_at,d.last_success_at]):'none';
       if (key!==renderKey) {
         renderKey=key;
+        renderDiagnostics(d.snapshot);
         if (d.snapshot && global.JevSearchPerformance) global.JevSearchPerformance.mount(display,{automatic:true,snapshot:d.snapshot});
         else display.replaceChildren(el('p','搜索图表尚未取得数据。连接完成并采集成功后自动显示。','sp-empty'));
       }

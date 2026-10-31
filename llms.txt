@@ -11,6 +11,7 @@ Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1
 ## Official pages
 
 - [About JevStyle: small decision models you can run yourself | JevStyle](https://jevstyle.com/about/)
+- [Local support routing benchmark: JevStyle vs TF-IDF | JevStyle](https://jevstyle.com/benchmarks/banking-routing/)
 - [JevStyle benchmarks: accuracy, latency and evaluation protocols | JevStyle](https://jevstyle.com/benchmarks/)
 - [Contact JevStyle | JevStyle](https://jevstyle.com/contact/)
 - [Claude Code tool-call guard with a local model | JevStyle](https://jevstyle.com/guides/claude-code-guard/)
