@@ -49,7 +49,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);-w
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.tab:focus-visible,.bcard:focus-visible,.dl-row:focus-visible{outline-offset:-2px}
+.tab:focus-visible,.dl-row:focus-visible{outline-offset:-2px}
+.bcard:focus-visible{outline-offset:-2px}
 h1,h2,h3{margin:0;font-weight:500;letter-spacing:-.02em;text-wrap:balance}
 :lang(zh) h1,:lang(zh) h2,:lang(zh) h3{letter-spacing:0}
 p{margin:0}
@@ -96,10 +97,6 @@ a:hover > .ne,button:hover > .ne{transform:translate(2px,-2px)}
 .hero{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;text-align:center;padding-block:clamp(48px,9vh,104px) 0}
 .hero::before{content:"";position:absolute;left:50%;top:12%;width:min(1100px,100%);aspect-ratio:2.4;transform:translate(-50%,-50%);background:radial-gradient(closest-side,var(--splash),transparent);z-index:-1;pointer-events:none}
 .hero h1{font-size:clamp(30px,3.4vw,48px);line-height:1.1}
-.w{display:inline-block;white-space:pre}
-.w.go{animation:w-in .7s var(--out) both,w-flash 1.2s ease-out backwards;animation-delay:var(--d),var(--d)}
-@keyframes w-in{0%{opacity:0;transform:translateY(6px)}.01%{opacity:1}100%{opacity:1;transform:none}}
-@keyframes w-flash{0%{color:var(--flash)}}
 .tabs.mtabs{flex-wrap:wrap;justify-content:center;overflow:visible;margin:24px 0 0;animation:fade-rise .8s var(--out) .3s both}
 .stage{width:100%;margin-top:28px;text-align:left;animation:fade-rise .9s var(--out) .45s both}
 .stage .fx-wrap{aspect-ratio:auto;height:clamp(320px,52vh,560px)}
@@ -463,8 +460,6 @@ a.tl-card:hover{background:var(--soft2);transform:translateY(-2px)}
 .dr-note{font-size:12.5px;color:var(--ink3)}
 
 /* scroll reveal (fade-rise) */
-.rv{transition:opacity 1s var(--out),transform 1.1s var(--out),filter 1s var(--out)}
-.rv.pre{opacity:0;transform:translateY(44px) scale(.97);filter:blur(8px)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 /* Cascade 9B (patch_9b.py): the per-difficulty bars show counts ("85/111"), so their value column is wider */
 .jbars.wv > div{grid-template-columns:minmax(0,11em) minmax(0,1fr) 4.4em}
@@ -703,32 +698,6 @@ ul.chk li{position:relative;padding-left:26px;font-size:15px;line-height:1.5;col
 ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;height:6px;border-left:1.8px solid var(--acc);border-bottom:1.8px solid var(--acc);transform:rotate(-45deg)}
 
 /* hero: centered headline, two pills (Docs opens a small menu), quiet proof strip instead of customer logos */
-.h3{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:clamp(36px,7vh,88px)}
-.h3 h1{font-size:clamp(40px,5.4vw,78px);line-height:1.03;letter-spacing:-.035em;max-width:13em}
-:lang(zh) .h3 h1{letter-spacing:0;max-width:8.6em;line-height:1.12}
-:lang(zh) .h3-sub,:lang(zh) .band p,:lang(zh) .s3-head p{word-break:keep-all}
-.h3-sub{font-size:clamp(17px,1.4vw,20px);line-height:1.5;color:var(--ink2);margin-top:22px;max-width:46ch;text-wrap:balance;animation:fade-rise .8s var(--out) .15s both}
-.h3-acts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:32px;animation:fade-rise .8s var(--out) .25s both}
-.dd{position:relative}
-.dd-menu{position:absolute;left:50%;top:calc(100% + 8px);z-index:25;width:max-content;min-width:260px;max-width:min(320px,calc(100vw - 32px));transform:translateX(-50%);padding:6px;border-radius:16px;background:var(--bg);box-shadow:var(--shadow);text-align:left;animation:dd-in .18s var(--out)}
-.dd-menu[hidden]{display:none}
-@keyframes dd-in{from{opacity:0;transform:translate(-50%,-4px)}}
-.dd-menu a{display:grid;gap:2px;padding:10px 14px;border-radius:10px;transition:background .15s var(--ease)}
-.dd-menu a:hover,.dd-menu a:focus-visible{background:var(--soft)}
-.dd-menu b{font-size:14.5px;font-weight:500}
-.dd-menu span{font-size:13px;color:var(--ink2)}
-#docsBtn[aria-expanded="true"] .chev{transform:rotate(180deg)}
-.h3-status{min-height:28px;margin-top:16px}
-.h3-nums{margin-top:clamp(26px,4vh,40px)}
-.h3-nums .om-stats{margin:0}
-.h3-nums .om-stats dd{font-size:clamp(30px,3.4vw,46px)}
-.h3-nums .stats-note{margin-top:10px;font-size:12.5px;color:var(--ink3)}
-.h3-nums .stats-note a{text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
-.proof{list-style:none;margin:clamp(48px,6vw,88px) 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:14px clamp(28px,4vw,64px);animation:fade-in 1s ease-out .4s both}
-.proof li > *{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink2);transition:color .2s var(--ease)}
-.proof a:hover{color:var(--ink)}
-.proof b{font-size:17px;font-weight:600;letter-spacing:-.01em}
-.proof li > * > span{font-size:13px;color:var(--ink3)}
 
 /* "Powered by" model card */
 .mc{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px clamp(32px,4vw,64px);padding:clamp(24px,3.4vw,48px);border-radius:24px;background:var(--soft)}
@@ -857,18 +826,12 @@ ul.chk li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;hei
 .pm-dl-foot{margin-top:14px;font-size:14px}
 @media (max-width:720px){.pm-dl .dl-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-/* Hero headline: arrives in ink and settles into the brand blue; buttons stay black */
-.h3 h1,.h3 h1 .w{color:var(--flash)}
-/* Reverse of the old flash: each word arrives in ink, then settles into the brand blue and stays there */
-.h3 h1 .w.go{animation:w-in .7s var(--out) both,w-ink 1.6s ease-out backwards;animation-delay:var(--d),var(--d)}
-@keyframes w-ink{0%,25%{color:var(--ink)}}
 
 /* Use cases: two featured up front, the rest behind "More use cases" */
 .uc3.uc3-feat{grid-template-columns:repeat(2,minmax(0,1fr))}
 #use-cases .dmore-row{margin-top:clamp(32px,4vw,48px)}
 @media (max-width:720px){.uc3.uc3-feat{grid-template-columns:minmax(0,1fr)}}
 /* ---------- 2026-10-08 trim: live decision strip, key numbers, trust line, 3 benchmark cards ---------- */
-.tick{width:min(600px,100%);margin-top:26px;padding:14px 16px 12px;border:1px solid var(--line);border-radius:16px;background:var(--bg);box-shadow:0 1px 2px rgba(13,13,15,.04),0 18px 40px -28px rgba(13,13,15,.35);text-align:left;font:13px/1.45 var(--mono);animation:fade-rise .9s var(--out) .55s both}
 .tk-head{display:flex;justify-content:space-between;gap:10px;color:var(--ink3);font-size:11.5px;letter-spacing:.02em;margin-bottom:8px}
 .tk-dots{display:inline-flex;align-items:center;gap:5px}
 .tk-dots i{width:6px;height:6px;border-radius:50%;background:var(--soft2);transition:background .3s var(--ease)}
@@ -912,42 +875,19 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 #open-models.om-big > div{display:flex;flex-direction:column;align-items:center}
 #open-models.om-big .half-k{font-size:13px}
 #open-models.om-big h2{font-size:clamp(46px,7vw,112px);line-height:1;letter-spacing:-.045em;margin-top:22px;transform:scale(calc(.88 + var(--p,1) * .12));transform-origin:50% 100%;opacity:calc(.25 + var(--p,1) * .75)}
-.om-stats{display:flex;justify-content:center;margin:clamp(32px,3.6vw,52px) 0 0}
-.om-stats > div{display:flex;flex-direction:column-reverse;align-items:center;gap:6px;padding:0 clamp(18px,3.6vw,56px);border-left:1px solid var(--line);min-width:0}
-.om-stats > div:first-child{border-left:0}
-.om-stats dd{margin:0;font-size:clamp(26px,3.6vw,52px);font-weight:600;letter-spacing:-.025em;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
-.om-stats dt{font-size:clamp(13px,1.1vw,15px);color:var(--ink3)}
 #open-models.om-big .hh-acts{justify-content:center;margin-top:clamp(32px,3.4vw,44px)}
-@media (max-width:480px){.om-stats > div{padding:0 16px}.h3-nums .om-stats dd{font-size:28px}}
 @media (prefers-reduced-motion:reduce){#open-models.om-big h2{transform:none;opacity:1}}
 #carTrack.bench3{display:grid;grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;overflow:visible;scroll-snap-type:none}
 #carTrack.bench3 > *{width:auto;min-width:0}
 @media (max-width:860px){#carTrack.bench3{grid-template-columns:minmax(0,1fr)}}
 .bcard .tk i{transition:width 1s var(--out) .25s}
 .bcard.pre .tk i{width:0 !important}
-@media (prefers-reduced-motion:reduce){.tick,.tk-row,.tk-bar i,pre.typing .ln{animation:none !important;transition:none !important}}
-/* ---------- 2026-10-08 round 2: Apple-style scroll motion (all off under reduced motion) ---------- */
-#mTabs[hidden],#stInfo[hidden]{display:none !important}
-#hero[data-sx]{transform-origin:50% 0;transform:translateY(calc(var(--p,0) * 60px)) scale(calc(1 - var(--p,0) * .07));opacity:calc(1 - var(--p,0) * .9);will-change:transform,opacity}
-#switcher[data-sx] .stage{transform:scale(calc(.86 + var(--p,1) * .14));transform-origin:50% 30%;will-change:transform}
-#switcher[data-sx] .fx-wrap{border-radius:calc(28px - var(--p,1) * 20px)}
-.uc3-card .media{transform:scale(calc(.9 + var(--p,1) * .1));transition:transform .2s linear}
-.kstats > div.rv{transition-delay:calc(var(--k,0) * 90ms)}
-.cta3.rv.pre:first-child{transform:translateX(-56px);filter:blur(8px)}
-.cta3.rv.pre:last-child{transform:translateX(56px);filter:blur(8px)}
-.scrub .sw{color:var(--muted);transition:color .3s var(--ease)}
-.scrub .sw.lit{color:var(--ink)}
-.s3-head h2,.half-head h2,.sec-head h2{transition:letter-spacing 1.2s var(--out)}
-.rv.pre h2{letter-spacing:.02em}
-.mcard.rv.pre .media{transform:scale(.86)}
-.mcard .media{transition:transform 1s var(--out)}
-@media (prefers-reduced-motion:reduce){#hero[data-sx],#switcher[data-sx] .stage,.uc3-card .media{transform:none !important;opacity:1 !important}.scrub .sw{color:inherit}}
+@media (prefers-reduced-motion:reduce){.tk-row,.tk-bar i,pre.typing .ln{animation:none !important;transition:none !important}}
 
 .api-reference-note{color:var(--ink2);line-height:1.6;max-width:850px;margin:-12px 0 24px}.project-faq{max-width:850px;line-height:1.7;margin-top:28px}.project-faq h3{font-size:20px;margin:24px 0 8px}.project-faq p{color:var(--ink2);margin-bottom:14px}.project-faq a{text-decoration:underline;text-underline-offset:3px}
 
 .current-project-facts{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px clamp(32px,4vw,64px);padding:56px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.6}.current-project-facts h2{font-size:clamp(20px,1.8vw,24px);line-height:1.25}.current-project-facts dl{margin:0}.current-project-facts dl>div{display:grid;grid-template-columns:9.5em minmax(0,1fr);gap:4px 16px;padding:14px 0;border-top:1px solid var(--line)}.current-project-facts dl>div:first-child{border-top:0;padding-top:0}.current-project-facts dt{color:var(--ink3)}.current-project-facts dd{margin:0;color:var(--ink2)}.current-project-facts strong{font-weight:500;color:var(--ink)}.current-project-facts a{text-decoration:underline;text-underline-offset:3px}.current-project-facts .facts-date{margin-top:8px;font-size:12px;color:var(--ink3)}@media (max-width:860px){.current-project-facts{grid-template-columns:minmax(0,1fr)}.current-project-facts dl>div{grid-template-columns:minmax(0,1fr)}}
 
-@media(max-width:1023px){.cta3.rv.pre,.cta3.rv.pre:last-child{transform:translateY(24px)}}
 </style>
 <link rel="alternate" hreflang="en" href="https://jevstyle.com/">
 <link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/">
@@ -988,38 +928,38 @@ pre.typing .ln{animation:ln-in .32s var(--out) both;animation-delay:calc(var(--i
 </div>
 
 <main id="top" class="wrap v3">
-  <section class="h3" id="hero" aria-labelledby="heroTitle" data-sx="exit">
+  <section class="h3" id="hero" aria-labelledby="heroTitle">
     <div class="h3-main">
-    <h1 id="heroTitle">AI Agent 的本地分类与路由</h1>
+    <h1 id="heroTitle">AI Agent 的<em>本地</em>分类与路由</h1>
     <p class="h3-sub" data-i18n="h3.sub">在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。</p>
+    <div class="h3-nums">
+      <dl class="om-stats" id="omStats"><!--prerender:omStats--><div><dt>下载</dt><dd>59,397</dd></div><div><dt>点赞</dt><dd>91</dd></div><div><dt>模型</dt><dd>7</dd></div><!--/prerender:omStats--></dl>
+      <p class="stats-note"><span data-i18n="om.note">Hugging Face 文件请求次数，并非独立用户数。</span> <a href="https://huggingface.co/docs/hub/models-download-stats" data-i18n="om.note.how">统计口径</a></p>
+    </div>
     <div class="h3-acts">
       <a class="pill dark lg" href="/register/" data-track="api_key_open" data-i18n="h3.key">免费获取 API key</a>
       <a class="pill soft lg" href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b?utm_source=jevstyle&utm_medium=website&utm_campaign=try_demo" data-track="demo_open" data-i18n="start.demo">体验 Demo</a>
       <a class="pill soft lg" href="/models/#run" data-track="quickstart_open" data-i18n="start.local">本地运行</a>
-      <div class="dd" id="docsDd">
-        <button type="button" class="pill soft lg" id="docsBtn" aria-expanded="false" aria-controls="docsMenu"><span data-i18n="nav.docs">文档</span><svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></button>
-        <div class="dd-menu" id="docsMenu" hidden>
-          <a href="/api/"><b data-i18n="dd.qs">快速开始</b><span data-i18n="dd.qs.d">几分钟发出第一个请求</span></a>
-          <a href="https://huggingface.co/spaces/chaoliangUNSW/jev-style-2b"><b data-i18n="nav.play">在线试用</b><span data-i18n="dd.pg.d">在浏览器里试请求</span></a>
-          <a href="/api/limits.html"><b data-i18n="dd.lim">限额</b><span data-i18n="dd.lim.d">速率、额度和重试</span></a>
-        </div>
-      </div>
-    </div>
-    <div class="h3-nums">
-      <dl class="om-stats" id="omStats"><!--prerender:omStats--><div><dt>次下载</dt><dd>59,397</dd></div><div><dt>个赞</dt><dd>91</dd></div><div><dt>个模型</dt><dd>7</dd></div><!--/prerender:omStats--></dl>
-      <p class="stats-note"><span data-i18n="om.note">Hugging Face 文件请求次数，并非独立用户数。</span> <a href="https://huggingface.co/docs/hub/models-download-stats" data-i18n="om.note.how">统计口径</a></p>
     </div>
     <p class="h3-status"><span class="api-status" hidden><i aria-hidden="true"></i><span></span></span></p>
     </div>
-    <aside class="h3-news" aria-labelledby="h3NewsH"><div class="h3-news-head"><h2 id="h3NewsH" data-i18n="news.h">最新动态</h2><a href="/updates/" data-i18n="news.all">全部更新</a></div><ol class="h3-news-list" id="h3News"><!--prerender:h3News--><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.2">jev-style 0.6.2</a></li><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.1">jev-style 0.6.1：更快上手本地工作流</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>模型</span><a href="/models/2b-v4/">Jev-Style 2B v4</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.0">jev-style 0.6.0</a></li><!--/prerender:h3News--></ol></aside>
-    <div class="tick" id="tick" aria-hidden="true"></div>
-    <ul class="proof" data-i18n-aria="pr.label">
-      <li><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener"><b>Hugging Face</b><span data-i18n="om.k">开源模型</span></a></li>
-      <li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener"><b>PyPI</b><span data-i18n="pr.pypi">jev-style 包</span></a></li>
-      <li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener"><b>GitHub</b><span data-i18n="pr.gh">源代码</span></a></li>
-      <li><span><b>Apache-2.0</b><span data-i18n="pr.weights">开源权重</span></span></li>
-    </ul>
+    <aside class="h3-news" aria-labelledby="h3NewsH"><div class="h3-news-head"><h2 id="h3NewsH" data-i18n="news.h">最新动态</h2><a href="/updates/" data-i18n="news.all">全部更新</a></div><ol class="h3-news-list" id="h3News"><!--prerender:h3News--><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.2">jev-style 0.6.2</a></li><li><time datetime="2026-10-28">2026-10-28</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.1">jev-style 0.6.1：更快上手本地工作流</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>模型</span><a href="/models/2b-v4/">Jev-Style 2B v4</a></li><li><time datetime="2026-10-27">2026-10-27</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.6.0">jev-style 0.6.0</a></li><li><time datetime="2026-10-17">2026-10-17</time><span>软件包</span><a href="https://github.com/lawrence3699/jev-style/releases/tag/v0.5.0">jev-style 0.5.0</a></li><!--/prerender:h3News--></ol></aside>
   </section>
+
+  <section class="ann" id="announcement" aria-labelledby="annH">
+    <div class="ann-top"><p class="ann-k" data-i18n="ann.k">公告</p><time datetime="2026-10-27">2026-10-27</time></div>
+    <div class="ann-body">
+      <div><h2 id="annH" data-i18n="ann.h">Jev-Style 2B v4 可以读图</h2><p data-i18n="ann.p">第一个支持图片输入的模型（PyTorch 版）。</p><a class="pill" href="/models/2b-v4/" data-i18n="ann.a">了解 2B v4</a></div>
+      <div class="tick" id="tick" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <ul class="proof" data-i18n-aria="pr.label">
+    <li><a class="hf" href="https://huggingface.co/chaoliangUNSW" target="_blank" rel="noopener"><b>Hugging Face</b><span data-i18n="om.k">开源模型</span></a></li>
+    <li><a href="https://pypi.org/project/jev-style/" target="_blank" rel="noopener"><b>PyPI</b><span data-i18n="pr.pypi">jev-style 包</span></a></li>
+    <li><a href="https://github.com/lawrence3699/jev-style" target="_blank" rel="noopener"><b>GitHub</b><span data-i18n="pr.gh">源代码</span></a></li>
+    <li><span><b>Apache-2.0</b><span data-i18n="pr.weights">开源权重</span></span></li>
+  </ul>
 
   <section id="try" aria-labelledby="tryH">
     <div class="s3-head"><h2 id="tryH" data-i18n="ex.h">一次请求，每个选项都有分数</h2><p data-i18n="try.p">一张客服工单，三个问题，一次调用。</p></div>
@@ -1621,7 +1561,12 @@ const I18N = {
   "bench.all": "Full evaluation",
   "final.h": "Start with one decision",
   "final.p": "Use the hosted API, or run the same kind of model on your own machine.",
-  "final.models": "Explore models"
+  "final.models": "Explore models",
+  "h3.em": "Local",
+  "ann.k": "Announcement",
+  "ann.h": "Jev-Style 2B v4 reads images",
+  "ann.p": "Our first model with image input, through its PyTorch build.",
+  "ann.a": "Read about 2B v4"
  },
  "zh": {
   "guide.0.h": "本地大模型路由",
@@ -2124,9 +2069,9 @@ const I18N = {
   "tr.2": "失败请求不计次",
   "tr.3": "开源本地模型仍可使用",
   "om.stats": "{dl} 次下载 · {m} 个模型 · Apache-2.0",
-  "om.s.dl": "次下载",
-  "om.s.m": "个模型",
-  "om.s.likes": "个赞",
+  "om.s.dl": "下载",
+  "om.s.m": "模型",
+  "om.s.likes": "点赞",
   "run.send": "发送中",
   "run.ok": "已记录的示例 · GPU 计算 {s} 秒",
   "run.see": "查看响应",
@@ -2136,7 +2081,12 @@ const I18N = {
   "bench.all": "完整评测",
   "final.h": "从一个判断开始",
   "final.p": "使用托管 API，或在自己的机器上运行同类模型。",
-  "final.models": "查看模型"
+  "final.models": "查看模型",
+  "h3.em": "本地",
+  "ann.k": "公告",
+  "ann.h": "Jev-Style 2B v4 可以读图",
+  "ann.p": "第一个支持图片输入的模型（PyTorch 版）。",
+  "ann.a": "了解 2B v4"
  }
 };
 let lang = location.pathname.startsWith('/zh/') ? 'zh' : 'en';   // English by default; 中文 only when the visitor picks it
@@ -2211,31 +2161,7 @@ function paintArt(root){
   });
 }
 
-/* ---------- hero: words rise in with a colour flash ---------- */
-function words(el, text){
-  el.textContent = '';
-  const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = text;
-  const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true'); el.append(sr, vis); el = vis;
-  const segs = (lang==='zh' && window.Intl && Intl.Segmenter) ? [...new Intl.Segmenter('zh',{granularity:'word'}).segment(text)].map(s => s.segment) : text.split(/(\s+)/);
-  let i = 0;
-  segs.forEach(s => {
-    if (!s) return;
-    if (/^\s+$/.test(s)) { el.append(s); return; }
-    if (/^\p{P}+$/u.test(s) && el.lastElementChild){ el.lastElementChild.textContent += s; return; }
-    const sp = document.createElement('span'); sp.className = 'w' + (REDUCED ? '' : ' go'); sp.textContent = s;
-    sp.style.setProperty('--d', (100 + i++*80)+'ms'); el.append(sp);
-  });
-}
-
 /* ---------- hero: model switcher (countdown tabs) driving the live stage ---------- */
-function countUp(el, text){
-  const m = String(text).match(/^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/);
-  if (!m || REDUCED){ el.textContent = text; return; }
-  const dec = (m[2].split('.')[1] || '').length, comma = m[2].includes(','), target = parseFloat(m[2].replace(/,/g,'')), t0 = performance.now(), run = (el._cu = (el._cu || 0) + 1);
-  const fmt = v => comma ? v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec}) : v.toFixed(dec);
-  const step = now => { if (el._cu !== run) return; const k = Math.max(0, Math.min(1, (now-t0)/700)), e = 1 - Math.pow(1-k, 3); el.textContent = m[1] + fmt(target*e) + m[3]; if (k < 1) requestAnimationFrame(step); };
-  requestAnimationFrame(step);
-}
 const dlAll = r => r.downloadsAllTime ?? r.downloads ?? 0, dl30 = r => r.downloads ?? 0;
 const famDl = f => f.repos.reduce((s,r) => s + dlAll(r), 0);
 const onHub = r => r.downloads != null || !!r.createdAt;   // patch_2b.py: repos not on the Hub yet (planned release) stay out of Downloads/Releases
@@ -2354,7 +2280,7 @@ function applyStats(list, src, at){
   const changed = before !== JSON.stringify(DATA.families.map(f => f.repos.map(r => [dlAll(r), dl30(r), r.likes]))) || DATA.extra.length;
   if (changed){
     if (visKey() !== visSeen){ visSeen = visKey(); renderBench(); applyVisibility(); if (!$('srch').hidden) renderSearch(); }
-    drawDrawer(); setupReveal();
+    drawDrawer();
   }
   renderDownloads();
 }
@@ -2756,17 +2682,6 @@ function setMenu(open){
   $('top').inert = open; const ft = document.querySelector('footer.foot'); if (ft) ft.inert = open;
 }
 
-/* ---------- reveal (below-the-fold only) and heading sweep ---------- */
-let revIO;
-function setupReveal(){
-  if (REDUCED || !('IntersectionObserver' in window)) return;
-  revIO = revIO || new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.remove('pre'); e.target.querySelectorAll('dd[data-v]').forEach(d => countUp(d, d.dataset.v)); e.target.querySelectorAll('[data-cu]').forEach(d => countUp(d, d.dataset.cu)); revIO.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
-  ['.mcard','.bcard','.dev-body','.ab-lead','.fcol','.uc3-card','.cta3','.feat','.ac-main','.half-head > div','.s3-head','.kstats > div','.trust'].forEach(sel => document.querySelectorAll(sel).forEach((el,i) => {
-    if (el.classList.contains('rv') || el.getBoundingClientRect().top < innerHeight) return;
-    el.classList.add('rv','pre'); el.style.transitionDelay = (el.parentElement && el.parentElement.id === 'kStats' ? i%4 * 110 : (i%3)*80) + 'ms'; revIO.observe(el);
-  }));
-}
-
 /* ---------- hosted API half (2026-10-08): live example, code tabs, status, theme ---------- */
 const API_ORIGIN = 'https://api.jevstyle.com';
 // Real production request/response, captured 2026-10-08 (~0.42 s end-to-end from Sydney).
@@ -2988,7 +2903,6 @@ $('ucMoreBtn').addEventListener('click', () => {
   $('ucMoreBtn').setAttribute('aria-expanded', String(open));
   if (open) paintArt($('ucMore'));
 });
-function setDocs(open){ $('docsBtn').setAttribute('aria-expanded', String(open)); $('docsMenu').hidden = !open; }
 /* ---------- wiring ---------- */
 function applyText(){
   document.documentElement.lang = lang==='zh' ? 'zh-CN' : 'en';
@@ -3001,11 +2915,10 @@ function applyText(){
   document.title = t('title3');
 }
 function renderAll(){
-  applyText(); words($('heroTitle'), t('h3.title'));
+  applyText(); $('heroTitle').innerHTML = esc(t('h3.title')).replace(t('h3.em'), '<em>$&</em>');
   renderUseCases(); renderDownloads(); renderBench(); renderTypes(false); renderStatus(); applyVisibility(); drawDrawer(); tickBuild(); tickPlay(); ucWatch();
   if (!$('srch').hidden) renderSearch();
   if (!$('vbox').hidden) vbFill();
-  scrubWords(); sxCollect(); sxFrame();
 }
 function copy(text, btn, selEl){
   const fallback = () => { if (!selEl) return; const s = getSelection(), r = document.createRange(); r.selectNodeContents(selEl); s.removeAllRanges(); s.addRange(r); };
@@ -3021,8 +2934,6 @@ document.querySelectorAll('[data-repo]').forEach(a => a.href = HF + a.dataset.re
 $('menuBtn').innerHTML = ICON_MENU;
 
 document.addEventListener('click', e => {
-  if (e.target.closest('#docsBtn')){ setDocs($('docsMenu').hidden); return; }
-  if (!$('docsMenu').hidden && !e.target.closest('#docsMenu')) setDocs(false);
   const so = e.target.closest('[data-sopen]'); if (so){ closeSearch(); openDrawer(so.dataset.sopen); return; }
   const sh = e.target.closest('[data-shash]'); if (sh){ closeSearch(); document.querySelector(sh.dataset.shash)?.scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth'}); return; }
   if (e.target.closest('#srch a')){ closeSearch(); return; }
@@ -3042,7 +2953,7 @@ $('srchIn').addEventListener('keydown', e => { if (e.key==='Enter'){ e.preventDe
 $('drClose').addEventListener('click', closeDrawer);
 $('scrim').addEventListener('click', closeDrawer);
 document.addEventListener('keydown', e => {
-  if (e.key==='Escape'){ if (!$('docsMenu').hidden){ setDocs(false); $('docsBtn').focus(); return; } if (!$('vbox').hidden) closeDemo(); else if (!$('srch').hidden) closeSearch(); else if (openId) closeDrawer(); else if (!$('mnav').hidden){ setMenu(false); $('menuBtn').focus(); } return; }
+  if (e.key==='Escape'){ if (!$('vbox').hidden) closeDemo(); else if (!$('srch').hidden) closeSearch(); else if (openId) closeDrawer(); else if (!$('mnav').hidden){ setMenu(false); $('menuBtn').focus(); } return; }
   if (!$('vbox').hidden){ if ((e.key==='ArrowLeft' || e.key==='ArrowRight') && document.activeElement !== $('vbVideo')){ e.preventDefault(); stepDemo(e.key==='ArrowLeft' ? -1 : 1); } return; }
   if (e.key==='/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName) && !openId){ e.preventDefault(); openSearch(); }
 });
@@ -3064,7 +2975,6 @@ $('tyTabs').addEventListener('keydown', e => {
   b.click(); $('tyTabs').querySelector(`[data-ty="${val}"]`)?.focus();
 });
 addEventListener('hashchange', () => { const h = location.hash.slice(1); if (fam(h)) openDrawer(h); });
-$('docsDd').addEventListener('focusout', e => { if (!$('docsDd').contains(e.relatedTarget)) setDocs(false); });
 $('pipCopy').addEventListener('click', e => copy('pip install jev-style', e.currentTarget, $('pipCode')));
 $('carTrack').addEventListener('scroll', () => { if (CAR.auto) return; const tr = $('carTrack'), w = tr.firstElementChild.offsetWidth + 24; CAR.i = Math.round(tr.scrollLeft / w); }, {passive:true});
 $('tyTabs').addEventListener('animationend', e => {
@@ -3081,7 +2991,6 @@ if ('ResizeObserver' in window){
   new ResizeObserver(() => { if (document.body.clientWidth === lastW) return; lastW = document.body.clientWidth; clearTimeout(rz); rz = setTimeout(() => { drawDrawer(); if (innerWidth > 1023) setMenu(false); }, 100); }).observe(document.body);
 }
 
-const SX = {els:[], cards:[]};   // filled by sxCollect() in renderAll()
 visSeen = visKey();
 renderAll();
 if ('IntersectionObserver' in window){
@@ -3090,44 +2999,6 @@ if ('IntersectionObserver' in window){
   new IntersectionObserver(es => { tyVis = es[es.length-1].isIntersecting; tyArm(); }, {threshold:.35}).observe($('try'));
 }
 
-/* Apple-style scroll motion: each [data-sx] element gets --p in 0..1 from its place in the viewport.
-   exit  - the hero sinks and fades as it scrolls away; enter - the model banner grows to full size;
-   scrub - the About sentence lights up word by word; use-case media grow in as they arrive. */
-function sxCollect(){ SX.els = [...document.querySelectorAll('[data-sx]')]; SX.cards = [...document.querySelectorAll('.uc3-card')]; }
-function scrubWords(){
-  document.querySelectorAll('.scrub').forEach(el => {
-    const text = el.textContent; el.textContent = '';
-    const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = text;
-    const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
-    (lang === 'zh' && window.Intl && Intl.Segmenter ? [...new Intl.Segmenter('zh', {granularity:'word'}).segment(text)].map(x => x.segment) : text.split(/(\s+)/)).forEach(w => {
-      if (!w) return; if (/^\s+$/.test(w)){ vis.append(w); return; }
-      const sp = document.createElement('span'); sp.className = 'sw'; sp.textContent = w; vis.append(sp);
-    });
-    el.append(sr, vis); el._k = -1;
-  });
-}
-function sxFrame(){
-  if (REDUCED) return;
-  const H = innerHeight, clamp = v => Math.max(0, Math.min(1, v));
-  SX.els.forEach(el => {
-    const r = el.getBoundingClientRect(), kind = el.dataset.sx;
-    if (r.bottom < -H || r.top > H * 2) return;
-    let p;
-    if (kind === 'exit') p = clamp(-r.top / Math.max(1, r.height * .85));
-    else if (kind === 'enter') p = clamp((H - r.top) / (H * .7));
-    else {
-      p = clamp((H * .82 - r.top) / (r.height + H * .3));
-      el.querySelectorAll('.scrub').forEach(sc => { const w = sc.querySelectorAll('.sw'), k = Math.round(p * w.length); if (k === sc._k) return; sc._k = k; w.forEach((x, i) => x.classList.toggle('lit', i < k)); });
-    }
-    el.style.setProperty('--p', p.toFixed(3));
-  });
-  SX.cards.forEach(c => { const r = c.getBoundingClientRect(); if (r.top > H * 1.5 || r.bottom < 0) return; c.style.setProperty('--p', clamp((H - r.top) / (H * .55)).toFixed(3)); });
-}
-let ticking = false;
-addEventListener('scroll', () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; sxFrame(); $('hdr').classList.toggle('scrolled', scrollY > 4); }); }, {passive:true});
-addEventListener('resize', () => requestAnimationFrame(sxFrame), {passive:true});
-
-setupReveal();
 if ('IntersectionObserver' in window && !REDUCED && $('tyAns').getBoundingClientRect().top > innerHeight){
   $('tyAns').classList.add('pre');
   const tio2 = new IntersectionObserver(es => { if (es[es.length-1].isIntersecting){ $('tyAns')?.classList.remove('pre'); tio2.disconnect(); } }, {rootMargin:'0px 0px -12% 0px'});

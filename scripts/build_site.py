@@ -19,6 +19,7 @@ UPDATES = json.loads((ROOT / 'assets/updates.json').read_text())
 EMAIL = chrome.EMAIL
 BEACON = '''<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{&quot;token&quot;: &quot;7a7432d7d2fe40b4b52e41e711938ac0&quot;}'></script>'''
 GROWTH_CSS = '<link rel="stylesheet" href="/assets/growth.css">'
+FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">'
 CHROME_ASSETS = '<link rel="stylesheet" href="/assets/site-chrome.css">\n<script src="/assets/site-chrome.js" defer></script>'
 TAGS = {'en': {'model': 'Model', 'package': 'Package'}, 'zh': {'model': '模型', 'package': '软件包'}}
 GROWTH_PAGES = ('benchmarks', 'models/compare', 'models/0-8b-v3', 'models/2b-v4',
@@ -66,6 +67,7 @@ def page(path, lang, title, description, body, url_path, styles=True):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(description, quote=True)}">
+{FONTS}
 {GROWTH_CSS}
 {CHROME_ASSETS}
 <link rel="stylesheet" href="/assets/site-pages.css">
@@ -181,6 +183,8 @@ def apply_growth_chrome(path, url_path):
     doc = swap(doc, 'footer', r'<footer class="site-footer">.*?</footer>', chrome.site_footer('en', url_path))
     if 'site-chrome.css' not in doc:
         doc = doc.replace(GROWTH_CSS, GROWTH_CSS + '\n' + CHROME_ASSETS, 1)
+    if 'fonts.googleapis.com' not in doc:
+        doc = doc.replace(GROWTH_CSS, FONTS + '\n' + GROWTH_CSS, 1)
     path.write_text(doc)
 
 

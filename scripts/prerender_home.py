@@ -13,7 +13,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'index.html'
-UPDATES_SHOWN = 4
+UPDATES_SHOWN = 5
 
 
 def fragment(doc, ident, content):
@@ -47,7 +47,7 @@ def render(source, translations, data, lang):
     markup, scripts = source.split('<script id="site-data"', 1)
     pattern = r'(<(?P<tag>[\w-]+)\b[^>]*data-i18n="(?P<key>[^"]+)"[^>]*>)[^<]*(</(?P=tag)>)'
     markup = re.sub(pattern, lambda m: m[1] + html.escape(t.get(m['key'], m['key'])) + m[4], markup)
-    markup = re.sub(r'<h1 id="heroTitle">.*?</h1>', '<h1 id="heroTitle">' + html.escape(t['h3.title']) + '</h1>', markup, flags=re.S)
+    markup = re.sub(r'<h1 id="heroTitle">.*?</h1>', '<h1 id="heroTitle">' + html.escape(t['h3.title']).replace(t['h3.em'], f"<em>{t['h3.em']}</em>", 1) + '</h1>', markup, flags=re.S)
     markup = re.sub(r'(<span class="bn">).*?(</span>)', r'\1JevStyle\2', markup)
     markup = re.sub(r'<html lang="[^"]+">', f'<html lang="{"zh-CN" if lang == "zh" else "en"}">', markup)
     url = 'https://jevstyle.com/' + ('zh/' if lang == 'zh' else '')
@@ -80,6 +80,8 @@ def main():
         translations = json.loads(subprocess.check_output(['node','-e',js], input=obj.encode('utf-8')))
     facts = json.loads((ROOT / 'assets/project-facts.json').read_text())
     assert facts['hostedApi']['status'] == 'operational', 'Review translated API copy before changing status.'
+    translations['en'].update({'h3.em':'Local', 'ann.k':'Announcement', 'ann.h':'Jev-Style 2B v4 reads images', 'ann.p':'Our first model with image input, through its PyTorch build.', 'ann.a':'Read about 2B v4'})
+    translations['zh'].update({'om.s.dl':'下载', 'om.s.likes':'点赞', 'om.s.m':'模型', 'h3.em':'本地', 'ann.k':'公告', 'ann.h':'Jev-Style 2B v4 可以读图', 'ann.p':'第一个支持图片输入的模型（PyTorch 版）。', 'ann.a':'了解 2B v4'})
     translations['en'].update({'news.h':'Latest updates', 'news.all':'All updates', 'uc.all':'All use cases', 'bench.all':'Full evaluation', 'final.h':'Start with one decision', 'final.p':'Use the hosted API, or run the same kind of model on your own machine.', 'final.models':'Explore models', 'f.contact':'Contact', 'nav.about':'About'})
     translations['zh'].update({'news.h':'最新动态', 'news.all':'全部更新', 'uc.all':'全部场景', 'bench.all':'完整评测', 'final.h':'从一个判断开始', 'final.p':'使用托管 API，或在自己的机器上运行同类模型。', 'final.models':'查看模型', 'f.contact':'联系我们', 'nav.about':'关于我们'})
     translations['en'].update({'title3':'Local Text Classification and AI Routing in Python | JevStyle', 'h3.title':'Local classification and routing for AI agents', 'h3.sub':'Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon.'})

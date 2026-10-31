@@ -104,7 +104,7 @@ def main():
             home_url = BASE + ('/zh/' if zh else '/')
             home_label = '首页' if zh else 'Home'
             if 'aria-label="Breadcrumb"' not in doc and '<main' in doc:
-                crumb = f'<nav class="breadcrumb" aria-label="Breadcrumb"><a href="{home_url}">{home_label}</a> / <span aria-current="page">{html.escape(title.split(" | ")[0])}</span></nav>'
+                crumb = f'<nav class="breadcrumb" aria-label="Breadcrumb"><a href="{home_url}">{home_label}</a> / <span aria-current="page">{html.escape(title.split(" | ")[0].split(":")[0])}</span></nav>'
                 doc = re.sub(r'(<main\b[^>]*>)', lambda m: m[1]+crumb, doc, count=1)
         schema = json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('</','<\\/')
         doc = doc.replace('</head>', '<script type="application/ld+json">'+schema+'</script>\n</head>', 1)
