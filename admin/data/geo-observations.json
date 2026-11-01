@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T22:44:59.311885+00:00",
+  "generated_at": "2026-11-01T23:11:30.080782+00:00",
   "measurement_type": "consumer_ai_web_probe",
   "is_live": false,
   "source_mode": "reviewed_run_history",
@@ -3253,6 +3253,661 @@
           }
         }
       ]
+    },
+    {
+      "id": "scheduled-20261101t225314z",
+      "label": "第六轮 · 每周真实复测（2026-11-02）",
+      "observed_at_start": "2026-11-01T22:55:14.677366+00:00",
+      "observed_at_end": "2026-11-01T23:11:12.652265+00:00",
+      "acquisition_mode": "consumer_web_ui",
+      "runner_kind": "scheduled_agent",
+      "protocol": "jevstyle-geo-web-v1",
+      "providers": [
+        {
+          "id": "chatgpt",
+          "name": "ChatGPT",
+          "environment": {
+            "browser": "Chrome",
+            "account_mode": "logged_in",
+            "model": "Not observed",
+            "search_mode": "not_available"
+          },
+          "availability": "unavailable",
+          "discovery": {
+            "planned_questions": 7,
+            "attempted_questions": 0,
+            "readable_replies": 0,
+            "counts": {
+              "substantive": 0,
+              "refusal": 0,
+              "technical_error": 0,
+              "blocked": 0,
+              "not_run": 7
+            },
+            "attempt_count": 0,
+            "technical_failure_attempts": 0,
+            "operator_aborted_attempts": 0,
+            "metrics": {
+              "mentions": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "site_citations": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "project_citations": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            },
+            "questions": [
+              {
+                "id": "D1",
+                "question": "How can I classify customer support tickets locally in Python without sending their contents to a hosted model?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D2",
+                "question": "How can I route requests to a workflow with a small local model and send uncertain cases to a larger LLM?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D3",
+                "question": "What are open-source options for scoring a fixed set of choices locally on Apple silicon?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D4",
+                "question": "How can I add a local review layer to Claude Code tool calls, and what are its limitations?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D5",
+                "question": "How should I choose a confidence threshold for automating a text classification workflow with human fallback?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D6",
+                "question": "Which small local decision models can answer yes/no questions about receipts or screenshots?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D7",
+                "question": "What evidence should I check before replacing label-only LLM calls with a local decision model?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              }
+            ]
+          },
+          "brand_checks": {
+            "planned_questions": 3,
+            "attempted_questions": 0,
+            "readable_replies": 0,
+            "counts": {
+              "substantive": 0,
+              "refusal": 0,
+              "technical_error": 0,
+              "blocked": 0,
+              "not_run": 3
+            },
+            "attempt_count": 0,
+            "technical_failure_attempts": 0,
+            "operator_aborted_attempts": 0,
+            "metrics": {
+              "mentions": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "site_citations": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "project_citations": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            },
+            "questions": [
+              {
+                "id": "B1",
+                "question": "What is JevStyle, who maintains it, and is it affiliated with TypeSafe AI?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "B2",
+                "question": "For JevStyle, how do the 0.8B v3 and 2B v4 models differ in input support, backends, and weight download sizes?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "B3",
+                "question": "How do I run JevStyle locally, and is its hosted API currently available?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              }
+            ]
+          }
+        },
+        {
+          "id": "gemini",
+          "name": "Gemini",
+          "environment": {
+            "browser": "Chrome",
+            "account_mode": "logged_in_temporary",
+            "model": "Flash-Lite (UI label)",
+            "search_mode": "default_tools"
+          },
+          "availability": "available",
+          "discovery": {
+            "planned_questions": 7,
+            "attempted_questions": 7,
+            "readable_replies": 7,
+            "counts": {
+              "substantive": 7,
+              "refusal": 0,
+              "technical_error": 0,
+              "blocked": 0,
+              "not_run": 0
+            },
+            "attempt_count": 7,
+            "technical_failure_attempts": 0,
+            "operator_aborted_attempts": 0,
+            "metrics": {
+              "mentions": {
+                "numerator": 0,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.0
+              },
+              "site_citations": {
+                "numerator": 0,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.0
+              },
+              "project_citations": {
+                "numerator": 0,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.0
+              }
+            },
+            "questions": [
+              {
+                "id": "D1",
+                "question": "How can I classify customer support tickets locally in Python without sending their contents to a hosted model?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T22:58:45.391Z",
+                "brand_mentioned": false,
+                "site_cited": false,
+                "project_source_cited": false
+              },
+              {
+                "id": "D2",
+                "question": "How can I route requests to a workflow with a small local model and send uncertain cases to a larger LLM?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T22:59:13.335Z",
+                "brand_mentioned": false,
+                "site_cited": false,
+                "project_source_cited": false
+              },
+              {
+                "id": "D3",
+                "question": "What are open-source options for scoring a fixed set of choices locally on Apple silicon?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T22:59:46.127Z",
+                "brand_mentioned": false,
+                "site_cited": false,
+                "project_source_cited": false
+              },
+              {
+                "id": "D4",
+                "question": "How can I add a local review layer to Claude Code tool calls, and what are its limitations?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T23:00:08.722Z",
+                "brand_mentioned": false,
+                "site_cited": false,
+                "project_source_cited": false
+              },
+              {
+                "id": "D5",
+                "question": "How should I choose a confidence threshold for automating a text classification workflow with human fallback?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T23:00:38.998Z",
+                "brand_mentioned": false,
+                "site_cited": false,
+                "project_source_cited": false
+              },
+              {
+                "id": "D6",
+                "question": "Which small local decision models can answer yes/no questions about receipts or screenshots?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T23:00:59.794Z",
+                "brand_mentioned": false,
+                "site_cited": false,
+                "project_source_cited": false
+              },
+              {
+                "id": "D7",
+                "question": "What evidence should I check before replacing label-only LLM calls with a local decision model?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T23:01:17.451Z",
+                "brand_mentioned": false,
+                "site_cited": false,
+                "project_source_cited": false
+              }
+            ]
+          },
+          "brand_checks": {
+            "planned_questions": 3,
+            "attempted_questions": 3,
+            "readable_replies": 3,
+            "counts": {
+              "substantive": 3,
+              "refusal": 0,
+              "technical_error": 0,
+              "blocked": 0,
+              "not_run": 0
+            },
+            "attempt_count": 3,
+            "technical_failure_attempts": 0,
+            "operator_aborted_attempts": 0,
+            "metrics": {
+              "mentions": {
+                "numerator": 3,
+                "denominator": 3,
+                "unknown": 0,
+                "rate": 1.0
+              },
+              "site_citations": {
+                "numerator": 3,
+                "denominator": 3,
+                "unknown": 0,
+                "rate": 1.0
+              },
+              "project_citations": {
+                "numerator": 2,
+                "denominator": 3,
+                "unknown": 0,
+                "rate": 0.6666666666666666
+              }
+            },
+            "questions": [
+              {
+                "id": "B1",
+                "question": "What is JevStyle, who maintains it, and is it affiliated with TypeSafe AI?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T23:01:37.002Z",
+                "brand_mentioned": true,
+                "site_cited": true,
+                "project_source_cited": true,
+                "verified_site_sources": [
+                  "https://jevstyle.com/about/"
+                ],
+                "fact_check": {
+                  "classification": "partly_accurate",
+                  "errors": [
+                    "训练来源有误"
+                  ],
+                  "correct": []
+                }
+              },
+              {
+                "id": "B2",
+                "question": "For JevStyle, how do the 0.8B v3 and 2B v4 models differ in input support, backends, and weight download sizes?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T23:10:27.414Z",
+                "brand_mentioned": true,
+                "site_cited": true,
+                "project_source_cited": true,
+                "verified_site_sources": [
+                  "https://jevstyle.com/models/2b-v4/"
+                ],
+                "fact_check": {
+                  "classification": "accurate",
+                  "errors": [],
+                  "correct": []
+                }
+              },
+              {
+                "id": "B3",
+                "question": "How do I run JevStyle locally, and is its hosted API currently available?",
+                "status": "substantive",
+                "original_status": "substantive",
+                "attempts": 1,
+                "primary_eligible": true,
+                "observed_at": "2026-11-01T23:10:59.049Z",
+                "brand_mentioned": true,
+                "site_cited": true,
+                "project_source_cited": false,
+                "verified_site_sources": [
+                  "https://jevstyle.com/api/limits.html"
+                ],
+                "fact_check": {
+                  "classification": "inaccurate",
+                  "errors": [
+                    "安装说明有误",
+                    "托管服务状态有误"
+                  ],
+                  "correct": []
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "perplexity",
+          "name": "Perplexity",
+          "environment": {
+            "browser": "Chrome",
+            "account_mode": "anonymous_incognito",
+            "model": "Not observed",
+            "search_mode": "search"
+          },
+          "availability": "unavailable",
+          "discovery": {
+            "planned_questions": 7,
+            "attempted_questions": 0,
+            "readable_replies": 0,
+            "counts": {
+              "substantive": 0,
+              "refusal": 0,
+              "technical_error": 0,
+              "blocked": 0,
+              "not_run": 7
+            },
+            "attempt_count": 0,
+            "technical_failure_attempts": 0,
+            "operator_aborted_attempts": 0,
+            "metrics": {
+              "mentions": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "site_citations": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "project_citations": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            },
+            "questions": [
+              {
+                "id": "D1",
+                "question": "How can I classify customer support tickets locally in Python without sending their contents to a hosted model?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D2",
+                "question": "How can I route requests to a workflow with a small local model and send uncertain cases to a larger LLM?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D3",
+                "question": "What are open-source options for scoring a fixed set of choices locally on Apple silicon?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D4",
+                "question": "How can I add a local review layer to Claude Code tool calls, and what are its limitations?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D5",
+                "question": "How should I choose a confidence threshold for automating a text classification workflow with human fallback?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D6",
+                "question": "Which small local decision models can answer yes/no questions about receipts or screenshots?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "D7",
+                "question": "What evidence should I check before replacing label-only LLM calls with a local decision model?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              }
+            ]
+          },
+          "brand_checks": {
+            "planned_questions": 3,
+            "attempted_questions": 0,
+            "readable_replies": 0,
+            "counts": {
+              "substantive": 0,
+              "refusal": 0,
+              "technical_error": 0,
+              "blocked": 0,
+              "not_run": 3
+            },
+            "attempt_count": 0,
+            "technical_failure_attempts": 0,
+            "operator_aborted_attempts": 0,
+            "metrics": {
+              "mentions": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "site_citations": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "project_citations": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            },
+            "questions": [
+              {
+                "id": "B1",
+                "question": "What is JevStyle, who maintains it, and is it affiliated with TypeSafe AI?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "B2",
+                "question": "For JevStyle, how do the 0.8B v3 and 2B v4 models differ in input support, backends, and weight download sizes?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              },
+              {
+                "id": "B3",
+                "question": "How do I run JevStyle locally, and is its hosted API currently available?",
+                "status": "not_run",
+                "original_status": "not_run",
+                "attempts": 0,
+                "primary_eligible": false,
+                "observed_at": null,
+                "brand_mentioned": null,
+                "site_cited": null,
+                "project_source_cited": null
+              }
+            ]
+          }
+        }
+      ]
     }
   ],
   "comparison": [
@@ -3495,6 +4150,22 @@
     {
       "id": "round5-20261101-reproducible-evidence/perplexity",
       "sha256": "e99e79e1c0fb061ab9f9c4c8bc5fdc8a849563991ce2c7968b1c0ae9ac25b336"
+    },
+    {
+      "id": "scheduled-20261101t225314z/manifest",
+      "sha256": "ff1a905e72bb45bee428a3b6519b43ecf7244b51af472a13e8cc0231147541d4"
+    },
+    {
+      "id": "scheduled-20261101t225314z/chatgpt",
+      "sha256": "b42e63199304225fad996c61f3a5ab4339d4a270e84a747bab5d87ce688217f3"
+    },
+    {
+      "id": "scheduled-20261101t225314z/gemini",
+      "sha256": "b8c89514add2ba2f90e9a73a9aff2d2df7715dd1e90bc2f1850a80aa80ee8c95"
+    },
+    {
+      "id": "scheduled-20261101t225314z/perplexity",
+      "sha256": "580146f45808034c7174166e67edb4f15368eb4a26ea61d92b4cb0924ab85d08"
     }
   ],
   "metric_definitions": {
@@ -3505,7 +4176,7 @@
     "paired": "仅比较两轮共同取得实质回答的同题子集，不汇总成跨平台曝光份额。"
   },
   "limitations": [
-    "历史前历史前历史前两轮为同日人工诊断小样本，不是持续监测、全网份额或显著性检验。",
+    "历史前历史前历史前历史前两轮为同日人工诊断小样本，不是持续监测、全网份额或显著性检验。",
     "第二轮由 IAB 改用 Chrome；ChatGPT 登录态和模型呈现亦变化，不能归因于网站改动。",
     "第二轮开始时新指南的搜索收录尚未确立；提交站点地图和请求收录不等于已收录。",
     "每题最多采用一个完整回答；只有完全无可读输出的失败或误停允许一次替代，失败另记。",
@@ -4193,11 +4864,181 @@
           }
         }
       ]
+    },
+    {
+      "before_round_id": "round5-20261101-reproducible-evidence",
+      "after_round_id": "scheduled-20261101t225314z",
+      "providers": [
+        {
+          "provider_id": "chatgpt",
+          "provider_name": "ChatGPT",
+          "paired_ids": [],
+          "paired_count": 0,
+          "comparability": "not_measurable",
+          "note": "无共同实质回答，不能作数值比较或记为零命中。",
+          "metrics": {
+            "mentions": {
+              "before": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "after": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            },
+            "site_citations": {
+              "before": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "after": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            },
+            "project_citations": {
+              "before": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "after": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            }
+          }
+        },
+        {
+          "provider_id": "gemini",
+          "provider_name": "Gemini",
+          "paired_ids": [
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7"
+          ],
+          "paired_count": 7,
+          "comparability": "environment_changed",
+          "note": "同题实质回答的描述性对照；记录相同环境也不能证明因果提升。",
+          "metrics": {
+            "mentions": {
+              "before": {
+                "numerator": 1,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.14285714285714285
+              },
+              "after": {
+                "numerator": 0,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.0
+              }
+            },
+            "site_citations": {
+              "before": {
+                "numerator": 1,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.14285714285714285
+              },
+              "after": {
+                "numerator": 0,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.0
+              }
+            },
+            "project_citations": {
+              "before": {
+                "numerator": 0,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.0
+              },
+              "after": {
+                "numerator": 0,
+                "denominator": 7,
+                "unknown": 0,
+                "rate": 0.0
+              }
+            }
+          }
+        },
+        {
+          "provider_id": "perplexity",
+          "provider_name": "Perplexity",
+          "paired_ids": [],
+          "paired_count": 0,
+          "comparability": "not_measurable",
+          "note": "无共同实质回答，不能作数值比较或记为零命中。",
+          "metrics": {
+            "mentions": {
+              "before": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "after": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            },
+            "site_citations": {
+              "before": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "after": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            },
+            "project_citations": {
+              "before": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              },
+              "after": {
+                "numerator": null,
+                "denominator": 0,
+                "unknown": 0,
+                "rate": null
+              }
+            }
+          }
+        }
+      ]
     }
   ],
   "latest_comparison": {
-    "before_round_id": "round4-20261029-task-content",
-    "after_round_id": "round5-20261101-reproducible-evidence",
+    "before_round_id": "round5-20261101-reproducible-evidence",
+    "after_round_id": "scheduled-20261101t225314z",
     "providers": [
       {
         "provider_id": "chatgpt",
@@ -4264,35 +5105,35 @@
           "D7"
         ],
         "paired_count": 7,
-        "comparability": "same_recorded_environment",
+        "comparability": "environment_changed",
         "note": "同题实质回答的描述性对照；记录相同环境也不能证明因果提升。",
         "metrics": {
           "mentions": {
             "before": {
-              "numerator": 0,
-              "denominator": 7,
-              "unknown": 0,
-              "rate": 0.0
-            },
-            "after": {
               "numerator": 1,
               "denominator": 7,
               "unknown": 0,
               "rate": 0.14285714285714285
+            },
+            "after": {
+              "numerator": 0,
+              "denominator": 7,
+              "unknown": 0,
+              "rate": 0.0
             }
           },
           "site_citations": {
             "before": {
-              "numerator": 0,
-              "denominator": 7,
-              "unknown": 0,
-              "rate": 0.0
-            },
-            "after": {
               "numerator": 1,
               "denominator": 7,
               "unknown": 0,
               "rate": 0.14285714285714285
+            },
+            "after": {
+              "numerator": 0,
+              "denominator": 7,
+              "unknown": 0,
+              "rate": 0.0
             }
           },
           "project_citations": {
