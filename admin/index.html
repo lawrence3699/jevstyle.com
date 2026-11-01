@@ -64,6 +64,8 @@
     th { text-align: left; font-weight: 500; color: var(--ink3); font-size: 13px; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
     td { padding: 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
     td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .usage-scroll { max-height: 380px; overflow: auto; }
+    .usage-scroll th { position: sticky; top: 0; background: var(--card); }
     .pill { font-size: 12px; border-radius: 99px; padding: 2px 8px; background: var(--soft); color: var(--ink2); }
     .pill.ok { background: var(--ok-bg); color: var(--ok); }
     .gate { max-width: 460px; margin: 12vh auto 0; text-align: center; }
@@ -92,7 +94,7 @@
     <main id="dash" hidden>
       <h1>Dashboard</h1>
       <p class="sub">Accounts, API usage, search performance and AI discovery. API statistics follow UTC.</p>
-      <nav class="admin-nav" aria-label="Dashboard sections"><a href="#api-stats">API usage</a><a href="#geo-monitor">GEO 复测</a><a href="#seo-monitor">SEO 搜索表现</a><a href="#routing-experiment">场景实验</a><a href="#data-sources">数据来源</a></nav>
+      <nav class="admin-nav" aria-label="Dashboard sections"><a href="#api-stats">API usage</a><a href="#model-usage">JEV 每日使用量</a><a href="#geo-monitor">GEO 复测</a><a href="#seo-monitor">SEO 搜索表现</a><a href="#routing-experiment">场景实验</a><a href="#data-sources">数据来源</a></nav>
       <div class="err" id="err" hidden></div>
       <div class="bar">
         <div class="seg" id="range" role="group" aria-label="Range">
@@ -115,6 +117,23 @@
         <div class="card chart"><h2>New users <span class="total" id="c-signups-t"></span></h2><svg id="c-signups" viewBox="0 0 600 150" preserveAspectRatio="none" role="img" aria-label="New users per day"></svg><div class="axis"><span id="c-signups-a"></span><span id="c-signups-b"></span></div></div>
         <div class="card chart"><h2>Successful requests <span class="total" id="c-req-t"></span></h2><svg id="c-req" viewBox="0 0 600 150" preserveAspectRatio="none" role="img" aria-label="Successful requests per day"></svg><div class="axis"><span id="c-req-a"></span><span id="c-req-b"></span></div></div>
       </div>
+
+      <section class="discovery" id="model-usage" aria-labelledby="usage-heading">
+        <h2 id="usage-heading">JEV 模型每日使用量 <span class="geo-badge">成功调用 · UTC</span></h2>
+        <p class="sub">使用上方 7 / 30 / 90 天切换范围；点击 Refresh 更新。今天的数据持续累计，尚非完整一天。</p>
+        <div class="grid">
+          <div class="card"><div class="k">今日调用</div><div class="v" id="usage-today">–</div><div class="n" id="usage-today-date"></div></div>
+          <div class="card"><div class="k">昨日调用</div><div class="v" id="usage-yesterday">–</div><div class="n" id="usage-yesterday-date"></div></div>
+          <div class="card"><div class="k">所选时段调用</div><div class="v" id="usage-window">–</div><div class="n" id="usage-period"></div></div>
+          <div class="card"><div class="k">今日活跃账户</div><div class="v" id="usage-active">–</div><div class="n">当天至少成功调用一次的账户</div></div>
+        </div>
+        <div class="card table">
+          <div class="bar"><h2>每日明细</h2><button class="btn" type="button" id="usage-export" disabled>导出 CSV</button><span class="stamp" id="usage-updated"></span></div>
+          <div class="usage-scroll" tabindex="0" role="region" aria-label="每日使用量表格，可滚动"><table aria-label="JEV 模型每日使用明细"><thead><tr><th>日期（UTC）</th><th class="num">成功调用次数</th><th class="num">活跃账户数</th></tr></thead><tbody id="usage-rows"></tbody></table></div>
+          <p class="note" id="usage-empty" hidden>所选时段没有成功调用记录。</p>
+          <p class="note">统计网站账户通过 JEV API 发起的成功请求，网页与程序调用合并计算；每次请求计 1 次，多个问题不重复计数。排除失败请求和已禁用的测试账户，不含外部 Hugging Face Demo、本地运行或模型下载。数据按 UTC 汇总，同步后更新，暂不区分模型版本。</p>
+        </div>
+      </section>
 
       <div class="card traffic">
         <div>
@@ -173,6 +192,8 @@
     var $ = function (id) { return document.getElementById(id); };
     var days = 30;
     var discoveryMounted = false;
+    var usageDaily = [];
+    var loadSequence = 0;
     var fmt = function (n) { return Number(n || 0).toLocaleString("en-US"); };
     var day = function (iso) { return iso ? iso.slice(0, 10) : "—"; };
     function ago(iso) {
@@ -209,7 +230,26 @@
       $(svg + "-a").textContent = items.length ? items[0].day : "";
       $(svg + "-b").textContent = items.length ? items[items.length - 1].day : "";
     }
+    function renderUsage(d) {
+      usageDaily = d.daily.slice();
+      var today = usageDaily[usageDaily.length - 1];
+      var yesterday = usageDaily[usageDaily.length - 2];
+      $("usage-today").textContent = fmt(today.requests);
+      $("usage-today-date").textContent = today.day + " UTC · 截至本次更新";
+      $("usage-yesterday").textContent = yesterday ? fmt(yesterday.requests) : "—";
+      $("usage-yesterday-date").textContent = yesterday ? yesterday.day + " UTC" : "暂无记录";
+      $("usage-window").textContent = fmt(d.requests.window);
+      $("usage-period").textContent = usageDaily[0].day + " — " + today.day + " · " + d.days + " 天";
+      $("usage-active").textContent = fmt(today.active_users);
+      $("usage-rows").innerHTML = usageDaily.slice().reverse().map(function (row) {
+        return '<tr><td>' + row.day + (row.day === today.day ? ' · 今日（未结束）' : '') + '</td><td class="num">' + fmt(row.requests) + '</td><td class="num">' + fmt(row.active_users) + '</td></tr>';
+      }).join("");
+      $("usage-empty").hidden = d.requests.window !== 0;
+      $("usage-updated").textContent = "更新于 " + new Date(d.generated_at).toLocaleString();
+      $("usage-export").disabled = false;
+    }
     function render(d) {
+      renderUsage(d);
       var a = d.accounts, k = d.keys, r = d.requests;
       $("m-users").textContent = fmt(a.active);
       $("m-users-n").innerHTML = "<b>+" + fmt(a.new_today) + "</b> today · +" + fmt(a.new_7d) + " in 7 days · " + fmt(a.verified) + " verified";
@@ -246,32 +286,38 @@
         counts(d.keys, ["active", "users_with_key", "revoked"]) &&
         counts(d.requests, ["today", "active_users_today", "last_7d", "all_time", "window"]) &&
         count(d.days) && Number.isFinite(Date.parse(d.generated_at)) &&
-        Array.isArray(d.daily) && d.daily.every(function (row) {
-          return counts(row, ["signups", "requests"]) && typeof row.day === "string" && /^\d{4}-\d{2}-\d{2}$/.test(row.day);
+        Array.isArray(d.daily) && d.daily.length === d.days && d.days >= 7 && d.days <= 90 && d.daily.every(function (row) {
+          return counts(row, ["signups", "requests", "active_users"]) && typeof row.day === "string" && /^\d{4}-\d{2}-\d{2}$/.test(row.day);
         }) && Array.isArray(d.users) && d.users.every(function (user) {
           return counts(user, ["active_keys", "requests_today", "requests_total"]) && typeof user.email === "string" &&
             (!user.created_at || (typeof user.created_at === "string" && /^\d{4}-\d{2}-\d{2}/.test(user.created_at)));
         });
     }
     async function load() {
+      var sequence = ++loadSequence;
+      $("usage-export").disabled = true;
       $("err").hidden = true;
       var res;
       try {
         res = await fetch(API + "/admin/stats?days=" + days, { credentials: "include", cache: "no-store" });
       } catch (e) {
+        if (sequence !== loadSequence) return;
         if ($("dash").hidden) gate("Can't reach JevStyle", "Check your connection and reload the page.", location.href, "Reload");
         else { $("err").textContent = "Can't reach JevStyle. Check your connection and try again."; $("err").hidden = false; }
         return;
       }
+      if (sequence !== loadSequence) return;
       if (res.status === 401) return gate("Sign in", "Sign in with the admin account to see the dashboard.", "/login/", "Sign in");
       if (res.status === 403) return gate("Not an admin account", "This account can't open the dashboard. Sign out and sign in with the admin account.", "/console/", "Back to Console");
       if (!res.ok) return gate("Dashboard unavailable", "The dashboard couldn't load (HTTP " + res.status + "). Try again in a minute.", location.href, "Reload");
       var data;
       try {
         data = await res.json();
+        if (sequence !== loadSequence) return;
         if (!validStats(data)) throw new Error("Invalid statistics");
         render(data);
       } catch (e) {
+        if (sequence !== loadSequence) return;
         return gate("Dashboard unavailable", "The server returned an unreadable statistics response. Reload to try again.", location.href, "Reload");
       }
       $("gate").hidden = true;
@@ -282,7 +328,7 @@
         if (window.JevSearchMonitor) window.JevSearchMonitor.mount($("search-content"));
         if (window.JevExperiments) window.JevExperiments.mount($("experiment-content"));
         Promise.resolve(geoLoaded).then(function () {
-          if (["#api-stats", "#geo-monitor", "#seo-monitor", "#routing-experiment", "#data-sources"].indexOf(location.hash) < 0) return;
+          if (["#api-stats", "#model-usage", "#geo-monitor", "#seo-monitor", "#routing-experiment", "#data-sources"].indexOf(location.hash) < 0) return;
           var target = $(location.hash.slice(1));
           if (target && target.scrollIntoView) target.scrollIntoView({ block: "start" });
         });
@@ -300,6 +346,20 @@
         document.querySelectorAll("#range button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
         load();
       });
+    });
+    $("usage-export").addEventListener("click", function () {
+      if ($("usage-export").disabled || !usageDaily.length || $("dash").hidden) return;
+      var csv = "date_utc,successful_requests,active_accounts\r\n" + usageDaily.map(function (row) {
+        return [row.day, row.requests, row.active_users].join(",");
+      }).join("\r\n") + "\r\n";
+      var url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      var link = document.createElement("a");
+      link.href = url;
+      link.download = "jev-daily-usage-" + usageDaily[0].day + "-" + usageDaily[usageDaily.length - 1].day + ".csv";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
     });
     $("refresh").addEventListener("click", load);
     loadMe();
