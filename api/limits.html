@@ -22,6 +22,7 @@
 <meta name="twitter:title" content="Limits · Jev-Style API">
 <meta name="twitter:description" content="Jev-Style Free Decision API — Limits.">
 <meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
+<script src="/assets/service-status.js" defer></script>
 <link rel="canonical" href="https://jevstyle.com/api/limits.html">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/api/limits.html#webpage", "url": "https://jevstyle.com/api/limits.html", "name": "Limits · Jev-Style API", "description": "Jev-Style Free Decision API — Limits.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Limits · Jev-Style API", "item": "https://jevstyle.com/api/limits.html"}]}]}</script>
 </head>
@@ -76,7 +77,8 @@
         <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4">Model card</a>
         <span>·</span><span>Base URL <code>https://api.jevstyle.com</code></span>
       </div>
-    </main>
+    <section id="service-status" aria-labelledby="service-status-heading"><h2 id="service-status-heading">Hosted API status and local installation</h2><p><strong>Checked 2 November 2026: the public health endpoint reported ready for inference.</strong> This is a dated health observation, not a permanent uptime claim or an end-to-end inference test. <a href="https://api.jevstyle.com/healthz">Check live health</a> for a new observation.</p><p data-service-health role="status">Live health has not been checked in this page session.</p><p>The hosted API serves text-only 2B v4, with an 8,000-token input cap. Shared capacity is elastic; see <a href="/api/limits.html">current quota and concurrency limits</a>. A 429 capacity response asks you to retry; it is not by itself evidence of maintenance.</p><p><a href="/guides/run-locally/">Run JevStyle locally without a hosted API key</a>. Local weights and Hugging Face demos are separate from this hosted endpoint. Install the official <code>jev-style</code> package for local inference; TypeSafe/OpenRouter Jev credentials and agent simulation are different paths.</p></section>
+</main>
   </div>
   <script>
     (function(){var KEY="jev-api-theme",order=["system","light","dark"];function cur(){try{return localStorage.getItem(KEY)||"system"}catch(e){return"system"}}function apply(t){var r=document.documentElement;if(!t||t==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",t);try{localStorage.setItem(KEY,t||"system")}catch(e){}}apply(cur());var b=document.getElementById("theme-btn");if(b)b.onclick=function(){var i=order.indexOf(cur());apply(order[(i+1)%order.length])};var m=document.getElementById("menu-btn"),s=document.getElementById("side");if(m&&s)m.onclick=function(){s.classList.toggle("open")}})();

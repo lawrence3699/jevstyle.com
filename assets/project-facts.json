@@ -9,18 +9,21 @@
   "pypi": "https://pypi.org/project/jev-style/",
   "linkedin": "https://www.linkedin.com/in/chaoliang-yan-a7061a370/",
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
-  "reviewed": "2026-10-29",
+  "reviewed": "2026-11-02",
   "hostedApi": {
     "status": "operational",
     "model": "Jev-Style Decision 2B v4",
     "dailyQuota": 10000,
     "inputTokenLimit": 8000,
     "textOnly": true,
-    "concurrencyLimit": 1
+    "statusReviewed": "2026-11-02",
+    "healthUrl": "https://api.jevstyle.com/healthz",
+    "concurrencyPolicy": "Elastic shared capacity; up to 3 concurrent requests per account while idle; may reduce to 2 or 1."
   },
-  "packageVersion": "0.6.2",
+  "packageVersion": "0.6.3",
   "latest2bModel": "Jev-Style-2B-Decision-v4",
   "latest2bReleased": "2026-10-27",
   "defaultTextModel": "Jev-Style-0.8B-Decision-v3",
-  "trainingProvenance": "Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. This does not imply affiliation or endorsement."
+  "trainingProvenance": "Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. JevStyle is maintained independently by Chaoliang Yan, with no TypeSafe affiliation or endorsement. The package does not bundle raw teacher-response datasets; that packaging detail does not negate the use of teacher outputs in training.",
+  "localInstallGuide": "https://jevstyle.com/guides/run-locally/"
 }

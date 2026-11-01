@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Overview · Jev-Style API</title>
-  <meta name="description" content="JevStyle hosted 2B v4 decision API reference: authentication, typed questions, and limits. Text only, up to 8,000 input tokens, with one request processed at a time." />
+  <meta name="description" content="JevStyle hosted 2B v4 decision API reference: authentication, typed questions, and limits. Text only, up to 8,000 input tokens, with elastic shared-capacity admission." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,16 +14,17 @@
   <script src="/assets/site-chrome.js" defer></script>
   <script>(function(){try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <meta property="og:title" content="Overview · Jev-Style API">
-<meta property="og:description" content="JevStyle hosted 2B v4 decision API reference: authentication, typed questions, and limits. Text only, up to 8,000 input tokens, with one request processed at a time.">
+<meta property="og:description" content="JevStyle hosted 2B v4 decision API reference: authentication, typed questions, and limits. Text only, up to 8,000 input tokens, with elastic shared-capacity admission.">
 <meta property="og:url" content="https://jevstyle.com/api/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Overview · Jev-Style API">
-<meta name="twitter:description" content="JevStyle hosted 2B v4 decision API reference: authentication, typed questions, and limits. Text only, up to 8,000 input tokens, with one request processed at a time.">
+<meta name="twitter:description" content="JevStyle hosted 2B v4 decision API reference: authentication, typed questions, and limits. Text only, up to 8,000 input tokens, with elastic shared-capacity admission.">
 <meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
+<script src="/assets/service-status.js" defer></script>
 <link rel="canonical" href="https://jevstyle.com/api/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/api/#webpage", "url": "https://jevstyle.com/api/", "name": "Overview · Jev-Style API", "description": "JevStyle hosted 2B v4 decision API reference: authentication, typed questions, and limits. Text only, up to 8,000 input tokens, with one request processed at a time.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Overview · Jev-Style API", "item": "https://jevstyle.com/api/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/api/#webpage", "url": "https://jevstyle.com/api/", "name": "Overview · Jev-Style API", "description": "JevStyle hosted 2B v4 decision API reference: authentication, typed questions, and limits. Text only, up to 8,000 input tokens, with elastic shared-capacity admission.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Overview · Jev-Style API", "item": "https://jevstyle.com/api/"}]}]}</script>
 </head>
 <body>
   <header class="hdr">
@@ -51,7 +52,7 @@
       <a href="/console/">Console</a>
     </aside>
     <main class="content"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="https://jevstyle.com/">Home</a> / <span aria-current="page">Overview · Jev-Style API</span></nav>
-      <div class="banner"><strong>Hosted API: 2B v4.</strong> Text only, up to 8,000 input tokens per request, one request at a time. Each account receives 10,000 successful requests per day, subject to shared capacity.</div>
+      <div class="banner"><strong>Hosted API: 2B v4.</strong> Text only, up to 8,000 input tokens per request. Concurrency varies with shared capacity. Each account receives 10,000 successful requests per day, subject to shared capacity.</div>
       <h1>JevStyle hosted decision API</h1>
       <p class="lead">Free hosted API for <strong>Jev-Style Decision 2B v4</strong>: send a <code>state</code> and typed <code>questions</code>, get calibrated probabilities in one pass. Independent · not TypeSafe.</p>
       <h2>Quick start</h2>
@@ -93,7 +94,8 @@ Inference:     https://api.jevstyle.com/v1/systemone</pre>
         <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4">Model card</a>
         <span>·</span><span>Sign up → key in Console · ≤3 keys · cookie session (CORS: jevstyle.com)</span>
       </div>
-    </main>
+    <section id="service-status" aria-labelledby="service-status-heading"><h2 id="service-status-heading">Hosted API status and local installation</h2><p><strong>Checked 2 November 2026: the public health endpoint reported ready for inference.</strong> This is a dated health observation, not a permanent uptime claim or an end-to-end inference test. <a href="https://api.jevstyle.com/healthz">Check live health</a> for a new observation.</p><p data-service-health role="status">Live health has not been checked in this page session.</p><p>The hosted API serves text-only 2B v4, with an 8,000-token input cap. Shared capacity is elastic; see <a href="/api/limits.html">current quota and concurrency limits</a>. A 429 capacity response asks you to retry; it is not by itself evidence of maintenance.</p><p><a href="/guides/run-locally/">Run JevStyle locally without a hosted API key</a>. Local weights and Hugging Face demos are separate from this hosted endpoint. Install the official <code>jev-style</code> package for local inference; TypeSafe/OpenRouter Jev credentials and agent simulation are different paths.</p></section>
+</main>
   </div>
   <script>
     (function(){var KEY="jev-api-theme",order=["system","light","dark"];function cur(){try{return localStorage.getItem(KEY)||"system"}catch(e){return"system"}}function apply(t){var r=document.documentElement;if(!t||t==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",t);try{localStorage.setItem(KEY,t||"system")}catch(e){}}apply(cur());var b=document.getElementById("theme-btn");if(b)b.onclick=function(){var i=order.indexOf(cur());apply(order[(i+1)%order.length])};var m=document.getElementById("menu-btn"),s=document.getElementById("side");if(m&&s)m.onclick=function(){s.classList.toggle("open")}})();

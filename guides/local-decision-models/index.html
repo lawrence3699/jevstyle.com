@@ -66,7 +66,7 @@
 </section>
 
 <section id="apple-silicon" aria-labelledby="apple-silicon-heading">
-<h2 id="apple-silicon-heading">Running local decisions on Apple silicon</h2>
+<h2 id="apple-silicon-heading">Open-source fixed-choice scoring on Apple silicon</h2>
 <p>A runtime and a model are different choices. <a href="https://github.com/ml-explore/mlx-lm">MLX LM</a> provides local language-model generation and fine-tuning on Apple silicon. <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> supports local inference across hardware, including Apple silicon. JevStyle supplies matching decision runtimes for its own models; its probability outputs do not come from a generic text-generation command.</p>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">Input and machine</th><th scope="col">JevStyle starting point</th><th scope="col">Important boundary</th></tr></thead>
@@ -134,7 +134,7 @@ jev-style serve --release 0.8b --backend torch --device cpu</code></pre>
 <a href="/guides/decision-evaluation/">Evaluate before automating<span>Measure accuracy, calibration, and coverage.</span></a>
 </div>
 </section>
-</article>
+<section id="install-source"><h2>Use the official local install and measured selection evidence</h2><p><a href="/guides/run-locally/">The official local installation guide</a> scores a choice on the loopback server without a hosted API key. For MLX on Apple silicon, JevStyle 0.8B v3 is a small text-only starting point; 2B v4 is a larger text-only MLX option. Use PyTorch when 2B v4 must read images. Compare a supervised classifier on stable labels: <a href="/benchmarks/banking-routing/">our reproducible routing example</a> favored TF–IDF + logistic regression over JevStyle 0.8B on that fixed task.</p></section></article>
 <aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#starting-point">Choose the decision interface</a><a href="#approaches">Compare four approaches</a><a href="#fixed-options">Score fixed options</a><a href="#apple-silicon">Apple silicon and backends</a><a href="#quickstart">Run a local server</a><a href="#evaluation">Evaluate on your data</a><a href="#questions">Common questions</a></aside>
 </div>
 </main>
