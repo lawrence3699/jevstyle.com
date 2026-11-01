@@ -58,6 +58,9 @@
     <loc>https://jevstyle.com/guides/replace-label-only-llm-calls/</loc>
   </url>
   <url>
+    <loc>https://jevstyle.com/guides/run-locally/</loc>
+  </url>
+  <url>
     <loc>https://jevstyle.com/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/" />

@@ -29,6 +29,7 @@ jobs:
           node scripts/check_search_performance_auto.cjs
           node scripts/check_search_monitor.cjs
           node scripts/check_admin_gate.cjs
+          node scripts/check_service_status.cjs
           node --check admin/discovery.js
           node --check admin/search-performance.js
           node --check admin/search-monitor.js

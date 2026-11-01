@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
 import re
-from build_discovery import public_pages
+from build_discovery import public_pages, FACTS
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -133,7 +133,7 @@ def main():
         assert 'id="current-facts"' in source
         assert '/guides/local-text-classification/' in source
         assert '/guides/local-decision-models/' in source
-        assert '1.14' in source and '0.6.2' in source
+        assert '1.14' in source and FACTS['packageVersion'] in source
     subprocess.run(['node','--check',str(ROOT/'assets/journey.js')],check=True)
     subprocess.run(['node',str(ROOT/'scripts/check_journey.cjs')],check=True)
     print(f'Checked {len(pages)} public growth pages, {len(urls)} sitemap URLs, metadata, links, Python examples and JavaScript syntax.')
