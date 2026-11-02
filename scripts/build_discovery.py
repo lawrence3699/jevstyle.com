@@ -26,7 +26,7 @@ def slot(doc, key, content, before=None):
 
 
 def public_pages():
-    paths = [ROOT/'index.html', ROOT/'zh/index.html', ROOT/'about/index.html', ROOT/'zh/about/index.html', ROOT/'contact/index.html', ROOT/'zh/contact/index.html']
+    paths = [ROOT/'tools/browser-agent/index.html', ROOT/'index.html', ROOT/'zh/index.html', ROOT/'about/index.html', ROOT/'zh/about/index.html', ROOT/'contact/index.html', ROOT/'zh/contact/index.html']
     for folder in ('use-cases', 'guides', 'models', 'benchmarks', 'updates', 'privacy', 'pricing'):
         paths += list((ROOT/folder).rglob('*.html'))
     paths += [p for p in (ROOT/'api').glob('*.html') if p.name not in ('docs.html', 'apply.html', 'usage.html')]
@@ -61,10 +61,10 @@ def task_entrypoints(zh):
     """Visible task guidance."""
     if zh:
         title = '从你的任务开始'
-        cards = [('/guides/local-text-classification/', 'Python 本地文本分类'), ('/guides/local-decision-models/', '本地决策模型与 Apple silicon'), ('/use-cases/local-llm-routing/', '请求路由与大模型回退'), ('/guides/local-routing-tools/', '本地路由工具选型'), ('/use-cases/local-vision-decisions/', '收据与截图的本地判断'), ('/guides/replace-label-only-llm-calls/', '替换只返回标签的 LLM 调用')]
+        cards = [('/tools/browser-agent/', '浏览器 Agent：运行记录与本地试用'), ('/guides/local-text-classification/', 'Python 本地文本分类'), ('/guides/local-decision-models/', '本地决策模型与 Apple silicon'), ('/use-cases/local-llm-routing/', '请求路由与大模型回退'), ('/guides/local-routing-tools/', '本地路由工具选型'), ('/use-cases/local-vision-decisions/', '收据与截图的本地判断'), ('/guides/replace-label-only-llm-calls/', '替换只返回标签的 LLM 调用')]
     else:
         title = 'Start with your task'
-        cards = [('/guides/local-text-classification/', 'Local text classification in Python'), ('/guides/local-decision-models/', 'Local decision models on Apple silicon'), ('/use-cases/local-llm-routing/', 'Workflow routing with LLM fallback'), ('/guides/local-routing-tools/', 'Compare local routing tools'), ('/use-cases/local-vision-decisions/', 'Local receipt and screenshot decisions'), ('/guides/replace-label-only-llm-calls/', 'Replace label-only LLM calls')]
+        cards = [('/tools/browser-agent/', 'Browser agent: recorded runs and local setup'), ('/guides/local-text-classification/', 'Local text classification in Python'), ('/guides/local-decision-models/', 'Local decision models on Apple silicon'), ('/use-cases/local-llm-routing/', 'Workflow routing with LLM fallback'), ('/guides/local-routing-tools/', 'Compare local routing tools'), ('/use-cases/local-vision-decisions/', 'Local receipt and screenshot decisions'), ('/guides/replace-label-only-llm-calls/', 'Replace label-only LLM calls')]
     links = ''.join(f'<a href="{url}" data-track="guide_open"><b>{label}</b></a>' for url, label in cards)
     return f'<section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">{title}</h2></div><div class="guide-grid">{links}</div></section>'
 

@@ -32,6 +32,7 @@ Hosted service status and its limits: https://jevstyle.com/api/#service-status
 - [Local decision models and downloads | JevStyle](https://jevstyle.com/models/)
 - [Pricing and license | JevStyle](https://jevstyle.com/pricing/)
 - [Privacy | JevStyle](https://jevstyle.com/privacy/)
+- [JevStyle Browser Agent: recorded runs and local runner | JevStyle](https://jevstyle.com/tools/browser-agent/)
 - [Model and package updates | JevStyle](https://jevstyle.com/updates/)
 - [Local AI use cases: classification and routing | JevStyle](https://jevstyle.com/use-cases/)
 - [Local LLM routing and intent classification | JevStyle](https://jevstyle.com/use-cases/local-llm-routing/)
