@@ -55,6 +55,8 @@ jobs:
           python3 scripts/build_routing_experiment.py
           python3 scripts/build_discovery.py
           python3 scripts/check_site.py
+          python3 scripts/check_browser_agent.py
+          node --check tools/browser-agent/replay.js
           python3 scripts/test_geo_snapshot.py
           python3 scripts/test_append_geo_run.py
           python3 scripts/test_search_collector.py

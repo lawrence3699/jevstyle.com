@@ -12,6 +12,7 @@ import json
 import re
 
 import site_chrome as chrome
+import browser_agent_page
 
 ROOT = Path(__file__).resolve().parents[1]
 FACTS = json.loads((ROOT / 'assets/project-facts.json').read_text())
@@ -28,6 +29,7 @@ GROWTH_PAGES = ('benchmarks', 'models/compare', 'models/0-8b-v3', 'models/2b-v4'
                 'use-cases/local-llm-routing', 'use-cases/local-vision-decisions', 'use-cases/support-ticket-classification')
 API_PAGES = ('api/index.html', 'api/auth.html', 'api/endpoints.html', 'api/errors.html', 'api/limits.html', 'api/terms.html')
 USE_CASES = [
+    ('/tools/browser-agent/', 'Browser agent', 'Inspect recorded browser decisions and run the JevStyle agent locally.'),
     ('/use-cases/support-ticket-classification/', 'Support ticket classification', 'Team, refund request, and urgency in one call.'),
     ('/use-cases/local-llm-routing/', 'Local LLM routing', 'Choose a route locally and send uncertain decisions to your LLM.'),
     ('/use-cases/local-vision-decisions/', 'Receipt and screenshot decisions', 'Ask yes/no questions about local images with the PyTorch build.'),
@@ -233,6 +235,7 @@ def main():
     models_page(data, lambda fid: i18n.get('one.' + fid, ''))
     index_page('use-cases/index.html', '/use-cases/', 'Use cases', 'What teams use decision models for', 'Each guide shows when the approach fits, a runnable example, and how to evaluate it on your own data.', 'Local AI use cases: classification and routing | JevStyle', 'Runnable examples for support ticket classification, LLM routing, image decisions, and agent tool-call review.', USE_CASES)
     index_page('guides/index.html', '/guides/', 'Guides', 'Guides for local decisions', 'Choose an approach, compare the tools, and measure the result on your own data.', 'Guides for local classification and routing | JevStyle', 'Practical guides for local text classification, decision models, routing tools, label-only LLM calls, and evaluation.', GUIDES)
+    browser_agent_page.build(page, ROOT)
     updates_page()
     privacy_page()
     pricing_page()

@@ -1,0 +1,500 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-02T20:19:37.781288+00:00",
+  "batch_status": "completed",
+  "planned_scenarios": [
+    "hotel"
+  ],
+  "review_every_step": true,
+  "configuration": {
+    "fallback_enabled": true,
+    "fallback_threshold": 1.0,
+    "fallback_format": "json_schema",
+    "max_actions": 40,
+    "max_seconds": 300,
+    "stop_when_verified": true
+  },
+  "scope": "Separate visual capture of the synthetic hotel fixture; does not replace the frozen seven-scenario release report.",
+  "visual_type": "Actual browser snapshots after individual actions; not continuous video.",
+  "runs": [
+    {
+      "id": "hotel",
+      "title": "Find a hotel",
+      "goal": "Use the destination search and filters to find Design stays in Lisbon with Free cancellation, then open Casa Flora.",
+      "url": "fixture.html?scenario=travel",
+      "local": true,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 9,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 20544,
+      "wall_ms": 20697,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "qwen3:4b-instruct-2507-q4_K_M",
+      "hybrid": true,
+      "fallback_calls": 7,
+      "all_decisions_reviewed": true,
+      "fallback_models": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "correct property opened",
+            "passed": true
+          },
+          {
+            "name": "Design category applied",
+            "passed": true
+          },
+          {
+            "name": "free cancellation enabled",
+            "passed": true
+          },
+          {
+            "name": "Lisbon destination search applied",
+            "passed": true
+          },
+          {
+            "name": "property heading",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "TYPE_TEXT",
+          "target": "4",
+          "label": "TYPE_TEXT element 4",
+          "latency_ms": 4098,
+          "elapsed_ms": 5296,
+          "confidence": 0.35308157424434317,
+          "text_latency_ms": 1086,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3:4b-instruct-2507-q4_K_M",
+          "operation_probabilities": {
+            "CLICK": 0.46090131187028593,
+            "TYPE_TEXT": 0.09426514697766232,
+            "SELECT": 0.2094549554132078,
+            "SCROLL_DOWN": 0.06917354831895967,
+            "WAIT": 0.08204377940451643,
+            "BLOCKED": 0.08416125801536785
+          },
+          "target_probabilities": {
+            "4": 1.0
+          }
+        },
+        {
+          "step": 2,
+          "operation": "SELECT",
+          "target": "6:1",
+          "label": "SELECT element 6:1",
+          "latency_ms": 2543,
+          "elapsed_ms": 7932,
+          "confidence": 0.47856933486223097,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3:4b-instruct-2507-q4_K_M",
+          "operation_probabilities": {
+            "CLICK": 0.5654744457185258,
+            "TYPE_TEXT": 0.04792243498721982,
+            "SELECT": 0.17011189588265652,
+            "SCROLL_DOWN": 0.06159444367476645,
+            "WAIT": 0.09291204110317078,
+            "BLOCKED": 0.06198473863366073
+          },
+          "target_probabilities": {
+            "6:1": 0.9102666037557716,
+            "6:2": 0.04507406544385707,
+            "6:3": 0.044659330800371363
+          }
+        },
+        {
+          "step": 3,
+          "operation": "CLICK",
+          "target": "7",
+          "label": "CLICK element 7",
+          "latency_ms": 2681,
+          "elapsed_ms": 10711,
+          "confidence": 0.4407774648845112,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3:4b-instruct-2507-q4_K_M",
+          "operation_probabilities": {
+            "CLICK": 0.5339812207370926,
+            "TYPE_TEXT": 0.049792521692390575,
+            "SELECT": 0.11937307646036,
+            "SCROLL_DOWN": 0.09784091481690703,
+            "WAIT": 0.1046019939676044,
+            "BLOCKED": 0.0944102723256454
+          },
+          "target_probabilities": {
+            "1": 0.039197465236290724,
+            "2": 0.07036860126394406,
+            "3": 0.012643700269634161,
+            "4": 0.04144216922232941,
+            "5": 0.16688011114610501,
+            "7": 0.1545376681950775,
+            "8": 0.4695049956937031,
+            "9": 0.04542528897291603
+          }
+        },
+        {
+          "step": 4,
+          "operation": "CLICK",
+          "target": "4",
+          "label": "CLICK element 4",
+          "latency_ms": 2438,
+          "elapsed_ms": 13227,
+          "confidence": 0.41954735335111604,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3:4b-instruct-2507-q4_K_M",
+          "operation_probabilities": {
+            "CLICK": 0.51628946112593,
+            "TYPE_TEXT": 0.06115140302332214,
+            "SELECT": 0.10681104102354516,
+            "SCROLL_DOWN": 0.11429203593510708,
+            "WAIT": 0.12888314317802052,
+            "BLOCKED": 0.07257291571407519
+          },
+          "target_probabilities": {
+            "1": 0.05992654477968845,
+            "2": 0.06262801364844257,
+            "3": 0.015900166809368635,
+            "4": 0.05881585778110146,
+            "5": 0.12898117686339533,
+            "7": 0.11784241838063263,
+            "8": 0.5146699258524423,
+            "9": 0.041235895884928576
+          }
+        },
+        {
+          "step": 5,
+          "operation": "CLICK",
+          "target": "4",
+          "label": "CLICK element 4",
+          "latency_ms": 1869,
+          "elapsed_ms": 15162,
+          "confidence": 0.4739096085959707,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3:4b-instruct-2507-q4_K_M",
+          "operation_probabilities": {
+            "CLICK": 0.5615913404966423,
+            "TYPE_TEXT": 0.0588236643782181,
+            "SELECT": 0.10539950700190244,
+            "SCROLL_DOWN": 0.0964346532562518,
+            "WAIT": 0.11189282161007576,
+            "BLOCKED": 0.0658580132569096
+          },
+          "target_probabilities": {
+            "1": 0.04222677478458151,
+            "2": 0.058302795922055645,
+            "3": 0.015115428419509786,
+            "4": 0.1012148178920184,
+            "5": 0.09602520035000381,
+            "7": 0.07265460483670423,
+            "8": 0.5562360368701869,
+            "9": 0.05822434092493986
+          }
+        },
+        {
+          "step": 6,
+          "operation": "CLICK",
+          "target": "5",
+          "label": "CLICK element 5",
+          "latency_ms": 2458,
+          "elapsed_ms": 17782,
+          "confidence": 0.4328344900778429,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3:4b-instruct-2507-q4_K_M",
+          "operation_probabilities": {
+            "CLICK": 0.5273620750648691,
+            "TYPE_TEXT": 0.09089475611505257,
+            "SELECT": 0.11654437636437409,
+            "SCROLL_DOWN": 0.1108692714218134,
+            "WAIT": 0.09796789340189309,
+            "BLOCKED": 0.05636162763199786
+          },
+          "target_probabilities": {
+            "1": 0.06625667122319442,
+            "2": 0.08966980536266882,
+            "3": 0.02646255010848321,
+            "5": 0.10756013865828058,
+            "7": 0.09359236368890596,
+            "8": 0.5467981295072413,
+            "9": 0.06966034145122586
+          }
+        },
+        {
+          "step": 7,
+          "operation": "CLICK",
+          "target": "8",
+          "label": "CLICK element 8",
+          "latency_ms": 2676,
+          "elapsed_ms": 20544,
+          "confidence": 0.5497534989486007,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3:4b-instruct-2507-q4_K_M",
+          "operation_probabilities": {
+            "CLICK": 0.6247945824571672,
+            "TYPE_TEXT": 0.02391005354786106,
+            "SELECT": 0.09085219499954103,
+            "SCROLL_DOWN": 0.08078060882655262,
+            "WAIT": 0.14807966637024997,
+            "BLOCKED": 0.031582893798628185
+          },
+          "target_probabilities": {
+            "1": 0.04194260932921234,
+            "2": 0.038591621352527125,
+            "3": 0.014453217862400877,
+            "4": 0.031094252438329213,
+            "5": 0.11717537338769196,
+            "7": 0.0505788057594254,
+            "8": 0.7061641198704132
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "CLICK": 0.46090131187028593,
+            "TYPE_TEXT": 0.09426514697766232,
+            "SELECT": 0.2094549554132078,
+            "SCROLL_DOWN": 0.06917354831895967,
+            "WAIT": 0.08204377940451643,
+            "BLOCKED": 0.08416125801536785
+          },
+          "target_probabilities": {
+            "4": 1.0
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 2502,
+          "fallback_latency_ms": 1596,
+          "latency_ms": 4098,
+          "elapsed_ms": 4100,
+          "confidence": 0.35308157424434317
+        },
+        {
+          "operation": "SELECT",
+          "operation_probabilities": {
+            "CLICK": 0.5654744457185258,
+            "TYPE_TEXT": 0.04792243498721982,
+            "SELECT": 0.17011189588265652,
+            "SCROLL_DOWN": 0.06159444367476645,
+            "WAIT": 0.09291204110317078,
+            "BLOCKED": 0.06198473863366073
+          },
+          "target_probabilities": {
+            "6:1": 0.9102666037557716,
+            "6:2": 0.04507406544385707,
+            "6:3": 0.044659330800371363
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1429,
+          "fallback_latency_ms": 1114,
+          "latency_ms": 2543,
+          "elapsed_ms": 7844,
+          "confidence": 0.47856933486223097
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.5339812207370926,
+            "TYPE_TEXT": 0.049792521692390575,
+            "SELECT": 0.11937307646036,
+            "SCROLL_DOWN": 0.09784091481690703,
+            "WAIT": 0.1046019939676044,
+            "BLOCKED": 0.0944102723256454
+          },
+          "target_probabilities": {
+            "1": 0.039197465236290724,
+            "2": 0.07036860126394406,
+            "3": 0.012643700269634161,
+            "4": 0.04144216922232941,
+            "5": 0.16688011114610501,
+            "7": 0.1545376681950775,
+            "8": 0.4695049956937031,
+            "9": 0.04542528897291603
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1291,
+          "fallback_latency_ms": 1390,
+          "latency_ms": 2681,
+          "elapsed_ms": 10619,
+          "confidence": 0.4407774648845112
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.51628946112593,
+            "TYPE_TEXT": 0.06115140302332214,
+            "SELECT": 0.10681104102354516,
+            "SCROLL_DOWN": 0.11429203593510708,
+            "WAIT": 0.12888314317802052,
+            "BLOCKED": 0.07257291571407519
+          },
+          "target_probabilities": {
+            "1": 0.05992654477968845,
+            "2": 0.06262801364844257,
+            "3": 0.015900166809368635,
+            "4": 0.05881585778110146,
+            "5": 0.12898117686339533,
+            "7": 0.11784241838063263,
+            "8": 0.5146699258524423,
+            "9": 0.041235895884928576
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1479,
+          "fallback_latency_ms": 959,
+          "latency_ms": 2438,
+          "elapsed_ms": 13154,
+          "confidence": 0.41954735335111604
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.5615913404966423,
+            "TYPE_TEXT": 0.0588236643782181,
+            "SELECT": 0.10539950700190244,
+            "SCROLL_DOWN": 0.0964346532562518,
+            "WAIT": 0.11189282161007576,
+            "BLOCKED": 0.0658580132569096
+          },
+          "target_probabilities": {
+            "1": 0.04222677478458151,
+            "2": 0.058302795922055645,
+            "3": 0.015115428419509786,
+            "4": 0.1012148178920184,
+            "5": 0.09602520035000381,
+            "7": 0.07265460483670423,
+            "8": 0.5562360368701869,
+            "9": 0.05822434092493986
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1469,
+          "fallback_latency_ms": 400,
+          "latency_ms": 1869,
+          "elapsed_ms": 15101,
+          "confidence": 0.4739096085959707
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.5273620750648691,
+            "TYPE_TEXT": 0.09089475611505257,
+            "SELECT": 0.11654437636437409,
+            "SCROLL_DOWN": 0.1108692714218134,
+            "WAIT": 0.09796789340189309,
+            "BLOCKED": 0.05636162763199786
+          },
+          "target_probabilities": {
+            "1": 0.06625667122319442,
+            "2": 0.08966980536266882,
+            "3": 0.02646255010848321,
+            "5": 0.10756013865828058,
+            "7": 0.09359236368890596,
+            "8": 0.5467981295072413,
+            "9": 0.06966034145122586
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1440,
+          "fallback_latency_ms": 1017,
+          "latency_ms": 2458,
+          "elapsed_ms": 17628,
+          "confidence": 0.4328344900778429
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.6247945824571672,
+            "TYPE_TEXT": 0.02391005354786106,
+            "SELECT": 0.09085219499954103,
+            "SCROLL_DOWN": 0.08078060882655262,
+            "WAIT": 0.14807966637024997,
+            "BLOCKED": 0.031582893798628185
+          },
+          "target_probabilities": {
+            "1": 0.04194260932921234,
+            "2": 0.038591621352527125,
+            "3": 0.014453217862400877,
+            "4": 0.031094252438329213,
+            "5": 0.11717537338769196,
+            "7": 0.0505788057594254,
+            "8": 0.7061641198704132
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1264,
+          "fallback_latency_ms": 1412,
+          "latency_ms": 2676,
+          "elapsed_ms": 20466,
+          "confidence": 0.5497534989486007
+        }
+      ],
+      "decision_calls": 7,
+      "text_calls": 1
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 0,
+    "blocked": 0
+  },
+  "frames": [
+    {
+      "elapsed_ms": 0,
+      "path": "hotel-frames/000000.jpg"
+    },
+    {
+      "elapsed_ms": 5296,
+      "path": "hotel-frames/005296.jpg"
+    },
+    {
+      "elapsed_ms": 7932,
+      "path": "hotel-frames/007932.jpg"
+    },
+    {
+      "elapsed_ms": 10711,
+      "path": "hotel-frames/010711.jpg"
+    },
+    {
+      "elapsed_ms": 13227,
+      "path": "hotel-frames/013227.jpg"
+    },
+    {
+      "elapsed_ms": 15162,
+      "path": "hotel-frames/015162.jpg"
+    },
+    {
+      "elapsed_ms": 17782,
+      "path": "hotel-frames/017782.jpg"
+    },
+    {
+      "elapsed_ms": 20544,
+      "path": "hotel-frames/020544.jpg"
+    }
+  ]
+}
