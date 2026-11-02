@@ -1,4 +1,4 @@
-import type {Person, Run} from './types';
+import type {Evidence, Person, Run} from './types';
 
 export const isFinished = (run: Run) => ['completed', 'partial', 'failed', 'cancelled'].includes(run.state);
 export function safeLink(value: string) {
@@ -19,6 +19,9 @@ export function evidenceRecords(profiles: Person[]) {
 }
 export function resultGroup(person: Person, run: Run) {
   return person.evaluation?.group || (isFinished(run) ? 'review' : 'pending');
+}
+export function citationNumber(profiles: Person[], person: Person, evidence: Evidence) {
+  return evidenceRecords(profiles).findIndex(e=>e.source===person.source&&e.url===evidence.url&&e.text.trim()===evidence.text.trim())+1;
 }
 export function summarize(run: Run) {
   const counts: Record<string, number> = {all: run.profiles.length, matched: 0, review: 0, not_matched: 0, pending: 0, saved: 0};
