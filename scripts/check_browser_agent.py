@@ -17,6 +17,20 @@ if latest.get('batch_status'):
     assert latest['batch_status'] == 'completed'
 if latest.get('planned_scenarios'):
     assert set(latest['planned_scenarios']) == {r['id'] for r in report['runs'] if r.get('batch_id') == latest['id']}
+release = report.get('release_validation', {})
+if release:
+    assert isinstance(release['batch_ids'], list) and release['batch_ids']
+    assert len(release['batch_ids']) == len(set(release['batch_ids']))
+    hashes = latest.get('source_hashes')
+    assert isinstance(hashes, dict) and hashes
+    assert all(isinstance(h, str) and len(h) == 64 and all(c in '0123456789abcdef' for c in h) for h in hashes.values())
+    validation_batches = [b for b in report['batches'] if b['id'] in release['batch_ids']]
+    assert len(validation_batches) == len(set(release['batch_ids']))
+    assert all(b.get('batch_status') == 'completed' and b.get('source_hashes') == latest.get('source_hashes') for b in validation_batches)
+    validation_runs = [r for r in report['runs'] if r['batch_id'] in release['batch_ids']]
+    assert len(validation_runs) == len(set(release['scenario_ids']))
+    assert {r['id'] for r in validation_runs} == set(release['scenario_ids'])
+    assert all(r['status'] == 'passed' for r in validation_runs)
 for run in report['runs']:
     assert run['status'] in {'passed', 'failed', 'blocked', 'skipped'}
     assert isinstance(run['steps'], list)
@@ -31,6 +45,18 @@ for run in report['runs']:
     if run.get('fallback_calls', 0):
         assert run.get('hybrid') is True, 'Recovery calls must be labelled hybrid.'
         assert run.get('fallback_models'), 'Identify the recovery models.'
+    if 'reviews_skipped_stale' in run:
+        skipped = run['reviews_skipped_stale']
+        assert type(skipped) is int and skipped >= 0
+        assert run['decision_calls'] == len(run.get('decisions', [])) + skipped
+        if skipped:
+            assert run['all_decisions_reviewed'] is False, 'Skipped scoring calls were not reviewed.'
+    if run.get('all_executed_actions_reviewed'):
+        assert run['steps'] and all(step.get('decision_source') == 'local_fallback' for step in run['steps'])
+    if run.get('timing'):
+        assert set(run['timing']) == {'primary_ms', 'review_ms', 'text_ms', 'other_ms'}
+        assert all(type(n) in (int, float) and math.isfinite(n) and n >= 0 for n in run['timing'].values())
+        assert abs(sum(run['timing'].values()) - run['elapsed_ms']) < 20
     for step in run['steps']:
         if step.get('decision_source') == 'local_fallback':
             assert run.get('hybrid') is True and step.get('probability_source') == 'jevstyle'
@@ -63,6 +89,19 @@ for run in report['runs']:
     if run.get('final_screenshot'):
         image = PAGE / run['final_screenshot']
         assert image.resolve().is_relative_to(PAGE.resolve()) and image.is_file()
+comparison_path = PAGE / 'evidence/speed-comparison.json'
+if comparison_path.exists():
+    comparison = json.loads(comparison_path.read_text())
+    speed_report = PAGE / comparison['optimized']['public_report']
+    assert hashlib.sha256(speed_report.read_bytes()).hexdigest() == comparison['report_sha256']
+    speed_run = json.loads(speed_report.read_text())['runs'][0]
+    assert speed_run['status'] == 'passed' and speed_run['all_executed_actions_reviewed']
+    for key in ('elapsed_ms', 'decision_calls', 'fallback_calls', 'reviews_skipped_stale', 'timing'):
+        assert comparison['optimized'][key] == speed_run[key]
+    assert hashlib.sha256((PAGE / 'media/speed-flight-r16/final.jpg').read_bytes()).hexdigest() == comparison['final_snapshot_sha256']
+    baseline = json.loads((PAGE / comparison['baseline']['public_report']).read_text())
+    baseline_flight = next(r for r in baseline['runs'] if r['id'] == 'flights')
+    assert baseline_flight['elapsed_ms'] == comparison['baseline']['elapsed_ms']
 archive = PAGE / 'jevstyle-browser.zip'
 with zipfile.ZipFile(archive) as z:
     names = z.namelist()

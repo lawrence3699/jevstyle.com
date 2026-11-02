@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "scope": "Two separately recorded live Google Flights runs, not a matched A/B experiment.",
+  "baseline": {
+    "report": "verified-eight-scenarios.json",
+    "report_sha256": "c052bcd2cc0feda623042606686541ab6a3232dbab7e4bad58b7955c570c3981",
+    "scenario": "flights",
+    "elapsed_ms": 485193,
+    "decision_calls": 23,
+    "executed_actions": 13,
+    "text_calls": 1,
+    "all_decisions_reviewed": true,
+    "timing": {
+      "primary_ms": 50778,
+      "review_ms": 424502,
+      "text_ms": 5221,
+      "other_ms": 4692
+    },
+    "public_report": "media/flight-27b-r14/runs.json"
+  },
+  "optimized": {
+    "elapsed_ms": 323359,
+    "decision_calls": 21,
+    "fallback_calls": 13,
+    "reviews_skipped_stale": 8,
+    "timing": {
+      "primary_ms": 42656,
+      "review_ms": 270622,
+      "text_ms": 4565,
+      "other_ms": 5516
+    },
+    "all_executed_actions_reviewed": true,
+    "executed_actions": 13,
+    "public_report": "evidence/speed-flight-r16.json",
+    "source_hashes": {
+      "scripts/run_scenarios.py": "10b481f0373045882b2257175be9a02856da2eede9f85b282694ff75c21cc9ab",
+      "jev_ultrafast/__init__.py": "5d2e83009ae3802e2edecf120f19b0380a27247e21a7b641b2a430c98dcbd208",
+      "jev_ultrafast/agent.py": "f037b1619ba1865e59f5cc9ff288988f994186b2f51dbf457dfdf8f53bae4fda",
+      "jev_ultrafast/browser.py": "ee08dafa93d731bd292aa0263a578a29c8001cf22eef3c59fe44a159649155ee",
+      "jev_ultrafast/demo.py": "b69705afe7e61d6183cbba3243d2bac5165d8f56253becb6a9a59b01e3c4f5b9",
+      "jev_ultrafast/fallback.py": "fd8303fbcd6eabe752c579df1d9a08cb712726ccc07451bf87417b894bcdecdb",
+      "jev_ultrafast/model.py": "84ba9499069071b5404eed83fdc5cbfbdc6e1629d75d1ef3b79191654d6236df",
+      "jev_ultrafast/progress.py": "ec4a90995b2dd054e0d56e6e2a6720f00eff446a63047a330d8b821a441dfb76",
+      "jev_ultrafast/questions.py": "fc11e334d9b31977bddb7d9319b9fd7bd16e05db7f9242c45c277e49c264617b",
+      "jev_ultrafast/scenarios.py": "25a6569229cc2fc33458e6eddcd00bfa53280b643dd80d6db8fee6f9a94c37e8",
+      "jev_ultrafast/snapshot.js": "eb8f6607dabaa2243a125d49a326ab7bb607a095677794e2c5e50f12e5f1caa7"
+    }
+  },
+  "comparison_limit": "The later run used AC power with Low Power Mode still reported on; power state was not recorded for the earlier run. Browser/network conditions and caches were live. This is not a controlled speedup estimate and does not compare directly with the upstream 7.1-second system, which used different model services without per-step 27B review.",
+  "report_sha256": "637f3b3fa12eaf2f8bbb8ceeafd05cd15656fb22a91aa7b3e295a5102e337e6d",
+  "final_snapshot_sha256": "50f2b681c369a1b5f2ede4d274e070996a5236f9166b07f304b58918efa199eb"
+}

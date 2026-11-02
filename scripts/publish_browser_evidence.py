@@ -6,14 +6,21 @@ import json
 from pathlib import Path
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--existing', type=Path, help='Retain batches and runs from an existing published bundle')
 parser.add_argument('--final-images', help='Verified final-image directory relative to the browser-agent page, for this latest batch only')
 parser.add_argument('--compare', action='append', default=[], help='Batch label to feature in the mode comparison; repeat as needed')
+parser.add_argument('--release-batch', action='append', default=[], help='Separate batch contributing to this release validation; IDs must be unique and source hashes identical')
 parser.add_argument('--batch', action='append', required=True, help='label=/absolute/path/to/runs.json; newest last')
 args = parser.parse_args()
 batches, runs = [], []
+if args.existing:
+    existing = json.loads(args.existing.read_text())
+    assert existing['schema_version'] == 1 and isinstance(existing['batches'], list)
+    batches, runs = copy.deepcopy(existing['batches']), copy.deepcopy(existing['runs'])
 latest = None
 for item in args.batch:
     label, path = item.split('=', 1)
+    assert label not in {b['id'] for b in batches}, 'Batch labels must be unique.'
     source = json.loads(Path(path).read_text())
     assert source['schema_version'] == 1 and isinstance(source['runs'], list)
     batch = {'id': label, 'label': label, 'generated_at': source['generated_at'], 'summary': source.get('summary', {}), 'measurement': source.get('measurement', {})}
@@ -38,6 +45,22 @@ assert set(args.compare).issubset({b['id'] for b in batches})
 # The latest complete suite is shown first; every earlier attempt remains selectable.
 runs.sort(key=lambda r: r['batch_id'] != last)
 report = {'schema_version': 1, 'generated_at': latest['generated_at'], 'model': 'See individual runs', 'measurement': latest.get('measurement', {}), 'latest_batch': last, 'coverage': {'latest_scenarios': latest_ids, 'excluded_from_latest': excluded}, 'comparison_batches': args.compare, 'batches': batches, 'runs': runs}
+if args.release_batch:
+    assert len(args.release_batch) == len(set(args.release_batch)), 'Release batch IDs must be unique.'
+    assert all(isinstance(label, str) and label.strip() for label in args.release_batch)
+    assert set(args.release_batch).issubset({b['id'] for b in batches})
+    hashes = latest.get('source_hashes')
+    assert isinstance(hashes, dict) and hashes, 'Release validation needs recorded source hashes.'
+    assert all(isinstance(h, str) and len(h) == 64 and all(c in '0123456789abcdef' for c in h) for h in hashes.values())
+    release_batches = [b for b in batches if b['id'] in args.release_batch]
+    assert all(b.get('batch_status') == 'completed' for b in release_batches)
+    assert all(b.get('source_hashes') == latest.get('source_hashes') for b in release_batches)
+    release_runs = [r for r in runs if r['batch_id'] in args.release_batch]
+    assert len({r['id'] for r in release_runs}) == len(release_runs), 'Do not count a scenario twice.'
+    assert all(r['status'] == 'passed' for r in release_runs)
+    report['release_validation'] = {'batch_ids': args.release_batch,
+                                    'scenario_ids': sorted(r['id'] for r in release_runs),
+                                    'scope': 'Separate completed batches with identical executable source hashes; not one timed suite.'}
 limits = latest.get('configuration', {}).get('decision_input_limits', {})
 replay = latest.get('post_run_validation', {}).get('original_8000_service', {})
 if limits:

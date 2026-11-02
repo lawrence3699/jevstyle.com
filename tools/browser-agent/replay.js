@@ -7,7 +7,30 @@ const list = value => Array.isArray(value) ? value : [];
 const current = () => report?.runs[runIndex];
 const track = () => byId('trace-track').value;
 const reviewerModels = run => [...new Set([...list(run.fallback_models), ...(typeof run.fallback_model === 'string' ? [run.fallback_model] : [])].filter(model => typeof model === 'string' && model.trim()))];
+const reviewMode = runs => runs.length && runs.every(run => run.all_executed_actions_reviewed)
+  ? 'Every executed action reviewed; changed observations may skip review'
+  : runs.some(run => run.all_decisions_reviewed) && runs.every(run => !run.decision_calls || run.all_decisions_reviewed)
+    ? 'JevStyle scoring + review of every decision'
+    : runs.length && runs.every(run => run.configured_review_every_step) ? 'Per-action review configured; see recorded calls'
+      : runs.some(run => run.hybrid) ? 'JevStyle + conditional local recovery' : 'JevStyle decisions · text helper for field values';
 const trace = () => list(track() === 'decisions' ? current()?.decisions : current()?.steps);
+function validatedRelease(value) {
+  const release = value.release_validation;
+  if (!release) return null;
+  const ids = list(release.batch_ids), scenarios = list(release.scenario_ids);
+  if (!ids.length || ids.some(id => typeof id !== 'string' || !id.trim()) || new Set(ids).size !== ids.length || !scenarios.length || new Set(scenarios).size !== scenarios.length) throw new Error('Invalid release-validation groups.');
+  const batches = list(value.batches).filter(batch => ids.includes(batch.id));
+  if (batches.length !== ids.length || batches.some(batch => batch.batch_status !== 'completed')) throw new Error('Release-validation batches are missing or incomplete.');
+  const hashKey = hashes => {
+    if (!hashes || typeof hashes !== 'object' || Array.isArray(hashes) || !Object.keys(hashes).length || Object.values(hashes).some(hash => typeof hash !== 'string' || !/^[a-f0-9]{64}$/.test(hash))) throw new Error('Release validation requires recorded source hashes.');
+    return JSON.stringify(Object.entries(hashes).sort(([a], [b]) => a.localeCompare(b)));
+  };
+  const expected = hashKey(batches[0].source_hashes);
+  if (batches.some(batch => hashKey(batch.source_hashes) !== expected)) throw new Error('Release-validation batches used different source.');
+  const runs = value.runs.filter(run => ids.includes(run.batch_id));
+  if (runs.length !== scenarios.length || new Set(runs.map(run => run.id)).size !== runs.length || runs.some(run => run.status !== 'passed' || !scenarios.includes(run.id))) throw new Error('Release-validation outcomes do not match the declared scenarios.');
+  return release;
+}
 function stop() { clearInterval(timer); timer = null; set('play', 'Play replay'); }
 function error(message) { const el = byId('load-error'); el.textContent = message; el.hidden = !message; }
 function loadReport(value) {
@@ -16,6 +39,7 @@ function loadReport(value) {
     if (!run || !Array.isArray(run.steps) || run.steps.length > 1000 || list(run.decisions).length > 1000 || !['passed', 'failed', 'blocked', 'skipped'].includes(run.status)) throw new Error('The report contains an invalid run.');
     if (run.status === 'passed' && (run.verification?.passed !== true || !list(run.verification?.checks).length || !run.verification.checks.every(check => check.passed === true))) throw new Error('A passed run must include successful independent outcome checks.');
   }
+  const release = validatedRelease(value);
   stop(); report = value; runIndex = 0; stepIndex = 0;
   const select = byId('run-select'); select.replaceChildren();
   value.runs.forEach((run, index) => { const option = document.createElement('option'); option.value = index; option.textContent = `${run.title || run.id || `Run ${index + 1}`}${run.attempt_label ? ` · ${run.attempt_label}` : ''} · ${run.status}`; select.append(option); });
@@ -25,6 +49,7 @@ function loadReport(value) {
   const passed = latest.filter(run => run.status === 'passed').length;
   const retained = value.runs.length - latest.length;
   set('report-summary', value.runs.length ? `${passed} of ${latest.length} latest recorded runs passed their independent checks.${retained ? ` ${retained} earlier attempts are retained below.` : ''}` : 'No completed run report is available yet. Open a report from your local runner.');
+  if (list(release?.batch_ids).length) set('report-summary', `${list(release.scenario_ids).length} named scenarios passed across ${release.batch_ids.length} separate release-validation batches using identical executable source. This is not one timed suite. All earlier attempts remain below.`);
   set('report-date', `Recorded: ${value.generated_at || 'not specified'} · Model: ${value.model || 'see each run'}`);
   const excluded = list(value.coverage?.excluded_from_latest);
   const flightRuns = value.runs.filter(run => run.id === 'flights').sort((a,b) => String(a.generated_at || '').localeCompare(String(b.generated_at || '')));
@@ -33,6 +58,7 @@ function loadReport(value) {
   coverage.textContent = latestFlight && latestFlight.status !== 'passed' ? `Google Flights remains unverified. ${excluded.includes('flights') ? `The latest ${latest.length}-scenario suite excludes it; ` : ''}its most recent recorded attempt did not pass. Failed flight attempts are retained in the report.` : '';
   const fullSuite = latest.length === 8 && ['hotel','reading','catalog','form','guide','autocomplete','wikipedia','flights'].every(id => latest.some(run => run.id === id));
   if (fullSuite && latest.every(run => run.status === 'passed')) coverage.textContent = 'Verified scope: six synthetic fixture tasks, Wikipedia, and Google Flights. The flight task searched matching options; no flight was selected or booked. These are recorded outcomes for the named tasks, not a general web reliability benchmark.';
+  if (list(release?.batch_ids).length) coverage.textContent = `Release checks are separate batches: ${release.batch_ids.join('; ')}. The flight task stopped at matching options without selecting or booking. Scope is limited to these named scenarios.`;
   coverage.hidden = !coverage.textContent;
   const modes = byId('protocol-summary'); modes.replaceChildren();
   for (const id of list(value.comparison_batches)) {
@@ -41,8 +67,7 @@ function loadReport(value) {
     const card = document.createElement('div'); card.className = 'ba-protocol';
     const title = document.createElement('b'); title.textContent = id;
     const count = document.createElement('span'); count.textContent = `${batch.filter(run => run.status === 'passed').length} / ${batch.length} independently verified`;
-    const reviewed = batch.some(run => run.all_decisions_reviewed) && batch.every(run => !run.decision_calls || run.all_decisions_reviewed);
-    const note = document.createElement('small'); note.textContent = reviewed ? 'JevStyle scoring + review of every step' : batch.some(run => run.hybrid) ? 'JevStyle + conditional local recovery' : 'JevStyle decisions · text helper for field values';
+    const note = document.createElement('small'); note.textContent = reviewMode(batch);
     card.append(title, count, note);
     const reviewers = [...new Set(batch.flatMap(reviewerModels))];
     if (reviewers.length) { const models = document.createElement('small'); models.textContent = `Reviewer: ${reviewers.join(', ')}`; card.append(models); }
@@ -68,11 +93,14 @@ function renderRun() {
   set('run-calls', run?.decision_calls ?? run?.steps.length ?? '—');
   set('run-model', run ? `Primary decision model: ${run.model || report.model || 'not recorded'}` : '');
   set('run-helpers', run ? `Text helper: ${run.text_model || 'not recorded'}` : '');
-  set('run-mode', run ? ((run.hybrid || run.configured_review_every_step) ? `${run.all_decisions_reviewed ? 'JevStyle scoring + review of every step' : run.configured_review_every_step ? 'Every-step review configured' : 'Conditional recovery'} · ${run.fallback_calls ?? 'unknown'} review calls · Reviewer: ${reviewerModels(run).join(', ') || 'not recorded'}` : 'JevStyle decisions · Recovery disabled') : '');
+  set('run-mode', run ? ((run.hybrid || run.configured_review_every_step) ? `${reviewMode([run])} · ${run.fallback_calls ?? 'unknown'} review calls · Reviewer: ${reviewerModels(run).join(', ') || 'not recorded'}` : 'JevStyle decisions · Recovery disabled') : '');
+  set('run-skips', number(run?.reviews_skipped_stale) !== null ? `${run.reviews_skipped_stale} scoring calls discarded before review because the page changed. They count in scoring calls, but have no completed choice in the replay track.` : '');
+  const timing = run?.timing;
+  set('run-timing', timing ? `JevStyle ${time(timing.primary_ms)} · Review ${time(timing.review_ms)} · Text ${time(timing.text_ms)} · Other ${time(timing.other_ms)}` : '');
   set('run-completion', run ? `Stopped by: ${run.completion_source === 'independent_verifier' ? 'Independent verifier' : run.agent_status === 'done' ? 'Model DONE' : 'Not completed'} · Agent state: ${run.agent_status || 'not recorded'}` : '');
   const finalPage = byId('run-final-page'); finalPage.hidden = true;
   const finalImage = finalPage.querySelector('img'), finalLink = finalPage.querySelector('a'); finalImage.removeAttribute('src'); finalLink.removeAttribute('href');
-  if (typeof run?.final_screenshot === 'string' && /^media\/flight-27b-r14\/finals\/[a-z]+\.jpg$/.test(run.final_screenshot)) { finalImage.src = run.final_screenshot; finalLink.href = run.final_screenshot; finalPage.hidden = false; }
+  if (typeof run?.final_screenshot === 'string' && /^(media\/flight-27b-r14\/finals\/[a-z]+\.jpg|media\/speed-flight-r16\/final\.jpg)$/.test(run.final_screenshot)) { finalImage.src = run.final_screenshot; finalLink.href = run.final_screenshot; finalPage.hidden = false; }
   const checks = byId('run-checks'); checks.replaceChildren();
   for (const check of list(run?.verification?.checks)) {
     const li = document.createElement('li'); li.textContent = `${check.passed === true ? '✓' : '×'} ${check.name || check.label || 'Outcome check'}`; checks.append(li);
