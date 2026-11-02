@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JevStyle browser lab</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f8faf9;color:#172f2a;font:16px system-ui,sans-serif}
+header{padding:22px 6%;border-bottom:1px solid #d7e3df;display:flex;justify-content:space-between}
+main{max-width:980px;margin:36px auto;padding:0 24px 40px}h1{font-size:36px;letter-spacing:-1px;margin:0 0 12px}
+p{line-height:1.65;color:#53665e}a{color:#006853}button,input,select,textarea{font:inherit}
+button{padding:11px 18px;background:#126b56;color:white;border:0;border-radius:6px;cursor:pointer}
+button:disabled{background:#8b9d95;cursor:wait}input,select,textarea{padding:10px;border:1px solid #a5bcb1;border-radius:5px}
+input[type=checkbox]{width:18px;height:18px}input:focus,button:focus,select:focus{outline:3px solid #79cbb2;outline-offset:3px}
+label{display:flex;align-items:center;gap:9px;margin:14px 0}.row{display:flex;align-items:end;gap:18px;flex-wrap:wrap}
+.row label{display:block}.row label input,.row label select{display:block;margin-top:8px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+article,.panel{padding:24px;background:#fff;border:1px solid #d7e3df;border-radius:9px}
+.pill{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#60766b}h2{font-size:21px}
+.form{max-width:620px}.form label{display:block}.form input:not([type=checkbox]),textarea{width:100%;margin-top:7px}
+.form label.check{display:flex}textarea{height:80px}dd{margin:0 0 14px}dt{font-size:12px;color:#60766b;text-transform:uppercase}
+.notice{padding:15px;background:#e2f4e9;border-radius:6px}.guide-section{padding:34px 0;min-height:340px;border-bottom:1px solid #d7e3df}
+[hidden]{display:none!important}#suggestions{max-width:440px;margin-top:8px}#suggestions button{display:block;width:100%;text-align:left;margin:6px 0}
+@media(max-width:700px){.cards{grid-template-columns:1fr}.row{display:block}}
+</style>
+<header><strong>JevStyle / Browser lab</strong><span class="pill">Synthetic tasks · no external submissions</span></header>
+<main id="main"></main>
+<script>
+const main=document.getElementById('main');
+const task=new URLSearchParams(location.search).get('task')||'catalog';
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function catalog(){
+  document.title='Catalog · JevStyle browser lab';
+  main.innerHTML=`<span class="pill">Fieldwork audio</span><h1>Choose your next studio companion.</h1>
+  <p>Search the collection, narrow your options and open a product to read the details.</p>
+  <form id="search" class="row"><label>Search products<input id="query" aria-label="Search products" type="search"></label>
+  <button>Search catalog</button></form><div class="row"><label>Category<select id="category" aria-label="Product category">
+  <option value="all">All categories</option><option value="audio">Audio</option><option value="accessories">Accessories</option></select></label>
+  <label>Sort by<select id="sort" aria-label="Sort products"><option value="featured">Featured</option>
+  <option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option></select></label>
+  <label><input id="stock" type="checkbox"> In stock only</label></div><div id="results"></div>`;
+  const products=[{id:'studio-pro',name:'Studio Pro headphones',category:'audio',stock:false,price:249},
+    {id:'studio-lite',name:'Studio Lite headphones',category:'audio',stock:true,price:89},
+    {id:'field-headphones',name:'Field headphones',category:'audio',stock:true,price:139},
+    {id:'travel-case',name:'Headphones travel case',category:'accessories',stock:true,price:25}];
+  let query='';
+  function render(){
+    const category=document.getElementById('category').value,stock=document.getElementById('stock').checked,
+      sort=document.getElementById('sort').value;
+    let rows=products.filter(p=>p.name.toLowerCase().includes(query.toLowerCase())&&
+      (category==='all'||p.category===category)&&(!stock||p.stock));
+    if(sort!=='featured')rows.sort((a,b)=>sort==='price-asc'?a.price-b.price:b.price-a.price);
+    document.getElementById('results').innerHTML=`<p data-result-filters data-query="${escapeHTML(query)}"
+      data-category="${category}" data-stock="${stock}" data-sort="${sort}">Query: ${escapeHTML(query||'all')} · Category: ${category} · ${stock?'In stock only':'All stock'} · Sort: ${sort}</p><div class="cards">`+
+      rows.map(p=>`<article><span class="pill">${p.stock?'In stock':'Out of stock'}</span><h2>${p.name}</h2><p>$${p.price}</p>
+        <button type="button" data-open="${p.id}">View ${p.name}</button></article>`).join('')+'</div>';
+    for(const button of document.querySelectorAll('[data-open]'))button.onclick=()=>{
+      const product=products.find(p=>p.id===button.dataset.open);location.hash=product.id;
+      document.getElementById('results').innerHTML=`<article><span class="pill">Product details</span><h2 data-product
+        data-query="${escapeHTML(query)}" data-category="${category}" data-stock="${stock}" data-sort="${sort}">${product.name}</h2>
+        <p>$${product.price} · ${product.stock?'In stock':'Out of stock'}</p><p>Compact, comfortable headphones for everyday listening.</p>
+        <p class="notice">Details opened. This demo does not sell or reserve products.</p></article>`;
+    };
+  }
+  document.getElementById('search').onsubmit=e=>{e.preventDefault();query=document.getElementById('query').value.trim();render()};
+  for(const id of ['category','stock','sort'])document.getElementById(id).onchange=render;
+  render();
+}
+function supportForm(){
+  document.title='Support request · JevStyle browser lab';
+  main.innerHTML=`<h1>Send a demo support request</h1><p>All fields stay in this local page. No email is sent.</p>
+  <form id="support" class="form panel"><label>Full name<input name="name" autocomplete="off" required></label>
+  <label>Email address<input name="email" type="email" autocomplete="off" required></label>
+  <label>Topic <select name="topic" aria-label="Request topic" required><option value="">Choose a topic</option>
+  <option>Billing</option><option>Technical support</option><option>General question</option></select></label>
+  <label>Message<textarea name="message" required></textarea></label>
+  <label class="check"><input type="checkbox" name="copy"> Send a copy</label><button>Submit demo request</button></form>`;
+  document.getElementById('support').onsubmit=e=>{
+    e.preventDefault();const data=new FormData(e.target);const fields={name:data.get('name').trim(),email:data.get('email').trim(),
+      topic:data.get('topic'),message:data.get('message').trim(),copy:data.has('copy')?'Yes':'No'};
+    location.hash='request-sent';main.innerHTML='<h1>Request received</h1><p class="notice">Synthetic receipt. No request or email was sent outside this page.</p><dl class="panel">'+
+      Object.entries(fields).map(([key,value])=>`<dt>${key}</dt><dd data-receipt="${key}">${escapeHTML(value)}</dd>`).join('')+'</dl>';
+  };
+}
+function guide(){
+  document.title='Documentation · JevStyle browser lab';
+  main.innerHTML='<h1>Developer guides</h1><p>Choose a guide to explore.</p><div class="cards"><article><h2>Structured output</h2><p>Request formats, validation and retries.</p><button id="open-guide">Open Structured output guide</button></article><article><h2>Authentication</h2><p>How to configure access.</p></article></div>';
+  document.getElementById('open-guide').onclick=()=>{
+    location.hash='structured-output';document.title='Structured output · JevStyle browser lab';
+    main.innerHTML='<h1>Structured output</h1><p>Request format, validation and retry examples. The Retry policy is below.</p>'+
+      '<section class="guide-section"><h2>1. Request format</h2><p>Send a state and questions. Each question defines a finite set of options.</p></section>'+
+      '<section class="guide-section"><h2>2. Response validation</h2><p>Validate every returned option against the observed action space before execution.</p></section>'+
+      '<section class="guide-section"><h2>3. Retry policy</h2><p>Retries depend on whether an operation can change application state.</p><button id="retry-toggle" aria-expanded="false" aria-controls="retry-example">Show implementation example</button><p id="retry-example" class="notice" hidden>Retry read-only requests with exponential backoff.</p></section>';
+    document.getElementById('retry-toggle').onclick=e=>{
+      const expanded=e.currentTarget.getAttribute('aria-expanded')==='true';
+      e.currentTarget.setAttribute('aria-expanded',String(!expanded));document.getElementById('retry-example').hidden=expanded;
+      e.currentTarget.textContent=expanded?'Show implementation example':'Hide implementation example';
+    };
+  };
+}
+function autocomplete(){
+  document.title='City guides · JevStyle browser lab';
+  main.innerHTML=`<h1>Find a city guide</h1><p>Type a city, select a suggestion, then open its guide.</p>
+  <label>City<input id="city-search" role="combobox" aria-controls="suggestions" aria-expanded="false" aria-autocomplete="list" autocomplete="off"></label>
+  <div id="loading" role="status"></div><div id="suggestions" role="listbox" aria-label="City suggestions"></div>
+  <button id="open-city" disabled>Open city guide</button><div id="guide-result"></div>`;
+  const cities=[{id:'kyoto-jp',name:'Kyoto, Japan'},{id:'tokyo-jp',name:'Tokyo, Japan'},{id:'kyiv-ua',name:'Kyiv, Ukraine'}];
+  let selected=null,timer;
+  const input=document.getElementById('city-search'),suggestions=document.getElementById('suggestions'),open=document.getElementById('open-city');
+  input.oninput=()=>{
+    clearTimeout(timer);selected=null;delete input.dataset.selectedCity;open.disabled=true;
+    suggestions.replaceChildren();input.setAttribute('aria-expanded','false');
+    const query=input.value.trim().toLowerCase();document.getElementById('loading').textContent=query?'Loading suggestions…':'';
+    if(!query)return;
+    timer=setTimeout(()=>{
+      document.getElementById('loading').textContent='';input.setAttribute('aria-expanded','true');
+      for(const city of cities.filter(c=>c.name.toLowerCase().includes(query))){
+        const option=document.createElement('button');option.type='button';option.role='option';option.textContent=city.name;
+        option.onclick=()=>{selected=city;input.value=city.name;input.dataset.selectedCity=city.id;
+          suggestions.replaceChildren();input.setAttribute('aria-expanded','false');open.disabled=false};
+        suggestions.append(option);
+      }
+      if(!suggestions.children.length)document.getElementById('loading').textContent='No matching cities. Try another search.';
+    },450);
+  };
+  open.onclick=()=>{
+    if(!selected)return;location.hash=selected.id;document.getElementById('guide-result').innerHTML=
+      `<article style="margin-top:24px"><h2 data-city="${selected.id}">${selected.name}</h2><p>Explore neighborhoods, local architecture and walking routes.</p></article>`;
+  };
+}
+({catalog,form:supportForm,guide,autocomplete}[task]||catalog)();
+</script>
+</html>

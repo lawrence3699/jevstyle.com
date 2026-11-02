@@ -3,6 +3,7 @@
 from pathlib import Path
 import json
 import math
+import hashlib
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,6 +12,11 @@ report = json.loads((PAGE / 'runs.json').read_text())
 assert report['schema_version'] == 1
 assert isinstance(report['runs'], list) and report['runs'], 'Publish actual run evidence.'
 assert report.get('generated_at'), 'Record the measurement date.'
+latest = next((b for b in report.get('batches', []) if b['id'] == report.get('latest_batch')), {})
+if latest.get('batch_status'):
+    assert latest['batch_status'] == 'completed'
+if latest.get('planned_scenarios'):
+    assert set(latest['planned_scenarios']) == {r['id'] for r in report['runs'] if r.get('batch_id') == latest['id']}
 for run in report['runs']:
     assert run['status'] in {'passed', 'failed', 'blocked', 'skipped'}
     assert isinstance(run['steps'], list)
@@ -33,12 +39,22 @@ for run in report['runs']:
         if step.get('screenshot'):
             image = PAGE / step['screenshot']
             assert image.resolve().is_relative_to(PAGE.resolve()) and image.is_file()
+capture = json.loads((PAGE / 'media/hotel-capture.json').read_text())
+assert capture['runs'][0]['verification']['passed'] is True
+assert all(c['passed'] for c in capture['runs'][0]['verification']['checks'])
+assert capture['frames'][0]['elapsed_ms'] == 0
+assert capture['frames'][-1]['elapsed_ms'] == capture['runs'][0]['elapsed_ms']
+for frame in capture['frames']:
+    image = PAGE / 'media' / frame['path']
+    assert image.resolve().is_relative_to(PAGE.resolve()) and image.is_file()
 archive = PAGE / 'jevstyle-browser.zip'
 with zipfile.ZipFile(archive) as z:
     names = z.namelist()
     assert any(n.endswith('/LICENSE') for n in names)
     assert any(n.endswith('/README.md') for n in names)
     assert any(n.endswith('/scripts/run_scenarios.py') for n in names)
+    for path, expected in latest.get('source_hashes', {}).items():
+        assert hashlib.sha256(z.read('jevstyle-browser/' + path)).hexdigest() == expected, f'Source changed after verification: {path}'
     for name in names:
         parts = Path(name).parts
         assert not Path(name).is_absolute() and '..' not in parts

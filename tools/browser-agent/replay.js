@@ -26,6 +26,12 @@ function loadReport(value) {
   const retained = value.runs.length - latest.length;
   set('report-summary', value.runs.length ? `${passed} of ${latest.length} latest recorded runs passed their independent checks.${retained ? ` ${retained} earlier attempts are retained below.` : ''}` : 'No completed run report is available yet. Open a report from your local runner.');
   set('report-date', `Recorded: ${value.generated_at || 'not specified'} · Model: ${value.model || 'see each run'}`);
+  const excluded = list(value.coverage?.excluded_from_latest);
+  const flightRuns = value.runs.filter(run => run.id === 'flights').sort((a,b) => String(a.generated_at || '').localeCompare(String(b.generated_at || '')));
+  const latestFlight = flightRuns[flightRuns.length - 1];
+  const coverage = byId('coverage-note');
+  coverage.textContent = latestFlight && latestFlight.status !== 'passed' ? `Google Flights remains unverified. ${excluded.includes('flights') ? `The latest ${latest.length}-scenario suite excludes it; ` : ''}its most recent recorded attempt did not pass. Failed flight attempts are retained in the report.` : '';
+  coverage.hidden = !coverage.textContent;
   const modes = byId('protocol-summary'); modes.replaceChildren();
   for (const id of list(value.comparison_batches)) {
     const batch = value.runs.filter(run => run.batch_id === id);
@@ -50,6 +56,8 @@ function renderRun() {
   stop(); stepIndex = 0;
   const run = current();
   set('run-goal', run?.goal || 'No recorded run is selected.');
+  const fixture = byId('run-fixture'); fixture.hidden = true; fixture.removeAttribute('href');
+  if (run?.local && typeof run.url === 'string' && /^(fixture\.html\?scenario=(travel|research)|scenarios\/lab\.html\?task=(catalog|form|guide|autocomplete))$/.test(run.url)) { fixture.href = './fixtures/' + run.url; fixture.hidden = false; }
   set('run-status', run?.status || '—'); set('run-time', time(run?.elapsed_ms)); set('run-wall', time(run?.wall_ms));
   set('run-calls', run?.decision_calls ?? run?.steps.length ?? '—');
   set('run-model', run ? `Primary decision model: ${run.model || report.model || 'not recorded'}` : '');
@@ -66,7 +74,10 @@ function renderRun() {
 }
 function bars(id, distribution, selected) {
   const parent = byId(id); parent.replaceChildren();
-  const entries = Object.entries(distribution && typeof distribution === 'object' ? distribution : {}).filter(([, v]) => number(v) !== null && v >= 0 && v <= 1).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const ranked = Object.entries(distribution && typeof distribution === 'object' ? distribution : {}).filter(([, v]) => number(v) !== null && v >= 0 && v <= 1).sort((a, b) => b[1] - a[1]);
+  const entries = ranked.slice(0, 8);
+  const selectedEntry = ranked.find(([key]) => key === selected);
+  if (selectedEntry && !entries.some(([key]) => key === selected)) entries[7] = selectedEntry;
   if (!entries.length) { const p = document.createElement('p'); p.className = 'ba-note'; p.textContent = 'Not recorded for this step.'; parent.append(p); return; }
   for (const [key, value] of entries) {
     const row = document.createElement('div'); row.className = `ba-bar${key === selected ? ' selected' : ''}`;
@@ -115,3 +126,10 @@ byId('report-file').addEventListener('change', async event => {
   event.target.value = '';
 });
 fetch('./runs.json').then(response => { if (!response.ok) throw new Error('Run report is unavailable.'); return response.json(); }).then(value => { if (!report) loadReport(value); }).catch(err => { if (report) return; const option = document.createElement('option'); option.textContent = 'No report loaded'; byId('run-select').replaceChildren(option); set('report-summary', 'Recorded runs could not be loaded. You can open your own local report.'); error(err.message); });
+
+const proofFrame = byId('proof-frame');
+if (proofFrame) proofFrame.addEventListener('change', () => {
+  if (!/^\.\/media\/hotel-frames\/[0-9]+\.jpg$/.test(proofFrame.value)) return;
+  byId('proof-image').src = proofFrame.value; byId('proof-link').href = proofFrame.value;
+  byId('proof-image').alt = `Actual synthetic hotel browser snapshot: ${proofFrame.options[proofFrame.selectedIndex].textContent}`;
+});

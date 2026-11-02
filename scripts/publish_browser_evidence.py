@@ -16,6 +16,9 @@ for item in args.batch:
     source = json.loads(Path(path).read_text())
     assert source['schema_version'] == 1 and source['runs']
     batch = {'id': label, 'label': label, 'generated_at': source['generated_at'], 'summary': source.get('summary', {}), 'measurement': source.get('measurement', {})}
+    for key in ('batch_status', 'planned_scenarios', 'configuration', 'source_hashes', 'review_every_step'):
+        if key in source:
+            batch[key] = copy.deepcopy(source[key])
     batches.append(batch)
     for row in source['runs']:
         run = copy.deepcopy(row)
@@ -23,10 +26,16 @@ for item in args.batch:
         runs.append(run)
     latest = source
 last = batches[-1]['id']
+if latest.get('batch_status'):
+    assert latest['batch_status'] == 'completed', 'Do not publish an incomplete latest suite.'
+if latest.get('planned_scenarios'):
+    assert set(latest['planned_scenarios']) == {r['id'] for r in latest['runs']}
+latest_ids = sorted({r['id'] for r in latest['runs']})
+excluded = sorted({r['id'] for r in runs} - set(latest_ids))
 assert set(args.compare).issubset({b['id'] for b in batches})
 # The latest complete suite is shown first; every earlier attempt remains selectable.
 runs.sort(key=lambda r: r['batch_id'] != last)
-report = {'schema_version': 1, 'generated_at': latest['generated_at'], 'model': 'See individual runs', 'measurement': latest.get('measurement', {}), 'latest_batch': last, 'comparison_batches': args.compare, 'batches': batches, 'runs': runs}
+report = {'schema_version': 1, 'generated_at': latest['generated_at'], 'model': 'See individual runs', 'measurement': latest.get('measurement', {}), 'latest_batch': last, 'coverage': {'latest_scenarios': latest_ids, 'excluded_from_latest': excluded}, 'comparison_batches': args.compare, 'batches': batches, 'runs': runs}
 target = Path(__file__).resolve().parents[1] / 'tools/browser-agent/runs.json'
 target.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
 print(f'Published evidence bundle: {len(runs)} attempts across {len(batches)} batches; latest {last}.')
