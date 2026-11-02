@@ -1,6 +1,7 @@
 import type React from 'react';
 export function Icon({name,size=20}:{name:string;size?:number}){
  const paths:Record<string,React.ReactNode>={
+  copy:<><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/></>,
   check:<path d="m5 12 4 4L19 6"/>,
   chevron:<path d="m6 9 6 6 6-6"/>,
   right:<path d="m9 5 7 7-7 7"/>,

@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {activityState, criterionCounts, evidenceRecords, filterPeople, resultGroup, safeLink, summarize} from '../src/presentation.ts';
+import {activityState, citationNumber, criterionCounts, evidenceRecords, filterPeople, resultGroup, safeLink, summarize} from '../src/presentation.ts';
 
 const person = (id, overrides={}) => ({id, name:id, source:'openalex', role:'', affiliation:'', location:'', evidence:[], evaluation:null, saved:false, ...overrides});
 const evaluation = (group, label, coverage=100) => ({group, score:label==='match'?100:null, coverage, items:[{text:'AI experience', label, required:false}]});
@@ -53,4 +53,20 @@ test('unsafe source URLs cannot become clickable citations', () => {
 test('an empty successful search is different from a source failure', () => {
   const state=activityState(run({state:'completed',stage:'completed'}));
   assert.equal(state.sourceDone,true);assert.equal(state.total,0);assert.equal(state.sourceState,'done');
+});
+test('answer citations reuse a shared source number across people and remain stable after filtering', () => {
+  const first={text:'Shared publication',url:'https://example.test/shared',kind:'publication'};
+  const second={text:'Another publication',url:'https://example.test/another',kind:'publication'};
+  const a=person('Ada',{evidence:[first,second]}),b=person('Ben',{evidence:[first]});
+  assert.equal(citationNumber([a,b],a,first),1);
+  assert.equal(citationNumber([a,b],b,first),1);
+  assert.equal(citationNumber([a,b],a,second),2);
+  const filtered=filterPeople(run({profiles:[a,b]}),'all','Ben','name');
+  assert.equal(citationNumber([a,b],filtered[0],first),1);
+});
+test('an absent or blank source never produces a made-up reference number', () => {
+  const p=person('Ada');
+  assert.equal(citationNumber([p],p,{text:'Missing',url:'https://example.test',kind:'publication'}),0);
+  const blank={text:'',url:'',kind:'public_description'};p.evidence=[blank];
+  assert.equal(citationNumber([p],p,blank),0);
 });
