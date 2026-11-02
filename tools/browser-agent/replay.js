@@ -31,6 +31,8 @@ function loadReport(value) {
   const latestFlight = flightRuns[flightRuns.length - 1];
   const coverage = byId('coverage-note');
   coverage.textContent = latestFlight && latestFlight.status !== 'passed' ? `Google Flights remains unverified. ${excluded.includes('flights') ? `The latest ${latest.length}-scenario suite excludes it; ` : ''}its most recent recorded attempt did not pass. Failed flight attempts are retained in the report.` : '';
+  const fullSuite = latest.length === 8 && ['hotel','reading','catalog','form','guide','autocomplete','wikipedia','flights'].every(id => latest.some(run => run.id === id));
+  if (fullSuite && latest.every(run => run.status === 'passed')) coverage.textContent = 'Verified scope: six synthetic fixture tasks, Wikipedia, and Google Flights. The flight task searched matching options; no flight was selected or booked. These are recorded outcomes for the named tasks, not a general web reliability benchmark.';
   coverage.hidden = !coverage.textContent;
   const modes = byId('protocol-summary'); modes.replaceChildren();
   for (const id of list(value.comparison_batches)) {
@@ -53,6 +55,7 @@ function loadReport(value) {
     table.append(row);
   }
   set('report-measurement', value.measurement ? `Decision loop: ${value.measurement.elapsed_ms || 'not specified'}. End to end: ${value.measurement.wall_ms || 'not specified'}.` : 'Timing scope was not supplied in this report.');
+  set('report-environment', value.release_environment_note || '');
   error(''); renderRun();
 }
 function renderRun() {
@@ -67,6 +70,9 @@ function renderRun() {
   set('run-helpers', run ? `Text helper: ${run.text_model || 'not recorded'}` : '');
   set('run-mode', run ? ((run.hybrid || run.configured_review_every_step) ? `${run.all_decisions_reviewed ? 'JevStyle scoring + review of every step' : run.configured_review_every_step ? 'Every-step review configured' : 'Conditional recovery'} · ${run.fallback_calls ?? 'unknown'} review calls · Reviewer: ${reviewerModels(run).join(', ') || 'not recorded'}` : 'JevStyle decisions · Recovery disabled') : '');
   set('run-completion', run ? `Stopped by: ${run.completion_source === 'independent_verifier' ? 'Independent verifier' : run.agent_status === 'done' ? 'Model DONE' : 'Not completed'} · Agent state: ${run.agent_status || 'not recorded'}` : '');
+  const finalPage = byId('run-final-page'); finalPage.hidden = true;
+  const finalImage = finalPage.querySelector('img'), finalLink = finalPage.querySelector('a'); finalImage.removeAttribute('src'); finalLink.removeAttribute('href');
+  if (typeof run?.final_screenshot === 'string' && /^media\/flight-27b-r14\/finals\/[a-z]+\.jpg$/.test(run.final_screenshot)) { finalImage.src = run.final_screenshot; finalLink.href = run.final_screenshot; finalPage.hidden = false; }
   const checks = byId('run-checks'); checks.replaceChildren();
   for (const check of list(run?.verification?.checks)) {
     const li = document.createElement('li'); li.textContent = `${check.passed === true ? '✓' : '×'} ${check.name || check.label || 'Outcome check'}`; checks.append(li);
@@ -135,4 +141,11 @@ if (proofFrame) proofFrame.addEventListener('change', () => {
   if (!/^\.\/media\/hotel-frames\/[0-9]+\.jpg$/.test(proofFrame.value)) return;
   byId('proof-image').src = proofFrame.value; byId('proof-link').href = proofFrame.value;
   byId('proof-image').alt = `Actual synthetic hotel browser snapshot: ${proofFrame.options[proofFrame.selectedIndex].textContent}`;
+});
+
+const flightProofFrame = byId('flight-proof-frame');
+if (flightProofFrame) flightProofFrame.addEventListener('change', () => {
+  if (!/^\.\/media\/flight-27b-r14\/flight-frames\/(?:[0-9]+|final)\.jpg$/.test(flightProofFrame.value)) return;
+  byId('flight-proof-image').src = flightProofFrame.value; byId('flight-proof-link').href = flightProofFrame.value;
+  byId('flight-proof-image').alt = `Actual Google Flights snapshot: ${flightProofFrame.options[flightProofFrame.selectedIndex].textContent}`;
 });

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-11-02T21:54:01.782480+00:00",
+  "kind": "corrected_verifier_recheck",
+  "original_attempt": "flight-27b-r13",
+  "original_batch_status": "interrupted",
+  "original_latest_recorded_verification": {
+    "passed": false,
+    "checks": [
+      {
+        "name": "flight search page",
+        "passed": true
+      },
+      {
+        "name": "one way",
+        "passed": true
+      },
+      {
+        "name": "one passenger",
+        "passed": true
+      },
+      {
+        "name": "economy cabin",
+        "passed": true
+      },
+      {
+        "name": "Zürich origin committed",
+        "passed": true
+      },
+      {
+        "name": "London destination committed",
+        "passed": true
+      },
+      {
+        "name": "departure date",
+        "passed": true
+      },
+      {
+        "name": "departure year",
+        "passed": true
+      },
+      {
+        "name": "visible matching flights",
+        "passed": false
+      }
+    ]
+  },
+  "corrected_verification": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "flight search page",
+        "passed": true
+      },
+      {
+        "name": "one way",
+        "passed": true
+      },
+      {
+        "name": "one passenger",
+        "passed": true
+      },
+      {
+        "name": "economy cabin",
+        "passed": true
+      },
+      {
+        "name": "Zürich origin committed",
+        "passed": true
+      },
+      {
+        "name": "London destination committed",
+        "passed": true
+      },
+      {
+        "name": "departure date",
+        "passed": true
+      },
+      {
+        "name": "departure year",
+        "passed": true
+      },
+      {
+        "name": "visible matching flights",
+        "passed": true
+      }
+    ]
+  },
+  "method": "Recheck the fresh read-only CDP snapshot captured before browser closure. No browser action or page alteration was performed for this recheck. Current observed Flight details labels are checked against the departure clause; all other strict conditions are unchanged. This is not a replacement for a new complete runner validation.",
+  "snapshot_sha256": "85443ca9ee4b5b26627456e569026c7d1549221cad4e7fde8bc63a9f90350ca1",
+  "verifier_sha256": "25a6569229cc2fc33458e6eddcd00bfa53280b643dd80d6db8fee6f9a94c37e8",
+  "observed_visible_flight_details": [
+    "Flight details. Leaves Zurich Airport at 10:05 AM on Monday, February 1 and arrives at London Gatwick Airport at 10:50 AM on Monday, February 1.",
+    "Flight details. Leaves Zurich Airport at 3:30 PM on Monday, February 1 and arrives at Heathrow Airport at 4:20 PM on Monday, February 1.",
+    "Flight details. Leaves Zurich Airport at 1:20 PM on Monday, February 1 and arrives at Heathrow Airport at 2:15 PM on Monday, February 1."
+  ]
+}

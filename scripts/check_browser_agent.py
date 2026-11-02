@@ -47,6 +47,22 @@ assert capture['frames'][-1]['elapsed_ms'] == capture['runs'][0]['elapsed_ms']
 for frame in capture['frames']:
     image = PAGE / 'media' / frame['path']
     assert image.resolve().is_relative_to(PAGE.resolve()) and image.is_file()
+flight_proof = PAGE / 'media/flight-27b-r14'
+flight_capture = json.loads((flight_proof / 'flight-capture.json').read_text())
+assert flight_capture['run']['verification']['passed'] is True
+assert all(c['passed'] for c in flight_capture['run']['verification']['checks'])
+assert flight_capture['continuous_video'] is False
+assert hashlib.sha256((flight_proof / 'runs.json').read_bytes()).hexdigest() == flight_capture['report_sha256']
+for frame in flight_capture['frames']:
+    image = flight_proof / frame['path']
+    assert image.resolve().is_relative_to(flight_proof.resolve()) and image.is_file()
+    assert hashlib.sha256(image.read_bytes()).hexdigest() == frame['sha256']
+    if frame['phase'] == 'final_independent_verification':
+        assert frame['elapsed_ms'] is None
+for run in report['runs']:
+    if run.get('final_screenshot'):
+        image = PAGE / run['final_screenshot']
+        assert image.resolve().is_relative_to(PAGE.resolve()) and image.is_file()
 archive = PAGE / 'jevstyle-browser.zip'
 with zipfile.ZipFile(archive) as z:
     names = z.namelist()
