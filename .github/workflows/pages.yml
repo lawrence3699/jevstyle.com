@@ -47,7 +47,7 @@ jobs:
           print(len(data), "repos,", sum(m.get("downloadsAllTime") or 0 for m in data), "all-time downloads")
           EOF
       - name: Build People Search
-        run: npm ci --prefix frontend/people && npm run build --prefix frontend/people
+        run: npm ci --prefix frontend/people && npm test --prefix frontend/people && npm run build --prefix frontend/people
       - name: Prerender and validate public pages
         run: |
           python3 scripts/prerender_home.py
