@@ -3,14 +3,16 @@ import React, {useEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import Papa from 'papaparse';
 import './style.css';
+import './results.css';
+import type {Person, Run} from './types';
+import {Icon} from './Icon';
+import {SearchActivity} from './SearchActivity';
+import {Results, ProfileDetail} from './Results';
 
-type Person={id:string;name:string;role:string;affiliation:string;location:string;location_kind:string;source:string;url:string;company_domain:string;fetched_at:string;source_updated_at?:string;evidence:{text:string;url:string;kind:string}[];evaluation?:{group:string;score:number|null;coverage:number;model:string;items:{text:string;label:string;required:boolean}[]};contact?:{email:string;status:string;checked_at:string};saved:boolean};
-type Run={id:string;kind:string;mode:string;state:string;stage:string;spec:any;profiles:Person[];warnings:string[];progress:number;maximum_micro:number;cost_micro:number;created_at:string;cancel_requested:boolean};
 type Quote={id:string;maximum_micro:number;expires_in_seconds:number};
 const ORIGIN=import.meta.env.DEV?'http://127.0.0.1:8092':'https://api.jevstyle.com';
 const BASE=ORIGIN+'/control/v1/people';
 const fmtMoney=(v:number)=>'$'+(v/1e6).toFixed(v&&v<10000?4:2);
-const safeLink=(value:string)=>{try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:'';}catch{return '';}};
 const complete=(r:Run|null)=>!!r&&['completed','partial','failed','cancelled'].includes(r.state);
 async function api(path:string,options:RequestInit={}){const r=await fetch(BASE+path,{credentials:'include',...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});let d:any={};try{d=await r.json();}catch{}if(!r.ok)throw Object.assign(new Error(typeof d.message==='string'?d.message:typeof d.detail?.message==='string'?d.detail.message:'Request could not be completed.'),{status:r.status,code:d.error||d.detail?.error});return d;}
 const post=(path:string,body:any={})=>api(path,{method:'POST',body:JSON.stringify(body)});
@@ -27,49 +29,47 @@ const warnings:Record<string,[string,string]>={
  paid_not_configured:['Paid data is not connected yet. Free search is available.','付费数据尚未接入，可使用免费搜索。'],
  missing_company_domain:['A known company domain is required to find a work email.','查工作邮箱需要已知公司域名。']
 };
-function Icon({name,size=20}:{name:string;size?:number}){
- const paths:Record<string,React.ReactNode>={
-  panel:<><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></>,
-  edit:<><path d="M13.5 5.5 18.5 10.5M5 19l4.5-1 11-11a2.8 2.8 0 0 0-4-4l-11 11L5 19Z"/><path d="M12 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-7"/></>,
-  search:<><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></>,
-  upload:<><path d="M12 16V3m-4 4 4-4 4 4M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></>,
-  settings:<><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="white"/><circle cx="15" cy="17" r="2" fill="white"/></>,
-  plus:<path d="M12 5v14M5 12h14"/>,arrow:<path d="M12 19V5m-6 6 6-6 6 6"/>,
-  clock:<><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></>,
-  book:<><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4V4Zm16 0h-4a3 3 0 0 0-3 3v14a4 4 0 0 1 4-2h3V4Z"/></>,
-  wallet:<><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 8V6a2 2 0 0 1 2-2h13M21 11h-6v5h6"/></>
- };
- return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]||paths.search}</svg>;
-}
 function App(){
  const [sidebarOpen,setSidebarOpen]=useState(window.innerWidth>900),[advanced,setAdvanced]=useState(false);const fileRef=useRef<HTMLInputElement>(null);
  const [zh,setZh]=useState(()=>localStorage.getItem('people-language')==='zh');const t=(en:string,cn:string)=>zh?cn:en;
  const [user,setUser]=useState<any>(null),[authLoading,setAuthLoading]=useState(true),[sources,setSources]=useState<any>(null),[history,setHistory]=useState<Run[]>([]);
  const [scene,setScene]=useState('research'),[query,setQuery]=useState(''),[country,setCountry]=useState(''),[title,setTitle]=useState(''),[domain,setDomain]=useState(''),[website,setWebsite]=useState(''),[limit,setLimit]=useState(20),[criterion,setCriterion]=useState(''),[required,setRequired]=useState(false);
- const [run,setRun]=useState<Run|null>(null),[detail,setDetail]=useState<Person|null>(null),[selected,setSelected]=useState<string[]>([]),[filter,setFilter]=useState('all'),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState('');
+ const [run,setRun]=useState<Run|null>(null),[detail,setDetail]=useState<Person|null>(null),[selected,setSelected]=useState<string[]>([]),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState('');
  const [quote,setQuote]=useState<{quote:Quote;path:string;body:any}|null>(null),[showHistory,setShowHistory]=useState(false),[showWallet,setShowWallet]=useState(false),[ledger,setLedger]=useState<any[]>([]);
  const [admin,setAdmin]=useState<any>(null),[showAdmin,setShowAdmin]=useState(false),[keys,setKeys]=useState<Record<string,string>>({}),[configFlags,setConfigFlags]=useState({paid_enabled:false,checkout_enabled:false}),[hosts,setHosts]=useState('');
  const [csv,setCsv]=useState(''),[csvHeaders,setCsvHeaders]=useState<string[]>([]),[mapping,setMapping]=useState<Record<string,string>>({}),[imported,setImported]=useState<any>(null);
- const [deleteTarget,setDeleteTarget]=useState<string|null>(null);const poll=useRef(0);
+ const [deleteTarget,setDeleteTarget]=useState<string|null>(null);const [connectionStale,setConnectionStale]=useState(false);
  useEffect(()=>{const open=!!(detail||quote||showHistory||showWallet||showAdmin||deleteTarget);if(!open)return;const previous=document.activeElement as HTMLElement|null;const dialog=document.querySelector<HTMLElement>('[role=dialog]');const focusables=()=>Array.from(dialog?.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],input,select,textarea')||[]).filter(e=>e.offsetParent!==null);focusables()[0]?.focus();const key=(e:KeyboardEvent)=>{if(e.key==='Escape'){setDetail(null);setQuote(null);setShowHistory(false);setShowWallet(false);setShowAdmin(false);setDeleteTarget(null);setKeys({});}if(e.key==='Tab'){const a=focusables(),first=a[0],last=a[a.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}};document.addEventListener('keydown',key);return()=>{document.removeEventListener('keydown',key);previous?.focus();};},[!!detail,!!quote,showHistory,showWallet,showAdmin,!!deleteTarget]);
  const refresh=async()=>{const [s,h]=await Promise.all([api('/sources'),api('/runs')]);setSources(s);setHistory(h.items);};
  useEffect(()=>{let active=true;(async()=>{try{const r=await fetch(ORIGIN+'/control/v1/auth/me',{credentials:'include'});if(!r.ok)return;const d=await r.json();if(active){setUser(d.user);await refresh();try{const a=await api('/admin/config');setAdmin(a);setHosts(a.website_hosts);setConfigFlags({paid_enabled:a.paid_enabled,checkout_enabled:a.checkout_enabled});}catch{}}}catch(e:any){if(active)setError(e.message);}finally{if(active)setAuthLoading(false);}})();return()=>{active=false;};},[]);
  useEffect(()=>{localStorage.setItem('people-language',zh?'zh':'en');document.documentElement.lang=zh?'zh-CN':'en';},[zh]);
- useEffect(()=>{if(!run||complete(run))return;const id=run.id;let active=true;poll.current=window.setInterval(async()=>{try{const r=await api('/runs/'+id);if(active){setRun(r);if(complete(r)){clearInterval(poll.current);await refresh();}}}catch(e:any){if(active){setError(e.message);clearInterval(poll.current);}}},2500);return()=>{active=false;clearInterval(poll.current);};},[run?.id,run?.state]);
+ useEffect(()=>{
+  setConnectionStale(false);
+  if(!run||complete(run))return;
+  const id=run.id;let active=true,timer=0,failures=0;
+  const update=async()=>{
+   try{
+    const next=await api('/runs/'+id,{signal:AbortSignal.timeout(15000)});
+    if(!active)return;
+    failures=0;setConnectionStale(false);setRun(next);
+    if(complete(next)){void refresh().catch(()=>{});return;}
+   }catch{if(!active)return;failures++;setConnectionStale(true);}
+   if(active)timer=window.setTimeout(update,Math.min(10000,1200*(failures+1)));
+  };
+  timer=window.setTimeout(update,800);
+  return()=>{active=false;clearTimeout(timer);};
+ },[run?.id,complete(run)]);
  const act=async(fn:()=>Promise<void>)=>{setBusy(true);setError('');setNotice('');try{await fn();}catch(e:any){setError(warnings[e.code]?.[zh?1:0]||e.message);}finally{setBusy(false);}};
  const searchBody=()=>({client_id:crypto.randomUUID(),mode:scene==='business'?'paid':'free',scene,query:['research','person'].includes(scene)?query:'',country,title,company_domain:domain,website,limit:Math.min(limit,scene==='business'?100:50),criteria:criterion.trim().split('\n').filter(Boolean).slice(0,6).map(text=>({text,required,weight:1})),import_id:scene==='import'?imported?.id:null});
  const start=()=>act(async()=>{const body=searchBody();if(scene==='business'){setQuote({quote:await post('/quotes',body),path:'/runs',body});return;}const r=await post('/runs',body);setRun(r);setDetail(null);setSelected([]);await refresh();});
  const executeQuote=()=>act(async()=>{if(!quote)return;const r=await post(quote.path,{...quote.body,quote_id:quote.quote.id});setQuote(null);setRun(r);setDetail(null);setSelected([]);await refresh();});
  const readRun=(id:string)=>act(async()=>{setRun(await api('/runs/'+id));setSelected([]);setDetail(null);setShowHistory(false);});
  const contact=()=>act(async()=>{if(!run)return;const body={client_id:crypto.randomUUID(),ids:selected};const base='/runs/'+run.id+'/contacts';setQuote({quote:await post(base+'/quote',body),path:base,body});});
- const toggleSave=(p:Person)=>act(async()=>{if(!run)return;await post('/runs/'+run.id+'/saved',{person_id:p.id,saved:!p.saved});const r=await api('/runs/'+run.id);setRun(r);setDetail(r.profiles.find((x:Person)=>x.id===p.id)||null);});
+ const toggleSave=(p:Person)=>act(async()=>{if(!run)return;await post('/runs/'+run.id+'/saved',{person_id:p.id,saved:!p.saved});const r=await api('/runs/'+run.id);setRun(r);if(detail?.id===p.id)setDetail(r.profiles.find((x:Person)=>x.id===p.id)||null);});
  const download=()=>act(async()=>{if(!run)return;const r=await fetch(BASE+'/runs/'+run.id+'/export',{credentials:'include'});if(!r.ok)throw new Error('Export unavailable');const blob=await r.blob();const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='jevstyle-people.csv';a.click();URL.revokeObjectURL(u);});
  const fileChange=async(file:File|undefined)=>{setImported(null);setScene('import');setAdvanced(true);if(!file)return;if(file.size>500000){setError(t('CSV must be under 500 KB.','CSV 不能超过 500 KB。'));return;}const text=await file.text();const parsed=Papa.parse<Record<string,string>>(text,{header:true,skipEmptyLines:true});if(parsed.errors.length){setError(t('Check your CSV format.','请检查 CSV 格式。'));return;}const headers=parsed.meta.fields||[];setCsv(text);setCsvHeaders(headers);const m:Record<string,string>={};for(const key of ['name','role','affiliation','location','url','description','company_domain']){m[key]=headers.find(h=>h.toLowerCase()===key)||'';}setMapping(m);};
  const upload=()=>act(async()=>{const m=Object.fromEntries(Object.entries(mapping).filter(([,v])=>v));const r=await post('/imports',{csv,mapping:m});setImported(r);setNotice(t(`${r.count} people imported. Add your criteria and start screening.`,`已导入 ${r.count} 人。填写条件后即可筛选。`));});
  const saveConfig=()=>act(async()=>{const patch={...Object.fromEntries(Object.entries(keys).filter(([,v])=>v.trim())),...configFlags,website_hosts:hosts};const r=await api('/admin/config',{method:'PUT',body:JSON.stringify(patch)});setKeys({});setAdmin(r);setNotice(t('Configuration saved securely.','配置已加密保存。'));await refresh();});
- const candidates=[...(run?.profiles||[])].sort((a,b)=>{const groups:Record<string,number>={matched:0,review:1,not_matched:2};return (groups[a.evaluation?.group||'review']-groups[b.evaluation?.group||'review'])||((b.evaluation?.score??-1)-(a.evaluation?.score??-1));});
- const visible=candidates.filter(p=>filter==='all'||filter==='saved'&&p.saved||p.evaluation?.group===filter||filter==='review'&&!p.evaluation);
- const groupLabel=(p:Person)=>p.evaluation?.group==='matched'?t('Relevant','符合需求'):p.evaluation?.group==='not_matched'?t('Not matched','不符合'):t('Needs review','待核实');
  const stageLabel=(s:string)=>({queued:t('Queued','排队中'),querying:t('Finding people','查询资料'),scoring:t('Screening with JevStyle','JevStyle 筛选中'),contacts:t('Checking work emails','查询与验证邮箱'),completed:t('Completed','已完成'),partial:t('Partially completed','部分完成'),failed:t('Could not finish','未完成'),cancelled:t('Stopped','已停止'),reconciliation:t('Checking billing receipt','核对费用回执')}[s]||s);
  const date=(s:string)=>new Date(s).toLocaleDateString(zh?'zh-CN':'en-AU');
 
@@ -83,7 +83,7 @@ function App(){
  const composer=<div className={'composer-wrap '+(run?'with-results':'')}>
   <form className="composer" onSubmit={e=>{e.preventDefault();start();}}>
    {imported&&scene==='import'&&<div className="attachment"><Icon name="book" size={18}/><div><strong>{t('Imported list','已导入名单')}</strong><small>{imported.count} {t('people · private','人 · 仅自己可见')}</small></div><button type="button" aria-label={t('Remove file','移除文件')} onClick={()=>{setImported(null);setCsv('');setCsvHeaders([]);}}>×</button></div>}
-   <textarea aria-label={t('Search request','搜索需求')} value={inputValue} onChange={e=>inputChange(e.target.value)} rows={2} maxLength={['research','person'].includes(scene)?200:1800}
+   <textarea aria-label={t('Search request','搜索需求')} value={inputValue} onChange={e=>inputChange(e.target.value)} rows={run?1:2} maxLength={['research','person'].includes(scene)?200:1800}
     placeholder={scene==='research'?t('Enter a research topic, e.g. AI safety','输入研究主题，例如 AI 安全、具身智能'):
       scene==='person'?t('Who are you looking for? Enter a name.','输入你要查找的人物姓名'):
       scene==='import'?t('What should the people in your list have experience in?','这份名单里，你想找具备哪些经历的人？'):
@@ -124,17 +124,16 @@ function App(){
  {error&&<div className="alert error" role="alert">{error}<button aria-label="Dismiss" onClick={()=>setError('')}>×</button></div>}{notice&&<div className="alert" role="status">{notice}</div>}
  {run&&<div className="conversation-results"><div className="query-bubble"><p>{run.spec.query||run.spec.title||run.spec.criteria?.map((c:any)=>c.text).join(' · ')||t('Find work emails for selected people','查询选中人员的工作邮箱')}</p><small>{run.mode==='free'?t('Free search','免费搜索'):t('Paid lookup','付费查询')} · {scenarioLabel(run.spec.scene)}</small></div>
   <div className="assistant-heading"><span className="assistant-mark">◎</span><strong>JevStyle</strong><span className={'stage '+(!complete(run)?'pulse':'')}>{stageLabel(run.stage)}</span><span className="run-cost">{fmtMoney(run.cost_micro)}</span></div>
-  {!complete(run)&&<div className="progress-line"><span>{run.progress} / {run.profiles.length||'—'} {t('people processed','人已处理')}</span><button disabled={run.cancel_requested} onClick={()=>act(async()=>{await post('/runs/'+run.id+'/cancel');setRun(await api('/runs/'+run.id));})}>{run.cancel_requested?t('Stopping…','正在停止…'):t('Stop','停止')}</button></div>}
+  <SearchActivity key={'activity-'+run.id} run={run} t={t} stale={connectionStale} onStop={()=>act(async()=>{await post('/runs/'+run.id+'/cancel');setRun(await api('/runs/'+run.id));})}/>
   {run.warnings.map(w=><div key={w} className="alert warm">{warnings[w]?.[zh?1:0]||t('A source or step is unavailable: ','部分来源或处理不可用：')+w}</div>)}
   {run.stage==='reconciliation'&&!run.cancel_requested&&<button className="button small" onClick={()=>act(async()=>{await post('/runs/'+run.id+'/resume');setRun(await api('/runs/'+run.id));})}>{t('Reconcile receipt','核对回执')}</button>}
-  <div className="result-controls"><div className="tabs">{[['all',t('All','全部')],['matched',t('Relevant','符合')],['review',t('Review','待核实')],['saved',t('Saved','收藏')]].map(([id,label])=><button key={id} className={filter===id?'active':''} onClick={()=>setFilter(id)}>{label}</button>)}</div><div className="actions"><button className="button small" onClick={download} disabled={!run.profiles.length}>{t('Export CSV','导出 CSV')}</button><button className="button small" disabled={!selected.length||!complete(run)||!sources?.paid_available} onClick={contact}>{t('Find work emails','查工作邮箱')}{selected.length?' ('+selected.length+')':''}</button></div></div>
-  {visible.length?<div className="people-list">{visible.map(p=><article className="person" key={p.id}><input type="checkbox" aria-label={t('Select ','选择 ')+p.name} checked={selected.includes(p.id)} disabled={!p.company_domain||!!p.contact} onChange={e=>setSelected(e.target.checked?[...selected,p.id]:selected.filter(id=>id!==p.id))}/><div className="avatar">{p.name.split(/\s+/).slice(0,2).map(x=>x[0]).join('')}</div><button className="person-main" onClick={()=>setDetail(p)}><h3>{p.name}<span>↗</span></h3><p>{p.role||(p.affiliation?(p.location_kind==='publication_affiliation'?t('Publication affiliation: ','论文署名机构：'):'')+p.affiliation:t('Public profile','公开资料'))}</p>{p.role&&p.affiliation&&<small>{p.affiliation}</small>}<div className="person-meta"><span>{p.source==='import'?t('Your list','你的名单'):p.source}</span>{p.location&&<span>{p.location}{p.location_kind==='publication_affiliation'?t(' · institution',' · 机构'):''}</span>}</div></button><div className="person-score"><span className={'badge '+(p.evaluation?.group||'review')}>{groupLabel(p)}</span><small>{p.evaluation?t('Assessed ','明确判断 ')+p.evaluation.coverage+'%':t('Not scored yet','尚未评分')}</small>{p.contact&&<small>{p.contact.status}</small>}</div><button className={'bookmark '+(p.saved?'saved':'')} aria-label={p.saved?t('Unsave','取消收藏'):t('Save person','收藏')} onClick={()=>toggleSave(p)} disabled={!complete(run)}>{p.saved?'★':'☆'}</button></article>)}</div>:<p className="empty-small">{complete(run)?t('No people in this view. Try another topic or source.','当前视图没有人员，可尝试其他主题或来源。'):t('Finding profiles. Results will appear here.','正在查询资料，结果会显示在这里。')}</p>}
+  <Results key={'results-'+run.id} run={run} t={t} selected={selected} onSelect={setSelected} onOpen={setDetail} onSave={toggleSave} onExport={download} onContacts={contact} paidAvailable={!!sources?.paid_available} busy={busy}/>
   <div className="result-footer"><span>{t('Check the original sources before relying on a match.','使用匹配结果前，请核对原始来源。')}</span><button onClick={()=>setDeleteTarget(run.id)}>{t('Delete search','删除记录')}</button></div>
  </div>}
  {run&&composer}
  </main><footer className="chat-footer">{t('JevStyle can make mistakes. Check the sources.','JevStyle 也可能出错，请核对来源。')} <a href="/privacy/">{t('Privacy','隐私')}</a><span>·</span><a href="/contact/">{t('Help','帮助')}</a></footer></div>
  </div>
- {detail&&<div className="overlay" onClick={()=>setDetail(null)}><section className="drawer" role="dialog" aria-modal="true" aria-label={detail.name} onClick={e=>e.stopPropagation()}><button className="close" aria-label="Close" onClick={()=>setDetail(null)}>×</button><span className="eyebrow">{detail.source}</span><h2>{detail.name}</h2><p>{detail.role}</p><p className="muted">{detail.location_kind==='publication_affiliation'?t('Publication affiliation: ','论文署名机构：'):''}{detail.affiliation}</p>{safeLink(detail.url)&&<a className="button" href={safeLink(detail.url)} target="_blank" rel="noreferrer">{t('Open source profile ↗','查看来源资料 ↗')}</a>}<h3>{t('How this profile matches','逐项匹配判断')}</h3>{detail.evaluation?.items.map((it,i)=><div className="criterion" key={i}><span className={'dot '+it.label}/><div><strong>{it.text}</strong><small>{it.label==='match'?t('Supported by the supplied profile','已有资料支持'):it.label==='mismatch'?t('Evidence indicates a mismatch','资料显示不符合'):t('Not enough evidence','资料不足')}{it.required?t(' · required',' · 必须满足'):''}</small></div></div>)||<p>{t('Not scored. Review the source directly.','尚未评分，请直接核对来源。')}</p>}<h3>{t('Source material','来源资料')}</h3>{detail.evidence.map((e,i)=><div className="evidence" key={i}><p>{e.text||t('No description provided.','来源未提供介绍。')}</p>{safeLink(e.url)&&<a href={safeLink(e.url)} target="_blank" rel="noreferrer">{t('Read source ↗','阅读来源 ↗')}</a>}</div>)}{detail.contact&&<div className="evidence"><strong>{t('Work email','工作邮箱')}</strong><p>{detail.contact.email||'—'}</p><span className="badge">{detail.contact.status}</span><small>{t('Deliverability is not proof of identity.','可投递性不等于身份已核实。')}</small></div>}<p className="hint">{t('Retrieved ','获取时间：')}{date(detail.fetched_at)}{detail.source_updated_at?' · '+t('Source updated ','来源更新时间：')+date(detail.source_updated_at):''}</p></section></div>}
+ {detail&&<ProfileDetail person={run?.profiles.find(p=>p.id===detail.id)||detail} t={t} onClose={()=>setDetail(null)} onSave={()=>toggleSave(run?.profiles.find(p=>p.id===detail.id)||detail)} canSave={complete(run)&&!busy}/>}
  {quote&&<div className="overlay"><section className="modal" role="dialog" aria-modal="true" aria-label="Confirm paid operation"><h2>{t('Review this paid operation','确认这次付费操作')}</h2><p>{t('Maximum reserved budget','最多预留预算')}</p><div className="price">{fmtMoney(quote.quote.maximum_micro)}</div><p>{t('Pilot pricing: actual supplier charges, no service markup. Unused reserved credit is released after receipts are confirmed. Quote expires in five minutes.','试运行按供应商实际费用结算，不加服务费。回执确认后释放未用余额。报价五分钟有效。')}</p><div className="actions"><button className="button" disabled={busy} onClick={()=>setQuote(null)}>{t('Cancel','取消')}</button><button className="button dark" disabled={busy} onClick={executeQuote}>{t('Confirm & start','确认并开始')}</button></div></section></div>}
  {showHistory&&<div className="overlay" onClick={()=>setShowHistory(false)}><section className="modal wide" role="dialog" aria-modal="true" aria-label="History" onClick={e=>e.stopPropagation()}><button className="close" onClick={()=>setShowHistory(false)} aria-label="Close">×</button><h2>{t('Search history','搜索历史')}</h2>{history.length?history.map(h=><button key={h.id} className="history-item" onClick={()=>readRun(h.id)}><span>{h.spec.query||h.spec.title||h.spec.scene||t('Work emails','工作邮箱')}</span><small>{stageLabel(h.stage)} · {date(h.created_at)} · {fmtMoney(h.cost_micro)}</small></button>):<p>{t('Your searches will appear here.','搜索记录会显示在这里。')}</p>}</section></div>}
  {showWallet&&<div className="overlay" onClick={()=>setShowWallet(false)}><section className="modal" role="dialog" aria-modal="true" aria-label="Credit" onClick={e=>e.stopPropagation()}><button className="close" onClick={()=>setShowWallet(false)} aria-label="Close">×</button><h2>{t('Your credit','账户余额')}</h2><div className="price">{fmtMoney((sources?.wallet.balance_micro||0)-(sources?.wallet.reserved_micro||0))}</div><p>{t('Reserved for running tasks: ','执行中任务预留：')}{fmtMoney(sources?.wallet.reserved_micro||0)}</p>{sources?.checkout_available?<div className="actions">{[500,1000,2000].map(n=><button key={n} className="button" disabled={busy} onClick={()=>act(async()=>{const d=await post('/billing/checkout',{amount_cents:n});window.location.assign(d.url);})}>+ ${n/100}</button>)}</div>:<p className="hint">{t('Paid credit purchases are not enabled yet. Free search is available.','充值暂未开放，免费搜索可用。')}</p>}{ledger.map((e,i)=><div className="ledger" key={i}><span>{e.kind}</span><span>{fmtMoney(e.amount_micro)}</span></div>)}</section></div>}
