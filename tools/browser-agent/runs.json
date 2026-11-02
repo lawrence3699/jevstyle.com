@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-02T21:55:28.103290+00:00",
+  "generated_at": "2026-11-02T22:57:40.705471+00:00",
   "model": "See individual runs",
   "measurement": {
     "elapsed_ms": "Agent decision loop; excludes browser setup and independent final verification",
@@ -8,24 +8,25 @@
     "scope": "Live attempts on named tasks; synthetic fixtures are not a general web benchmark",
     "replay": "Executed actions and separate decision scores; no recorded video or simulated actions"
   },
-  "latest_batch": "27B reviewed eight-scenario release",
+  "latest_batch": "27B optimized seven-scenario regression",
   "coverage": {
     "latest_scenarios": [
       "autocomplete",
       "catalog",
-      "flights",
       "form",
       "guide",
       "hotel",
       "reading",
       "wikipedia"
     ],
-    "excluded_from_latest": []
+    "excluded_from_latest": [
+      "flights"
+    ]
   },
   "comparison_batches": [
-    "JevStyle-only full suite",
-    "4B reviewed seven-scenario release",
-    "27B reviewed eight-scenario release"
+    "27B reviewed eight-scenario release",
+    "27B optimized flight check",
+    "27B optimized seven-scenario regression"
   ],
   "batches": [
     {
@@ -617,9 +618,2145 @@
         "Original failures, interrupted r13 and its corrected-verifier recheck are separate evidence and were not relabelled.",
         "Images are actual discrete browser snapshots, not continuous video."
       ]
+    },
+    {
+      "id": "Short-ID speed diagnostic (withdrawn)",
+      "label": "Short-ID speed diagnostic (withdrawn)",
+      "generated_at": "2026-11-02T22:46:30.833020+00:00",
+      "summary": {},
+      "measurement": {
+        "elapsed_ms": "Agent decision loop; excludes browser setup and independent final verification",
+        "wall_ms": "Browser setup, decision loop, independent verification and cleanup",
+        "scope": "Live attempts on named tasks; synthetic fixtures are not a general web benchmark",
+        "replay": "Executed actions and separate decision scores; no recorded video or simulated actions"
+      },
+      "batch_status": "interrupted",
+      "planned_scenarios": [
+        "flights"
+      ],
+      "configuration": {
+        "fallback_enabled": true,
+        "fallback_threshold": 1.0,
+        "fallback_format": "action_id",
+        "max_actions": 40,
+        "max_seconds": 900.0,
+        "stop_when_verified": true,
+        "http_timeout_seconds": 120.0,
+        "capture_enabled": true
+      },
+      "source_hashes": {
+        "scripts/run_scenarios.py": "e72761d83595bdc78656f9b01475821e2d0c6ca9733a610edcc09010c0c5593f",
+        "jev_ultrafast/__init__.py": "5d2e83009ae3802e2edecf120f19b0380a27247e21a7b641b2a430c98dcbd208",
+        "jev_ultrafast/agent.py": "109925489dbd5ce3b08017c04b7a19363455be447e67f711d2b5a000a3285f0a",
+        "jev_ultrafast/browser.py": "ee08dafa93d731bd292aa0263a578a29c8001cf22eef3c59fe44a159649155ee",
+        "jev_ultrafast/demo.py": "b69705afe7e61d6183cbba3243d2bac5165d8f56253becb6a9a59b01e3c4f5b9",
+        "jev_ultrafast/fallback.py": "6cb5ea88d1c94f79a6c0f321ddc55bd7436b322345157f583b9e0df986b0d30c",
+        "jev_ultrafast/model.py": "84ba9499069071b5404eed83fdc5cbfbdc6e1629d75d1ef3b79191654d6236df",
+        "jev_ultrafast/progress.py": "ec4a90995b2dd054e0d56e6e2a6720f00eff446a63047a330d8b821a441dfb76",
+        "jev_ultrafast/questions.py": "fc11e334d9b31977bddb7d9319b9fd7bd16e05db7f9242c45c277e49c264617b",
+        "jev_ultrafast/scenarios.py": "25a6569229cc2fc33458e6eddcd00bfa53280b643dd80d6db8fee6f9a94c37e8",
+        "jev_ultrafast/snapshot.js": "eb8f6607dabaa2243a125d49a326ab7bb607a095677794e2c5e50f12e5f1caa7"
+      },
+      "review_every_step": true,
+      "interrupted_scenario": "flights"
+    },
+    {
+      "id": "27B optimized flight check",
+      "label": "27B optimized flight check",
+      "generated_at": "2026-11-02T22:50:16.358712+00:00",
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "blocked": 0
+      },
+      "measurement": {
+        "elapsed_ms": "Agent decision loop; excludes browser setup and independent final verification",
+        "wall_ms": "Browser setup, decision loop, independent verification and cleanup",
+        "scope": "Live attempts on named tasks; synthetic fixtures are not a general web benchmark",
+        "replay": "Executed actions and separate decision scores; no recorded video or simulated actions"
+      },
+      "batch_status": "completed",
+      "planned_scenarios": [
+        "flights"
+      ],
+      "configuration": {
+        "fallback_enabled": true,
+        "fallback_threshold": 1.0,
+        "fallback_format": "action_enum",
+        "max_actions": 40,
+        "max_seconds": 900.0,
+        "stop_when_verified": true,
+        "http_timeout_seconds": 120.0,
+        "capture_enabled": true
+      },
+      "source_hashes": {
+        "scripts/run_scenarios.py": "10b481f0373045882b2257175be9a02856da2eede9f85b282694ff75c21cc9ab",
+        "jev_ultrafast/__init__.py": "5d2e83009ae3802e2edecf120f19b0380a27247e21a7b641b2a430c98dcbd208",
+        "jev_ultrafast/agent.py": "f037b1619ba1865e59f5cc9ff288988f994186b2f51dbf457dfdf8f53bae4fda",
+        "jev_ultrafast/browser.py": "ee08dafa93d731bd292aa0263a578a29c8001cf22eef3c59fe44a159649155ee",
+        "jev_ultrafast/demo.py": "b69705afe7e61d6183cbba3243d2bac5165d8f56253becb6a9a59b01e3c4f5b9",
+        "jev_ultrafast/fallback.py": "fd8303fbcd6eabe752c579df1d9a08cb712726ccc07451bf87417b894bcdecdb",
+        "jev_ultrafast/model.py": "84ba9499069071b5404eed83fdc5cbfbdc6e1629d75d1ef3b79191654d6236df",
+        "jev_ultrafast/progress.py": "ec4a90995b2dd054e0d56e6e2a6720f00eff446a63047a330d8b821a441dfb76",
+        "jev_ultrafast/questions.py": "fc11e334d9b31977bddb7d9319b9fd7bd16e05db7f9242c45c277e49c264617b",
+        "jev_ultrafast/scenarios.py": "25a6569229cc2fc33458e6eddcd00bfa53280b643dd80d6db8fee6f9a94c37e8",
+        "jev_ultrafast/snapshot.js": "eb8f6607dabaa2243a125d49a326ab7bb607a095677794e2c5e50f12e5f1caa7"
+      },
+      "review_every_step": true
+    },
+    {
+      "id": "27B optimized seven-scenario regression",
+      "label": "27B optimized seven-scenario regression",
+      "generated_at": "2026-11-02T22:57:40.705471+00:00",
+      "summary": {
+        "passed": 7,
+        "failed": 0,
+        "blocked": 0
+      },
+      "measurement": {
+        "elapsed_ms": "Agent decision loop; excludes browser setup and independent final verification",
+        "wall_ms": "Browser setup, decision loop, independent verification and cleanup",
+        "scope": "Live attempts on named tasks; synthetic fixtures are not a general web benchmark",
+        "replay": "Executed actions and separate decision scores; no recorded video or simulated actions"
+      },
+      "batch_status": "completed",
+      "planned_scenarios": [
+        "hotel",
+        "reading",
+        "catalog",
+        "form",
+        "guide",
+        "autocomplete",
+        "wikipedia"
+      ],
+      "configuration": {
+        "fallback_enabled": true,
+        "fallback_threshold": 1.0,
+        "fallback_format": "action_enum",
+        "max_actions": 40,
+        "max_seconds": 300.0,
+        "stop_when_verified": true,
+        "http_timeout_seconds": 120.0,
+        "capture_enabled": true
+      },
+      "source_hashes": {
+        "scripts/run_scenarios.py": "10b481f0373045882b2257175be9a02856da2eede9f85b282694ff75c21cc9ab",
+        "jev_ultrafast/__init__.py": "5d2e83009ae3802e2edecf120f19b0380a27247e21a7b641b2a430c98dcbd208",
+        "jev_ultrafast/agent.py": "f037b1619ba1865e59f5cc9ff288988f994186b2f51dbf457dfdf8f53bae4fda",
+        "jev_ultrafast/browser.py": "ee08dafa93d731bd292aa0263a578a29c8001cf22eef3c59fe44a159649155ee",
+        "jev_ultrafast/demo.py": "b69705afe7e61d6183cbba3243d2bac5165d8f56253becb6a9a59b01e3c4f5b9",
+        "jev_ultrafast/fallback.py": "fd8303fbcd6eabe752c579df1d9a08cb712726ccc07451bf87417b894bcdecdb",
+        "jev_ultrafast/model.py": "84ba9499069071b5404eed83fdc5cbfbdc6e1629d75d1ef3b79191654d6236df",
+        "jev_ultrafast/progress.py": "ec4a90995b2dd054e0d56e6e2a6720f00eff446a63047a330d8b821a441dfb76",
+        "jev_ultrafast/questions.py": "fc11e334d9b31977bddb7d9319b9fd7bd16e05db7f9242c45c277e49c264617b",
+        "jev_ultrafast/scenarios.py": "25a6569229cc2fc33458e6eddcd00bfa53280b643dd80d6db8fee6f9a94c37e8",
+        "jev_ultrafast/snapshot.js": "eb8f6607dabaa2243a125d49a326ab7bb607a095677794e2c5e50f12e5f1caa7"
+      },
+      "review_every_step": true
     }
   ],
   "runs": [
+    {
+      "id": "hotel",
+      "title": "Find a hotel",
+      "goal": "Use the destination search and filters to find Design stays in Lisbon with Free cancellation, then open Casa Flora.",
+      "url": "fixture.html?scenario=travel",
+      "local": true,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 8,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 63082,
+      "wall_ms": 63257,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "qwen3.8-27b-uncensored-q4_k_m",
+      "hybrid": true,
+      "fallback_calls": 6,
+      "capture_enabled": true,
+      "final_frame_captured": true,
+      "captured_frames": 8,
+      "all_decisions_reviewed": true,
+      "all_executed_actions_reviewed": true,
+      "reviews_skipped_stale": 0,
+      "timing": {
+        "primary_ms": 7516,
+        "review_ms": 48075,
+        "text_ms": 6923,
+        "other_ms": 568
+      },
+      "fallback_models": [
+        "qwen3.8-27b-uncensored-q4_k_m"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "correct property opened",
+            "passed": true
+          },
+          {
+            "name": "Design category applied",
+            "passed": true
+          },
+          {
+            "name": "free cancellation enabled",
+            "passed": true
+          },
+          {
+            "name": "Lisbon destination search applied",
+            "passed": true
+          },
+          {
+            "name": "property heading",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "CLICK",
+          "target": "4",
+          "label": "CLICK element 4",
+          "latency_ms": 10201,
+          "elapsed_ms": 10290,
+          "confidence": 0.3324386142249548,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.4436988451874623,
+            "TYPE_TEXT": 0.09953939421295119,
+            "SELECT": 0.2256134580812096,
+            "SCROLL_DOWN": 0.0686237303373872,
+            "WAIT": 0.08625225810993728,
+            "BLOCKED": 0.07627231407105255
+          },
+          "target_probabilities": {
+            "1": 0.059259018183262624,
+            "2": 0.10769515327348124,
+            "3": 0.01254145536080901,
+            "4": 0.07979684665686122,
+            "5": 0.1539275303079826,
+            "7": 0.08121898177053939,
+            "8": 0.4596569273080777,
+            "9": 0.02585151484762378,
+            "10": 0.02005257229136246
+          }
+        },
+        {
+          "step": 2,
+          "operation": "TYPE_TEXT",
+          "target": "4",
+          "label": "TYPE_TEXT element 4",
+          "latency_ms": 9146,
+          "elapsed_ms": 26456,
+          "confidence": 0.36052461475304776,
+          "text_latency_ms": 6923,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.4671038456275398,
+            "TYPE_TEXT": 0.09640680361127674,
+            "SELECT": 0.2175635325976089,
+            "SCROLL_DOWN": 0.06593105792103901,
+            "WAIT": 0.09509813138837984,
+            "BLOCKED": 0.057896628854155655
+          },
+          "target_probabilities": {
+            "4": 1.0
+          }
+        },
+        {
+          "step": 3,
+          "operation": "SELECT",
+          "target": "6:1",
+          "label": "SELECT element 6:1",
+          "latency_ms": 9609,
+          "elapsed_ms": 36138,
+          "confidence": 0.3839003121607977,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.48658359346733143,
+            "TYPE_TEXT": 0.05582387014113058,
+            "SELECT": 0.21171109332607588,
+            "SCROLL_DOWN": 0.07250233325235515,
+            "WAIT": 0.11354108352966015,
+            "BLOCKED": 0.059838026283446824
+          },
+          "target_probabilities": {
+            "6:1": 0.9221196930398923,
+            "6:2": 0.03735676167809575,
+            "6:3": 0.04052354528201198
+          }
+        },
+        {
+          "step": 4,
+          "operation": "CLICK",
+          "target": "7",
+          "label": "CLICK element 7",
+          "latency_ms": 9214,
+          "elapsed_ms": 45441,
+          "confidence": 0.41022482288699075,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.508520685739159,
+            "TYPE_TEXT": 0.0468878899839453,
+            "SELECT": 0.1269386072960979,
+            "SCROLL_DOWN": 0.1090647682451329,
+            "WAIT": 0.11301041918263716,
+            "BLOCKED": 0.09557762955302773
+          },
+          "target_probabilities": {
+            "1": 0.03998808930345153,
+            "2": 0.07082768431228822,
+            "3": 0.01615572324397674,
+            "4": 0.062239631773149284,
+            "5": 0.1750170905425853,
+            "7": 0.1448702372922624,
+            "8": 0.42964550110323707,
+            "9": 0.06125604242904945
+          }
+        },
+        {
+          "step": 5,
+          "operation": "CLICK",
+          "target": "5",
+          "label": "CLICK element 5",
+          "latency_ms": 8740,
+          "elapsed_ms": 54272,
+          "confidence": 0.38974229645762704,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.4914519137146892,
+            "TYPE_TEXT": 0.06340631876363381,
+            "SELECT": 0.10441535234037608,
+            "SCROLL_DOWN": 0.12555100375890893,
+            "WAIT": 0.14188815274392802,
+            "BLOCKED": 0.073287258678464
+          },
+          "target_probabilities": {
+            "1": 0.03826918858920761,
+            "2": 0.0654978807006769,
+            "3": 0.01628902686656839,
+            "4": 0.08443608536191859,
+            "5": 0.1139612880419943,
+            "7": 0.0878858148296455,
+            "8": 0.5291196895527402,
+            "9": 0.06454102605724846
+          }
+        },
+        {
+          "step": 6,
+          "operation": "CLICK",
+          "target": "8",
+          "label": "CLICK element 8",
+          "latency_ms": 8702,
+          "elapsed_ms": 63082,
+          "confidence": 0.5145180361213054,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.5954316967677545,
+            "TYPE_TEXT": 0.018393595910987912,
+            "SELECT": 0.04935473289743146,
+            "SCROLL_DOWN": 0.08325629843676483,
+            "WAIT": 0.21814185209292233,
+            "BLOCKED": 0.03542182389413897
+          },
+          "target_probabilities": {
+            "1": 0.03145522474141218,
+            "2": 0.03356519066350334,
+            "3": 0.009147875220175359,
+            "4": 0.021990919904123225,
+            "5": 0.12103875803167494,
+            "7": 0.034658369627581016,
+            "8": 0.74814366181153
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.4436988451874623,
+            "TYPE_TEXT": 0.09953939421295119,
+            "SELECT": 0.2256134580812096,
+            "SCROLL_DOWN": 0.0686237303373872,
+            "WAIT": 0.08625225810993728,
+            "BLOCKED": 0.07627231407105255
+          },
+          "target_probabilities": {
+            "1": 0.059259018183262624,
+            "2": 0.10769515327348124,
+            "3": 0.01254145536080901,
+            "4": 0.07979684665686122,
+            "5": 0.1539275303079826,
+            "7": 0.08121898177053939,
+            "8": 0.4596569273080777,
+            "9": 0.02585151484762378,
+            "10": 0.02005257229136246
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1243,
+          "fallback_latency_ms": 8954,
+          "latency_ms": 10201,
+          "elapsed_ms": 10204,
+          "confidence": 0.3324386142249548
+        },
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "CLICK": 0.4671038456275398,
+            "TYPE_TEXT": 0.09640680361127674,
+            "SELECT": 0.2175635325976089,
+            "SCROLL_DOWN": 0.06593105792103901,
+            "WAIT": 0.09509813138837984,
+            "BLOCKED": 0.057896628854155655
+          },
+          "target_probabilities": {
+            "4": 1.0
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1240,
+          "fallback_latency_ms": 7903,
+          "latency_ms": 9146,
+          "elapsed_ms": 19445,
+          "confidence": 0.36052461475304776
+        },
+        {
+          "operation": "SELECT",
+          "operation_probabilities": {
+            "CLICK": 0.48658359346733143,
+            "TYPE_TEXT": 0.05582387014113058,
+            "SELECT": 0.21171109332607588,
+            "SCROLL_DOWN": 0.07250233325235515,
+            "WAIT": 0.11354108352966015,
+            "BLOCKED": 0.059838026283446824
+          },
+          "target_probabilities": {
+            "6:1": 0.9221196930398923,
+            "6:2": 0.03735676167809575,
+            "6:3": 0.04052354528201198
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1276,
+          "fallback_latency_ms": 8331,
+          "latency_ms": 9609,
+          "elapsed_ms": 36073,
+          "confidence": 0.3839003121607977
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.508520685739159,
+            "TYPE_TEXT": 0.0468878899839453,
+            "SELECT": 0.1269386072960979,
+            "SCROLL_DOWN": 0.1090647682451329,
+            "WAIT": 0.11301041918263716,
+            "BLOCKED": 0.09557762955302773
+          },
+          "target_probabilities": {
+            "1": 0.03998808930345153,
+            "2": 0.07082768431228822,
+            "3": 0.01615572324397674,
+            "4": 0.062239631773149284,
+            "5": 0.1750170905425853,
+            "7": 0.1448702372922624,
+            "8": 0.42964550110323707,
+            "9": 0.06125604242904945
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1266,
+          "fallback_latency_ms": 7943,
+          "latency_ms": 9214,
+          "elapsed_ms": 45359,
+          "confidence": 0.41022482288699075
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.4914519137146892,
+            "TYPE_TEXT": 0.06340631876363381,
+            "SELECT": 0.10441535234037608,
+            "SCROLL_DOWN": 0.12555100375890893,
+            "WAIT": 0.14188815274392802,
+            "BLOCKED": 0.073287258678464
+          },
+          "target_probabilities": {
+            "1": 0.03826918858920761,
+            "2": 0.0654978807006769,
+            "3": 0.01628902686656839,
+            "4": 0.08443608536191859,
+            "5": 0.1139612880419943,
+            "7": 0.0878858148296455,
+            "8": 0.5291196895527402,
+            "9": 0.06454102605724846
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1270,
+          "fallback_latency_ms": 7466,
+          "latency_ms": 8740,
+          "elapsed_ms": 54189,
+          "confidence": 0.38974229645762704
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.5954316967677545,
+            "TYPE_TEXT": 0.018393595910987912,
+            "SELECT": 0.04935473289743146,
+            "SCROLL_DOWN": 0.08325629843676483,
+            "WAIT": 0.21814185209292233,
+            "BLOCKED": 0.03542182389413897
+          },
+          "target_probabilities": {
+            "1": 0.03145522474141218,
+            "2": 0.03356519066350334,
+            "3": 0.009147875220175359,
+            "4": 0.021990919904123225,
+            "5": 0.12103875803167494,
+            "7": 0.034658369627581016,
+            "8": 0.74814366181153
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1221,
+          "fallback_latency_ms": 7478,
+          "latency_ms": 8702,
+          "elapsed_ms": 62989,
+          "confidence": 0.5145180361213054
+        }
+      ],
+      "decision_calls": 6,
+      "text_calls": 1,
+      "batch_id": "27B optimized seven-scenario regression",
+      "attempt_label": "27B optimized seven-scenario regression",
+      "generated_at": "2026-11-02T22:57:40.705471+00:00",
+      "configured_review_every_step": true
+    },
+    {
+      "id": "reading",
+      "title": "Open a research article",
+      "goal": "Open the reading-room article titled Confidence is not correctness.",
+      "url": "fixture.html?scenario=research",
+      "local": true,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 3,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 7083,
+      "wall_ms": 7233,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "not_called",
+      "hybrid": true,
+      "fallback_calls": 1,
+      "capture_enabled": true,
+      "final_frame_captured": true,
+      "captured_frames": 3,
+      "all_decisions_reviewed": true,
+      "all_executed_actions_reviewed": true,
+      "reviews_skipped_stale": 0,
+      "timing": {
+        "primary_ms": 650,
+        "review_ms": 6327,
+        "text_ms": 0,
+        "other_ms": 106
+      },
+      "fallback_models": [
+        "qwen3.8-27b-uncensored-q4_k_m"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "article route",
+            "passed": true
+          },
+          {
+            "name": "article heading",
+            "passed": true
+          },
+          {
+            "name": "article body",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "CLICK",
+          "target": "6",
+          "label": "CLICK element 6",
+          "latency_ms": 6988,
+          "elapsed_ms": 7083,
+          "confidence": 0.29713862487906245,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.47285396865929685,
+            "SCROLL_DOWN": 0.20935006491570854,
+            "WAIT": 0.053118033349865534,
+            "BLOCKED": 0.2646779330751291
+          },
+          "target_probabilities": {
+            "1": 0.027758602215335243,
+            "2": 0.010704724313975338,
+            "3": 0.5025336706855136,
+            "4": 0.010811230937507297,
+            "5": 0.015316703294430724,
+            "6": 0.4328750685532377
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.47285396865929685,
+            "SCROLL_DOWN": 0.20935006491570854,
+            "WAIT": 0.053118033349865534,
+            "BLOCKED": 0.2646779330751291
+          },
+          "target_probabilities": {
+            "1": 0.027758602215335243,
+            "2": 0.010704724313975338,
+            "3": 0.5025336706855136,
+            "4": 0.010811230937507297,
+            "5": 0.015316703294430724,
+            "6": 0.4328750685532377
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 650,
+          "fallback_latency_ms": 6327,
+          "latency_ms": 6988,
+          "elapsed_ms": 6991,
+          "confidence": 0.29713862487906245
+        }
+      ],
+      "decision_calls": 1,
+      "text_calls": 0,
+      "batch_id": "27B optimized seven-scenario regression",
+      "attempt_label": "27B optimized seven-scenario regression",
+      "generated_at": "2026-11-02T22:57:40.705471+00:00",
+      "configured_review_every_step": true
+    },
+    {
+      "id": "catalog",
+      "title": "Search and filter a catalog",
+      "goal": "Search the catalog for headphones, choose the Audio category, enable In stock only, sort by Price: low to high, then open Studio Lite headphones.",
+      "url": "scenarios/lab.html?task=catalog",
+      "local": true,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 9,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 74267,
+      "wall_ms": 74440,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "qwen3.8-27b-uncensored-q4_k_m",
+      "hybrid": true,
+      "fallback_calls": 7,
+      "capture_enabled": true,
+      "final_frame_captured": true,
+      "captured_frames": 9,
+      "all_decisions_reviewed": true,
+      "all_executed_actions_reviewed": true,
+      "reviews_skipped_stale": 0,
+      "timing": {
+        "primary_ms": 9119,
+        "review_ms": 59855,
+        "text_ms": 4558,
+        "other_ms": 735
+      },
+      "fallback_models": [
+        "qwen3.8-27b-uncensored-q4_k_m"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "product detail",
+            "passed": true
+          },
+          {
+            "name": "query applied",
+            "passed": true
+          },
+          {
+            "name": "category applied",
+            "passed": true
+          },
+          {
+            "name": "stock filter applied",
+            "passed": true
+          },
+          {
+            "name": "price sorting applied",
+            "passed": true
+          },
+          {
+            "name": "result route",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "TYPE_TEXT",
+          "target": "1",
+          "label": "TYPE_TEXT element 1",
+          "latency_ms": 9641,
+          "elapsed_ms": 14328,
+          "confidence": 0.35699555756781515,
+          "text_latency_ms": 4558,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.024138967445524125,
+            "CLICK": 0.46416296463984597,
+            "SELECT": 0.4278609823212738,
+            "SCROLL_DOWN": 0.029877609906797793,
+            "WAIT": 0.03451712870866712,
+            "BLOCKED": 0.019442346977891205
+          },
+          "target_probabilities": {
+            "1": 1.0
+          }
+        },
+        {
+          "step": 2,
+          "operation": "SELECT",
+          "target": "3:1",
+          "label": "SELECT element 3:1",
+          "latency_ms": 9998,
+          "elapsed_ms": 24439,
+          "confidence": 0.4464192994285835,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.01872774568974285,
+            "CLICK": 0.3598535574556617,
+            "SELECT": 0.5386827495238196,
+            "SCROLL_DOWN": 0.03056178100410347,
+            "WAIT": 0.03681869427172208,
+            "BLOCKED": 0.015355472054950412
+          },
+          "target_probabilities": {
+            "3:1": 0.6806016311472528,
+            "3:2": 0.02634366231122285,
+            "4:1": 0.285152563966641,
+            "4:2": 0.007902142574883357
+          }
+        },
+        {
+          "step": 3,
+          "operation": "CLICK",
+          "target": "5",
+          "label": "CLICK element 5",
+          "latency_ms": 9282,
+          "elapsed_ms": 33820,
+          "confidence": 0.5708549245841987,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.02809878904692618,
+            "CLICK": 0.6423791038201656,
+            "SELECT": 0.20849412571537537,
+            "SCROLL_DOWN": 0.043668108734099896,
+            "WAIT": 0.05525178848675629,
+            "BLOCKED": 0.022108084196676654
+          },
+          "target_probabilities": {
+            "1": 0.04748409502618005,
+            "2": 0.20897856100963208,
+            "5": 0.10230882491185585,
+            "6": 0.044997057197608305,
+            "7": 0.5526210098138582,
+            "8": 0.04361045204086563
+          }
+        },
+        {
+          "step": 4,
+          "operation": "SELECT",
+          "target": "4:1",
+          "label": "SELECT element 4:1",
+          "latency_ms": 9585,
+          "elapsed_ms": 43519,
+          "confidence": 0.4092913219826408,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.0177674882208495,
+            "CLICK": 0.5077427683188673,
+            "SELECT": 0.3941513435096699,
+            "SCROLL_DOWN": 0.026065407618151754,
+            "WAIT": 0.04131838182365059,
+            "BLOCKED": 0.012954610508810966
+          },
+          "target_probabilities": {
+            "3:1": 0.1083111613492287,
+            "3:2": 0.026686995639911573,
+            "4:1": 0.8457209295962019,
+            "4:2": 0.019280913414657857
+          }
+        },
+        {
+          "step": 5,
+          "operation": "CLICK",
+          "target": "6",
+          "label": "CLICK element 6",
+          "latency_ms": 9535,
+          "elapsed_ms": 53138,
+          "confidence": 0.7518036115803121,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.018241636527654887,
+            "CLICK": 0.7931696763169267,
+            "SELECT": 0.0943837629002109,
+            "SCROLL_DOWN": 0.029757844734966024,
+            "WAIT": 0.04721763137612605,
+            "BLOCKED": 0.0172294481441155
+          },
+          "target_probabilities": {
+            "1": 0.048104320107758454,
+            "2": 0.15435488261707186,
+            "5": 0.09487381835768248,
+            "6": 0.6016873203677122,
+            "7": 0.100979658549775
+          }
+        },
+        {
+          "step": 6,
+          "operation": "CLICK",
+          "target": "2",
+          "label": "CLICK element 2",
+          "latency_ms": 10664,
+          "elapsed_ms": 63887,
+          "confidence": 0.6295736988723413,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.030680872277163616,
+            "CLICK": 0.703658959097873,
+            "SELECT": 0.13077617260260785,
+            "WAIT": 0.11404263582322201,
+            "BLOCKED": 0.020841360199133525
+          },
+          "target_probabilities": {
+            "1": 0.2583779360941557,
+            "2": 0.509934222496439,
+            "5": 0.2316878414094053
+          }
+        },
+        {
+          "step": 7,
+          "operation": "CLICK",
+          "target": "6",
+          "label": "CLICK element 6",
+          "latency_ms": 10298,
+          "elapsed_ms": 74267,
+          "confidence": 0.7747812608370073,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.011472753241942692,
+            "CLICK": 0.8123177173641727,
+            "SELECT": 0.07719534010655563,
+            "SCROLL_DOWN": 0.024940155391607863,
+            "WAIT": 0.061077835664161126,
+            "BLOCKED": 0.01299619823155992
+          },
+          "target_probabilities": {
+            "1": 0.029833707103105754,
+            "2": 0.25468458320480686,
+            "5": 0.09920841997458042,
+            "6": 0.4841243310165882,
+            "7": 0.13214895870091875
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.024138967445524125,
+            "CLICK": 0.46416296463984597,
+            "SELECT": 0.4278609823212738,
+            "SCROLL_DOWN": 0.029877609906797793,
+            "WAIT": 0.03451712870866712,
+            "BLOCKED": 0.019442346977891205
+          },
+          "target_probabilities": {
+            "1": 1.0
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1306,
+          "fallback_latency_ms": 8332,
+          "latency_ms": 9641,
+          "elapsed_ms": 9643,
+          "confidence": 0.35699555756781515
+        },
+        {
+          "operation": "SELECT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.01872774568974285,
+            "CLICK": 0.3598535574556617,
+            "SELECT": 0.5386827495238196,
+            "SCROLL_DOWN": 0.03056178100410347,
+            "WAIT": 0.03681869427172208,
+            "BLOCKED": 0.015355472054950412
+          },
+          "target_probabilities": {
+            "3:1": 0.6806016311472528,
+            "3:2": 0.02634366231122285,
+            "4:1": 0.285152563966641,
+            "4:2": 0.007902142574883357
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1257,
+          "fallback_latency_ms": 8739,
+          "latency_ms": 9998,
+          "elapsed_ms": 24332,
+          "confidence": 0.4464192994285835
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.02809878904692618,
+            "CLICK": 0.6423791038201656,
+            "SELECT": 0.20849412571537537,
+            "SCROLL_DOWN": 0.043668108734099896,
+            "WAIT": 0.05525178848675629,
+            "BLOCKED": 0.022108084196676654
+          },
+          "target_probabilities": {
+            "1": 0.04748409502618005,
+            "2": 0.20897856100963208,
+            "5": 0.10230882491185585,
+            "6": 0.044997057197608305,
+            "7": 0.5526210098138582,
+            "8": 0.04361045204086563
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1272,
+          "fallback_latency_ms": 8008,
+          "latency_ms": 9282,
+          "elapsed_ms": 33728,
+          "confidence": 0.5708549245841987
+        },
+        {
+          "operation": "SELECT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.0177674882208495,
+            "CLICK": 0.5077427683188673,
+            "SELECT": 0.3941513435096699,
+            "SCROLL_DOWN": 0.026065407618151754,
+            "WAIT": 0.04131838182365059,
+            "BLOCKED": 0.012954610508810966
+          },
+          "target_probabilities": {
+            "3:1": 0.1083111613492287,
+            "3:2": 0.026686995639911573,
+            "4:1": 0.8457209295962019,
+            "4:2": 0.019280913414657857
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1264,
+          "fallback_latency_ms": 8314,
+          "latency_ms": 9585,
+          "elapsed_ms": 43411,
+          "confidence": 0.4092913219826408
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.018241636527654887,
+            "CLICK": 0.7931696763169267,
+            "SELECT": 0.0943837629002109,
+            "SCROLL_DOWN": 0.029757844734966024,
+            "WAIT": 0.04721763137612605,
+            "BLOCKED": 0.0172294481441155
+          },
+          "target_probabilities": {
+            "1": 0.048104320107758454,
+            "2": 0.15435488261707186,
+            "5": 0.09487381835768248,
+            "6": 0.6016873203677122,
+            "7": 0.100979658549775
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1421,
+          "fallback_latency_ms": 8107,
+          "latency_ms": 9535,
+          "elapsed_ms": 53060,
+          "confidence": 0.7518036115803121
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.030680872277163616,
+            "CLICK": 0.703658959097873,
+            "SELECT": 0.13077617260260785,
+            "WAIT": 0.11404263582322201,
+            "BLOCKED": 0.020841360199133525
+          },
+          "target_probabilities": {
+            "1": 0.2583779360941557,
+            "2": 0.509934222496439,
+            "5": 0.2316878414094053
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1216,
+          "fallback_latency_ms": 9443,
+          "latency_ms": 10664,
+          "elapsed_ms": 63810,
+          "confidence": 0.6295736988723413
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.011472753241942692,
+            "CLICK": 0.8123177173641727,
+            "SELECT": 0.07719534010655563,
+            "SCROLL_DOWN": 0.024940155391607863,
+            "WAIT": 0.061077835664161126,
+            "BLOCKED": 0.01299619823155992
+          },
+          "target_probabilities": {
+            "1": 0.029833707103105754,
+            "2": 0.25468458320480686,
+            "5": 0.09920841997458042,
+            "6": 0.4841243310165882,
+            "7": 0.13214895870091875
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1383,
+          "fallback_latency_ms": 8912,
+          "latency_ms": 10298,
+          "elapsed_ms": 74193,
+          "confidence": 0.7747812608370073
+        }
+      ],
+      "decision_calls": 7,
+      "text_calls": 1,
+      "batch_id": "27B optimized seven-scenario regression",
+      "attempt_label": "27B optimized seven-scenario regression",
+      "generated_at": "2026-11-02T22:57:40.705471+00:00",
+      "configured_review_every_step": true
+    },
+    {
+      "id": "form",
+      "title": "Submit a synthetic support request",
+      "goal": "Submit a demo support request for Alex Chen at alex.chen@example.com. Choose Billing, enter the message I was charged twice, enable Send a copy, and stop when the receipt appears.",
+      "url": "scenarios/lab.html?task=form",
+      "local": true,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 8,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 69978,
+      "wall_ms": 70209,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "qwen3.8-27b-uncensored-q4_k_m",
+      "hybrid": true,
+      "fallback_calls": 6,
+      "capture_enabled": true,
+      "final_frame_captured": true,
+      "captured_frames": 8,
+      "all_decisions_reviewed": true,
+      "all_executed_actions_reviewed": true,
+      "reviews_skipped_stale": 0,
+      "timing": {
+        "primary_ms": 7283,
+        "review_ms": 48989,
+        "text_ms": 13087,
+        "other_ms": 619
+      },
+      "fallback_models": [
+        "qwen3.8-27b-uncensored-q4_k_m"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "submission receipt",
+            "passed": true
+          },
+          {
+            "name": "name",
+            "passed": true
+          },
+          {
+            "name": "email",
+            "passed": true
+          },
+          {
+            "name": "topic",
+            "passed": true
+          },
+          {
+            "name": "message",
+            "passed": true
+          },
+          {
+            "name": "copy enabled",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "TYPE_TEXT",
+          "target": "1",
+          "label": "TYPE_TEXT element 1",
+          "latency_ms": 8755,
+          "elapsed_ms": 12731,
+          "confidence": 0.5925207602897904,
+          "text_latency_ms": 3878,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.6740166082318323,
+            "CLICK": 0.22548007354095603,
+            "SELECT": 0.02128488858458329,
+            "WAIT": 0.0599886128587873,
+            "BLOCKED": 0.019229816783841152
+          },
+          "target_probabilities": {
+            "1": 0.2434415093320622,
+            "2": 0.04378584661863257,
+            "4": 0.7127726440493052
+          }
+        },
+        {
+          "step": 2,
+          "operation": "TYPE_TEXT",
+          "target": "2",
+          "label": "TYPE_TEXT element 2",
+          "latency_ms": 9007,
+          "elapsed_ms": 26148,
+          "confidence": 0.3525426653358231,
+          "text_latency_ms": 4322,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.4820341322686585,
+            "CLICK": 0.3876171803456432,
+            "SELECT": 0.03563323788158451,
+            "WAIT": 0.06600825613668267,
+            "BLOCKED": 0.028707193367431057
+          },
+          "target_probabilities": {
+            "1": 0.028292565153108903,
+            "2": 0.35889418715349597,
+            "4": 0.6128132476933952
+          }
+        },
+        {
+          "step": 3,
+          "operation": "SELECT",
+          "target": "3:1",
+          "label": "SELECT element 3:1",
+          "latency_ms": 9762,
+          "elapsed_ms": 35998,
+          "confidence": 0.6434733272216749,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.71477866177734,
+            "CLICK": 0.172686098728789,
+            "SELECT": 0.05609039666983399,
+            "WAIT": 0.038488691144765344,
+            "BLOCKED": 0.017956151679271757
+          },
+          "target_probabilities": {
+            "3:1": 0.8097923070266209,
+            "3:2": 0.10209107579243956,
+            "3:3": 0.08811661718093958
+          }
+        },
+        {
+          "step": 4,
+          "operation": "TYPE_TEXT",
+          "target": "4",
+          "label": "TYPE_TEXT element 4",
+          "latency_ms": 9410,
+          "elapsed_ms": 50398,
+          "confidence": 0.7281096560724206,
+          "text_latency_ms": 4887,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.7824877248579365,
+            "CLICK": 0.14783772891517635,
+            "SELECT": 0.018765610297826665,
+            "WAIT": 0.034722735954750096,
+            "BLOCKED": 0.01618619997431044
+          },
+          "target_probabilities": {
+            "1": 0.012180935856478038,
+            "2": 0.010656796562257013,
+            "4": 0.977162267581265
+          }
+        },
+        {
+          "step": 5,
+          "operation": "CLICK",
+          "target": "5",
+          "label": "CLICK element 5",
+          "latency_ms": 9832,
+          "elapsed_ms": 60349,
+          "confidence": 0.6803327191262154,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.028822953499444807,
+            "CLICK": 0.7442661753009723,
+            "SELECT": 0.04745800811238139,
+            "WAIT": 0.12837230206978867,
+            "BLOCKED": 0.051080561017412936
+          },
+          "target_probabilities": {
+            "1": 0.010398996791962444,
+            "2": 0.007351226347967761,
+            "4": 0.026955160996837715,
+            "5": 0.38345324501086386,
+            "6": 0.5718413708523682
+          }
+        },
+        {
+          "step": 6,
+          "operation": "CLICK",
+          "target": "6",
+          "label": "CLICK element 6",
+          "latency_ms": 9535,
+          "elapsed_ms": 69978,
+          "confidence": 0.7342117023615031,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.019003650575621596,
+            "CLICK": 0.7873693618892025,
+            "SELECT": 0.033218275876658765,
+            "WAIT": 0.12374258914316828,
+            "BLOCKED": 0.03666612251534888
+          },
+          "target_probabilities": {
+            "1": 0.01032619291605082,
+            "2": 0.008782199246481553,
+            "4": 0.029204332693113438,
+            "5": 0.10665572346986761,
+            "6": 0.8450315516744866
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.6740166082318323,
+            "CLICK": 0.22548007354095603,
+            "SELECT": 0.02128488858458329,
+            "WAIT": 0.0599886128587873,
+            "BLOCKED": 0.019229816783841152
+          },
+          "target_probabilities": {
+            "1": 0.2434415093320622,
+            "2": 0.04378584661863257,
+            "4": 0.7127726440493052
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1167,
+          "fallback_latency_ms": 7582,
+          "latency_ms": 8755,
+          "elapsed_ms": 8758,
+          "confidence": 0.5925207602897904
+        },
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.4820341322686585,
+            "CLICK": 0.3876171803456432,
+            "SELECT": 0.03563323788158451,
+            "WAIT": 0.06600825613668267,
+            "BLOCKED": 0.028707193367431057
+          },
+          "target_probabilities": {
+            "1": 0.028292565153108903,
+            "2": 0.35889418715349597,
+            "4": 0.6128132476933952
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1166,
+          "fallback_latency_ms": 7836,
+          "latency_ms": 9007,
+          "elapsed_ms": 21745,
+          "confidence": 0.3525426653358231
+        },
+        {
+          "operation": "SELECT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.71477866177734,
+            "CLICK": 0.172686098728789,
+            "SELECT": 0.05609039666983399,
+            "WAIT": 0.038488691144765344,
+            "BLOCKED": 0.017956151679271757
+          },
+          "target_probabilities": {
+            "3:1": 0.8097923070266209,
+            "3:2": 0.10209107579243956,
+            "3:3": 0.08811661718093958
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1203,
+          "fallback_latency_ms": 8555,
+          "latency_ms": 9762,
+          "elapsed_ms": 35916,
+          "confidence": 0.6434733272216749
+        },
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.7824877248579365,
+            "CLICK": 0.14783772891517635,
+            "SELECT": 0.018765610297826665,
+            "WAIT": 0.034722735954750096,
+            "BLOCKED": 0.01618619997431044
+          },
+          "target_probabilities": {
+            "1": 0.012180935856478038,
+            "2": 0.010656796562257013,
+            "4": 0.977162267581265
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1236,
+          "fallback_latency_ms": 8170,
+          "latency_ms": 9410,
+          "elapsed_ms": 45414,
+          "confidence": 0.7281096560724206
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.028822953499444807,
+            "CLICK": 0.7442661753009723,
+            "SELECT": 0.04745800811238139,
+            "WAIT": 0.12837230206978867,
+            "BLOCKED": 0.051080561017412936
+          },
+          "target_probabilities": {
+            "1": 0.010398996791962444,
+            "2": 0.007351226347967761,
+            "4": 0.026955160996837715,
+            "5": 0.38345324501086386,
+            "6": 0.5718413708523682
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1239,
+          "fallback_latency_ms": 8585,
+          "latency_ms": 9832,
+          "elapsed_ms": 60241,
+          "confidence": 0.6803327191262154
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.019003650575621596,
+            "CLICK": 0.7873693618892025,
+            "SELECT": 0.033218275876658765,
+            "WAIT": 0.12374258914316828,
+            "BLOCKED": 0.03666612251534888
+          },
+          "target_probabilities": {
+            "1": 0.01032619291605082,
+            "2": 0.008782199246481553,
+            "4": 0.029204332693113438,
+            "5": 0.10665572346986761,
+            "6": 0.8450315516744866
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1272,
+          "fallback_latency_ms": 8261,
+          "latency_ms": 9535,
+          "elapsed_ms": 69892,
+          "confidence": 0.7342117023615031
+        }
+      ],
+      "decision_calls": 6,
+      "text_calls": 3,
+      "batch_id": "27B optimized seven-scenario regression",
+      "attempt_label": "27B optimized seven-scenario regression",
+      "generated_at": "2026-11-02T22:57:40.705471+00:00",
+      "configured_review_every_step": true
+    },
+    {
+      "id": "guide",
+      "title": "Navigate and scroll a guide",
+      "goal": "Open the Structured output guide, find the Retry policy section farther down the article, and expand its implementation example.",
+      "url": "scenarios/lab.html?task=guide",
+      "local": true,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 5,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 17063,
+      "wall_ms": 17277,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "not_called",
+      "hybrid": true,
+      "fallback_calls": 3,
+      "capture_enabled": true,
+      "final_frame_captured": true,
+      "captured_frames": 5,
+      "all_decisions_reviewed": true,
+      "all_executed_actions_reviewed": true,
+      "reviews_skipped_stale": 0,
+      "timing": {
+        "primary_ms": 1530,
+        "review_ms": 15228,
+        "text_ms": 0,
+        "other_ms": 305
+      },
+      "fallback_models": [
+        "qwen3.8-27b-uncensored-q4_k_m"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "correct guide",
+            "passed": true
+          },
+          {
+            "name": "section expanded",
+            "passed": true
+          },
+          {
+            "name": "example visible",
+            "passed": true
+          },
+          {
+            "name": "scrolled to section",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "CLICK",
+          "target": "1",
+          "label": "CLICK element 1",
+          "latency_ms": 5516,
+          "elapsed_ms": 5625,
+          "confidence": 0.7054960278950102,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.8036640185966735,
+            "WAIT": 0.1079711471097859,
+            "BLOCKED": 0.08836483429354064
+          },
+          "target_probabilities": {
+            "1": 1.0
+          }
+        },
+        {
+          "step": 2,
+          "operation": "SCROLL_DOWN",
+          "target": "",
+          "label": "SCROLL_DOWN",
+          "latency_ms": 5131,
+          "elapsed_ms": 10847,
+          "confidence": 0.8114231959182971,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "SCROLL_DOWN": 0.8742821306121982,
+            "WAIT": 0.08491468169407883,
+            "BLOCKED": 0.04080318769372298
+          },
+          "target_probabilities": {}
+        },
+        {
+          "step": 3,
+          "operation": "CLICK",
+          "target": "1",
+          "label": "CLICK element 1",
+          "latency_ms": 6118,
+          "elapsed_ms": 17063,
+          "confidence": 0.6653135609675468,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.09608863154122554,
+            "SCROLL_UP": 0.7489851707256601,
+            "WAIT": 0.07936828246515287,
+            "BLOCKED": 0.07555791526796148
+          },
+          "target_probabilities": {
+            "1": 1.0
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.8036640185966735,
+            "WAIT": 0.1079711471097859,
+            "BLOCKED": 0.08836483429354064
+          },
+          "target_probabilities": {
+            "1": 1.0
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 715,
+          "fallback_latency_ms": 4799,
+          "latency_ms": 5516,
+          "elapsed_ms": 5518,
+          "confidence": 0.7054960278950102
+        },
+        {
+          "operation": "SCROLL_DOWN",
+          "operation_probabilities": {
+            "SCROLL_DOWN": 0.8742821306121982,
+            "WAIT": 0.08491468169407883,
+            "BLOCKED": 0.04080318769372298
+          },
+          "target_probabilities": {},
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 283,
+          "fallback_latency_ms": 4846,
+          "latency_ms": 5131,
+          "elapsed_ms": 10760,
+          "confidence": 0.8114231959182971
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.09608863154122554,
+            "SCROLL_UP": 0.7489851707256601,
+            "WAIT": 0.07936828246515287,
+            "BLOCKED": 0.07555791526796148
+          },
+          "target_probabilities": {
+            "1": 1.0
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 532,
+          "fallback_latency_ms": 5583,
+          "latency_ms": 6118,
+          "elapsed_ms": 16970,
+          "confidence": 0.6653135609675468
+        }
+      ],
+      "decision_calls": 3,
+      "text_calls": 0,
+      "batch_id": "27B optimized seven-scenario regression",
+      "attempt_label": "27B optimized seven-scenario regression",
+      "generated_at": "2026-11-02T22:57:40.705471+00:00",
+      "configured_review_every_step": true
+    },
+    {
+      "id": "autocomplete",
+      "title": "Select an asynchronous suggestion",
+      "goal": "Find Kyoto using the city search, select Kyoto, Japan from the suggestions, and open its city guide.",
+      "url": "scenarios/lab.html?task=autocomplete",
+      "local": true,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 6,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 22694,
+      "wall_ms": 22855,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "qwen3.8-27b-uncensored-q4_k_m",
+      "hybrid": true,
+      "fallback_calls": 3,
+      "capture_enabled": true,
+      "final_frame_captured": true,
+      "captured_frames": 5,
+      "all_decisions_reviewed": false,
+      "all_executed_actions_reviewed": true,
+      "reviews_skipped_stale": 1,
+      "timing": {
+        "primary_ms": 2883,
+        "review_ms": 16070,
+        "text_ms": 2973,
+        "other_ms": 768
+      },
+      "fallback_models": [
+        "qwen3.8-27b-uncensored-q4_k_m"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "selected city identifier",
+            "passed": true
+          },
+          {
+            "name": "opened city guide",
+            "passed": true
+          },
+          {
+            "name": "guide route",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "TYPE_TEXT",
+          "target": "1",
+          "label": "TYPE_TEXT element 1",
+          "latency_ms": 5037,
+          "elapsed_ms": 8457,
+          "confidence": 0.7514726179081896,
+          "text_latency_ms": 2973,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.8136044634311422,
+            "CLICK": 0.15399535464928105,
+            "WAIT": 0.02304892955321711,
+            "BLOCKED": 0.009351252366359664
+          },
+          "target_probabilities": {
+            "1": 1.0
+          }
+        },
+        {
+          "step": 2,
+          "operation": "CLICK",
+          "target": "2",
+          "label": "CLICK element 2",
+          "latency_ms": 6490,
+          "elapsed_ms": 15844,
+          "confidence": 0.8629235393062623,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.03328437361940524,
+            "CLICK": 0.8971926544796968,
+            "WAIT": 0.0537946140759657,
+            "BLOCKED": 0.0157283578249323
+          },
+          "target_probabilities": {
+            "1": 0.1668228552144411,
+            "2": 0.8331771447855589
+          }
+        },
+        {
+          "step": 3,
+          "operation": "CLICK",
+          "target": "2",
+          "label": "CLICK element 2",
+          "latency_ms": 6754,
+          "elapsed_ms": 22694,
+          "confidence": 0.8526467153956284,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.021645269786610185,
+            "CLICK": 0.8894850365467213,
+            "WAIT": 0.06965922633402405,
+            "BLOCKED": 0.019210467332644556
+          },
+          "target_probabilities": {
+            "1": 0.08366794229157806,
+            "2": 0.916332057708422
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.8136044634311422,
+            "CLICK": 0.15399535464928105,
+            "WAIT": 0.02304892955321711,
+            "BLOCKED": 0.009351252366359664
+          },
+          "target_probabilities": {
+            "1": 1.0
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 704,
+          "fallback_latency_ms": 4331,
+          "latency_ms": 5037,
+          "elapsed_ms": 5039,
+          "confidence": 0.7514726179081896
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.03328437361940524,
+            "CLICK": 0.8971926544796968,
+            "WAIT": 0.0537946140759657,
+            "BLOCKED": 0.0157283578249323
+          },
+          "target_probabilities": {
+            "1": 0.1668228552144411,
+            "2": 0.8331771447855589
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 707,
+          "fallback_latency_ms": 5780,
+          "latency_ms": 6490,
+          "elapsed_ms": 15768,
+          "confidence": 0.8629235393062623
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.021645269786610185,
+            "CLICK": 0.8894850365467213,
+            "WAIT": 0.06965922633402405,
+            "BLOCKED": 0.019210467332644556
+          },
+          "target_probabilities": {
+            "1": 0.08366794229157806,
+            "2": 0.916332057708422
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 759,
+          "fallback_latency_ms": 5959,
+          "latency_ms": 6754,
+          "elapsed_ms": 22605,
+          "confidence": 0.8526467153956284
+        }
+      ],
+      "decision_calls": 4,
+      "text_calls": 1,
+      "batch_id": "27B optimized seven-scenario regression",
+      "attempt_label": "27B optimized seven-scenario regression",
+      "generated_at": "2026-11-02T22:57:40.705471+00:00",
+      "configured_review_every_step": true
+    },
+    {
+      "id": "wikipedia",
+      "title": "Find a Wikipedia article",
+      "goal": "Find and open the Wikipedia article about Gödel’s incompleteness theorems.",
+      "url": "https://en.wikipedia.org/wiki/Main_Page",
+      "local": false,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 6,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 67593,
+      "wall_ms": 69055,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "qwen3.8-27b-uncensored-q4_k_m",
+      "hybrid": true,
+      "fallback_calls": 3,
+      "capture_enabled": true,
+      "final_frame_captured": true,
+      "captured_frames": 5,
+      "all_decisions_reviewed": false,
+      "all_executed_actions_reviewed": true,
+      "reviews_skipped_stale": 1,
+      "timing": {
+        "primary_ms": 6917,
+        "review_ms": 49908,
+        "text_ms": 8581,
+        "other_ms": 2187
+      },
+      "fallback_models": [
+        "qwen3.8-27b-uncensored-q4_k_m"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "Wikipedia domain",
+            "passed": true
+          },
+          {
+            "name": "exact article",
+            "passed": true
+          },
+          {
+            "name": "article heading",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "CLICK",
+          "target": "2",
+          "label": "CLICK element 2",
+          "latency_ms": 16938,
+          "elapsed_ms": 17345,
+          "confidence": 0.48475956165549555,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.10892195859109403,
+            "TYPE_TEXT": 0.15570413427519128,
+            "SCROLL_DOWN": 0.5706329680462463,
+            "WAIT": 0.023650777735531637,
+            "DONE": 0.04589687568145228,
+            "BLOCKED": 0.09519328567048443
+          },
+          "target_probabilities": {
+            "1": 0.14432615979505892,
+            "2": 0.08223781909452067,
+            "3": 0.2977901198809102,
+            "4": 0.0008434365001356772,
+            "5": 0.000590988348699974,
+            "6": 0.0005396867082593562,
+            "7": 0.14890471577511447,
+            "8": 0.004002939360334238,
+            "9": 0.013030348941049348,
+            "10": 0.00786479692027039,
+            "11": 0.0022268917136540663,
+            "12": 0.0005775948583376642,
+            "13": 0.2051190625467314,
+            "14": 0.002806429212648493,
+            "15": 0.0018796134519511174,
+            "16": 0.002766005842547934,
+            "17": 0.0022856707748358856,
+            "18": 0.0021706081503510655,
+            "19": 0.014361274039558228,
+            "20": 0.003284211045091506,
+            "21": 0.008666381825042415,
+            "22": 0.005854622126418114,
+            "23": 0.0046609207190204316,
+            "24": 0.003321290837626719,
+            "25": 0.003331799011846544,
+            "26": 0.0011480704294914849,
+            "27": 0.00364697741189679,
+            "28": 0.002751099881994223,
+            "29": 0.0013269441148442043,
+            "30": 0.0019722287360994977,
+            "31": 0.001651394146645996,
+            "32": 0.01468395309253479,
+            "33": 0.009375944706478241
+          }
+        },
+        {
+          "step": 2,
+          "operation": "TYPE_TEXT",
+          "target": "2",
+          "label": "TYPE_TEXT element 2",
+          "latency_ms": 17779,
+          "elapsed_ms": 45871,
+          "confidence": 0.3179389453289736,
+          "text_latency_ms": 8581,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.15646694315925466,
+            "TYPE_TEXT": 0.2542363313391241,
+            "SCROLL_DOWN": 0.45435115626317885,
+            "WAIT": 0.03133599988206853,
+            "BLOCKED": 0.10360956935637389
+          },
+          "target_probabilities": {
+            "2": 1.0
+          }
+        },
+        {
+          "step": 3,
+          "operation": "CLICK",
+          "target": "3",
+          "label": "CLICK element 3",
+          "latency_ms": 20433,
+          "elapsed_ms": 67593,
+          "confidence": 0.4775324841869478,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.5820259873495582,
+            "TYPE_TEXT": 0.06219726364916991,
+            "SCROLL_DOWN": 0.10021811232121844,
+            "WAIT": 0.23308283525410103,
+            "BLOCKED": 0.022475801425952378
+          },
+          "target_probabilities": {
+            "1": 0.05699688273186585,
+            "2": 0.13005928150905924,
+            "3": 0.0818471935105832,
+            "4": 0.46813579525309895,
+            "5": 0.023186770343367576,
+            "6": 0.055196924166864086,
+            "7": 0.046091800208313355,
+            "8": 0.0007520462035559952,
+            "9": 0.0003093447988788425,
+            "10": 0.0004346187919499848,
+            "11": 0.10292759371601179,
+            "12": 0.002536378933093908,
+            "13": 0.006135019958013435,
+            "14": 0.001614809737912286,
+            "15": 0.00046511747739426336,
+            "16": 0.0009917629792063109,
+            "17": 0.0008130217653722145,
+            "18": 0.0013459621404725104,
+            "19": 0.0014392784998542136,
+            "20": 0.0018848024814281626,
+            "21": 0.0017060348588500618,
+            "22": 0.0004978772301089214,
+            "23": 0.0007729203717928737,
+            "24": 0.0008877796956864105,
+            "25": 0.0003652553421212823,
+            "26": 0.00036650448296901355,
+            "27": 0.0008922637194474188,
+            "28": 0.00027003624491743684,
+            "29": 0.001569718275169812,
+            "30": 0.004708055497399675,
+            "31": 0.0005155689261705938,
+            "32": 0.000504364271434559,
+            "33": 0.00038883257535639516,
+            "34": 0.0022461343872769907,
+            "35": 0.0011442489150023296
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.10892195859109403,
+            "TYPE_TEXT": 0.15570413427519128,
+            "SCROLL_DOWN": 0.5706329680462463,
+            "WAIT": 0.023650777735531637,
+            "DONE": 0.04589687568145228,
+            "BLOCKED": 0.09519328567048443
+          },
+          "target_probabilities": {
+            "1": 0.14432615979505892,
+            "2": 0.08223781909452067,
+            "3": 0.2977901198809102,
+            "4": 0.0008434365001356772,
+            "5": 0.000590988348699974,
+            "6": 0.0005396867082593562,
+            "7": 0.14890471577511447,
+            "8": 0.004002939360334238,
+            "9": 0.013030348941049348,
+            "10": 0.00786479692027039,
+            "11": 0.0022268917136540663,
+            "12": 0.0005775948583376642,
+            "13": 0.2051190625467314,
+            "14": 0.002806429212648493,
+            "15": 0.0018796134519511174,
+            "16": 0.002766005842547934,
+            "17": 0.0022856707748358856,
+            "18": 0.0021706081503510655,
+            "19": 0.014361274039558228,
+            "20": 0.003284211045091506,
+            "21": 0.008666381825042415,
+            "22": 0.005854622126418114,
+            "23": 0.0046609207190204316,
+            "24": 0.003321290837626719,
+            "25": 0.003331799011846544,
+            "26": 0.0011480704294914849,
+            "27": 0.00364697741189679,
+            "28": 0.002751099881994223,
+            "29": 0.0013269441148442043,
+            "30": 0.0019722287360994977,
+            "31": 0.001651394146645996,
+            "32": 0.01468395309253479,
+            "33": 0.009375944706478241
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1656,
+          "fallback_latency_ms": 15274,
+          "latency_ms": 16938,
+          "elapsed_ms": 17008,
+          "confidence": 0.48475956165549555
+        },
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "CLICK": 0.15646694315925466,
+            "TYPE_TEXT": 0.2542363313391241,
+            "SCROLL_DOWN": 0.45435115626317885,
+            "WAIT": 0.03133599988206853,
+            "BLOCKED": 0.10360956935637389
+          },
+          "target_probabilities": {
+            "2": 1.0
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1688,
+          "fallback_latency_ms": 16083,
+          "latency_ms": 17779,
+          "elapsed_ms": 36926,
+          "confidence": 0.3179389453289736
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.5820259873495582,
+            "TYPE_TEXT": 0.06219726364916991,
+            "SCROLL_DOWN": 0.10021811232121844,
+            "WAIT": 0.23308283525410103,
+            "BLOCKED": 0.022475801425952378
+          },
+          "target_probabilities": {
+            "1": 0.05699688273186585,
+            "2": 0.13005928150905924,
+            "3": 0.0818471935105832,
+            "4": 0.46813579525309895,
+            "5": 0.023186770343367576,
+            "6": 0.055196924166864086,
+            "7": 0.046091800208313355,
+            "8": 0.0007520462035559952,
+            "9": 0.0003093447988788425,
+            "10": 0.0004346187919499848,
+            "11": 0.10292759371601179,
+            "12": 0.002536378933093908,
+            "13": 0.006135019958013435,
+            "14": 0.001614809737912286,
+            "15": 0.00046511747739426336,
+            "16": 0.0009917629792063109,
+            "17": 0.0008130217653722145,
+            "18": 0.0013459621404725104,
+            "19": 0.0014392784998542136,
+            "20": 0.0018848024814281626,
+            "21": 0.0017060348588500618,
+            "22": 0.0004978772301089214,
+            "23": 0.0007729203717928737,
+            "24": 0.0008877796956864105,
+            "25": 0.0003652553421212823,
+            "26": 0.00036650448296901355,
+            "27": 0.0008922637194474188,
+            "28": 0.00027003624491743684,
+            "29": 0.001569718275169812,
+            "30": 0.004708055497399675,
+            "31": 0.0005155689261705938,
+            "32": 0.000504364271434559,
+            "33": 0.00038883257535639516,
+            "34": 0.0022461343872769907,
+            "35": 0.0011442489150023296
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1876,
+          "fallback_latency_ms": 18551,
+          "latency_ms": 20433,
+          "elapsed_ms": 66323,
+          "confidence": 0.4775324841869478
+        }
+      ],
+      "decision_calls": 4,
+      "text_calls": 1,
+      "batch_id": "27B optimized seven-scenario regression",
+      "attempt_label": "27B optimized seven-scenario regression",
+      "generated_at": "2026-11-02T22:57:40.705471+00:00",
+      "configured_review_every_step": true
+    },
     {
       "id": "hotel",
       "title": "Find a hotel",
@@ -39571,9 +41708,1438 @@
       "attempt_label": "27B flight attempt 10",
       "generated_at": "2026-11-02T20:39:27.455797+00:00",
       "configured_review_every_step": true
+    },
+    {
+      "id": "flights",
+      "title": "Search future flights",
+      "goal": "Find one-way flights from Zurich to London on February 01, 2027, for one adult in economy. Stop when matching flight options are visible. Do not select or book a flight.",
+      "url": "https://www.google.com/travel/flights?hl=en",
+      "local": false,
+      "status": "passed",
+      "agent_status": "ready",
+      "completion_source": "independent_verifier",
+      "verification_checks": 23,
+      "rejected_completion_claims": 0,
+      "elapsed_ms": 323359,
+      "wall_ms": 324891,
+      "model": "jev-style-2b-decision-v4",
+      "text_model": "qwen3.8-27b-uncensored-q4_k_m",
+      "hybrid": true,
+      "fallback_calls": 13,
+      "capture_enabled": true,
+      "final_frame_captured": true,
+      "captured_frames": 15,
+      "all_decisions_reviewed": false,
+      "all_executed_actions_reviewed": true,
+      "reviews_skipped_stale": 8,
+      "timing": {
+        "primary_ms": 42656,
+        "review_ms": 270622,
+        "text_ms": 4565,
+        "other_ms": 5516
+      },
+      "fallback_models": [
+        "qwen3.8-27b-uncensored-q4_k_m"
+      ],
+      "probability_source": "jevstyle",
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "flight search page",
+            "passed": true
+          },
+          {
+            "name": "one way",
+            "passed": true
+          },
+          {
+            "name": "one passenger",
+            "passed": true
+          },
+          {
+            "name": "economy cabin",
+            "passed": true
+          },
+          {
+            "name": "Zürich origin committed",
+            "passed": true
+          },
+          {
+            "name": "London destination committed",
+            "passed": true
+          },
+          {
+            "name": "departure date",
+            "passed": true
+          },
+          {
+            "name": "departure year",
+            "passed": true
+          },
+          {
+            "name": "visible matching flights",
+            "passed": true
+          }
+        ]
+      },
+      "error": null,
+      "steps": [
+        {
+          "step": 1,
+          "operation": "CLICK",
+          "target": "10",
+          "label": "CLICK element 10",
+          "latency_ms": 15191,
+          "elapsed_ms": 15557,
+          "confidence": 0.3200446362112461,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.45603570896899687,
+            "TYPE_TEXT": 0.25463706874066483,
+            "SCROLL_DOWN": 0.09584259872084376,
+            "WAIT": 0.07805349245453032,
+            "BLOCKED": 0.11543113111496431
+          },
+          "target_probabilities": {
+            "1": 0.008418976289913577,
+            "2": 0.02732632180863219,
+            "3": 0.03475969661360342,
+            "4": 0.09690929186466775,
+            "5": 0.0008561653009569271,
+            "6": 0.0008479198541349414,
+            "7": 0.0024775499995019832,
+            "8": 0.003005426380336015,
+            "9": 0.0019126393569749442,
+            "10": 0.015482535165620275,
+            "11": 0.007818224878438917,
+            "12": 0.03687590182002497,
+            "13": 0.06841581458103752,
+            "14": 0.14912412965803346,
+            "15": 0.3991140115532572,
+            "16": 0.008414357396883074,
+            "17": 0.042035557117489165,
+            "18": 0.046184970805054425,
+            "19": 0.006356590459099119,
+            "20": 0.01866748449434985,
+            "21": 0.012567800931746897,
+            "22": 0.004376981504342409,
+            "23": 0.008051652165900983
+          }
+        },
+        {
+          "step": 2,
+          "operation": "CLICK",
+          "target": "2",
+          "label": "CLICK element 2",
+          "latency_ms": 6278,
+          "elapsed_ms": 22156,
+          "confidence": 0.37556972817378775,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.5004557825390302,
+            "SCROLL_DOWN": 0.2531277718360789,
+            "WAIT": 0.10464035829895334,
+            "DONE": 0.08168243973871427,
+            "BLOCKED": 0.060093647587223305
+          },
+          "target_probabilities": {
+            "1": 0.0958888711337494,
+            "2": 0.7979527480453091,
+            "3": 0.10615838082094144
+          }
+        },
+        {
+          "step": 3,
+          "operation": "CLICK",
+          "target": "13",
+          "label": "CLICK element 13",
+          "latency_ms": 15126,
+          "elapsed_ms": 39058,
+          "confidence": 0.3928541667931129,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.5142833334344903,
+            "TYPE_TEXT": 0.1972203992976412,
+            "SCROLL_DOWN": 0.09355567644482753,
+            "WAIT": 0.09721468049302293,
+            "BLOCKED": 0.09772591033001814
+          },
+          "target_probabilities": {
+            "1": 0.0074710646623258525,
+            "2": 0.01924427612634116,
+            "3": 0.019318966552992277,
+            "4": 0.04405404303929823,
+            "5": 0.000827376093181249,
+            "6": 0.0008548446738460472,
+            "7": 0.002522554179830672,
+            "8": 0.0034250352881441235,
+            "9": 0.0016524653956730279,
+            "10": 0.11449697774163094,
+            "11": 0.015843529705509986,
+            "12": 0.03042168914005317,
+            "13": 0.10158928439685391,
+            "14": 0.21928805875681973,
+            "15": 0.28266163573803177,
+            "16": 0.03263760749222701,
+            "17": 0.039511296764768646,
+            "18": 0.005347452524463748,
+            "19": 0.028199146451015098,
+            "20": 0.014936385882728241,
+            "21": 0.006427561071734289,
+            "22": 0.009268748322530867
+          }
+        },
+        {
+          "step": 4,
+          "operation": "TYPE_TEXT",
+          "target": "1",
+          "label": "TYPE_TEXT element 1",
+          "latency_ms": 13127,
+          "elapsed_ms": 57959,
+          "confidence": 0.4260849179305395,
+          "text_latency_ms": 4565,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.1296877720536212,
+            "CLICK": 0.5408679343444316,
+            "SCROLL_DOWN": 0.13375869054941772,
+            "WAIT": 0.117782472311782,
+            "BLOCKED": 0.0779031307407476
+          },
+          "target_probabilities": {
+            "1": 1.0
+          }
+        },
+        {
+          "step": 5,
+          "operation": "CLICK",
+          "target": "3",
+          "label": "CLICK element 3",
+          "latency_ms": 11234,
+          "elapsed_ms": 69336,
+          "confidence": 0.20621662625794074,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.2425071131158835,
+            "CLICK": 0.33851385521495064,
+            "SCROLL_DOWN": 0.19554525664263336,
+            "WAIT": 0.12011010548362389,
+            "DONE": 0.02741053867311891,
+            "BLOCKED": 0.07591313086978972
+          },
+          "target_probabilities": {
+            "1": 0.06384811590653473,
+            "2": 0.2621408195602903,
+            "3": 0.18295393207424496,
+            "4": 0.010183191755445107,
+            "5": 0.047101561636297,
+            "6": 0.05723524654731022,
+            "7": 0.23272411557662895,
+            "8": 0.010677425268082097,
+            "9": 0.1264488316527114,
+            "10": 0.006686760022455256
+          }
+        },
+        {
+          "step": 6,
+          "operation": "CLICK",
+          "target": "14",
+          "label": "CLICK element 14",
+          "latency_ms": 15080,
+          "elapsed_ms": 86164,
+          "confidence": 0.33025201404048,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.46420161123238396,
+            "TYPE_TEXT": 0.23257176847599095,
+            "SCROLL_DOWN": 0.11917728263094365,
+            "WAIT": 0.09380800569942196,
+            "BLOCKED": 0.09024133196125947
+          },
+          "target_probabilities": {
+            "1": 0.004415238470903116,
+            "2": 0.010129999838363917,
+            "3": 0.015576647258220477,
+            "4": 0.03531595549880973,
+            "5": 0.0006073963940592228,
+            "6": 0.0006434332649901858,
+            "7": 0.00181670440504391,
+            "8": 0.001972056957707553,
+            "9": 0.0009889268226358297,
+            "10": 0.060725750714875903,
+            "11": 0.007054747881806821,
+            "12": 0.013954975143286252,
+            "13": 0.015619272522962675,
+            "14": 0.49141931537528954,
+            "15": 0.219030469377326,
+            "16": 0.03414370087100297,
+            "17": 0.015001903594098634,
+            "18": 0.004435785848060738,
+            "19": 0.02859702114339899,
+            "20": 0.023034527635416316,
+            "21": 0.006929331331944427,
+            "22": 0.008586839649796773
+          }
+        },
+        {
+          "step": 7,
+          "operation": "CLICK",
+          "target": "8",
+          "label": "CLICK element 8",
+          "latency_ms": 12273,
+          "elapsed_ms": 99654,
+          "confidence": 0.4753195960052381,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.1443783086243436,
+            "CLICK": 0.5802556768041904,
+            "SCROLL_DOWN": 0.144782903185383,
+            "WAIT": 0.0775845757158451,
+            "BLOCKED": 0.052998535670237955
+          },
+          "target_probabilities": {
+            "1": 0.26496952680524183,
+            "2": 0.06751268698692124,
+            "3": 0.07088114993209718,
+            "4": 0.055196313302971686,
+            "5": 0.009955853777377772,
+            "6": 0.02297857820984501,
+            "7": 0.0051857705983188295,
+            "8": 0.49550262248487686,
+            "9": 0.00781749790234967
+          }
+        },
+        {
+          "step": 8,
+          "operation": "CLICK",
+          "target": "16",
+          "label": "CLICK element 16",
+          "latency_ms": 17077,
+          "elapsed_ms": 118701,
+          "confidence": 0.4505385614924138,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.560430849193931,
+            "TYPE_TEXT": 0.17187077177898866,
+            "SCROLL_DOWN": 0.10247910362672247,
+            "WAIT": 0.12121421888204846,
+            "BLOCKED": 0.04400505651830943
+          },
+          "target_probabilities": {
+            "1": 0.0034987597279514202,
+            "2": 0.005519949076646535,
+            "3": 0.006448238453586878,
+            "4": 0.021610123261977126,
+            "5": 0.0004179252044667397,
+            "6": 0.000411896290211359,
+            "7": 0.0018419499316260255,
+            "8": 0.0016184059076621053,
+            "9": 0.0008269700434460153,
+            "10": 0.04501569495411339,
+            "11": 0.009797871435859468,
+            "12": 0.011153188330000034,
+            "13": 0.023345453666757294,
+            "14": 0.0032341530830762213,
+            "15": 0.2491655851539376,
+            "16": 0.2323809613525186,
+            "17": 0.31058517162794486,
+            "18": 0.027183289883101716,
+            "19": 0.005213194218086833,
+            "20": 0.021582407144076606,
+            "21": 0.010192882313032005,
+            "22": 0.0030623239167544528,
+            "23": 0.00589360502316668
+          }
+        },
+        {
+          "step": 9,
+          "operation": "CLICK",
+          "target": "62",
+          "label": "CLICK element 62",
+          "latency_ms": 33529,
+          "elapsed_ms": 152695,
+          "confidence": 0.5373463316418788,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.18227380531964374,
+            "CLICK": 0.6298770653135031,
+            "SCROLL_DOWN": 0.0762919468606384,
+            "WAIT": 0.05330993903514205,
+            "BLOCKED": 0.05824724347107285
+          },
+          "target_probabilities": {
+            "1": 0.2841938687970475,
+            "2": 0.08440405535471174,
+            "3": 0.016516125008005676,
+            "4": 0.00523241184478628,
+            "5": 0.0047327850528870044,
+            "6": 0.0038574254972259816,
+            "7": 0.004646787778663934,
+            "8": 0.0025425921593731225,
+            "9": 0.002407308500071315,
+            "10": 0.001512516696173591,
+            "11": 0.001773767021459979,
+            "12": 0.0027774069879290997,
+            "13": 0.001658872837556557,
+            "14": 0.0016309228465719524,
+            "15": 0.001514950682464496,
+            "16": 0.0020277759061536047,
+            "17": 0.0018569363460615902,
+            "18": 0.001549289014370634,
+            "19": 0.0016439961467554834,
+            "20": 0.0016273688810834635,
+            "21": 0.0012690497210582248,
+            "22": 0.0013304772627574278,
+            "23": 0.001977046489102524,
+            "24": 0.0018147112133247933,
+            "25": 0.0014888021017111096,
+            "26": 0.0014726294112865457,
+            "27": 0.0017016637151263821,
+            "28": 0.0012381893388215912,
+            "29": 0.0012643359899972937,
+            "30": 0.003259953783888551,
+            "31": 0.3173360464088468,
+            "32": 0.0158746694251598,
+            "33": 0.005681640567663066,
+            "34": 0.0033627257517683524,
+            "35": 0.0034042409510815805,
+            "36": 0.0041887292982455354,
+            "37": 0.009345233887408889,
+            "38": 0.0026409509605844978,
+            "39": 0.0018101512087436312,
+            "40": 0.0016890250224856458,
+            "41": 0.0023744952273328573,
+            "42": 0.0018824318722916928,
+            "43": 0.0012724877770674534,
+            "44": 0.0022799853365230677,
+            "45": 0.001987605824691757,
+            "46": 0.0019233833724384042,
+            "47": 0.002680765220180445,
+            "48": 0.0015026541148921127,
+            "49": 0.0014648077490114501,
+            "50": 0.0015071506642448903,
+            "51": 0.0010394596099286013,
+            "52": 0.0016094835871733138,
+            "53": 0.0019487649503235394,
+            "54": 0.002889982283556705,
+            "55": 0.0023891180254807173,
+            "56": 0.0018367783067171144,
+            "57": 0.002920142988816368,
+            "58": 0.0034188719173822387,
+            "59": 0.0024861520912202667,
+            "60": 0.00388487964780808,
+            "61": 0.09860768366797587,
+            "62": 0.031028795022943857,
+            "63": 0.01680668487358409
+          }
+        },
+        {
+          "step": 10,
+          "operation": "CLICK",
+          "target": "66",
+          "label": "CLICK element 66",
+          "latency_ms": 51413,
+          "elapsed_ms": 208383,
+          "confidence": 0.41799133367487784,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.1738013226701806,
+            "CLICK": 0.5343930669399023,
+            "SCROLL_DOWN": 0.09984753957940205,
+            "WAIT": 0.09520919466170057,
+            "BLOCKED": 0.09674887614881442
+          },
+          "target_probabilities": {
+            "1": 0.09547103523085364,
+            "2": 0.03847155543451359,
+            "3": 0.0029749768267924126,
+            "4": 0.0017923334974101004,
+            "5": 0.0024349393985361755,
+            "6": 0.003110131725528689,
+            "7": 0.002859062351195431,
+            "8": 0.0011343101840171083,
+            "9": 0.002635982013113382,
+            "10": 0.0008084458763219796,
+            "11": 0.0009662713847842174,
+            "12": 0.0012592212342193627,
+            "13": 0.0016370108734964563,
+            "14": 0.001324886484322104,
+            "15": 0.0015880423313704387,
+            "16": 0.002053585301421238,
+            "17": 0.000881042705292755,
+            "18": 0.0005637496567659538,
+            "19": 0.0012599624036192492,
+            "20": 0.001005685929784567,
+            "21": 0.0007423163085104397,
+            "22": 0.0006713474955399556,
+            "23": 0.000636804588089939,
+            "24": 0.0007244335703941777,
+            "25": 0.000682319177218825,
+            "26": 0.0009126720647547345,
+            "27": 0.0007025491802975871,
+            "28": 0.0003674549675332204,
+            "29": 0.0007076466761674474,
+            "30": 0.0008902011342186177,
+            "31": 0.0033018429872372114,
+            "32": 0.0012981339361767545,
+            "33": 0.007865160036215737,
+            "34": 0.5115440540177051,
+            "35": 0.10038330993087714,
+            "36": 0.01579498479451465,
+            "37": 0.02230490398247603,
+            "38": 0.004996151912881816,
+            "39": 0.006933432072976463,
+            "40": 0.0074795913810283025,
+            "41": 0.0031236108627158803,
+            "42": 0.003287358532652323,
+            "43": 0.0019834606875599016,
+            "44": 0.001711406654223314,
+            "45": 0.004259467502169464,
+            "46": 0.002666439962328576,
+            "47": 0.003428719156484286,
+            "48": 0.0019851887605948594,
+            "49": 0.0017850922041809736,
+            "50": 0.00500171284516042,
+            "51": 0.0019518471280100937,
+            "52": 0.004695229142138116,
+            "53": 0.001994301315838412,
+            "54": 0.0012679461915259221,
+            "55": 0.0011413549614826986,
+            "56": 0.002322289176960771,
+            "57": 0.00487360029796004,
+            "58": 0.003012454986625268,
+            "59": 0.002769095741580151,
+            "60": 0.005952693611567942,
+            "61": 0.013629013858883585,
+            "62": 0.0062168404526927856,
+            "63": 0.009163972809900039,
+            "64": 0.018251493355124212,
+            "65": 0.005129093243433915,
+            "66": 0.02259980649654085,
+            "67": 0.012624969003492184
+          }
+        },
+        {
+          "step": 11,
+          "operation": "CLICK",
+          "target": "34",
+          "label": "CLICK element 34",
+          "latency_ms": 45830,
+          "elapsed_ms": 258747,
+          "confidence": 0.524639263444802,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.12601676605460296,
+            "CLICK": 0.6197114107558417,
+            "SCROLL_DOWN": 0.08402742669431708,
+            "WAIT": 0.09775907362810889,
+            "BLOCKED": 0.07248532286712941
+          },
+          "target_probabilities": {
+            "1": 0.3092625559066865,
+            "2": 0.1139036246180966,
+            "3": 0.1293404099488606,
+            "4": 0.006755271744116888,
+            "5": 0.008762884593987602,
+            "6": 0.02367809602209752,
+            "7": 0.014750739685672675,
+            "8": 0.010029540397031165,
+            "9": 0.013823003213139087,
+            "10": 0.003527592038527669,
+            "11": 0.008410039332114698,
+            "12": 0.007583459323910069,
+            "13": 0.009041435484282675,
+            "14": 0.004832204024258178,
+            "15": 0.0031487351205332103,
+            "16": 0.0057053789422400695,
+            "17": 0.0031506352804395077,
+            "18": 0.0034248518467575872,
+            "19": 0.006186946660573017,
+            "20": 0.0049268299953850354,
+            "21": 0.002983649920774405,
+            "22": 0.00292273679886154,
+            "23": 0.006199106451886781,
+            "24": 0.0021200872665755647,
+            "25": 0.002848093330633711,
+            "26": 0.004111842056217808,
+            "27": 0.006336625844853799,
+            "28": 0.00243655362131817,
+            "29": 0.0029970597924792093,
+            "30": 0.005366423447232175,
+            "31": 0.006954412134506873,
+            "32": 0.013832767143080616,
+            "33": 0.02720545753520685,
+            "34": 0.04353366139913411,
+            "35": 0.00549425735681498,
+            "36": 0.003443037228953602,
+            "37": 0.01870272844770661,
+            "38": 0.002397840184019158,
+            "39": 0.0021432854961824397,
+            "40": 0.009028676101391247,
+            "41": 0.003260085906284383,
+            "42": 0.005500754285121281,
+            "43": 0.0025053101418355006,
+            "44": 0.002837619887473326,
+            "45": 0.0024677256748537467,
+            "46": 0.002478801396248093,
+            "47": 0.0030442934985842303,
+            "48": 0.0016211167884515997,
+            "49": 0.0026088014437098566,
+            "50": 0.006377196739403867,
+            "51": 0.004818306514010054,
+            "52": 0.005300079587460296,
+            "53": 0.003910778530790069,
+            "54": 0.00166155205164973,
+            "55": 0.0015589472146223752,
+            "56": 0.003233916839670168,
+            "57": 0.0061833684846513675,
+            "58": 0.004495349550608095,
+            "59": 0.001714738337506663,
+            "60": 0.005075708545871969,
+            "61": 0.011651957432924794,
+            "62": 0.010415217994955863,
+            "63": 0.02225734622312084,
+            "64": 0.02371849119365195
+          }
+        },
+        {
+          "step": 12,
+          "operation": "CLICK",
+          "target": "65",
+          "label": "CLICK element 65",
+          "latency_ms": 47005,
+          "elapsed_ms": 306354,
+          "confidence": 0.4172416590346698,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.10416608190135421,
+            "CLICK": 0.5337933272277359,
+            "SCROLL_DOWN": 0.10937863113508982,
+            "WAIT": 0.1776092537195145,
+            "BLOCKED": 0.07505270601630559
+          },
+          "target_probabilities": {
+            "1": 0.021216169593630763,
+            "2": 0.01760485831800737,
+            "3": 0.0016671250350835053,
+            "4": 0.00419820850668998,
+            "5": 0.001225001156924609,
+            "6": 0.0011778036790397988,
+            "7": 0.0032161428380965825,
+            "8": 0.0010335925909395515,
+            "9": 0.001145394527304556,
+            "10": 0.0015623866706652328,
+            "11": 0.0007410419830429642,
+            "12": 0.0010352802454046321,
+            "13": 0.0010715317563644898,
+            "14": 0.0009666641030468616,
+            "15": 0.0006296319628578267,
+            "16": 0.0006026943936880989,
+            "17": 0.0016564348704730697,
+            "18": 0.000380397689101599,
+            "19": 0.0005299435160961098,
+            "20": 0.0008081104675640552,
+            "21": 0.00033411858341790486,
+            "22": 0.00043687448025148535,
+            "23": 0.00044127691587864283,
+            "24": 0.0006683370497246211,
+            "25": 0.00034339467184076413,
+            "26": 0.0004250342658875204,
+            "27": 0.0007648328477871297,
+            "28": 0.0004931316969864307,
+            "29": 0.00032252785743643866,
+            "30": 0.000277793193018145,
+            "31": 0.0009543799995063879,
+            "32": 0.0014294397441775525,
+            "33": 0.0005197021879808047,
+            "34": 0.0015113924519436427,
+            "35": 0.022132055926310543,
+            "36": 0.0007840566027718887,
+            "37": 0.0003464106696665605,
+            "38": 0.0013903561412772483,
+            "39": 0.000468919461410509,
+            "40": 0.00040937071624178647,
+            "41": 0.006504494479753687,
+            "42": 0.0004256855477600374,
+            "43": 0.00036306914823569015,
+            "44": 0.00018362881647967448,
+            "45": 0.00036483153411686795,
+            "46": 0.0005568008550046853,
+            "47": 0.00029998264430000713,
+            "48": 0.00020128885335195387,
+            "49": 0.0002251601915565821,
+            "50": 0.00031248409072043477,
+            "51": 0.0010647675701650546,
+            "52": 0.0005404964573666816,
+            "53": 0.0005279692188975893,
+            "54": 0.00020081887464850343,
+            "55": 0.0003380692479072648,
+            "56": 0.00028746986413873935,
+            "57": 0.0003502111116174133,
+            "58": 0.0005964871966340508,
+            "59": 0.0007584679193246562,
+            "60": 0.0004826687108294951,
+            "61": 0.0005088840623904761,
+            "62": 0.001110223811792064,
+            "63": 0.0006396025096155624,
+            "64": 0.0022657631491014734,
+            "65": 0.8839688547667538
+          }
+        },
+        {
+          "step": 13,
+          "operation": "CLICK",
+          "target": "17",
+          "label": "CLICK element 17",
+          "latency_ms": 14634,
+          "elapsed_ms": 321403,
+          "confidence": 0.41523085077695965,
+          "text_latency_ms": 0,
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "fallback_model": "qwen3.8-27b-uncensored-q4_k_m",
+          "operation_probabilities": {
+            "CLICK": 0.07188655220052867,
+            "TYPE_TEXT": 0.03177253163456043,
+            "SCROLL_DOWN": 0.06363562641472553,
+            "WAIT": 0.3036773589855201,
+            "DONE": 0.5126923756474664,
+            "BLOCKED": 0.01633555511719899
+          },
+          "target_probabilities": {
+            "1": 0.0019544391063725233,
+            "2": 0.003115840135952819,
+            "3": 0.0026574385686194114,
+            "4": 0.015980406246838462,
+            "5": 0.0003641417318487303,
+            "6": 0.00035168850171548845,
+            "7": 0.0014722208643252932,
+            "8": 0.0012232167491839712,
+            "9": 0.0006137740332789434,
+            "10": 0.04490231992856982,
+            "11": 0.028862514680214918,
+            "12": 0.2589151587501319,
+            "13": 0.028614876280452114,
+            "14": 0.0054841615242767,
+            "15": 0.17857483733713478,
+            "16": 0.1330941157313596,
+            "17": 0.25688009239309845,
+            "18": 0.006646550754855628,
+            "19": 0.0025620654786837646,
+            "20": 0.012896620439527235,
+            "21": 0.005493306623589713,
+            "22": 0.002800693738390679,
+            "23": 0.006539520401579051
+          }
+        }
+      ],
+      "decisions": [
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.45603570896899687,
+            "TYPE_TEXT": 0.25463706874066483,
+            "SCROLL_DOWN": 0.09584259872084376,
+            "WAIT": 0.07805349245453032,
+            "BLOCKED": 0.11543113111496431
+          },
+          "target_probabilities": {
+            "1": 0.008418976289913577,
+            "2": 0.02732632180863219,
+            "3": 0.03475969661360342,
+            "4": 0.09690929186466775,
+            "5": 0.0008561653009569271,
+            "6": 0.0008479198541349414,
+            "7": 0.0024775499995019832,
+            "8": 0.003005426380336015,
+            "9": 0.0019126393569749442,
+            "10": 0.015482535165620275,
+            "11": 0.007818224878438917,
+            "12": 0.03687590182002497,
+            "13": 0.06841581458103752,
+            "14": 0.14912412965803346,
+            "15": 0.3991140115532572,
+            "16": 0.008414357396883074,
+            "17": 0.042035557117489165,
+            "18": 0.046184970805054425,
+            "19": 0.006356590459099119,
+            "20": 0.01866748449434985,
+            "21": 0.012567800931746897,
+            "22": 0.004376981504342409,
+            "23": 0.008051652165900983
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1465,
+          "fallback_latency_ms": 13718,
+          "latency_ms": 15191,
+          "elapsed_ms": 15198,
+          "confidence": 0.3200446362112461
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.5004557825390302,
+            "SCROLL_DOWN": 0.2531277718360789,
+            "WAIT": 0.10464035829895334,
+            "DONE": 0.08168243973871427,
+            "BLOCKED": 0.060093647587223305
+          },
+          "target_probabilities": {
+            "1": 0.0958888711337494,
+            "2": 0.7979527480453091,
+            "3": 0.10615838082094144
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 741,
+          "fallback_latency_ms": 5533,
+          "latency_ms": 6278,
+          "elapsed_ms": 21918,
+          "confidence": 0.37556972817378775
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.5142833334344903,
+            "TYPE_TEXT": 0.1972203992976412,
+            "SCROLL_DOWN": 0.09355567644482753,
+            "WAIT": 0.09721468049302293,
+            "BLOCKED": 0.09772591033001814
+          },
+          "target_probabilities": {
+            "1": 0.0074710646623258525,
+            "2": 0.01924427612634116,
+            "3": 0.019318966552992277,
+            "4": 0.04405404303929823,
+            "5": 0.000827376093181249,
+            "6": 0.0008548446738460472,
+            "7": 0.002522554179830672,
+            "8": 0.0034250352881441235,
+            "9": 0.0016524653956730279,
+            "10": 0.11449697774163094,
+            "11": 0.015843529705509986,
+            "12": 0.03042168914005317,
+            "13": 0.10158928439685391,
+            "14": 0.21928805875681973,
+            "15": 0.28266163573803177,
+            "16": 0.03263760749222701,
+            "17": 0.039511296764768646,
+            "18": 0.005347452524463748,
+            "19": 0.028199146451015098,
+            "20": 0.014936385882728241,
+            "21": 0.006427561071734289,
+            "22": 0.009268748322530867
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1514,
+          "fallback_latency_ms": 13603,
+          "latency_ms": 15126,
+          "elapsed_ms": 38913,
+          "confidence": 0.3928541667931129
+        },
+        {
+          "operation": "TYPE_TEXT",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.1296877720536212,
+            "CLICK": 0.5408679343444316,
+            "SCROLL_DOWN": 0.13375869054941772,
+            "WAIT": 0.117782472311782,
+            "BLOCKED": 0.0779031307407476
+          },
+          "target_probabilities": {
+            "1": 1.0
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1205,
+          "fallback_latency_ms": 11912,
+          "latency_ms": 13127,
+          "elapsed_ms": 53130,
+          "confidence": 0.4260849179305395
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.2425071131158835,
+            "CLICK": 0.33851385521495064,
+            "SCROLL_DOWN": 0.19554525664263336,
+            "WAIT": 0.12011010548362389,
+            "DONE": 0.02741053867311891,
+            "BLOCKED": 0.07591313086978972
+          },
+          "target_probabilities": {
+            "1": 0.06384811590653473,
+            "2": 0.2621408195602903,
+            "3": 0.18295393207424496,
+            "4": 0.010183191755445107,
+            "5": 0.047101561636297,
+            "6": 0.05723524654731022,
+            "7": 0.23272411557662895,
+            "8": 0.010677425268082097,
+            "9": 0.1264488316527114,
+            "10": 0.006686760022455256
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1201,
+          "fallback_latency_ms": 10024,
+          "latency_ms": 11234,
+          "elapsed_ms": 69255,
+          "confidence": 0.20621662625794074
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.46420161123238396,
+            "TYPE_TEXT": 0.23257176847599095,
+            "SCROLL_DOWN": 0.11917728263094365,
+            "WAIT": 0.09380800569942196,
+            "BLOCKED": 0.09024133196125947
+          },
+          "target_probabilities": {
+            "1": 0.004415238470903116,
+            "2": 0.010129999838363917,
+            "3": 0.015576647258220477,
+            "4": 0.03531595549880973,
+            "5": 0.0006073963940592228,
+            "6": 0.0006434332649901858,
+            "7": 0.00181670440504391,
+            "8": 0.001972056957707553,
+            "9": 0.0009889268226358297,
+            "10": 0.060725750714875903,
+            "11": 0.007054747881806821,
+            "12": 0.013954975143286252,
+            "13": 0.015619272522962675,
+            "14": 0.49141931537528954,
+            "15": 0.219030469377326,
+            "16": 0.03414370087100297,
+            "17": 0.015001903594098634,
+            "18": 0.004435785848060738,
+            "19": 0.02859702114339899,
+            "20": 0.023034527635416316,
+            "21": 0.006929331331944427,
+            "22": 0.008586839649796773
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1506,
+          "fallback_latency_ms": 13566,
+          "latency_ms": 15080,
+          "elapsed_ms": 85991,
+          "confidence": 0.33025201404048
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.1443783086243436,
+            "CLICK": 0.5802556768041904,
+            "SCROLL_DOWN": 0.144782903185383,
+            "WAIT": 0.0775845757158451,
+            "BLOCKED": 0.052998535670237955
+          },
+          "target_probabilities": {
+            "1": 0.26496952680524183,
+            "2": 0.06751268698692124,
+            "3": 0.07088114993209718,
+            "4": 0.055196313302971686,
+            "5": 0.009955853777377772,
+            "6": 0.02297857820984501,
+            "7": 0.0051857705983188295,
+            "8": 0.49550262248487686,
+            "9": 0.00781749790234967
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1130,
+          "fallback_latency_ms": 11137,
+          "latency_ms": 12273,
+          "elapsed_ms": 99396,
+          "confidence": 0.4753195960052381
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.560430849193931,
+            "TYPE_TEXT": 0.17187077177898866,
+            "SCROLL_DOWN": 0.10247910362672247,
+            "WAIT": 0.12121421888204846,
+            "BLOCKED": 0.04400505651830943
+          },
+          "target_probabilities": {
+            "1": 0.0034987597279514202,
+            "2": 0.005519949076646535,
+            "3": 0.006448238453586878,
+            "4": 0.021610123261977126,
+            "5": 0.0004179252044667397,
+            "6": 0.000411896290211359,
+            "7": 0.0018419499316260255,
+            "8": 0.0016184059076621053,
+            "9": 0.0008269700434460153,
+            "10": 0.04501569495411339,
+            "11": 0.009797871435859468,
+            "12": 0.011153188330000034,
+            "13": 0.023345453666757294,
+            "14": 0.0032341530830762213,
+            "15": 0.2491655851539376,
+            "16": 0.2323809613525186,
+            "17": 0.31058517162794486,
+            "18": 0.027183289883101716,
+            "19": 0.005213194218086833,
+            "20": 0.021582407144076606,
+            "21": 0.010192882313032005,
+            "22": 0.0030623239167544528,
+            "23": 0.00589360502316668
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1584,
+          "fallback_latency_ms": 15485,
+          "latency_ms": 17077,
+          "elapsed_ms": 118417,
+          "confidence": 0.4505385614924138
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.18227380531964374,
+            "CLICK": 0.6298770653135031,
+            "SCROLL_DOWN": 0.0762919468606384,
+            "WAIT": 0.05330993903514205,
+            "BLOCKED": 0.05824724347107285
+          },
+          "target_probabilities": {
+            "1": 0.2841938687970475,
+            "2": 0.08440405535471174,
+            "3": 0.016516125008005676,
+            "4": 0.00523241184478628,
+            "5": 0.0047327850528870044,
+            "6": 0.0038574254972259816,
+            "7": 0.004646787778663934,
+            "8": 0.0025425921593731225,
+            "9": 0.002407308500071315,
+            "10": 0.001512516696173591,
+            "11": 0.001773767021459979,
+            "12": 0.0027774069879290997,
+            "13": 0.001658872837556557,
+            "14": 0.0016309228465719524,
+            "15": 0.001514950682464496,
+            "16": 0.0020277759061536047,
+            "17": 0.0018569363460615902,
+            "18": 0.001549289014370634,
+            "19": 0.0016439961467554834,
+            "20": 0.0016273688810834635,
+            "21": 0.0012690497210582248,
+            "22": 0.0013304772627574278,
+            "23": 0.001977046489102524,
+            "24": 0.0018147112133247933,
+            "25": 0.0014888021017111096,
+            "26": 0.0014726294112865457,
+            "27": 0.0017016637151263821,
+            "28": 0.0012381893388215912,
+            "29": 0.0012643359899972937,
+            "30": 0.003259953783888551,
+            "31": 0.3173360464088468,
+            "32": 0.0158746694251598,
+            "33": 0.005681640567663066,
+            "34": 0.0033627257517683524,
+            "35": 0.0034042409510815805,
+            "36": 0.0041887292982455354,
+            "37": 0.009345233887408889,
+            "38": 0.0026409509605844978,
+            "39": 0.0018101512087436312,
+            "40": 0.0016890250224856458,
+            "41": 0.0023744952273328573,
+            "42": 0.0018824318722916928,
+            "43": 0.0012724877770674534,
+            "44": 0.0022799853365230677,
+            "45": 0.001987605824691757,
+            "46": 0.0019233833724384042,
+            "47": 0.002680765220180445,
+            "48": 0.0015026541148921127,
+            "49": 0.0014648077490114501,
+            "50": 0.0015071506642448903,
+            "51": 0.0010394596099286013,
+            "52": 0.0016094835871733138,
+            "53": 0.0019487649503235394,
+            "54": 0.002889982283556705,
+            "55": 0.0023891180254807173,
+            "56": 0.0018367783067171144,
+            "57": 0.002920142988816368,
+            "58": 0.0034188719173822387,
+            "59": 0.0024861520912202667,
+            "60": 0.00388487964780808,
+            "61": 0.09860768366797587,
+            "62": 0.031028795022943857,
+            "63": 0.01680668487358409
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 3525,
+          "fallback_latency_ms": 29976,
+          "latency_ms": 33529,
+          "elapsed_ms": 152295,
+          "confidence": 0.5373463316418788
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.1738013226701806,
+            "CLICK": 0.5343930669399023,
+            "SCROLL_DOWN": 0.09984753957940205,
+            "WAIT": 0.09520919466170057,
+            "BLOCKED": 0.09674887614881442
+          },
+          "target_probabilities": {
+            "1": 0.09547103523085364,
+            "2": 0.03847155543451359,
+            "3": 0.0029749768267924126,
+            "4": 0.0017923334974101004,
+            "5": 0.0024349393985361755,
+            "6": 0.003110131725528689,
+            "7": 0.002859062351195431,
+            "8": 0.0011343101840171083,
+            "9": 0.002635982013113382,
+            "10": 0.0008084458763219796,
+            "11": 0.0009662713847842174,
+            "12": 0.0012592212342193627,
+            "13": 0.0016370108734964563,
+            "14": 0.001324886484322104,
+            "15": 0.0015880423313704387,
+            "16": 0.002053585301421238,
+            "17": 0.000881042705292755,
+            "18": 0.0005637496567659538,
+            "19": 0.0012599624036192492,
+            "20": 0.001005685929784567,
+            "21": 0.0007423163085104397,
+            "22": 0.0006713474955399556,
+            "23": 0.000636804588089939,
+            "24": 0.0007244335703941777,
+            "25": 0.000682319177218825,
+            "26": 0.0009126720647547345,
+            "27": 0.0007025491802975871,
+            "28": 0.0003674549675332204,
+            "29": 0.0007076466761674474,
+            "30": 0.0008902011342186177,
+            "31": 0.0033018429872372114,
+            "32": 0.0012981339361767545,
+            "33": 0.007865160036215737,
+            "34": 0.5115440540177051,
+            "35": 0.10038330993087714,
+            "36": 0.01579498479451465,
+            "37": 0.02230490398247603,
+            "38": 0.004996151912881816,
+            "39": 0.006933432072976463,
+            "40": 0.0074795913810283025,
+            "41": 0.0031236108627158803,
+            "42": 0.003287358532652323,
+            "43": 0.0019834606875599016,
+            "44": 0.001711406654223314,
+            "45": 0.004259467502169464,
+            "46": 0.002666439962328576,
+            "47": 0.003428719156484286,
+            "48": 0.0019851887605948594,
+            "49": 0.0017850922041809736,
+            "50": 0.00500171284516042,
+            "51": 0.0019518471280100937,
+            "52": 0.004695229142138116,
+            "53": 0.001994301315838412,
+            "54": 0.0012679461915259221,
+            "55": 0.0011413549614826986,
+            "56": 0.002322289176960771,
+            "57": 0.00487360029796004,
+            "58": 0.003012454986625268,
+            "59": 0.002769095741580151,
+            "60": 0.005952693611567942,
+            "61": 0.013629013858883585,
+            "62": 0.0062168404526927856,
+            "63": 0.009163972809900039,
+            "64": 0.018251493355124212,
+            "65": 0.005129093243433915,
+            "66": 0.02259980649654085,
+            "67": 0.012624969003492184
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 3807,
+          "fallback_latency_ms": 47575,
+          "latency_ms": 51413,
+          "elapsed_ms": 208198,
+          "confidence": 0.41799133367487784
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.12601676605460296,
+            "CLICK": 0.6197114107558417,
+            "SCROLL_DOWN": 0.08402742669431708,
+            "WAIT": 0.09775907362810889,
+            "BLOCKED": 0.07248532286712941
+          },
+          "target_probabilities": {
+            "1": 0.3092625559066865,
+            "2": 0.1139036246180966,
+            "3": 0.1293404099488606,
+            "4": 0.006755271744116888,
+            "5": 0.008762884593987602,
+            "6": 0.02367809602209752,
+            "7": 0.014750739685672675,
+            "8": 0.010029540397031165,
+            "9": 0.013823003213139087,
+            "10": 0.003527592038527669,
+            "11": 0.008410039332114698,
+            "12": 0.007583459323910069,
+            "13": 0.009041435484282675,
+            "14": 0.004832204024258178,
+            "15": 0.0031487351205332103,
+            "16": 0.0057053789422400695,
+            "17": 0.0031506352804395077,
+            "18": 0.0034248518467575872,
+            "19": 0.006186946660573017,
+            "20": 0.0049268299953850354,
+            "21": 0.002983649920774405,
+            "22": 0.00292273679886154,
+            "23": 0.006199106451886781,
+            "24": 0.0021200872665755647,
+            "25": 0.002848093330633711,
+            "26": 0.004111842056217808,
+            "27": 0.006336625844853799,
+            "28": 0.00243655362131817,
+            "29": 0.0029970597924792093,
+            "30": 0.005366423447232175,
+            "31": 0.006954412134506873,
+            "32": 0.013832767143080616,
+            "33": 0.02720545753520685,
+            "34": 0.04353366139913411,
+            "35": 0.00549425735681498,
+            "36": 0.003443037228953602,
+            "37": 0.01870272844770661,
+            "38": 0.002397840184019158,
+            "39": 0.0021432854961824397,
+            "40": 0.009028676101391247,
+            "41": 0.003260085906284383,
+            "42": 0.005500754285121281,
+            "43": 0.0025053101418355006,
+            "44": 0.002837619887473326,
+            "45": 0.0024677256748537467,
+            "46": 0.002478801396248093,
+            "47": 0.0030442934985842303,
+            "48": 0.0016211167884515997,
+            "49": 0.0026088014437098566,
+            "50": 0.006377196739403867,
+            "51": 0.004818306514010054,
+            "52": 0.005300079587460296,
+            "53": 0.003910778530790069,
+            "54": 0.00166155205164973,
+            "55": 0.0015589472146223752,
+            "56": 0.003233916839670168,
+            "57": 0.0061833684846513675,
+            "58": 0.004495349550608095,
+            "59": 0.001714738337506663,
+            "60": 0.005075708545871969,
+            "61": 0.011651957432924794,
+            "62": 0.010415217994955863,
+            "63": 0.02225734622312084,
+            "64": 0.02371849119365195
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 3755,
+          "fallback_latency_ms": 42036,
+          "latency_ms": 45830,
+          "elapsed_ms": 258572,
+          "confidence": 0.524639263444802
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "TYPE_TEXT": 0.10416608190135421,
+            "CLICK": 0.5337933272277359,
+            "SCROLL_DOWN": 0.10937863113508982,
+            "WAIT": 0.1776092537195145,
+            "BLOCKED": 0.07505270601630559
+          },
+          "target_probabilities": {
+            "1": 0.021216169593630763,
+            "2": 0.01760485831800737,
+            "3": 0.0016671250350835053,
+            "4": 0.00419820850668998,
+            "5": 0.001225001156924609,
+            "6": 0.0011778036790397988,
+            "7": 0.0032161428380965825,
+            "8": 0.0010335925909395515,
+            "9": 0.001145394527304556,
+            "10": 0.0015623866706652328,
+            "11": 0.0007410419830429642,
+            "12": 0.0010352802454046321,
+            "13": 0.0010715317563644898,
+            "14": 0.0009666641030468616,
+            "15": 0.0006296319628578267,
+            "16": 0.0006026943936880989,
+            "17": 0.0016564348704730697,
+            "18": 0.000380397689101599,
+            "19": 0.0005299435160961098,
+            "20": 0.0008081104675640552,
+            "21": 0.00033411858341790486,
+            "22": 0.00043687448025148535,
+            "23": 0.00044127691587864283,
+            "24": 0.0006683370497246211,
+            "25": 0.00034339467184076413,
+            "26": 0.0004250342658875204,
+            "27": 0.0007648328477871297,
+            "28": 0.0004931316969864307,
+            "29": 0.00032252785743643866,
+            "30": 0.000277793193018145,
+            "31": 0.0009543799995063879,
+            "32": 0.0014294397441775525,
+            "33": 0.0005197021879808047,
+            "34": 0.0015113924519436427,
+            "35": 0.022132055926310543,
+            "36": 0.0007840566027718887,
+            "37": 0.0003464106696665605,
+            "38": 0.0013903561412772483,
+            "39": 0.000468919461410509,
+            "40": 0.00040937071624178647,
+            "41": 0.006504494479753687,
+            "42": 0.0004256855477600374,
+            "43": 0.00036306914823569015,
+            "44": 0.00018362881647967448,
+            "45": 0.00036483153411686795,
+            "46": 0.0005568008550046853,
+            "47": 0.00029998264430000713,
+            "48": 0.00020128885335195387,
+            "49": 0.0002251601915565821,
+            "50": 0.00031248409072043477,
+            "51": 0.0010647675701650546,
+            "52": 0.0005404964573666816,
+            "53": 0.0005279692188975893,
+            "54": 0.00020081887464850343,
+            "55": 0.0003380692479072648,
+            "56": 0.00028746986413873935,
+            "57": 0.0003502111116174133,
+            "58": 0.0005964871966340508,
+            "59": 0.0007584679193246562,
+            "60": 0.0004826687108294951,
+            "61": 0.0005088840623904761,
+            "62": 0.001110223811792064,
+            "63": 0.0006396025096155624,
+            "64": 0.0022657631491014734,
+            "65": 0.8839688547667538
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 3926,
+          "fallback_latency_ms": 43048,
+          "latency_ms": 47005,
+          "elapsed_ms": 305825,
+          "confidence": 0.4172416590346698
+        },
+        {
+          "operation": "CLICK",
+          "operation_probabilities": {
+            "CLICK": 0.07188655220052867,
+            "TYPE_TEXT": 0.03177253163456043,
+            "SCROLL_DOWN": 0.06363562641472553,
+            "WAIT": 0.3036773589855201,
+            "DONE": 0.5126923756474664,
+            "BLOCKED": 0.01633555511719899
+          },
+          "target_probabilities": {
+            "1": 0.0019544391063725233,
+            "2": 0.003115840135952819,
+            "3": 0.0026574385686194114,
+            "4": 0.015980406246838462,
+            "5": 0.0003641417318487303,
+            "6": 0.00035168850171548845,
+            "7": 0.0014722208643252932,
+            "8": 0.0012232167491839712,
+            "9": 0.0006137740332789434,
+            "10": 0.04490231992856982,
+            "11": 0.028862514680214918,
+            "12": 0.2589151587501319,
+            "13": 0.028614876280452114,
+            "14": 0.0054841615242767,
+            "15": 0.17857483733713478,
+            "16": 0.1330941157313596,
+            "17": 0.25688009239309845,
+            "18": 0.006646550754855628,
+            "19": 0.0025620654786837646,
+            "20": 0.012896620439527235,
+            "21": 0.005493306623589713,
+            "22": 0.002800693738390679,
+            "23": 0.006539520401579051
+          },
+          "decision_source": "local_fallback",
+          "probability_source": "jevstyle",
+          "primary_latency_ms": 1608,
+          "fallback_latency_ms": 13009,
+          "latency_ms": 14634,
+          "elapsed_ms": 321062,
+          "confidence": 0.41523085077695965
+        }
+      ],
+      "decision_calls": 21,
+      "text_calls": 1,
+      "batch_id": "27B optimized flight check",
+      "attempt_label": "27B optimized flight check",
+      "generated_at": "2026-11-02T22:50:16.358712+00:00",
+      "configured_review_every_step": true
     }
   ],
-  "release_environment_note": "The timed full suite used an isolated private JevStyle worker with a 16,000-token aggregate cap, 8,000 per-head cap and 8,192-token native context. The largest observed request used 6,978 tokens. The public limit remains 8,000. After the suite, that exact largest request returned HTTP 200 on the original 8,000-token service. This was a single-request compatibility check, not a full suite rerun.",
+  "release_validation": {
+    "batch_ids": [
+      "27B optimized flight check",
+      "27B optimized seven-scenario regression"
+    ],
+    "scenario_ids": [
+      "autocomplete",
+      "catalog",
+      "flights",
+      "form",
+      "guide",
+      "hotel",
+      "reading",
+      "wikipedia"
+    ],
+    "scope": "Separate completed batches with identical executable source hashes; not one timed suite."
+  },
   "development_rechecks": [
     {
       "title": "Interrupted 27B flight attempt 13: corrected-verifier recheck",
