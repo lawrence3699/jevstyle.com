@@ -55,7 +55,7 @@ def local(path, lang):
 
 def developer_links(lang):
     t = LABELS[lang]
-    return [('/api/', t['docs'], ''), ('/guides/', t['guides'], ''), ('/console/', t['console'], ''), (GITHUB, 'GitHub ↗', ' data-track="github_open"'), (PYPI, 'PyPI ↗', ''), (HF, 'Hugging Face ↗', ' data-track="model_open"'), (DISCORD, 'Discord ↗', '')]
+    return [('/tools/people-search/', '找人工具' if lang == 'zh' else 'People Search', ''), ('/api/', t['docs'], ''), ('/guides/', t['guides'], ''), ('/console/', t['console'], ''), (GITHUB, 'GitHub ↗', ' data-track="github_open"'), (PYPI, 'PyPI ↗', ''), (HF, 'Hugging Face ↗', ' data-track="model_open"'), (DISCORD, 'Discord ↗', '')]
 
 
 def company_links(lang):
