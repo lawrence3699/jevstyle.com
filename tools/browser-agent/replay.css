@@ -3,3 +3,5 @@
 .ba-protocols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:25px 0}.ba-protocol{border:1px solid #ded8e8;background:#faf8fd;border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}.ba-protocol b{font-size:13px;font-weight:500}.ba-protocol span{font:19px 'Geist Mono',monospace;letter-spacing:-.03em}.ba-protocol small{font-size:11px;color:#786d84}
 .ba-coverage{padding:15px 18px;border:1px solid #e5d5b7;background:#fffaf0;border-radius:9px;font-size:13px;line-height:1.6;color:#73552c;margin:20px 0}
 .ba-proof{margin:0 0 70px}.ba-proof-control{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:22px 0 14px;font-size:12px;color:#68616f}.ba-proof-control select{font:inherit;color:#24212b;background:#fff;border:1px solid #dcd9e2;border-radius:7px;padding:10px 13px}.ba-proof-control a{margin-left:auto}.ba-proof img{display:block;width:100%;height:auto;border:1px solid #e2dce8;border-radius:14px;box-shadow:0 10px 30px #2d1a4010}
+
+.ba-protocol small,.ba-scenarios .ba-note{overflow-wrap:anywhere}

@@ -6,7 +6,7 @@ const set = (id, value) => { byId(id).textContent = value ?? '—'; };
 const list = value => Array.isArray(value) ? value : [];
 const current = () => report?.runs[runIndex];
 const track = () => byId('trace-track').value;
-const reviewLabel = run => list(run.fallback_models).some(model => /4b/i.test(model)) ? '4B' : 'local model';
+const reviewerModels = run => [...new Set([...list(run.fallback_models), ...(typeof run.fallback_model === 'string' ? [run.fallback_model] : [])].filter(model => typeof model === 'string' && model.trim()))];
 const trace = () => list(track() === 'decisions' ? current()?.decisions : current()?.steps);
 function stop() { clearInterval(timer); timer = null; set('play', 'Play replay'); }
 function error(message) { const el = byId('load-error'); el.textContent = message; el.hidden = !message; }
@@ -40,8 +40,11 @@ function loadReport(value) {
     const title = document.createElement('b'); title.textContent = id;
     const count = document.createElement('span'); count.textContent = `${batch.filter(run => run.status === 'passed').length} / ${batch.length} independently verified`;
     const reviewed = batch.some(run => run.all_decisions_reviewed) && batch.every(run => !run.decision_calls || run.all_decisions_reviewed);
-    const note = document.createElement('small'); note.textContent = reviewed ? `JevStyle scoring + ${reviewLabel(batch.find(run => run.fallback_models?.length) || batch[0])} review of every step` : batch.some(run => run.hybrid) ? 'JevStyle + conditional local recovery' : 'JevStyle decisions · text helper for field values';
-    card.append(title, count, note); modes.append(card);
+    const note = document.createElement('small'); note.textContent = reviewed ? 'JevStyle scoring + review of every step' : batch.some(run => run.hybrid) ? 'JevStyle + conditional local recovery' : 'JevStyle decisions · text helper for field values';
+    card.append(title, count, note);
+    const reviewers = [...new Set(batch.flatMap(reviewerModels))];
+    if (reviewers.length) { const models = document.createElement('small'); models.textContent = `Reviewer: ${reviewers.join(', ')}`; card.append(models); }
+    modes.append(card);
   }
   const table = byId('run-table-body'); table.replaceChildren();
   for (const run of value.runs) {
@@ -62,7 +65,7 @@ function renderRun() {
   set('run-calls', run?.decision_calls ?? run?.steps.length ?? '—');
   set('run-model', run ? `Primary decision model: ${run.model || report.model || 'not recorded'}` : '');
   set('run-helpers', run ? `Text helper: ${run.text_model || 'not recorded'}` : '');
-  set('run-mode', run ? ((run.hybrid || run.configured_review_every_step) ? `${run.all_decisions_reviewed ? `JevStyle scoring + ${reviewLabel(run)} review of every step` : run.configured_review_every_step ? 'Every-step review configured' : 'Conditional recovery'} · ${run.fallback_calls ?? 'unknown'} review calls · ${list(run.fallback_models).join(', ') || run.fallback_model || 'no recovery model called'}` : 'JevStyle decisions · Recovery disabled') : '');
+  set('run-mode', run ? ((run.hybrid || run.configured_review_every_step) ? `${run.all_decisions_reviewed ? 'JevStyle scoring + review of every step' : run.configured_review_every_step ? 'Every-step review configured' : 'Conditional recovery'} · ${run.fallback_calls ?? 'unknown'} review calls · Reviewer: ${reviewerModels(run).join(', ') || 'not recorded'}` : 'JevStyle decisions · Recovery disabled') : '');
   set('run-completion', run ? `Stopped by: ${run.completion_source === 'independent_verifier' ? 'Independent verifier' : run.agent_status === 'done' ? 'Model DONE' : 'Not completed'} · Agent state: ${run.agent_status || 'not recorded'}` : '');
   const checks = byId('run-checks'); checks.replaceChildren();
   for (const check of list(run?.verification?.checks)) {
