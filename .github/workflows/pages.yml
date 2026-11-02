@@ -46,6 +46,8 @@ jobs:
               json.dump(out, f, indent=1)
           print(len(data), "repos,", sum(m.get("downloadsAllTime") or 0 for m in data), "all-time downloads")
           EOF
+      - name: Build People Search
+        run: npm ci --prefix frontend/people && npm run build --prefix frontend/people
       - name: Prerender and validate public pages
         run: |
           python3 scripts/prerender_home.py
@@ -65,6 +67,8 @@ jobs:
           node --check admin/search-performance.js
           node --check admin/search-monitor.js
           node --check admin/experiments.js
+      - name: Exclude development dependencies from publication
+        run: rm -rf frontend/people/node_modules
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

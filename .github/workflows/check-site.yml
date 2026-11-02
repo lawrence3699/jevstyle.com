@@ -14,6 +14,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Build People Search
+        run: npm ci --prefix frontend/people && npm run build --prefix frontend/people
       - name: Verify reproducible pages and links
         run: |
           python3 scripts/prerender_home.py
