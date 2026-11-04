@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: "17 */3 * * *"   # every 3 hours
   workflow_dispatch:
+    inputs:
+      indexnow_all:
+        description: After deploy, send every sitemap URL to IndexNow
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -50,11 +55,33 @@ jobs:
         run: npm ci --prefix frontend/people && npm test --prefix frontend/people && npm run build --prefix frontend/people
       - name: Prerender and validate public pages
         run: bash scripts/check_all.sh
-      - name: Exclude development dependencies from publication
-        run: rm -rf frontend/people/node_modules
+      - name: Copy only the public site into _site
+        # Build scripts, internal docs, frontend sources and git metadata stay out of the published artifact.
+        run: |
+          rsync -a --delete \
+            --exclude='/.git*' --exclude='/_site/' --exclude='/docs/' --exclude='/scripts/' \
+            --exclude='/frontend/' --exclude='node_modules/' \
+            ./ _site/
+          test -f _site/index.html && test -f _site/tools/people-search/index.html && test -f _site/favicon.ico
+          ! test -e _site/scripts && ! test -e _site/docs && ! test -e _site/frontend
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Tell IndexNow about changed pages
+        # Search engines that support IndexNow (Bing, Yandex and others) hear about new or changed pages.
+        # Scheduled stats refreshes do not change page dates, so they send nothing.
+        if: github.event_name == 'push' || inputs.indexnow_all
+        continue-on-error: true
+        env:
+          BEFORE: ${{ github.event.before }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "push" ]; then
+            git fetch --no-tags --depth=1 origin "$BEFORE" || true
+            python3 scripts/notify_indexnow.py --changed-since "$BEFORE" --submit
+          else
+            python3 scripts/notify_indexnow.py --submit
+          fi

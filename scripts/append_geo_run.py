@@ -49,6 +49,13 @@ PROMPTS = {
     "B2": "For JevStyle, how do the 0.8B v3 and 2B v4 models differ in input support, backends, and weight download sizes?",
     "B3": "How do I run JevStyle locally, and is its hosted API currently available?",
 }
+# Optional supplementary probes for the category phrases. A run records both or neither, so the
+# ten fixed questions above, and every comparison between rounds built on them, stay unchanged.
+CATEGORY_PROMPTS = {
+    "C1": "What open-source Jev alternatives can I run locally?",
+    "C2": "Which Jev-compatible local decision models accept /v1/systemone requests?",
+}
+ALL_PROMPTS = {**PROMPTS, **CATEGORY_PROMPTS}
 
 
 def require(condition, message):
@@ -185,13 +192,15 @@ def export_provider(raw, root, start, end, file_hashes):
     env = environment(raw.get("environment"))
     require(raw.get("availability") in {"available", "partial", "unavailable"}, "Provider availability must be recorded")
     rows = raw.get("results")
-    require(isinstance(rows, list) and len(rows) == len(PROMPTS), "Each provider requires ten question records, including not_run")
-    require({row.get("id") for row in rows} == set(PROMPTS), "Question IDs must be unique and fixed")
+    ids = [row.get("id") for row in rows] if isinstance(rows, list) else []
+    require(len(ids) == len(set(ids)) and set(ids) in (set(PROMPTS), set(ALL_PROMPTS)),
+            "Each provider requires the ten fixed question records, including not_run, plus both or neither category questions")
+    asked = {key: ALL_PROMPTS[key] for key in ALL_PROMPTS if key in ids}
     attempts = raw.get("attempts")
     require(isinstance(attempts, list), "Complete attempt log is required")
-    by_id = {key: [] for key in PROMPTS}
+    by_id = {key: [] for key in asked}
     for item in attempts:
-        require(isinstance(item, dict) and item.get("id") in PROMPTS and item.get("status") in ATTEMPT_STATUSES, "Invalid attempt record")
+        require(isinstance(item, dict) and item.get("id") in asked and item.get("status") in ATTEMPT_STATUSES, "Invalid attempt record")
         began = timestamp(item.get("started_at"), "attempt.started_at")
         finished = timestamp(item.get("finished_at"), "attempt.finished_at")
         require(start <= began <= finished <= end, "Attempt time is outside run bounds")
@@ -200,9 +209,9 @@ def export_provider(raw, root, start, end, file_hashes):
         evidence(root, item.get("evidence"), False, "", file_hashes, allow_error=item["status"] in {"technical_error", "operator_aborted"})
         by_id[item["id"]].append(item)
     exported_rows = []
-    for row in sorted(rows, key=lambda row: list(PROMPTS).index(row["id"])):
+    for row in sorted(rows, key=lambda row: list(ALL_PROMPTS).index(row["id"])):
         qid, status = row["id"], row.get("status")
-        require(row.get("question") == PROMPTS[qid], "Fixed prompt drift: " + qid)
+        require(row.get("question") == ALL_PROMPTS[qid], "Fixed prompt drift: " + qid)
         require(status in STATUSES, "Unknown question status")
         history = by_id[qid]
         require(type(row.get("actual_attempts")) is int and row["actual_attempts"] == len(history), "Question attempt count differs from evidence log")
@@ -226,7 +235,7 @@ def export_provider(raw, root, start, end, file_hashes):
         else:
             require(all(field in row and row[field] is None for field in FIELDS), "No-output outcomes must be null, never false")
             require(not row.get("answer"), "No-output record cannot contain an answer")
-        public = {"id": qid, "question": PROMPTS[qid], "status": status, "original_status": status,
+        public = {"id": qid, "question": ALL_PROMPTS[qid], "status": status, "original_status": status,
                   "attempts": len(history), "primary_eligible": status == "substantive", "observed_at": observed}
         public.update({field: row[field] for field in FIELDS})
         if readable:
@@ -252,7 +261,8 @@ def export_provider(raw, root, start, end, file_hashes):
         require(raw.get("unavailability_code") in {"browser_unavailable", "authentication_required", "provider_unavailable", "not_authorized"}, "Unattempted provider needs an explicit unavailability reason")
         evidence(root, raw.get("availability_evidence"), False, "", file_hashes, allow_error=True)
     result = {"id": ident, "name": names[ident], "environment": env, "availability": raw["availability"]}
-    for group, prefix in (("discovery", "D"), ("brand_checks", "B")):
+    groups = [("discovery", "D"), ("brand_checks", "B")] + ([("category_checks", "C")] if "C1" in asked else [])
+    for group, prefix in groups:
         current = [row for row in exported_rows if row["id"].startswith(prefix)]
         relevant = [item for item in attempts if item["id"].startswith(prefix)]
         counts = {state: sum(row["status"] == state for row in current) for state in STATUSES}
@@ -329,7 +339,7 @@ def template():
     for ident, _ in PROVIDERS:
         providers.append({"id": ident, "availability": "unavailable", "unavailability_code": "browser_unavailable", "availability_evidence": {"error_text": "FILL-WITH-REAL-ERROR.txt"},
                           "environment": {"browser": "unavailable", "account_mode": "anonymous", "model": "Not observed", "search_mode": "not_available"}, "attempts": [],
-                          "results": [{"id": qid, "question": prompt, "status": "not_run", "actual_attempts": 0, "answer": None, **{field: None for field in FIELDS}} for qid, prompt in PROMPTS.items()]})
+                          "results": [{"id": qid, "question": prompt, "status": "not_run", "actual_attempts": 0, "answer": None, **{field: None for field in FIELDS}} for qid, prompt in ALL_PROMPTS.items()]})
     return {"schema_version": 1, "protocol": PROTOCOL, "run_id": "FILL-IMMUTABLE-RUN-ID", "label": "FILL-PUBLIC-LABEL", "acquisition_mode": "consumer_web_ui", "runner_kind": "scheduled_agent", "review_ready": False, "started_at": "FILL-ISO-TIME-WITH-TIMEZONE", "finished_at": "FILL-ISO-TIME-WITH-TIMEZONE", "providers": providers}
 
 

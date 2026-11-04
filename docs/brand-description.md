@@ -1,6 +1,6 @@
 # JevStyle brand and distribution copy
 
-Reviewed: 29 October 2026. These are ready-to-use factual descriptions for the
+Reviewed: 5 November 2026 (definition sentence, category phrases and GitHub About text added). These are ready-to-use factual descriptions for the
 project's owned channels. They do not claim that third-party profiles were changed
 by this website deployment. Verify the channel's current content before updating it.
 
@@ -17,7 +17,29 @@ by this website deployment. Verify the channel's current content before updating
 - Code and published open weights: Apache-2.0; retain each distribution's license
   and notice files. A software/model license is not a hosted-service SLA.
 
-## Short description
+## Definition sentence
+
+Use one plain "JevStyle is ..." sentence near the top of the homepage, About, Models
+and both model pages, so search and answer engines can quote what the project is:
+
+> JevStyle is an independent open-source project by Chaoliang Yan: small decision models (Jev-Style-0.8B-Decision-v3 and Jev-Style-2B-Decision-v4) and the jev-style Python package. Give it text, or an image with 2B v4, plus yes/no, choice or score questions, and it returns a probability for every option.
+
+## Category phrases
+
+People and answer engines look for this kind of project with the words
+"open-source Jev alternative", "Jev-compatible", "systemone-compatible",
+"System One model" and "decision model". Use them as descriptions, not as a claim
+of being Jev:
+
+- Say "an open-source alternative to TypeSafe's hosted Jev" or "its local server
+  accepts the public `/v1/systemone` request shape". Keep the non-affiliation
+  sentence close by.
+- Use each phrase in one heading where it fits (the comparison guide at
+  `/guides/open-source-jev-alternatives/` owns "open-source Jev alternatives"),
+  not in every heading.
+- In comparisons, state hosted Jev's accuracy lead first: Jev 1.13.0 86.6% vs
+  2B v4 74.9% on 231 public JevBench v1.4.1 items (2B v4 self-run).
+
 
 > Local classification and routing for AI agents, using small open decision models with probabilities for predefined answers.
 
@@ -27,7 +49,11 @@ by this website deployment. Verify the channel's current content before updating
 
 ## Suggested GitHub About text
 
-> Local decision models for AI agents: classification, routing, probabilities, MCP tools and a Claude Code review hook. Open weights; runs locally.
+> JevStyle: local decision models for AI agents. Classify, route and score with a probability per option. systemone-compatible local server, MCP tools, Claude Code guard. Open weights, Apache-2.0.
+
+GitHub topics include `jev-alternative`, the topic page that lists other
+open-source Jev alternatives (the repository is at GitHub's 20-topic limit, so
+add a topic by replacing a duplicate).
 
 Website: `https://jevstyle.com/`
 

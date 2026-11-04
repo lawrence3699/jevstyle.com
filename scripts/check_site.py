@@ -85,6 +85,7 @@ def main():
         assert title not in titles, f'{rel}: duplicate title'
         titles.add(title)
         assert page.metas.get('description'), f'{rel}: description missing'
+        assert '<link rel="icon" href="/favicon.ico"' in source and 'rel="apple-touch-icon"' in source, f'{rel}: favicon links missing'
         assert page.metas.get('og:image') == 'https://jevstyle.com/assets/social-card.png', rel
         assert 'noindex' not in (page.metas.get('robots') or ''), rel
         assert 'sc-nav' in source and 'sc-foot' in source, f'{rel}: shared header or footer missing'
@@ -108,6 +109,19 @@ def main():
                     graph = parsed['@graph']
                     assert any(n.get('url') == page.canonical and n['@type'] in ('WebPage','AboutPage') for n in graph), rel
                     assert not any(n['@type'] in ('Review','AggregateRating') for n in graph), rel
+                    defined = {n['@id'] for n in graph if '@id' in n and '@type' in n}
+                    def refs(node):
+                        if isinstance(node, dict):
+                            if set(node) == {'@id'}:
+                                yield node['@id']
+                            for value in node.values():
+                                yield from refs(value)
+                        elif isinstance(node, list):
+                            for value in node:
+                                yield from refs(value)
+                    dangling = sorted(set(refs(graph)) - defined)
+                    assert not dangling, f'{rel}: JSON-LD references undefined nodes {dangling}'
+                    assert not any(n['@type'] == 'Organization' for n in graph), f'{rel}: no legal entity exists; the publisher is a Person'
             else:
                 with tempfile.NamedTemporaryFile(suffix='.js',mode='w') as f:
                     f.write(script); f.flush()
@@ -116,6 +130,10 @@ def main():
             ast.parse(code)
     sitemap = ET.parse(ROOT/'sitemap.xml')
     urls = [n.text for n in sitemap.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
+    lastmods = [n.text for n in sitemap.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}lastmod')]
+    assert len(lastmods) == len(urls) and all(re.fullmatch(r'\d{4}-\d{2}-\d{2}', d or '') for d in lastmods), 'every sitemap URL needs an ISO lastmod'
+    for name in ('favicon.ico', 'favicon.svg', 'apple-touch-icon.png'):
+        assert (ROOT/name).stat().st_size > 0, name
     assert len(urls) == len(set(urls)), 'duplicate sitemap URLs'
     assert set(urls) == expected_urls, 'sitemap and indexable pages disagree'
     for url in urls:
@@ -149,6 +167,12 @@ def main():
         assert '/guides/local-text-classification/' in source
         assert '/guides/local-decision-models/' in source
         assert '1.14' in source and FACTS['packageVersion'] in source
+    for home in ('index.html', 'zh/index.html'):
+        doc = (ROOT/home).read_text()
+        graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', doc, re.S)[1])['@graph']
+        faq = [n for n in graph if n['@type'] == 'FAQPage']
+        visible = re.findall(r'<summary>(.*?)</summary>', re.search(r'<section id="project-guide".*?</section>', doc, re.S)[0])
+        assert len(faq) == 1 and [q['name'] for q in faq[0]['mainEntity']] == visible, f'{home}: FAQ markup must match the visible questions'
     subprocess.run(['node','--check',str(ROOT/'assets/journey.js')],check=True)
     subprocess.run(['node',str(ROOT/'scripts/check_journey.cjs')],check=True)
     print(f'Checked {len(pages)} public growth pages, {len(urls)} sitemap URLs, metadata, links, Python examples and JavaScript syntax.')

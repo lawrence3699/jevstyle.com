@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from append_geo_run import FIELDS, PROMPTS, append, template
+from append_geo_run import CATEGORY_PROMPTS, FIELDS, PROMPTS, append, template
 from build_geo_snapshot import PROVIDERS
 
 
@@ -62,6 +62,33 @@ class AppendContracts(unittest.TestCase):
         self.assertNotIn("Synthetic captured answer", public)
         self.assertNotIn("screen.png", public)
         self.assertNotIn(str(self.root), public)
+
+    def test_ten_question_run_without_category_probes_still_appends(self):
+        for provider in self.run["providers"]:
+            provider["results"] = [r for r in provider["results"] if r["id"] in PROMPTS]
+        self.complete()
+        value, report = append(self.snapshot, self.run, self.root)
+        latest = value["rounds"][-1]["providers"][1]
+        self.assertNotIn("category_checks", latest)
+        self.assertEqual(latest["discovery"]["planned_questions"], 7)
+        self.assertEqual(report["validation"], "passed")
+
+    def test_category_probes_are_a_separate_group(self):
+        self.complete()
+        self.complete(qid="C1", flags=(True, False, False))
+        value, _ = append(self.snapshot, self.run, self.root)
+        latest = value["rounds"][-1]["providers"][1]
+        self.assertEqual(latest["discovery"]["planned_questions"], 7)
+        self.assertEqual(latest["discovery"]["metrics"]["mentions"]["denominator"], 1)
+        group = latest["category_checks"]
+        self.assertEqual([q["id"] for q in group["questions"]], list(CATEGORY_PROMPTS))
+        self.assertEqual(group["metrics"]["mentions"]["denominator"], 1)
+
+    def test_category_probes_are_recorded_together(self):
+        for provider in self.run["providers"]:
+            provider["results"] = [r for r in provider["results"] if r["id"] != "C2"]
+        with self.assertRaisesRegex(ValueError, "both or neither"):
+            append(self.snapshot, self.run, self.root)
 
     def test_user_requested_agent_run_retains_distinct_runner_kind(self):
         self.run["runner_kind"] = "interactive_agent"

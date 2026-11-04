@@ -6,14 +6,22 @@ Run after prerender_home.py. No network, credentials, or third-party packages.
 Only public content goes in the sitemap; account and admin pages stay excluded.
 """
 from pathlib import Path
+import datetime
+import hashlib
 import html
 import json
 import re
 import xml.etree.ElementTree as ET
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 FACTS = json.loads((ROOT / 'assets/project-facts.json').read_text())
 BASE = FACTS['url'].rstrip('/')
+PAGE_DATES = ROOT / 'assets/page-dates.json'
+FAVICON = ('<link rel="icon" href="/favicon.ico" sizes="32x32">\n<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
+           '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n')
+ICON_TAGS = re.compile(r'[ \t]*<link\s+rel="(?:icon|shortcut icon|apple-touch-icon)"[^>]*>\s*')
+VOLATILE = re.compile(r'<!--prerender:omStats-->.*?<!--/prerender:omStats-->', re.S)
 
 
 def slot(doc, key, content, before=None):
@@ -47,24 +55,34 @@ def qa(pairs):
     return ''.join(f'<details class="qa"><summary>{q}</summary><p>{answer}</p></details>' for q, answer in pairs)
 
 
-def home_content(zh):
+def home_questions(zh):
+    """The homepage questions, shared by the visible list and its FAQPage markup."""
     if zh:
-        title = '常见问题'
-        pairs = [('可以离线运行吗？', '可以。安装依赖并下载模型后，输入都在本机处理。在线 Demo 和托管 API 是独立服务，会收到你发送的内容。'), ('应该选哪个模型？', '文本任务从 0.8B v3 开始，再用自己的数据对比 2B v4。图片输入需要 2B v4 的 PyTorch 版；MLX 和 GGUF 仅支持文本。'), ('它会生成聊天回复吗？', '不会。它为是/否、多选和有序评分问题返回概率。不确定的情况交给人工或大模型。')]
-    else:
-        title = 'Questions'
-        pairs = [('Can JevStyle run offline?', 'Yes. After installing dependencies and downloading a model, inputs stay on your machine. The online demo and hosted API are separate services and receive what you send them.'), ('Which model should I use?', 'Start with 0.8B v3 for text, then compare 2B v4 on your own examples. Image input needs the 2B v4 PyTorch build; MLX and GGUF builds are text-only.'), ('Does it write chat replies?', 'No. It returns probabilities for yes/no, choice, and ordered-score questions. Send uncertain cases to a person or a larger model.')]
+        return '常见问题', [('JevStyle 是什么？', 'JevStyle 是严超亮独立维护的开源项目，包括小型决策模型（Jev-Style-0.8B-Decision-v3 与 Jev-Style-2B-Decision-v4）和 jev-style Python 软件包。给它文本（2B v4 还能读图片）和是/否、多选或打分问题，它为每个选项返回概率。本地服务器接受 /v1/systemone 格式的请求。代码与权重均为 Apache-2.0，项目与 TypeSafe 无隶属关系。<a href="/guides/open-source-jev-alternatives/">与其他开源 Jev 替代方案对比（英文）</a>。'), ('可以离线运行吗？', '可以。安装依赖并下载模型后，输入都在本机处理。在线 Demo 和托管 API 是独立服务，会收到你发送的内容。'), ('应该选哪个模型？', '文本任务从 0.8B v3 开始，再用自己的数据对比 2B v4。图片输入需要 2B v4 的 PyTorch 版；MLX 和 GGUF 仅支持文本。'), ('它会生成聊天回复吗？', '不会。它为是/否、多选和有序评分问题返回概率。不确定的情况交给人工或大模型。')]
+    return 'Questions', [('What is JevStyle?', 'JevStyle is an independent open-source project by Chaoliang Yan: small decision models (Jev-Style-0.8B-Decision-v3 and Jev-Style-2B-Decision-v4) and the jev-style Python package. Give it text, or an image with 2B v4, plus yes/no, choice or score questions, and it returns a probability for every option. Its local server accepts /v1/systemone requests. Code and weights are Apache-2.0, and the project is not affiliated with TypeSafe. <a href="/guides/open-source-jev-alternatives/">Compare it with other open-source Jev alternatives</a>.'), ('Can JevStyle run offline?', 'Yes. After installing dependencies and downloading a model, inputs stay on your machine. The online demo and hosted API are separate services and receive what you send them.'), ('Which model should I use?', 'Start with 0.8B v3 for text, then compare 2B v4 on your own examples. Image input needs the 2B v4 PyTorch build; MLX and GGUF builds are text-only.'), ('Does it write chat replies?', 'No. It returns probabilities for yes/no, choice, and ordered-score questions. Send uncertain cases to a person or a larger model.')]
+
+
+def home_content(zh):
+    title, pairs = home_questions(zh)
     return f'<section id="project-guide" class="home-notes" aria-labelledby="project-guide-heading"><h2 id="project-guide-heading">{title}</h2>{qa(pairs)}</section>'
+
+
+def faq_node(url, zh):
+    """FAQPage markup that repeats the visible homepage questions word for word."""
+    _, pairs = home_questions(zh)
+    text = lambda value: ' '.join(html.unescape(re.sub(r'<[^>]+>', '', value)).split())
+    return {'@type': 'FAQPage', '@id': url + '#faq', 'inLanguage': 'zh-CN' if zh else 'en', 'isPartOf': {'@id': url + '#webpage'},
+            'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': text(a)}} for q, a in pairs]}
 
 
 def task_entrypoints(zh):
     """Visible task guidance."""
     if zh:
         title = '从你的任务开始'
-        cards = [('/tools/browser-agent/', '浏览器 Agent：运行记录与本地试用'), ('/guides/local-text-classification/', 'Python 本地文本分类'), ('/guides/local-decision-models/', '本地决策模型与 Apple silicon'), ('/use-cases/local-llm-routing/', '请求路由与大模型回退'), ('/guides/local-routing-tools/', '本地路由工具选型'), ('/use-cases/local-vision-decisions/', '收据与截图的本地判断'), ('/guides/replace-label-only-llm-calls/', '替换只返回标签的 LLM 调用')]
+        cards = [('/tools/browser-agent/', '浏览器 Agent：运行记录与本地试用'), ('/guides/local-text-classification/', 'Python 本地文本分类'), ('/guides/local-decision-models/', '本地决策模型与 Apple silicon'), ('/use-cases/local-llm-routing/', '请求路由与大模型回退'), ('/guides/local-routing-tools/', '本地路由工具选型'), ('/guides/open-source-jev-alternatives/', '开源 Jev 替代方案对比'), ('/use-cases/local-vision-decisions/', '收据与截图的本地判断'), ('/guides/replace-label-only-llm-calls/', '替换只返回标签的 LLM 调用')]
     else:
         title = 'Start with your task'
-        cards = [('/tools/browser-agent/', 'Browser agent: recorded runs and local setup'), ('/guides/local-text-classification/', 'Local text classification in Python'), ('/guides/local-decision-models/', 'Local decision models on Apple silicon'), ('/use-cases/local-llm-routing/', 'Workflow routing with LLM fallback'), ('/guides/local-routing-tools/', 'Compare local routing tools'), ('/use-cases/local-vision-decisions/', 'Local receipt and screenshot decisions'), ('/guides/replace-label-only-llm-calls/', 'Replace label-only LLM calls')]
+        cards = [('/tools/browser-agent/', 'Browser agent: recorded runs and local setup'), ('/guides/local-text-classification/', 'Local text classification in Python'), ('/guides/local-decision-models/', 'Local decision models on Apple silicon'), ('/use-cases/local-llm-routing/', 'Workflow routing with LLM fallback'), ('/guides/local-routing-tools/', 'Compare local routing tools'), ('/guides/open-source-jev-alternatives/', 'Open-source Jev alternatives compared'), ('/use-cases/local-vision-decisions/', 'Local receipt and screenshot decisions'), ('/guides/replace-label-only-llm-calls/', 'Replace label-only LLM calls')]
     links = ''.join(f'<a href="{url}" data-track="guide_open"><b>{label}</b></a>' for url, label in cards)
     return f'<section id="local-tasks" class="growth-guides" aria-labelledby="local-tasks-heading"><div class="s3-head"><h2 id="local-tasks-heading">{title}</h2></div><div class="guide-grid">{links}</div></section>'
 
@@ -84,9 +102,34 @@ def current_facts(zh):
     return f'<section class="home-notes" id="current-facts" aria-labelledby="current-facts-heading"><h2 id="current-facts-heading">{title}</h2>{qa(pairs)}<p class="facts-date">{"核对日期" if zh else "Reviewed"}: <time datetime="{date}">{date}</time></p></section>'
 
 
+def content_hash(doc):
+    """Hash of the page's own content: <main> (or <body>) without the live download counters, so a
+    header/footer change or a stats refresh does not count as a page update."""
+    match = re.search(r'<main\b.*?</main>', doc, re.S) or re.search(r'<body\b.*?</body>', doc, re.S)
+    text = VOLATILE.sub('', match[0] if match else doc)
+    return hashlib.sha256(' '.join(text.split()).encode()).hexdigest()[:16]
+
+
+def page_dates(pages, docs):
+    """Sitemap lastmod per URL. A date changes only when that page's content hash changes, so rebuilding
+    unchanged pages is reproducible and redeploys do not pretend every page was edited."""
+    old = json.loads(PAGE_DATES.read_text()) if PAGE_DATES.exists() else {}
+    # The maintainer's calendar date (Sydney), so CI runners in UTC and local builds stamp the same day as git.
+    today = datetime.datetime.now(ZoneInfo('Australia/Sydney')).date().isoformat()
+    new = {}
+    for path in pages:
+        key = '/' + path.relative_to(ROOT).as_posix().removesuffix('index.html')
+        digest = content_hash(docs[path])
+        entry = old.get(key)
+        new[key] = entry if entry and entry.get('hash') == digest else {'hash': digest, 'lastmod': today}
+    PAGE_DATES.write_text(json.dumps(new, indent=1, sort_keys=True) + '\n')
+    return new
+
+
 def main():
     assert FACTS['hostedApi']['status'] in ('operational', 'degraded', 'maintenance'), FACTS['hostedApi']['status']
     pages = public_pages()
+    docs = {}
     for path in pages:
         doc = path.read_text()
         url = page_url(path)
@@ -97,14 +140,18 @@ def main():
         desc = html.unescape(desc_match[1]) if desc_match else FACTS['description']
         doc = re.sub(r'<link\s+rel="canonical"[^>]*>\s*', '', doc)
         doc = doc.replace('</head>', f'<link rel="canonical" href="{url}">\n</head>', 1)
+        doc = ICON_TAGS.sub('', doc)
+        doc = doc.replace('</head>', FAVICON + '</head>', 1)
         for key, value, attr in [('og:title',title,'property'), ('og:description',desc,'property'), ('og:url',url,'property'), ('og:type','website','property'), ('og:image',BASE+'/assets/social-card.png','property'), ('twitter:card','summary_large_image','name'), ('twitter:title',title,'name'), ('twitter:description',desc,'name'), ('twitter:image',BASE+'/assets/social-card.png','name')]:
             doc = meta(doc, key, value, attr)
         doc = re.sub(r'<script[^>]*type="application/ld\+json"[^>]*>.*?</script>\s*', '', doc, flags=re.S)
-        website = {'@type':'WebSite','@id':BASE+'/#website','url':FACTS['url'],'name':FACTS['name'],'alternateName':FACTS['alternateName'],'inLanguage':['en','zh-CN']}
+        website = {'@type':'WebSite','@id':BASE+'/#website','url':FACTS['url'],'name':FACTS['name'],'alternateName':FACTS['alternateName'],'inLanguage':['en','zh-CN'],'publisher':{'@id':BASE+'/about/#maintainer'}}
         page = {'@type':'AboutPage' if '/about/' in url else 'WebPage','@id':url+'#webpage','url':url,'name':title,'description':desc,'inLanguage':lang,'isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#software'}}
+        # Every page defines the nodes it references (publisher, about), so no @id is left dangling.
         graph = [website, page]
-        if url in (BASE+'/',BASE+'/zh/',BASE+'/about/',BASE+'/zh/about/'):
-            graph += [{'@type':'Person','@id':BASE+'/about/#maintainer','name':FACTS['maintainer'],'url':BASE+'/about/','sameAs':['https://github.com/lawrence3699',FACTS['huggingface'],FACTS['linkedin']]}, {'@type':'SoftwareSourceCode','@id':BASE+'/#software','name':FACTS['name'],'alternateName':FACTS['alternateName'],'url':FACTS['url'],'description':FACTS['description'],'codeRepository':FACTS['github'],'license':FACTS['license'],'programmingLanguage':'Python','version':FACTS['packageVersion'],'author':{'@id':BASE+'/about/#maintainer'},'sameAs':[FACTS['github'],FACTS['huggingface'],FACTS['pypi']]}]
+        graph += [{'@type':'Person','@id':BASE+'/about/#maintainer','name':FACTS['maintainer'],'url':BASE+'/about/','sameAs':['https://github.com/lawrence3699',FACTS['huggingface'],FACTS['linkedin']]}, {'@type':'SoftwareSourceCode','@id':BASE+'/#software','name':FACTS['name'],'alternateName':FACTS['alternateName'],'url':FACTS['url'],'description':FACTS['description'],'codeRepository':FACTS['github'],'license':FACTS['license'],'programmingLanguage':'Python','version':FACTS['packageVersion'],'author':{'@id':BASE+'/about/#maintainer'},'sameAs':[FACTS['github'],FACTS['huggingface'],FACTS['pypi']]}]
+        if url in (BASE+'/',BASE+'/zh/'):
+            graph.append(faq_node(url, zh))
         if url not in (BASE+'/',BASE+'/zh/'):
             graph.append({'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'首页' if zh else 'Home','item':BASE+'/zh/' if zh else FACTS['url']},{'@type':'ListItem','position':2,'name':title.split(' | ')[0],'item':url}]})
             # The breadcrumb is visible as well as machine readable.
@@ -122,6 +169,8 @@ def main():
             doc = slot(doc, 'home-guide', home_content(zh), before='  <section id="about">')
             doc = slot(doc, 'current-facts', current_facts(zh), before='  <section id="about">')
         path.write_text(doc)
+        docs[path] = doc
+    dates = page_dates(pages, docs)
     ns, xh = 'http://www.sitemaps.org/schemas/sitemap/0.9', 'http://www.w3.org/1999/xhtml'
     ET.register_namespace('',ns); ET.register_namespace('xhtml',xh)
     root = ET.Element('{'+ns+'}urlset')
@@ -129,6 +178,7 @@ def main():
         item = ET.SubElement(root,'{'+ns+'}url')
         url = page_url(path)
         ET.SubElement(item,'{'+ns+'}loc').text = url
+        ET.SubElement(item,'{'+ns+'}lastmod').text = dates['/' + path.relative_to(ROOT).as_posix().removesuffix('index.html')]['lastmod']
         if path in (ROOT/'index.html',ROOT/'zh/index.html',ROOT/'about/index.html',ROOT/'zh/about/index.html',ROOT/'contact/index.html',ROOT/'zh/contact/index.html'):
             suffix = 'about/' if '/about/' in url else 'contact/' if '/contact/' in url else ''
             for language, dest in [('en',BASE+'/'+suffix),('zh-CN',BASE+'/zh/'+suffix),('x-default',BASE+'/'+suffix)]:
@@ -136,7 +186,7 @@ def main():
     ET.indent(root)
     ET.ElementTree(root).write(ROOT/'sitemap.xml',encoding='utf-8',xml_declaration=True)
     api, di = FACTS['hostedApi'], FACTS['decisionIndex']
-    lines = ['# JevStyle','', '> '+FACTS['description'], '', 'Maintainer: '+FACTS['maintainer']+'. Code and weights: Apache-2.0.', f'Hosted API: 2B v4, text only, {api["contextTokens"]:,}-token context, {api["inputTokenLimit"]:,}-token input cap. {api["limitsPolicy"]} Reviewed '+FACTS['reviewed']+'. Live status: https://api.jevstyle.com/healthz. Local models and hosted demos are separate.', f'Decision Index {di["edition"]} public board (since {di["listed"]}, replacing 2B v3): 2B v4 Public {di["2b-v4"]["public"]}, Full {di["2b-v4"]["full"]}, Breadth {di["2b-v4"]["breadth"]}; Vision Public {di["2b-v4"]["visionPublic"]}, Full {di["2b-v4"]["visionFull"]}; 0.8B v3 Public {di["0.8b-v3"]["public"]}, Full {di["0.8b-v3"]["full"]}. Public is the suite anyone can run; Full adds the maintainers\' private tests and is lower. Board: {di["board"]}', 'Community: '+FACTS['discussions']+' (GitHub Discussions).', 'Current Python package: '+FACTS['packageVersion']+'. Local default: 0.8B v3; --release 2b selects 2B v4 (released '+FACTS['latest2bReleased']+').', '2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.', FACTS['trainingProvenance'], '', 'Official local install (no hosted API key): https://jevstyle.com/guides/run-locally/', 'Hosted service status and its limits: https://jevstyle.com/api/#service-status', '', '## Official pages','']
+    lines = ['# JevStyle','', '> '+FACTS['description'], '', 'Maintainer: '+FACTS['maintainer']+'. Code and weights: Apache-2.0.', f'Hosted API: 2B v4, text only, {api["contextTokens"]:,}-token context, {api["inputTokenLimit"]:,}-token input cap. {api["limitsPolicy"]} Reviewed '+FACTS['reviewed']+'. Live status: https://api.jevstyle.com/healthz. Local models and hosted demos are separate.', f'Decision Index {di["edition"]} public board (since {di["listed"]}, replacing 2B v3): 2B v4 Public {di["2b-v4"]["public"]}, Full {di["2b-v4"]["full"]}, Breadth {di["2b-v4"]["breadth"]}; Vision Public {di["2b-v4"]["visionPublic"]}, Full {di["2b-v4"]["visionFull"]}; 0.8B v3 Public {di["0.8b-v3"]["public"]}, Full {di["0.8b-v3"]["full"]}. Public is the suite anyone can run; Full adds the maintainers\' private tests and is lower. Board: {di["board"]}', 'Community: '+FACTS['discussions']+' (GitHub Discussions).', 'Current Python package: '+FACTS['packageVersion']+'. Local default: 0.8B v3; --release 2b selects 2B v4 (released '+FACTS['latest2bReleased']+').', '2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.', 'Local server: `jev-style serve` accepts POST /v1/systemone requests, so clients written for Jev-compatible servers can call it. JevStyle is an open-source alternative to TypeSafe\'s hosted Jev, not an official distribution.', FACTS['trainingProvenance'], '', 'Official local install (no hosted API key): https://jevstyle.com/guides/run-locally/', 'Hosted service status and its limits: https://jevstyle.com/api/#service-status', 'Comparison with other open-source Jev alternatives: https://jevstyle.com/guides/open-source-jev-alternatives/', '', '## Official pages','']
     for path in pages:
         if '/api/' in str(path) or path == ROOT/'zh/index.html':
             continue

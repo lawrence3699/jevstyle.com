@@ -1,0 +1,142 @@
+{
+ "/": {
+  "hash": "f9d79d44f1e378f6",
+  "lastmod": "2026-11-05"
+ },
+ "/about/": {
+  "hash": "60935b9fa20335cb",
+  "lastmod": "2026-11-05"
+ },
+ "/api/": {
+  "hash": "11aade9d69017da7",
+  "lastmod": "2026-11-05"
+ },
+ "/api/auth.html": {
+  "hash": "f29220fbb461ca35",
+  "lastmod": "2026-10-31"
+ },
+ "/api/endpoints.html": {
+  "hash": "5618daf9bb472d9d",
+  "lastmod": "2026-11-05"
+ },
+ "/api/errors.html": {
+  "hash": "82148f9cf9183811",
+  "lastmod": "2026-11-05"
+ },
+ "/api/limits.html": {
+  "hash": "e2013339e0756686",
+  "lastmod": "2026-11-05"
+ },
+ "/api/terms.html": {
+  "hash": "c39ddd0ab6e48eaf",
+  "lastmod": "2026-11-05"
+ },
+ "/benchmarks/": {
+  "hash": "26418f9994e32843",
+  "lastmod": "2026-11-05"
+ },
+ "/benchmarks/banking-routing/": {
+  "hash": "ae5db4baba9fe6ae",
+  "lastmod": "2026-11-01"
+ },
+ "/contact/": {
+  "hash": "759f12586fd2b273",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/": {
+  "hash": "9a335d301cfe5c2e",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/claude-code-guard/": {
+  "hash": "24452feebd53b9fc",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/decision-evaluation/": {
+  "hash": "f623e29f97682aff",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/local-decision-models/": {
+  "hash": "b4a15915d0450813",
+  "lastmod": "2026-11-02"
+ },
+ "/guides/local-routing-tools/": {
+  "hash": "98d9ed8c94b0f8ec",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/local-text-classification/": {
+  "hash": "2a4487c3c0444bbd",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/open-source-jev-alternatives/": {
+  "hash": "3418f74c2e93881c",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/replace-label-only-llm-calls/": {
+  "hash": "651b3be0af3402f7",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/run-locally/": {
+  "hash": "ddd7e69e6ed5178e",
+  "lastmod": "2026-11-05"
+ },
+ "/models/": {
+  "hash": "93b5aad258341188",
+  "lastmod": "2026-11-05"
+ },
+ "/models/0-8b-v3/": {
+  "hash": "f167242f5d21c4bb",
+  "lastmod": "2026-11-05"
+ },
+ "/models/2b-v4/": {
+  "hash": "d0bb9cd552d47cbf",
+  "lastmod": "2026-11-05"
+ },
+ "/models/compare/": {
+  "hash": "85e08ce3bc2a2972",
+  "lastmod": "2026-11-05"
+ },
+ "/pricing/": {
+  "hash": "389cd4b1dbe2fb02",
+  "lastmod": "2026-11-05"
+ },
+ "/privacy/": {
+  "hash": "64397cc269137870",
+  "lastmod": "2026-11-05"
+ },
+ "/tools/browser-agent/": {
+  "hash": "3f12f8045cc55ff9",
+  "lastmod": "2026-11-05"
+ },
+ "/updates/": {
+  "hash": "33c9dd3c75833d57",
+  "lastmod": "2026-11-05"
+ },
+ "/use-cases/": {
+  "hash": "6431203ed5875616",
+  "lastmod": "2026-11-05"
+ },
+ "/use-cases/local-llm-routing/": {
+  "hash": "dc498c5fcbed64cd",
+  "lastmod": "2026-11-05"
+ },
+ "/use-cases/local-vision-decisions/": {
+  "hash": "79aab92df28532c0",
+  "lastmod": "2026-11-02"
+ },
+ "/use-cases/support-ticket-classification/": {
+  "hash": "21292e2390fc9f14",
+  "lastmod": "2026-11-05"
+ },
+ "/zh/": {
+  "hash": "3f39f7d9287a52ee",
+  "lastmod": "2026-11-05"
+ },
+ "/zh/about/": {
+  "hash": "3dab6898f15f2d79",
+  "lastmod": "2026-11-05"
+ },
+ "/zh/contact/": {
+  "hash": "7471c29f02ac1ebb",
+  "lastmod": "2026-11-05"
+ }
+}
