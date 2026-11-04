@@ -155,6 +155,14 @@
   function errorText(r, fallback) {
     return (r && r.data && typeof r.data.message === "string" && r.data.message) || fallback;
   }
+  // When fetch() itself throws we can't see a status (a Cloudflare 5xx page has no CORS headers).
+  // An opaque no-cors request still resolves if *any* server answered, and rejects only when the
+  // network path is broken — so we can tell "service down" from "your connection is down".
+  async function reachable() {
+    try { await fetch(ORIGIN + "/healthz", { mode: "no-cors", cache: "no-store", credentials: "omit" }); return true; }
+    catch (e) { return false; }
+  }
+  async function outageKind() { return (await reachable()) ? "unavailable" : "offline"; }
 
   /* ---------- Gate / routing ---------- */
   function showGate(kind) {
@@ -163,12 +171,13 @@
     var title = "Sign in to the console";
     var body = "Manage API keys, try requests in the Playground and track your usage.";
     if (kind === "expired") { title = "Your session has ended"; body = "Log in again to keep managing your API keys."; }
-    if (kind === "offline") { title = "Can't reach JevStyle right now"; body = "Check your connection, then try again. Your keys keep working while this page is unavailable."; }
+    if (kind === "offline") { title = "Can't reach JevStyle right now"; body = "Your browser couldn't connect to api.jevstyle.com. Check your connection, then try again."; }
+    if (kind === "unavailable") { title = "JevStyle is temporarily unavailable"; body = "The service isn't responding right now and we're working on it. API requests also fail until it recovers; failed requests are never charged. Please try again in a few minutes."; }
     gate.innerHTML = "";
     gate.appendChild(el("h2", null, title));
     gate.appendChild(el("p", null, body));
     var actions = el("div", "gate-actions");
-    if (kind === "offline") {
+    if (kind === "offline" || kind === "unavailable") {
       var retry = el("button", "btn primary", "Try again");
       retry.type = "button";
       retry.onclick = function () { location.reload(); };
@@ -185,7 +194,7 @@
     gate.hidden = false;
     $("verify-banner").hidden = true;
     document.querySelectorAll("[data-view]").forEach(function (v) { v.hidden = true; });
-    setAccount(kind === "offline" ? "Offline" : "Not signed in", "");
+    setAccount(kind === "offline" || kind === "unavailable" ? "Unavailable" : "Not signed in", "");
     $("logout-btn").hidden = kind !== "expired";
     closeDialogs();
   }
@@ -227,14 +236,15 @@
   }
   async function loadMe() {
     var r;
-    try { r = await api("/auth/me"); } catch (e) { showGate("offline"); return null; }
+    try { r = await api("/auth/me"); } catch (e) { showGate(await outageKind()); return null; }
     if (r.status === 401) { showGate("signin"); return null; }
-    if (!r.ok || !r.data || !r.data.user) { showGate("offline"); return null; }
+    if (!r.ok || !r.data || !r.data.user) { showGate("unavailable"); return null; }
     var me = r.data.user;
     state.me = me;
     state.verified = me.email_verified === true;
     setAccount(me.email || me.name || "Signed in", me.email || "");
     $("logout-btn").hidden = false;
+    $("delete-account-btn").hidden = false;
     $("ov-email").textContent = me.email || me.name || "your account";
     $("verify-banner").hidden = state.verified;
     if (!state.verified) {
@@ -246,13 +256,14 @@
   /* ---------- Service status ---------- */
   var HEALTH_TEXT = {
     operational: "All systems operational", degraded: "Degraded performance",
-    down: "Inference unavailable", unreachable: "Can't reach the API"
+    down: "Inference unavailable", unavailable: "Service unavailable", unreachable: "Can't reach the API"
   };
   var HEALTH_TITLE = {
     operational: "The API is accepting requests.",
     degraded: "The API is working, but inference was unavailable at least once in the last 10 minutes.",
     down: "Requests may fail with 503 and are not charged.",
-    unreachable: "Your browser couldn't reach api.jevstyle.com."
+    unavailable: "api.jevstyle.com is not responding (HTTP 5xx). We're working on it; failed requests are not charged.",
+    unreachable: "Your browser couldn't connect to api.jevstyle.com. Check your connection."
   };
   var COMPONENT_TEXT = { operational: "Operational", degraded: "Degraded", down: "Unavailable" };
   function pct(x) {
@@ -322,7 +333,8 @@
         var r = await api("/status");
         if (r.ok && r.data && Array.isArray(r.data.days)) data = r.data;
         else if (r.status === 401) return;
-      } catch (e) { name = "unreachable"; }
+        else if (r.status >= 500) name = "unavailable";
+      } catch (e) { name = (await reachable()) ? "unavailable" : "unreachable"; }
     }
     if (data) {
       name = data.status in HEALTH_TEXT ? data.status : "down";
@@ -331,18 +343,22 @@
       started = performance.now();
       try {
         var res = await fetch(ORIGIN + "/healthz", { credentials: "omit", cache: "no-store" });
-        var h = await res.json();
-        name = res.ok && h && h.inference_ready === true ? "operational" : "down";
-      } catch (e) { name = "unreachable"; }
+        if (res.status >= 500) name = "unavailable";
+        else {
+          var h = await res.json();
+          name = res.ok && h && h.inference_ready === true ? "operational" : "down";
+        }
+      } catch (e) { name = (await reachable()) ? "unavailable" : "unreachable"; }
     }
     var ms = Math.round(performance.now() - started);
     setOverall(name);
     if (!state.me) return;
-    renderComponents(data ? data.components : name === "unreachable"
+    var outage = name === "unreachable" || name === "unavailable";
+    renderComponents(data ? data.components : outage
       ? [{ name: "API", status: "down" }, { name: "Inference", status: "down" }]
       : [{ name: "API", status: "operational" }, { name: "Inference", status: name }]);
     renderHistory(data);
-    $("hl-foot").textContent = (name === "unreachable" ? "" : "Response time from your browser: " +
+    $("hl-foot").textContent = (outage ? "" : "Response time from your browser: " +
       (ms < 1000 ? ms + " ms" : (ms / 1000).toFixed(2) + " s") + " · ") +
       "Checked at " + timeFmt.format(new Date()) + " · refreshes every 30 s. Checks run every minute; days are in UTC.";
   }
@@ -363,7 +379,7 @@
       renderStart();
       if (state.daily) renderKeyFilter();
     } catch (e) {
-      notice($("keys-msg"), "Can't reach JevStyle. Check your connection and refresh.", "err");
+      notice($("keys-msg"), "Couldn't load your keys. JevStyle may be temporarily unavailable — refresh to try again.", "err");
     }
   }
 
@@ -512,7 +528,7 @@
       loadKeys();
       loadUsage();
     } catch (e) {
-      notice($("create-msg"), "Can't reach JevStyle. Check your connection and try again.", "err");
+      notice($("create-msg"), "Couldn't create the key. JevStyle may be temporarily unavailable — try again shortly.", "err");
     } finally {
       state.creating = false;
       $("create-submit").disabled = false;
@@ -575,7 +591,7 @@
       notice($("keys-msg"), "Key renamed.", "ok");
       await loadKeys();
     } catch (e) {
-      notice($("rename-msg"), "Can't reach JevStyle. Try again.", "err");
+      notice($("rename-msg"), "Couldn't rename the key. Try again shortly.", "err");
     } finally {
       $("rename-save").disabled = !$("rename-input").value.trim();
     }
@@ -603,7 +619,7 @@
       await loadKeys();
       loadUsage();
     } catch (e) {
-      notice($("revoke-msg"), "Can't reach JevStyle. Try again.", "err");
+      notice($("revoke-msg"), "Couldn't revoke the key. Try again shortly.", "err");
     } finally {
       btn.disabled = false;
     }
@@ -742,31 +758,18 @@
       renderLimits();
       renderStart();
     } catch (e) {
-      notice($("usage-msg"), "Can't reach JevStyle. Check your connection and refresh.", "err");
+      notice($("usage-msg"), "Couldn't load usage. JevStyle may be temporarily unavailable — refresh to try again.", "err");
     }
   }
 
-  function setMeter(fill, used, limit) {
-    var ratio = limit > 0 ? Math.min(1, used / limit) : 0;
-    fill.style.width = (ratio * 100).toFixed(2) + "%";
-    fill.className = ratio >= 1 ? "full" : ratio >= 0.8 ? "warn" : "";
-  }
+  // Only the day's successful-request count is shown. There is no fixed per-account quota, so any
+  // daily_limit / daily_remaining the control plane still reports is deliberately not rendered.
   function renderToday() {
     var u = state.usage;
     if (!u) return;
     var used = Number(u.daily_used) || 0;
-    var limit = Number(u.daily_limit) || 10000;
-    var remaining = u.daily_remaining != null ? Number(u.daily_remaining) : Math.max(0, limit - used);
     $("u-used").textContent = fmtInt(used);
-    $("u-rem").textContent = fmtInt(remaining);
-    $("u-limit").textContent = fmtInt(limit);
     $("ov-used").textContent = fmtInt(used);
-    $("ov-limit").textContent = fmtInt(limit);
-    setMeter($("u-meter"), used, limit);
-    setMeter($("ov-meter"), used, limit);
-    var wrap = $("u-meter-wrap");
-    wrap.setAttribute("aria-valuemax", String(limit));
-    wrap.setAttribute("aria-valuenow", String(used));
     renderReset();
   }
   function renderReset() {
@@ -778,12 +781,8 @@
   function renderLimits() {
     var u = state.usage;
     if (!u) return;
-    if (u.concurrency_mode === "elastic" || u.concurrency_limit === 0) {
-      $("l-conc").textContent = "Elastic" + (u.concurrency_burst_limit ? " · up to " + fmtInt(u.concurrency_burst_limit) : "");
-    } else if (u.concurrency_limit) $("l-conc").textContent = fmtInt(u.concurrency_limit);
-    if (u.rpm_mode === "elastic" || u.rpm_limit === 0) $("l-rpm").textContent = "Elastic";
-    else if (u.rpm_limit) $("l-rpm").textContent = fmtInt(u.rpm_limit) + " RPM";
-    if (u.daily_limit) $("l-daily").textContent = fmtInt(u.daily_limit);
+    // Capacity is shared and a busy server answers 429 + Retry-After, so no per-account request
+    // numbers are shown: rpm_limit / rpm_mode / concurrency_* / daily_limit fields are ignored on purpose.
     if (u.input_token_soft_limit) $("l-tokens").textContent = fmtInt(u.input_token_soft_limit);
   }
 
@@ -816,7 +815,7 @@
       renderKeyFilter();
       renderChart();
     } catch (e) {
-      notice($("usage-msg"), "Can't reach JevStyle. Check your connection and refresh.", "err");
+      notice($("usage-msg"), "Couldn't load usage history. JevStyle may be temporarily unavailable — refresh to try again.", "err");
     } finally {
       if (seq === dailySeq) chart.style.opacity = "";
     }
@@ -1096,21 +1095,23 @@
         refund: { type: "noul", instructions: "Does the customer ask for money back?" },
         team: { type: "choice", instructions: "Which team should handle this ticket first?",
           criteria: { billing: "charges, refunds, invoices", tech: "bugs, crashes, sign-in problems", sales: "pricing and upgrades" } },
-        urgency: { type: "score", instructions: "How urgent is this ticket?", criteria: ["low", "medium", "high", "critical"] }
+        topic: { type: "choice", instructions: "Which topic label fits this ticket best?",
+          criteria: { payment: "billing and payment problems", account_access: "login, sessions, passwords", feature_request: "asks for something new", other: "anything else" } }
       }
     },
     noul: {
-      state: "Customer: I was charged twice for my October invoice. Please refund the duplicate payment.",
-      questions: { wants_refund: { type: "noul", instructions: "Does the customer ask for money back?" } }
+      state: "Email: Your account will be suspended in 24 hours. To keep access, confirm your password at http://secure-login-verify.example.net/ now.",
+      questions: { phishing: { type: "noul", instructions: "Is this email a phishing attempt?" } }
     },
     choice: {
       state: "User: The app crashes every time I upload a photo larger than 10 MB.",
       questions: { team: { type: "choice", instructions: "Which team should handle this ticket?",
         criteria: { billing: "charges, refunds, invoices", tech: "bugs, crashes, errors", sales: "pricing, upgrades, quotes" } } }
     },
-    score: {
-      state: "Customer: This is the third outage this week. We are losing orders every hour and will cancel today if it is not fixed.",
-      questions: { urgency: { type: "score", instructions: "How urgent is this ticket?", criteria: ["low", "medium", "high", "critical"] } }
+    tool: {
+      state: "User: Will it rain in Sydney tomorrow afternoon? I need to decide whether to move the picnic.",
+      questions: { tool: { type: "choice", instructions: "Which tool should the assistant call next?",
+        criteria: { weather: "current conditions and forecasts for a place", calendar: "the user's events and scheduling", web_search: "general information lookup", none: "answer directly without calling a tool" } } }
     }
   };
   var TYPE_HELP = {
@@ -1811,13 +1812,8 @@
     }
     if (status === 429) {
       var retry = wait ? " Try again in " + (wait < 120 ? plural(wait, "second") : countdown(wait * 1000)) + "." : " Try again shortly.";
-      if (limit === "concurrency") {
-        if (u.concurrency_mode === "elastic" || u.concurrency_limit === 0) return "Your account's current share of concurrent capacity is in use. Wait for a running request to finish." + retry;
-        return "Only " + (u.concurrency_limit || 1) + " request can run at a time per account. Wait for the current request to finish.";
-      }
-      if (limit === "rpm") return (u.rpm_limit > 0 ? "You've reached " + u.rpm_limit + " requests per minute." : "The service is busy right now.") + retry;
-      if (limit === "daily") return "You've used today's " + fmtInt(u.daily_limit || 10000) + " successful requests. " + resetText(u.reset_at) + ".";
-      return "The free tier is busy right now." + retry;
+      if (limit === "daily") return "Successful requests for this account are paused for today. " + resetText(u.reset_at) + ".";
+      return "Shared capacity is busy right now; there is no fixed per-account cap, so this clears as other requests finish." + retry;
     }
     if (status === 503) return "Inference is temporarily unavailable. Failed requests are not charged, so you can try again shortly.";
     if (status === 504) return "The model didn't finish in time. This request was not charged; try again.";
@@ -1978,10 +1974,79 @@
   setMode("form");
   loadTemplate("support");
 
+  /* ---------- Secrets held in page memory ---------- */
+  function clearSecrets() {
+    var field = $("pg-key");
+    field.value = "";
+    field.type = "password";
+    $("pg-key-toggle").textContent = "Show";
+    $("pg-key-toggle").setAttribute("aria-pressed", "false");
+    $("new-key").value = "";
+    $("new-key-curl").textContent = "";
+  }
+  // Leaving the page (including into the back/forward cache) drops the pasted key. Coming back
+  // out of that cache re-checks the session, so a console that was logged out never shows account data.
+  window.addEventListener("pagehide", clearSecrets);
+  window.addEventListener("pageshow", function (ev) { if (ev.persisted) { clearSecrets(); init(); } });
+
+  /* ---------- Delete account ---------- */
+  var deleteDialog = $("delete-dialog");
+  $("delete-account-btn").onclick = function () {
+    if (!state.me) return;
+    var google = state.me.auth_provider === "google";
+    $("delete-pw-field").hidden = google;
+    $("delete-email-field").hidden = !google;
+    $("delete-password").value = "";
+    $("delete-email").value = "";
+    notice($("delete-msg"), "");
+    $("delete-confirm").disabled = false;
+    if (acctMenu) acctMenu.hidden = true;
+    deleteDialog.showModal();
+    (google ? $("delete-email") : $("delete-password")).focus();
+  };
+  $("delete-form").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var google = state.me && state.me.auth_provider === "google";
+    var body = google ? { confirm: $("delete-email").value.trim() } : { password: $("delete-password").value };
+    if (google ? !body.confirm : !body.password) {
+      notice($("delete-msg"), google ? "Type your account email to confirm." : "Enter your current password.", "err");
+      return;
+    }
+    var btn = $("delete-confirm");
+    btn.disabled = true;
+    try {
+      var r = await api("/account/delete", { method: "POST", body: body });
+      if (r.ok) { clearSecrets(); location.replace("/login/?deleted=1"); return; }
+      var code = r.data && r.data.error;
+      var text = code === "confirmation_failed" ? (google ? "That email doesn't match this account." : "That password is not correct.")
+        : code === "wallet_balance" ? "This account still has a People Search balance. Contact us from the Contact page to settle it before deleting."
+        : r.status === 404 ? "Account deletion isn't available yet. Please try again later."
+        : r.status >= 500 ? "JevStyle is temporarily unavailable. Try again in a few minutes."
+        : errorText(r, "Couldn't delete the account.");
+      notice($("delete-msg"), text, "err");
+    } catch (e) {
+      notice($("delete-msg"), "Couldn't reach JevStyle. Try again shortly.", "err");
+    } finally {
+      $("delete-password").value = "";
+      btn.disabled = false;
+    }
+  });
+
   /* ---------- Log out ---------- */
   $("logout-btn").onclick = async function () {
-    try { await api("/auth/logout", { method: "POST", body: {} }); } catch (e) {}
-    location.href = "/login/";
+    var btn = this;
+    btn.disabled = true;
+    clearSecrets();
+    closeDialogs();
+    var r = null;
+    try { r = await api("/auth/logout", { method: "POST", body: {} }); } catch (e) {}
+    if (r && (r.ok || r.status === 401)) { location.replace("/login/"); return; }
+    // The session cookie is still valid, so don't pretend the sign-out happened.
+    btn.disabled = false;
+    var kind = r ? "unavailable" : await outageKind();
+    notice($("global-msg"), kind === "unavailable"
+      ? "Couldn't log out: JevStyle is temporarily unavailable. Try again in a few minutes."
+      : "Couldn't log out: your browser couldn't reach JevStyle. Check your connection, then try again.", "err");
   };
 
   /* ---------- Timers ---------- */
@@ -1993,14 +2058,16 @@
   document.addEventListener("visibilitychange", function () { if (!document.hidden) loadHealth(); });
 
   /* ---------- Start ---------- */
-  showPage(false);
-  loadHealth();
-  (async function init() {
+  async function init() {
     var me = await loadMe();
     if (!me) return;
     state.signedOut = false;
     $("gate").hidden = true;
+    notice($("global-msg"), "");
     showPage(false);
     loadHealth();
-  })();
+  }
+  showPage(false);
+  loadHealth();
+  init();
 })();

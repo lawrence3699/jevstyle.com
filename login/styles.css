@@ -104,6 +104,10 @@ input:focus {
   margin-top: 12px; padding: 10px 12px; border-radius: 10px;
   background: var(--soft); color: var(--ink2); font-size: .9rem;
 }
+.msg.ok {
+  background: color-mix(in srgb, var(--acc) 12%, var(--soft));
+  color: var(--ink);
+}
 .msg.err {
   background: color-mix(in srgb, var(--danger) 12%, var(--soft));
   color: var(--danger);

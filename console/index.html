@@ -48,6 +48,7 @@
             <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
           </div>
           <a class="menu-item" href="/api/"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Documentation</a>
+          <button type="button" class="menu-item" id="delete-account-btn" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 6.5h9M8.2 6.5V4.8h3.6v1.7M6.6 6.5l.7 9h5.4l.7-9"/></svg>Delete account…</button>
           <button type="button" class="menu-item" id="logout-btn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4.5H4.8v11H8M11.5 6.8 14.7 10l-3.2 3.2M14.5 10H7.8"/></svg>Log out</button>
         </div>
       </div>
@@ -55,6 +56,7 @@
 
     <main class="content" id="content">
       <div id="gate" class="gate" hidden></div>
+      <div id="global-msg" class="notice" role="alert" hidden></div>
       <div id="verify-banner" class="notice warn" hidden>
         <strong>Verify your email to create and use API keys.</strong>
         <a id="verify-link" href="/verify-email/">Send a verification link</a>
@@ -139,10 +141,9 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
 
         <div class="cards3">
           <div class="card stat">
-            <div class="card-label">Requests today</div>
-            <div class="big"><span id="ov-used">—</span><span class="of"> / <span id="ov-limit">10,000</span></span></div>
-            <div class="meter" aria-hidden="true"><span id="ov-meter"></span></div>
-            <div class="card-foot" id="ov-reset">Resets at 00:00 UTC</div>
+            <div class="card-label">Successful requests today</div>
+            <div class="big"><span id="ov-used">—</span></div>
+            <div class="card-foot" id="ov-reset">Counter resets at 00:00 UTC</div>
             <div class="spark-row">
               <svg class="spark" id="ov-spark" viewBox="0 0 120 28" preserveAspectRatio="none" aria-hidden="true"></svg>
               <span class="spark-label" id="ov-week">— in the last 7 days</span>
@@ -184,7 +185,7 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
             <li><a href="/api/">Documentation</a><span>Request format, question types and examples</span></li>
             <li><a href="/api/endpoints.html">Endpoints</a><span>Every route, with request and response fields</span></li>
             <li><a href="/api/errors.html">Errors</a><span>Status codes and how to handle them</span></li>
-            <li><a href="#limits">Limits &amp; models</a><span>Rate limits, daily quota and model details</span></li>
+            <li><a href="#limits">Limits &amp; models</a><span>Shared capacity, how 429 works and model details</span></li>
           </ul>
         </div>
       </section>
@@ -194,7 +195,7 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
         <header class="page-head">
           <div>
             <h1>Playground</h1>
-            <p class="page-sub">Build decision questions and run them against <code>POST /v1/systemone</code>. Successful runs count toward your daily quota.</p>
+            <p class="page-sub">Build decision questions and run them against <code>POST /v1/systemone</code>. Successful runs show up in your usage.</p>
           </div>
           <div class="head-actions">
             <a class="btn" href="/api/#examples"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Docs</a>
@@ -245,10 +246,10 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
                 <strong>Your decision will appear here</strong>
                 <span>Choose a template or build your own questions, then press Run.</span>
                 <div class="tpl-grid" id="tpl-grid">
-                  <button type="button" class="tpl" data-template="support" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Multiple · Support ticket</span><span class="tpl-desc">Refund, routing and urgency for one ticket.</span></button>
-                  <button type="button" class="tpl" data-template="noul" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Yes / No · Refund request</span><span class="tpl-desc">How likely is it that the customer wants money back?</span></button>
+                  <button type="button" class="tpl" data-template="support" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Multiple · Support ticket</span><span class="tpl-desc">Refund, routing and topic for one ticket.</span></button>
+                  <button type="button" class="tpl" data-template="noul" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Yes / No · Phishing email</span><span class="tpl-desc">How likely is it that this email is a phishing attempt?</span></button>
                   <button type="button" class="tpl" data-template="choice" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Choice · Route a ticket</span><span class="tpl-desc">Pick the team best suited to handle a bug report.</span></button>
-                  <button type="button" class="tpl" data-template="score" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Score · Ticket urgency</span><span class="tpl-desc">Rate urgency on an ordered four-level scale.</span></button>
+                  <button type="button" class="tpl" data-template="tool" aria-pressed="false"><span class="tpl-icon" aria-hidden="true"></span><span class="tpl-title">Choice · Tool selection</span><span class="tpl-desc">Decide which tool an agent should call next.</span></button>
                 </div>
               </div>
               <div id="pg-result" hidden>
@@ -288,7 +289,7 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
         <header class="page-head">
           <div>
             <h1>API keys</h1>
-            <p class="page-sub">A key is shown only once, when you create it, so store it somewhere safe. Do not share your keys or put them in browser or other client-side code. All keys in your account share the same <a href="#limits">limits</a>.</p>
+            <p class="page-sub">A key is shown only once, when you create it, so store it somewhere safe. Do not share your keys or put them in browser or other client-side code. All keys in your account share the same <a href="#limits">capacity</a>.</p>
           </div>
           <div class="head-actions">
             <a class="btn" href="/api/auth.html"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Docs</a>
@@ -367,12 +368,8 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
           <div class="usage-rail">
             <div class="card rail-card">
               <div class="card-label">Today · whole account</div>
-              <div class="big"><span id="u-used">—</span><span class="of"> / <span id="u-limit">10,000</span></span></div>
-              <div class="meter" id="u-meter-wrap" role="meter" aria-label="Requests used today" aria-valuemin="0" aria-valuemax="10000" aria-valuenow="0"><span id="u-meter"></span></div>
-              <dl class="rail-dl">
-                <div><dt>Remaining</dt><dd id="u-rem">—</dd></div>
-              </dl>
-              <div class="card-foot" id="u-reset">Resets at 00:00 UTC</div>
+              <div class="big"><span id="u-used">—</span></div>
+              <div class="card-foot" id="u-reset">Counter resets at 00:00 UTC</div>
             </div>
             <div class="card rail-card">
               <div class="card-label" id="u-period-label">Last 30 days</div>
@@ -389,32 +386,31 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
         <header class="page-head">
           <div>
             <h1>Limits &amp; models</h1>
-            <p class="page-sub">Free tier, best effort and without an SLA. Limits may change.</p>
+            <p class="page-sub">Free tier, best effort and without an SLA.</p>
           </div>
           <div class="head-actions">
             <a class="btn" href="/api/limits.html"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Docs</a>
           </div>
         </header>
         <div class="card">
-          <h2>Rate limits</h2>
-          <p class="muted">Elastic request rate and concurrency use available shared capacity. Concurrency shrinks as more accounts are active. Daily quota and concurrent capacity are shared by all of your keys.</p>
+          <h2>Limits</h2>
+          <p class="muted">There is currently no fixed per-account limit: no daily request count and no requests-per-minute cap. Capacity is shared by everyone using the hosted API, so when the server is busy a request gets <code>429</code> with a <code>Retry-After</code> header. Clients should wait that long and retry.</p>
           <div class="table-scroll">
             <table class="data-table limits-table" id="limits-table">
-              <thead><tr><th scope="col">Model</th><th scope="col" class="num">Concurrent</th><th scope="col" class="num">Requests per minute</th><th scope="col" class="num">Requests per day</th><th scope="col" class="num">Input per request</th></tr></thead>
+              <thead><tr><th scope="col">Model</th><th scope="col">Per-account limit</th><th scope="col">When capacity is busy</th><th scope="col" class="num">Input per request</th></tr></thead>
               <tbody>
                 <tr>
                   <td><code class="model-id">jev-style-2b-decision-v4</code></td>
-                  <td class="num"><span id="l-conc">Elastic</span></td>
-                  <td class="num"><span id="l-rpm">Elastic</span></td>
-                  <td class="num"><span id="l-daily">10,000</span> RPD</td>
+                  <td>None fixed · shared capacity</td>
+                  <td><code>429</code> + <code>Retry-After</code>, then retry</td>
                   <td class="num"><span id="l-tokens">8,000</span> tokens</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <ul class="fine-list">
-            <li>The daily quota resets at 00:00 UTC. Only successful requests count; failed, rejected and timed-out requests are free.</li>
-            <li>Over a limit, requests get <code>429</code> (with <code>Retry-After</code> for the per-minute limit). Input over the token cap gets <code>413</code>.</li>
+            <li>Only successful requests show up in your usage; failed, rejected and timed-out requests are never charged.</li>
+            <li>A <code>429</code> means shared capacity is in use right now, not that your account hit a quota. Honour <code>Retry-After</code> and retry. Input over the token cap gets <code>413</code>.</li>
             <li>Up to <strong id="l-keys">3</strong> active API keys per account. Extra keys are for rotation, not extra capacity.</li>
           </ul>
         </div>
@@ -427,13 +423,13 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
             </div>
             <p class="muted">Jev-Style Decision 2B v4 reads a state and answers typed decision questions in a single pass, returning calibrated probabilities instead of generated text.</p>
             <dl class="specs">
-              <div><dt>Context window</dt><dd>32,768 tokens</dd></div>
-              <div><dt>Free-tier input cap</dt><dd>8,000 tokens per request</dd></div>
+              <div><dt>Context window</dt><dd>8,192 tokens</dd></div>
+              <div><dt>Input cap</dt><dd>8,000 tokens per request</dd></div>
               <div><dt>Question types</dt><dd class="types"><span><code>noul</code>yes / no</span><span><code>choice</code>pick one option</span><span><code>score</code>ordered scale</span></dd></div>
               <div><dt>Output</dt><dd>Probabilities per question, no generated text</dd></div>
               <div><dt>Endpoints</dt><dd><code>POST /v1/systemone</code><br /><code>GET /v1/models</code></dd></div>
             </dl>
-            <a class="ext-link" href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v3" target="_blank" rel="noopener noreferrer">Model card on Hugging Face <span aria-hidden="true">↗</span></a>
+            <a class="ext-link" href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4" target="_blank" rel="noopener noreferrer">Model card on Hugging Face <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
@@ -503,6 +499,26 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
       <button type="button" class="btn" data-close>Cancel</button>
       <button type="button" class="btn danger" id="revoke-confirm">Revoke key</button>
     </div>
+  </dialog>
+
+  <dialog class="dlg" id="delete-dialog" aria-labelledby="delete-title">
+    <form id="delete-form" novalidate>
+      <h3 id="delete-title">Delete account</h3>
+      <p>This revokes every API key on the account, signs you out everywhere and permanently replaces your email and name with an anonymous placeholder. It cannot be undone. You can sign up again later with the same email; that creates a new, empty account.</p>
+      <div id="delete-pw-field">
+        <label for="delete-password">Current password</label>
+        <input id="delete-password" type="password" autocomplete="current-password" />
+      </div>
+      <div id="delete-email-field" hidden>
+        <label for="delete-email">Type your account email to confirm</label>
+        <input id="delete-email" type="email" autocomplete="off" spellcheck="false" />
+      </div>
+      <div id="delete-msg" class="notice err" hidden></div>
+      <div class="dlg-actions">
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn danger" id="delete-confirm">Delete account</button>
+      </div>
+    </form>
   </dialog>
 
   <dialog class="dlg dlg-wide" id="code-dialog" aria-labelledby="code-title">

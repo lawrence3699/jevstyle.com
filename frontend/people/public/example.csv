@@ -1,0 +1,4 @@
+name,role,affiliation,location,url,description
+Ada Lovelace,Research engineer,Analytical Engines Ltd,London,https://example.org/ada,"Built the first compiler-style translation of Bernoulli numbers into machine operations; led a team of six engineers on numerical methods; published two papers on program notation."
+Grace Hopper,Senior software lead,Navy Research Lab,Washington,https://example.org/grace,"Designed the first English-like data processing language and its compiler; maintained large production systems; mentored junior programmers for a decade."
+Alan Turing,Mathematician,Bletchley Park,Manchester,https://example.org/alan,"Formal models of computation and early machine intelligence; worked on cryptanalysis hardware; no production software experience listed."

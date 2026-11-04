@@ -3,9 +3,12 @@
 
 No browser or third-party Python packages are required. Node evaluates only the
 translation object in an isolated VM; the website application is never executed.
-Run before deploying, after editing homepage copy or model data.
+Run before deploying, after editing homepage copy or model data. The homepage
+script and stylesheet live in assets/home.js and assets/home.css; both homepages
+link to them with a content hash, so browsers cache them across / and /zh/.
 """
 from pathlib import Path
+import hashlib
 import html
 import json
 import re
@@ -13,7 +16,23 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'index.html'
+HOME_JS = ROOT / 'assets/home.js'
+HOME_CSS = ROOT / 'assets/home.css'
 UPDATES_SHOWN = 4
+STATUSES = ('operational', 'degraded', 'maintenance')
+
+
+def asset_version(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:10]
+
+
+def bench_fragment(facts, lang):
+    di = facts['decisionIndex']; v4 = di['2b-v4']
+    if lang == 'zh':
+        return (f'<div class="static-bench"><p>Jev-Style 2B v4：JevBench v1.4.1 公开题准确率 74.9%；Decision Index {di["edition"]} 公开榜：Public {v4["public"]}，Full {v4["full"]}。</p>'
+                f'<p>JevBench 为单次自测。Decision Index 分数引自<a href="{di["board"]}">公开榜单</a>，2B v4 自 {di["listed"]} 起在榜；Public 是任何人都能跑的公开套件，Full 还包含维护者的私有测试，所以更低。硬件、测试协议、置信区间和限制：<a href="/models/2b-v4/">阅读模型页（英文）</a>。</p></div>')
+    return (f'<div class="static-bench"><p>Jev-Style 2B v4: JevBench v1.4.1 public accuracy 74.9%; Decision Index {di["edition"]} board: Public {v4["public"]}, Full {v4["full"]}.</p>'
+            f'<p>JevBench is a single self-run. The Decision Index scores are quoted from the <a href="{di["board"]}">public board</a>, where 2B v4 has been listed since {di["listed"]}; Public is the suite anyone can run, Full adds the maintainers\' private tests and is lower. Hardware, test protocols, confidence intervals, and limitations: <a href="/models/2b-v4/">read the model guide</a>.</p></div>')
 
 
 def fragment(doc, ident, content):
@@ -41,7 +60,7 @@ def hub_totals(data):
     return [(sum(map(all_time, hub)), 'om.s.dl'), (sum(r.get('likes') or 0 for r in hub), 'om.s.likes'), (published, 'om.s.m')]
 
 
-def render(source, translations, data, lang):
+def render(source, translations, data, lang, facts, versions):
     t = translations[lang]
     # Restrict substitution to markup, not JS strings that also contain HTML.
     markup, scripts = source.split('<script id="site-data"', 1)
@@ -58,11 +77,14 @@ def render(source, translations, data, lang):
         markup = re.sub(r'(<meta ' + attr + r' content=")[^"]*', lambda m: m[1] + html.escape(t['h3.meta'], quote=True), markup)
     markup = re.sub(r'(<meta property="og:title" content=")[^"]*', lambda m: m[1] + html.escape(t['title3'], quote=True), markup)
     markup = re.sub(r'(<button[^>]*id="langBtn"[^>]*>)[^<]*', lambda m: m[1] + ('English' if lang == 'zh' else '中文'), markup)
-    uses = [('/use-cases/support-ticket-classification/', '工单分类' if lang=='zh' else 'Support ticket classification', '一次请求判断团队、退款诉求与紧急程度。' if lang=='zh' else 'Classify the team, refund request, and urgency in one call.'), ('/guides/claude-code-guard/', 'Agent 工具调用审核' if lang=='zh' else 'Agent tool-call review', '用本地模型与明确规则辅助决定允许、询问或拒绝。' if lang=='zh' else 'Use a local model and explicit rules to allow, ask, or deny.')]
+    uses = [('/use-cases/support-ticket-classification/', '工单分类' if lang=='zh' else 'Support ticket classification', '一次请求判断负责团队与退款诉求。' if lang=='zh' else 'Route each ticket to a team and flag refund requests in one call.'), ('/guides/claude-code-guard/', 'Agent 工具调用审核' if lang=='zh' else 'Agent tool-call review', '用本地模型与明确规则辅助决定允许、询问或拒绝。' if lang=='zh' else 'Use a local model and explicit rules to allow, ask, or deny.')]
     markup = fragment(markup, 'ucGrid', ''.join(f'<article class="uc3-card static-model"><h3><a href="{url}">{title}</a></h3><p>{description}</p></article>' for url,title,description in uses))
     example = '<div class="static-example"><h3>' + ('每个选项都有概率' if lang=='zh' else 'A probability for each option') + '</h3><p>“I was billed twice. Please refund one charge.”</p><pre>{"refund": {"type": "noul", "instructions": "The customer asks for money back."}}</pre><p>' + ('示例输出：退款概率 0.967。实际结果取决于模型与输入。' if lang=='zh' else 'Illustrative output: refund probability 0.967. Results depend on the model and input.') + '</p></div>'
     markup = fragment(markup, 'tyPanel', example)
-    markup = fragment(markup, 'carTrack', '<div class="static-bench"><p>Jev-Style 2B v4: JevBench v1.4.1 public accuracy 74.9%; Decision Index 0.3 public score 44.37.</p><p>Single self-runs, not official board ranks. Hardware, test protocols, confidence intervals, and limitations: <a href="/models/2b-v4/">read the model guide</a>.</p></div>')
+    markup = fragment(markup, 'carTrack', bench_fragment(facts, lang))
+    for name, version in versions.items():
+        markup, n = re.subn(r'(/assets/home\.' + name + r')(?:\?v=[0-9a-f]+)?"', lambda m: m[1] + '?v=' + version + '"', markup)
+        assert n == 1, name
     updates = json.loads((ROOT / 'assets/updates.json').read_text())[:UPDATES_SHOWN]
     tags = {'en': {'model': 'Model', 'package': 'Package'}, 'zh': {'model': '模型', 'package': '软件包'}}[lang]
     markup = fragment(markup, 'h3News', ''.join(f'<li><time datetime="{u["date"]}">{u["date"]}</time><span>{tags[u["tag"]]}</span><a href="{u["href"]}">{html.escape(u["title"][lang])}</a></li>' for u in updates))
@@ -72,25 +94,28 @@ def render(source, translations, data, lang):
 
 def main():
     source = SOURCE.read_text()
-    obj = re.search(r'const I18N = (.*?);\s*let lang', source, re.S).group(1)
+    script = HOME_JS.read_text()
+    obj = re.search(r'const I18N = (.*?);\s*let lang', script, re.S).group(1)
     js = "const vm=require('node:vm');let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>process.stdout.write(JSON.stringify(vm.runInNewContext('('+s+')',Object.create(null),{timeout:1000}))));"
     try:
         translations = json.loads(obj)
     except json.JSONDecodeError:
         translations = json.loads(subprocess.check_output(['node','-e',js], input=obj.encode('utf-8')))
     facts = json.loads((ROOT / 'assets/project-facts.json').read_text())
-    assert facts['hostedApi']['status'] == 'operational', 'Review translated API copy before changing status.'
-    translations['en'].update({'h3.em':'Local', 'go.key':'10,000 free requests a day', 'go.demo':'No install, no API key', 'go.local':'CPU, CUDA and Apple silicon', 'om.note':'Hugging Face file requests, not unique users.'})
-    translations['zh'].update({'om.s.dl':'下载', 'om.s.likes':'点赞', 'om.s.m':'模型', 'h3.em':'本地', 'go.key':'每天 10,000 次免费请求', 'go.demo':'无需安装和 API key', 'go.local':'CPU、CUDA 和 Apple silicon', 'om.note':'Hugging Face 文件请求次数，非独立用户。'})
+    assert facts['hostedApi']['status'] in STATUSES, facts['hostedApi']['status']
+    translations['en'].update({'h3.em':'Local', 'go.key':'Free, no fixed per-account limits', 'go.demo':'No install, no API key', 'go.local':'CPU, CUDA and Apple silicon', 'om.note':'Hugging Face file requests, not unique users.'})
+    translations['zh'].update({'om.s.dl':'下载', 'om.s.likes':'点赞', 'om.s.m':'模型', 'h3.em':'本地', 'go.key':'免费，目前不设账号固定限额', 'go.demo':'无需安装和 API key', 'go.local':'CPU、CUDA 和 Apple silicon', 'om.note':'Hugging Face 文件请求次数，非独立用户。'})
     translations['en'].update({'news.h':'Latest updates', 'news.all':'All updates', 'uc.all':'All use cases', 'bench.all':'Full evaluation', 'final.h':'Start with one decision', 'final.models':'Explore models', 'f.contact':'Contact', 'nav.about':'About'})
     translations['zh'].update({'news.h':'最新动态', 'news.all':'全部更新', 'uc.all':'全部场景', 'bench.all':'完整评测', 'final.h':'从一个判断开始', 'final.models':'查看模型', 'f.contact':'联系我们', 'nav.about':'关于我们'})
     translations['en'].update({'title3':'Local Text Classification and AI Routing in Python | JevStyle', 'h3.title':'Local classification and routing for AI agents', 'h3.sub':'Small open models that score your options in one call. Run them yourself, or use the free API.', 'h3.meta':'Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon.'})
     translations['zh'].update({'title3':'Python 本地文本分类与 AI 路由模型 | JevStyle', 'h3.title':'AI Agent 的本地分类与路由', 'h3.sub':'小型开放模型，一次调用给每个选项打分。可本地运行，也可用免费 API。', 'h3.meta':'在 Python 中完成文本分类、请求路由和固定选项评分。可用免费托管 API，也可在 CPU、CUDA 与 Apple silicon 上运行小型开源模型。'})
-    source = re.sub(r'const I18N = .*?;\s*let lang', lambda _: 'const I18N = '+json.dumps(translations, ensure_ascii=False, indent=1)+';\nlet lang', source, count=1, flags=re.S)
+    script = re.sub(r'const I18N = .*?;\s*let lang', lambda _: 'const I18N = '+json.dumps(translations, ensure_ascii=False, indent=1)+';\nlet lang', script, count=1, flags=re.S)
+    HOME_JS.write_text(script)
+    versions = {'js': asset_version(HOME_JS), 'css': asset_version(HOME_CSS)}
     data = json.loads(re.search(r'<script id="site-data" type="application/json">(.*?)</script>', source, re.S).group(1))
-    SOURCE.write_text(render(source, translations, data, 'en'))
+    SOURCE.write_text(render(source, translations, data, 'en', facts, versions))
     (ROOT / 'zh').mkdir(exist_ok=True)
-    (ROOT / 'zh/index.html').write_text(render(source, translations, data, 'zh'))
+    (ROOT / 'zh/index.html').write_text(render(source, translations, data, 'zh', facts, versions))
     print('Prerendered English and Chinese homepages.')
 
 

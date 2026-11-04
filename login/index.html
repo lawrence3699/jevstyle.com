@@ -7,9 +7,7 @@
   <title>Log in · JevStyle</title>
   <meta name="description" content="Log in to Jev-Style Free API Console." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&amp;display=swap" />
+  <link rel="stylesheet" href="/assets/fonts.css" />
   <link rel="stylesheet" href="/assets/auth.css" />
   <script>(function(){try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 </head>
@@ -20,7 +18,6 @@
     JevStyle
   </a>
   <div class="card">
-    <div class="maint-note" role="status" style="margin:0 0 20px;padding:10px 14px;border:1px solid rgba(217,119,6,.45);border-radius:10px;background:rgba(217,119,6,.10);font-size:14px;line-height:1.55"><b>Maintenance</b> · The hosted API is temporarily down for maintenance, so API calls will fail for now. The open models are still available on Hugging Face.<br><span lang="zh">API 服务暂时维护中，期间无法调用。开源模型仍可在 Hugging Face 下载使用。</span></div>
     <h1>Log in</h1>
     <p class="sub">Welcome back to JevStyle Free API.</p>
     <form id="form" novalidate>
@@ -60,6 +57,9 @@
       };
 
       var CONTROL = "https://api.jevstyle.com/control/v1";
+      // Same wording as /assets/auth-flows.js: never blame the user's network for a server-side outage.
+      var OFFLINE = "Can't reach the service. Please try again later.";
+      var UNAVAILABLE = "The service is temporarily unavailable and we're working on it. Please try again in a few minutes.";
       var form = document.getElementById("form");
       var msg = document.getElementById("msg");
       var button = form.querySelector("button[type=submit]");
@@ -71,6 +71,30 @@
       }
       // Coming back from Console via the back button restores this page as it was left.
       window.addEventListener("pageshow", function () { button.classList.remove("loading"); button.disabled = false; });
+      // Google sign-in failures come back as /login/?error=<code> (control plane 0.7.1+).
+      var OAUTH_ERRORS = {
+        google_cancelled: "Google sign-in was cancelled. Try again, or log in with email and password.",
+        google_expired: "That Google sign-in took too long or was already used. Please start again.",
+        google_failed: "Google sign-in could not be completed. Try again, or log in with email and password.",
+        google_unavailable: "Google sign-in is not available right now. Please log in with email and password.",
+        account_disabled: "This account is disabled."
+      };
+      try {
+        var params = new URLSearchParams(location.search);
+        var code = params.get("error");
+        if (code) {
+          fail(Object.prototype.hasOwnProperty.call(OAUTH_ERRORS, code) ? OAUTH_ERRORS[code] : OAUTH_ERRORS.google_failed);
+          params.delete("error");
+          var rest = params.toString();
+          history.replaceState(null, "", location.pathname + (rest ? "?" + rest : "") + location.hash);
+        }
+      } catch (e) {}
+      try {
+        if (new URLSearchParams(location.search).get("deleted") === "1") {
+          msg.textContent = "Your account was deleted. All its API keys are revoked."; msg.className = "msg ok"; msg.hidden = false;
+          history.replaceState(null, "", location.pathname + location.hash);
+        }
+      } catch (e) {}
       form.addEventListener("submit", async function (ev) {
         ev.preventDefault();
         msg.hidden = true;
@@ -79,7 +103,7 @@
         if (!email || password.length < 8) {
           fail("Enter a valid email and password (min 8 characters)."); return;
         }
-        var path = "login" === "login" ? "/auth/login" : "/auth/register";
+        var path = "/auth/login";
         var body = { email: email, password: password };
         button.classList.add("loading"); button.disabled = true;
         try {
@@ -90,15 +114,15 @@
             body: JSON.stringify(body)
           });
           if (!res.ok) {
-            var errText = "Could not login.";
+            var errText = res.status >= 500 ? UNAVAILABLE : "Could not log in.";
             try { var j = await res.json(); if (j.message) errText = j.message; } catch (e) {}
-            if (res.status === 0 || res.type === "opaque") errText = "Can't reach the control plane.";
+            if (res.status === 0 || res.type === "opaque") errText = OFFLINE;
             fail(errText); button.classList.remove("loading"); button.disabled = false; return;
           }
           location.href = "/console/";
           return;
         } catch (e) {
-          fail("Can't reach the control plane. Auth routes may not be live yet — try again later.");
+          fail(OFFLINE);
         }
         button.classList.remove("loading"); button.disabled = false;
       });

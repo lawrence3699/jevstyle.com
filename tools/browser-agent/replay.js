@@ -162,7 +162,17 @@ byId('report-file').addEventListener('change', async event => {
   catch (err) { error(`Could not open report: ${err.message}`); }
   event.target.value = '';
 });
-fetch('./runs.json').then(response => { if (!response.ok) throw new Error('Run report is unavailable.'); return response.json(); }).then(value => { if (!report) loadReport(value); }).catch(err => { if (report) return; const option = document.createElement('option'); option.textContent = 'No report loaded'; byId('run-select').replaceChildren(option); set('report-summary', 'Recorded runs could not be loaded. You can open your own local report.'); error(err.message); });
+let loading = null;
+// The 1.4 MB run report is fetched only when someone opens the recorded runs, not on every page view.
+function loadRecorded() {
+  if (report || loading) return loading;
+  set('report-summary', 'Loading recorded runs…');
+  loading = fetch('./runs.json').then(response => { if (!response.ok) throw new Error('Run report is unavailable.'); return response.json(); }).then(value => { if (!report) loadReport(value); }).catch(err => { loading = null; if (report) return; const option = document.createElement('option'); option.textContent = 'No report loaded'; byId('run-select').replaceChildren(option); set('report-summary', 'Recorded runs could not be loaded. You can open your own local report.'); error(err.message); });
+  return loading;
+}
+const loadButton = byId('load-runs');
+if (loadButton) loadButton.addEventListener('click', () => { loadButton.disabled = true; loadRecorded(); });
+for (const type of ['focus', 'pointerdown']) byId('run-select').addEventListener(type, loadRecorded, { once: true });
 
 const proofFrame = byId('proof-frame');
 if (proofFrame) proofFrame.addEventListener('change', () => {

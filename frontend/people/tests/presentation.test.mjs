@@ -70,3 +70,48 @@ test('an absent or blank source never produces a made-up reference number', () =
   const blank={text:'',url:'',kind:'public_description'};p.evidence=[blank];
   assert.equal(citationNumber([p],p,blank),0);
 });
+
+// --- v3 --------------------------------------------------------------------------------
+import {affiliationLine, criteriaLines, isStructured, scholarLinks, scholarStats, structuredLabel} from '../src/presentation.ts';
+const t = (en) => en;
+test('source facts are told apart from written criteria and read as plain sentences', () => {
+  const fact = {text:'Published in the last 3 years', label:'match', required:false, kind:'recency', method:'source_field_match', value:2025};
+  const written = {text:'Works on graphs', label:'match', required:false};
+  assert.equal(isStructured(fact), true); assert.equal(isStructured(written), false);
+  assert.equal(structuredLabel(fact, t), 'Published in the last 3 years (2025)');
+  assert.equal(structuredLabel({...fact, text:'Published in the last 5 years', value:null}, t), 'Published in the last 5 years');
+  assert.equal(structuredLabel({kind:'institution', label:'mismatch', value:'Example Corp', text:'x', required:true}, t), 'At a university or research institute (Example Corp)');
+  assert.equal(structuredLabel(written, t), 'Works on graphs');
+});
+test('latest institution is labelled as a source record, never as a verified job', () => {
+  const hydrated = person('a', {affiliation:'Stanford University', location:'US', location_kind:'last_known_affiliation', current_affiliation:'Stanford University', current_affiliation_country:'US', publication_affiliation:'Cornell University'});
+  const line = affiliationLine(hydrated, t);
+  assert.equal(line.kind, 'current'); assert.match(line.label, /source record/); assert.equal(line.value, 'Stanford University · US');
+  const paper = person('b', {affiliation:'ANU', location:'AU', location_kind:'publication_affiliation'});
+  assert.equal(affiliationLine(paper, t).label, 'Publication affiliation');
+  assert.equal(affiliationLine(person('c'), t), null);
+  assert.deepEqual(scholarStats(person('d', {works_count:683, cited_by_count:19853, h_index:149, first_year:2008, latest_year:2025}), t), ['683 works', '19,853 citations', 'h-index 149', 'active 2008–2025']);
+  assert.deepEqual(scholarStats(person('e'), t), []);
+});
+test('outbound links are only https source records and plain search links', () => {
+  const p = person('a', {name:'Jure Leskovec', url:'https://openalex.org/A1', orcid:'https://orcid.org/0000-0002-5411-923X', current_affiliation:'Stanford University'});
+  const links = scholarLinks(p);
+  assert.deepEqual(links.map(l => l.id), ['openalex', 'orcid', 'scholar', 'web']);
+  assert.ok(links[2].url.startsWith('https://scholar.google.com/scholar?q=%22Jure%20Leskovec%22'));
+  assert.deepEqual(scholarLinks(person('b', {source:'import', name:'Private Person', url:'https://example.test'})), []);
+  assert.deepEqual(scholarLinks(person('c', {source:'text', name:'Pasted'})), []);
+  assert.deepEqual(scholarLinks(person('d', {source:'wikidata', url:'http://insecure.example', name:'X'})).map(l => l.id), ['scholar', 'web']);
+});
+test('criteria are one per line, trimmed and capped at six', () => {
+  assert.deepEqual(criteriaLines(' a \n\n b \nc\nd\ne\nf\ng'), ['a', 'b', 'c', 'd', 'e', 'f']);
+  assert.deepEqual(criteriaLines('   '), []);
+});
+test('result sorting can use recency and citations when scholar data exists', () => {
+  const profiles=[person('Old',{latest_year:2015,cited_by_count:50}),person('New',{latest_year:2026,cited_by_count:5}),person('Mid',{latest_year:2020,cited_by_count:500})];
+  const r=run({profiles,state:'completed'});
+  assert.deepEqual(filterPeople(r,'all','','recent').map(p=>p.name),['New','Mid','Old']);
+  assert.deepEqual(filterPeople(r,'all','','cited').map(p=>p.name),['Mid','Old','New']);
+  assert.deepEqual(filterPeople(r,'all','stanford','relevance').map(p=>p.name),[]);
+  profiles[0].topics=['Stanford things'];
+  assert.deepEqual(filterPeople(r,'all','stanford','relevance').map(p=>p.name),['Old']);
+});

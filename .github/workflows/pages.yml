@@ -49,26 +49,7 @@ jobs:
       - name: Build People Search
         run: npm ci --prefix frontend/people && npm test --prefix frontend/people && npm run build --prefix frontend/people
       - name: Prerender and validate public pages
-        run: |
-          python3 scripts/prerender_home.py
-          python3 scripts/build_site.py
-          python3 scripts/build_routing_experiment.py
-          python3 scripts/build_discovery.py
-          python3 scripts/check_site.py
-          python3 scripts/check_browser_agent.py
-          node --check tools/browser-agent/replay.js
-          python3 scripts/test_geo_snapshot.py
-          python3 scripts/test_append_geo_run.py
-          python3 scripts/test_search_collector.py
-          python3 scripts/test_discovery_audit.py
-          node scripts/check_search_performance.cjs
-          node scripts/check_search_performance_auto.cjs
-          node scripts/check_search_monitor.cjs
-          node scripts/check_admin_gate.cjs
-          node --check admin/discovery.js
-          node --check admin/search-performance.js
-          node --check admin/search-monitor.js
-          node --check admin/experiments.js
+        run: bash scripts/check_all.sh
       - name: Exclude development dependencies from publication
         run: rm -rf frontend/people/node_modules
       - uses: actions/configure-pages@v5
