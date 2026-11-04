@@ -2,120 +2,154 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://jevstyle.com/about/</loc>
+    <lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/about/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/about/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/about/" />
   </url>
   <url>
     <loc>https://jevstyle.com/api/auth.html</loc>
+    <lastmod>2026-10-31</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/api/endpoints.html</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/api/errors.html</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/api/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/api/limits.html</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/api/terms.html</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/benchmarks/banking-routing/</loc>
+    <lastmod>2026-11-01</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/benchmarks/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/contact/</loc>
+    <lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/contact/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/contact/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/contact/" />
   </url>
   <url>
     <loc>https://jevstyle.com/guides/claude-code-guard/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/decision-evaluation/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/</loc>
+    <lastmod>2026-11-02</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/local-decision-models/</loc>
+    <lastmod>2026-11-02</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/local-routing-tools/</loc>
+    <lastmod>2026-11-01</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/local-text-classification/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/replace-label-only-llm-calls/</loc>
+    <lastmod>2026-11-02</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/guides/run-locally/</loc>
+    <lastmod>2026-11-02</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/</loc>
+    <lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/" />
   </url>
   <url>
     <loc>https://jevstyle.com/models/0-8b-v3/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/models/2b-v4/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/models/compare/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/models/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/pricing/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/privacy/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/tools/browser-agent/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/updates/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/use-cases/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/use-cases/local-llm-routing/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/use-cases/local-vision-decisions/</loc>
+    <lastmod>2026-11-02</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/use-cases/support-ticket-classification/</loc>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://jevstyle.com/zh/about/</loc>
+    <lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/about/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/about/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/about/" />
   </url>
   <url>
     <loc>https://jevstyle.com/zh/contact/</loc>
+    <lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/contact/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/contact/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/contact/" />
   </url>
   <url>
     <loc>https://jevstyle.com/zh/</loc>
+    <lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://jevstyle.com/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://jevstyle.com/zh/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jevstyle.com/" />

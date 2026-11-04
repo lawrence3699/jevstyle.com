@@ -95,6 +95,9 @@ def page(path, lang, title, description, body, url_path, head=''):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(description, quote=True)}">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 {FONTS}
 {GROWTH_CSS}
 {CHROME_ASSETS}

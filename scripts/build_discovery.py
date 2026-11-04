@@ -6,6 +6,8 @@ Run after prerender_home.py. No network, credentials, or third-party packages.
 Only public content goes in the sitemap; account and admin pages stay excluded.
 """
 from pathlib import Path
+import datetime
+import hashlib
 import html
 import json
 import re
@@ -14,6 +16,11 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 FACTS = json.loads((ROOT / 'assets/project-facts.json').read_text())
 BASE = FACTS['url'].rstrip('/')
+PAGE_DATES = ROOT / 'assets/page-dates.json'
+FAVICON = ('<link rel="icon" href="/favicon.ico" sizes="32x32">\n<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
+           '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n')
+ICON_TAGS = re.compile(r'[ \t]*<link\s+rel="(?:icon|shortcut icon|apple-touch-icon)"[^>]*>\s*')
+VOLATILE = re.compile(r'<!--prerender:omStats-->.*?<!--/prerender:omStats-->', re.S)
 
 
 def slot(doc, key, content, before=None):
@@ -84,9 +91,33 @@ def current_facts(zh):
     return f'<section class="home-notes" id="current-facts" aria-labelledby="current-facts-heading"><h2 id="current-facts-heading">{title}</h2>{qa(pairs)}<p class="facts-date">{"核对日期" if zh else "Reviewed"}: <time datetime="{date}">{date}</time></p></section>'
 
 
+def content_hash(doc):
+    """Hash of the page's own content: <main> (or <body>) without the live download counters, so a
+    header/footer change or a stats refresh does not count as a page update."""
+    match = re.search(r'<main\b.*?</main>', doc, re.S) or re.search(r'<body\b.*?</body>', doc, re.S)
+    text = VOLATILE.sub('', match[0] if match else doc)
+    return hashlib.sha256(' '.join(text.split()).encode()).hexdigest()[:16]
+
+
+def page_dates(pages, docs):
+    """Sitemap lastmod per URL. A date changes only when that page's content hash changes, so rebuilding
+    unchanged pages is reproducible and redeploys do not pretend every page was edited."""
+    old = json.loads(PAGE_DATES.read_text()) if PAGE_DATES.exists() else {}
+    today = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+    new = {}
+    for path in pages:
+        key = '/' + path.relative_to(ROOT).as_posix().removesuffix('index.html')
+        digest = content_hash(docs[path])
+        entry = old.get(key)
+        new[key] = entry if entry and entry.get('hash') == digest else {'hash': digest, 'lastmod': today}
+    PAGE_DATES.write_text(json.dumps(new, indent=1, sort_keys=True) + '\n')
+    return new
+
+
 def main():
     assert FACTS['hostedApi']['status'] in ('operational', 'degraded', 'maintenance'), FACTS['hostedApi']['status']
     pages = public_pages()
+    docs = {}
     for path in pages:
         doc = path.read_text()
         url = page_url(path)
@@ -97,14 +128,16 @@ def main():
         desc = html.unescape(desc_match[1]) if desc_match else FACTS['description']
         doc = re.sub(r'<link\s+rel="canonical"[^>]*>\s*', '', doc)
         doc = doc.replace('</head>', f'<link rel="canonical" href="{url}">\n</head>', 1)
+        doc = ICON_TAGS.sub('', doc)
+        doc = doc.replace('</head>', FAVICON + '</head>', 1)
         for key, value, attr in [('og:title',title,'property'), ('og:description',desc,'property'), ('og:url',url,'property'), ('og:type','website','property'), ('og:image',BASE+'/assets/social-card.png','property'), ('twitter:card','summary_large_image','name'), ('twitter:title',title,'name'), ('twitter:description',desc,'name'), ('twitter:image',BASE+'/assets/social-card.png','name')]:
             doc = meta(doc, key, value, attr)
         doc = re.sub(r'<script[^>]*type="application/ld\+json"[^>]*>.*?</script>\s*', '', doc, flags=re.S)
-        website = {'@type':'WebSite','@id':BASE+'/#website','url':FACTS['url'],'name':FACTS['name'],'alternateName':FACTS['alternateName'],'inLanguage':['en','zh-CN']}
+        website = {'@type':'WebSite','@id':BASE+'/#website','url':FACTS['url'],'name':FACTS['name'],'alternateName':FACTS['alternateName'],'inLanguage':['en','zh-CN'],'publisher':{'@id':BASE+'/about/#maintainer'}}
         page = {'@type':'AboutPage' if '/about/' in url else 'WebPage','@id':url+'#webpage','url':url,'name':title,'description':desc,'inLanguage':lang,'isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#software'}}
+        # Every page defines the nodes it references (publisher, about), so no @id is left dangling.
         graph = [website, page]
-        if url in (BASE+'/',BASE+'/zh/',BASE+'/about/',BASE+'/zh/about/'):
-            graph += [{'@type':'Person','@id':BASE+'/about/#maintainer','name':FACTS['maintainer'],'url':BASE+'/about/','sameAs':['https://github.com/lawrence3699',FACTS['huggingface'],FACTS['linkedin']]}, {'@type':'SoftwareSourceCode','@id':BASE+'/#software','name':FACTS['name'],'alternateName':FACTS['alternateName'],'url':FACTS['url'],'description':FACTS['description'],'codeRepository':FACTS['github'],'license':FACTS['license'],'programmingLanguage':'Python','version':FACTS['packageVersion'],'author':{'@id':BASE+'/about/#maintainer'},'sameAs':[FACTS['github'],FACTS['huggingface'],FACTS['pypi']]}]
+        graph += [{'@type':'Person','@id':BASE+'/about/#maintainer','name':FACTS['maintainer'],'url':BASE+'/about/','sameAs':['https://github.com/lawrence3699',FACTS['huggingface'],FACTS['linkedin']]}, {'@type':'SoftwareSourceCode','@id':BASE+'/#software','name':FACTS['name'],'alternateName':FACTS['alternateName'],'url':FACTS['url'],'description':FACTS['description'],'codeRepository':FACTS['github'],'license':FACTS['license'],'programmingLanguage':'Python','version':FACTS['packageVersion'],'author':{'@id':BASE+'/about/#maintainer'},'sameAs':[FACTS['github'],FACTS['huggingface'],FACTS['pypi']]}]
         if url not in (BASE+'/',BASE+'/zh/'):
             graph.append({'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'首页' if zh else 'Home','item':BASE+'/zh/' if zh else FACTS['url']},{'@type':'ListItem','position':2,'name':title.split(' | ')[0],'item':url}]})
             # The breadcrumb is visible as well as machine readable.
@@ -122,6 +155,8 @@ def main():
             doc = slot(doc, 'home-guide', home_content(zh), before='  <section id="about">')
             doc = slot(doc, 'current-facts', current_facts(zh), before='  <section id="about">')
         path.write_text(doc)
+        docs[path] = doc
+    dates = page_dates(pages, docs)
     ns, xh = 'http://www.sitemaps.org/schemas/sitemap/0.9', 'http://www.w3.org/1999/xhtml'
     ET.register_namespace('',ns); ET.register_namespace('xhtml',xh)
     root = ET.Element('{'+ns+'}urlset')
@@ -129,6 +164,7 @@ def main():
         item = ET.SubElement(root,'{'+ns+'}url')
         url = page_url(path)
         ET.SubElement(item,'{'+ns+'}loc').text = url
+        ET.SubElement(item,'{'+ns+'}lastmod').text = dates['/' + path.relative_to(ROOT).as_posix().removesuffix('index.html')]['lastmod']
         if path in (ROOT/'index.html',ROOT/'zh/index.html',ROOT/'about/index.html',ROOT/'zh/about/index.html',ROOT/'contact/index.html',ROOT/'zh/contact/index.html'):
             suffix = 'about/' if '/about/' in url else 'contact/' if '/contact/' in url else ''
             for language, dest in [('en',BASE+'/'+suffix),('zh-CN',BASE+'/zh/'+suffix),('x-default',BASE+'/'+suffix)]:

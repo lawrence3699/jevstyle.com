@@ -19,4 +19,4 @@ jobs:
       - name: Verify reproducible pages and links
         run: |
           bash scripts/check_all.sh
-          git diff --exit-code -- index.html zh about contact privacy pricing updates use-cases guides models benchmarks api sitemap.xml llms.txt tools/browser-agent assets/home.js assets/home.css 404.html
+          git diff --exit-code -- index.html zh about contact privacy pricing updates use-cases guides models benchmarks api sitemap.xml llms.txt tools/browser-agent assets/home.js assets/home.css assets/page-dates.json 404.html
