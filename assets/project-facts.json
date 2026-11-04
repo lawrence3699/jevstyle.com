@@ -40,8 +40,9 @@
     }
   },
   "peopleSearch": {
-    "freeSearchesPerDay": 3,
+    "freeSearchesPerDay": 10,
     "maxPeoplePerSearch": 50,
+    "maxListRows": 500,
     "retentionDays": 30,
     "paidData": false
   },
