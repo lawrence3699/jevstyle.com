@@ -103,8 +103,8 @@ def main():
         translations = json.loads(subprocess.check_output(['node','-e',js], input=obj.encode('utf-8')))
     facts = json.loads((ROOT / 'assets/project-facts.json').read_text())
     assert facts['hostedApi']['status'] in STATUSES, facts['hostedApi']['status']
-    translations['en'].update({'h3.em':'Local', 'go.key':'Free, no fixed per-account limits', 'go.demo':'No install, no API key', 'go.local':'CPU, CUDA and Apple silicon', 'om.note':'Hugging Face file requests, not unique users.'})
-    translations['zh'].update({'om.s.dl':'下载', 'om.s.likes':'点赞', 'om.s.m':'模型', 'h3.em':'本地', 'go.key':'免费，目前不设账号固定限额', 'go.demo':'无需安装和 API key', 'go.local':'CPU、CUDA 和 Apple silicon', 'om.note':'Hugging Face 文件请求次数，非独立用户。'})
+    translations['en'].update({'h3.em':'Local', 'go.key':'Free, no fixed per-account limits', 'go.demo':'No install, no API key', 'go.local':'CPU, CUDA and Apple silicon'})
+    translations['zh'].update({'om.s.dl':'下载', 'om.s.likes':'点赞', 'om.s.m':'模型', 'h3.em':'本地', 'go.key':'免费，目前不设账号固定限额', 'go.demo':'无需安装和 API key', 'go.local':'CPU、CUDA 和 Apple silicon'})
     translations['en'].update({'news.h':'Latest updates', 'news.all':'All updates', 'uc.all':'All use cases', 'bench.all':'Full evaluation', 'final.h':'Start with one decision', 'final.models':'Explore models', 'f.contact':'Contact', 'nav.about':'About'})
     translations['zh'].update({'news.h':'最新动态', 'news.all':'全部更新', 'uc.all':'全部场景', 'bench.all':'完整评测', 'final.h':'从一个判断开始', 'final.models':'查看模型', 'f.contact':'联系我们', 'nav.about':'关于我们'})
     translations['en'].update({'title3':'Local Text Classification and AI Routing in Python | JevStyle', 'h3.title':'Local classification and routing for AI agents', 'h3.sub':'Small open models that score your options in one call. Run them yourself, or use the free API.', 'h3.meta':'Classify text, route requests, and score fixed choices in Python. Use the free hosted API, or run small open models on CPU, CUDA, or Apple silicon.'})
