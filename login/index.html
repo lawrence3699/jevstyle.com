@@ -20,7 +20,6 @@
     JevStyle
   </a>
   <div class="card">
-    <div class="maint-note" role="status" style="margin:0 0 20px;padding:10px 14px;border:1px solid rgba(217,119,6,.45);border-radius:10px;background:rgba(217,119,6,.10);font-size:14px;line-height:1.55"><b>Maintenance</b> · The hosted API is temporarily down for maintenance, so API calls will fail for now. The open models are still available on Hugging Face.<br><span lang="zh">API 服务暂时维护中，期间无法调用。开源模型仍可在 Hugging Face 下载使用。</span></div>
     <h1>Log in</h1>
     <p class="sub">Welcome back to JevStyle Free API.</p>
     <form id="form" novalidate>
@@ -60,6 +59,9 @@
       };
 
       var CONTROL = "https://api.jevstyle.com/control/v1";
+      // Same wording as /assets/auth-flows.js: never blame the user's network for a server-side outage.
+      var OFFLINE = "Can't reach the service. Please try again later.";
+      var UNAVAILABLE = "The service is temporarily unavailable and we're working on it. Please try again in a few minutes.";
       var form = document.getElementById("form");
       var msg = document.getElementById("msg");
       var button = form.querySelector("button[type=submit]");
@@ -79,7 +81,7 @@
         if (!email || password.length < 8) {
           fail("Enter a valid email and password (min 8 characters)."); return;
         }
-        var path = "login" === "login" ? "/auth/login" : "/auth/register";
+        var path = "/auth/login";
         var body = { email: email, password: password };
         button.classList.add("loading"); button.disabled = true;
         try {
@@ -90,15 +92,15 @@
             body: JSON.stringify(body)
           });
           if (!res.ok) {
-            var errText = "Could not login.";
+            var errText = res.status >= 500 ? UNAVAILABLE : "Could not log in.";
             try { var j = await res.json(); if (j.message) errText = j.message; } catch (e) {}
-            if (res.status === 0 || res.type === "opaque") errText = "Can't reach the control plane.";
+            if (res.status === 0 || res.type === "opaque") errText = OFFLINE;
             fail(errText); button.classList.remove("loading"); button.disabled = false; return;
           }
           location.href = "/console/";
           return;
         } catch (e) {
-          fail("Can't reach the control plane. Auth routes may not be live yet — try again later.");
+          fail(OFFLINE);
         }
         button.classList.remove("loading"); button.disabled = false;
       });
