@@ -216,7 +216,7 @@ code { font-size: .88em; background: var(--soft); padding: 1px 6px; border-radiu
 .health-overall i { width: 9px; height: 9px; border-radius: 50%; background: var(--ink3); flex: none; }
 .health-overall[data-state="operational"] i { background: var(--up); box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 22%, transparent); }
 .health-overall[data-state="degraded"] i { background: var(--major); box-shadow: 0 0 0 3px color-mix(in srgb, var(--major) 22%, transparent); }
-.health-overall[data-state="down"] i, .health-overall[data-state="unreachable"] i { background: var(--out); box-shadow: 0 0 0 3px color-mix(in srgb, var(--out) 22%, transparent); }
+.health-overall[data-state="down"] i, .health-overall[data-state="unavailable"] i, .health-overall[data-state="unreachable"] i { background: var(--out); box-shadow: 0 0 0 3px color-mix(in srgb, var(--out) 22%, transparent); }
 .health-comp { list-style: none; margin: 0 0 16px; padding: 0; border: 1px solid var(--line); border-radius: 10px; }
 .health-comp li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; font-size: 13.5px; font-weight: 500; }
 .health-comp li + li { border-top: 1px solid var(--line); }

@@ -51,14 +51,11 @@
   }
   function render(root, data) {
     root.replaceChildren();
-    var schedule=el('div',null,'geo-summary'); schedule.appendChild(el('p','正在读取复测计划状态…'));root.appendChild(schedule);
-    fetch('/admin/data/monitoring-status.json',{cache:'no-cache',credentials:'omit'}).then(function (r) { if (!r.ok) throw new Error();return r.json(); }).then(function (info) {
-      var g=info.geo;
-      if (!g || !g.enabled) { schedule.firstChild.textContent='复测计划尚未启用，当前仅展示已有历史。';return; }
-      var latest=data.rounds[data.rounds.length-1];
-      schedule.firstChild.textContent='已启用：'+g.schedule_label+'。运行需要本机开机、Codex 应用运行及可用网页会话。最新记录：'+latest.label+'，完成于 '+date(latest.observed_at_end)+'。页面每 5 分钟检查新结果。';
-      if (Date.now()-Date.parse(latest.observed_at_end)>9*86400000) schedule.appendChild(el('p','超过 9 天没有新复测记录，请检查本机和计划任务；现有数据已过期。'));
-    }).catch(function () { schedule.firstChild.textContent='复测计划状态暂未取得；历史记录仍可查看。'; });
+    // Freshness comes from the reviewed snapshot itself; the run schedule is private and not published here.
+    var schedule=el('div',null,'geo-summary'); root.appendChild(schedule);
+    var latest=data.rounds[data.rounds.length-1];
+    schedule.appendChild(el('p','最新记录：'+latest.label+'，完成于 '+date(latest.observed_at_end)+'。页面每 5 分钟检查新结果；此面板的数据是经审核的公开快照。'));
+    if (Date.now()-Date.parse(latest.observed_at_end)>9*86400000) schedule.appendChild(el('p','超过 9 天没有新复测记录，现有数据可能已过期。'));
     var controls = el('div', null, 'geo-controls');
     var round = select('测试轮次', data.rounds.map(function (r) { return [r.id, r.label]; }), data.rounds[data.rounds.length - 1].id);
     var provider = select('AI 平台', data.rounds[0].providers.map(function (p) { return [p.id, p.name]; }), 'gemini');

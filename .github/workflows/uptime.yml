@@ -1,8 +1,19 @@
 name: API uptime check
 
-# Probes the public API from outside every 5 minutes. On an outage it opens one
-# "uptime-alert" issue and fails the run (GitHub emails/pushes the owner); on recovery
-# it comments with the downtime and closes the issue.
+# External probe of the hosted API, run from GitHub's schedulers as a *fallback* alarm only.
+#
+# The cron below says "every 5 minutes", but GitHub throttles busy scheduled workflows: measured over
+# Oct–Nov 2026 this job actually ran every 2–10 hours (median about 4 h). Do not read the cron as the
+# detection latency. Minute-level alerting has to come from an external monitor; this workflow just
+# makes sure an outage eventually opens one "uptime-alert" issue, fails the run (GitHub emails/pushes
+# the owner) and, on recovery, comments with the downtime and closes the issue.
+#
+# Probes:
+#   - GET https://api.jevstyle.com/healthz           -> ok, inference_ready, edge_sync   (decides "down")
+#   - GET https://api-edge.jevstyle.com/healthz      -> same fields                     (reported, not decisive)
+#   - GET https://api.jevstyle.com/v1/models, no key -> expects 401 (proves the control plane / auth path answers)
+#   - GET https://api.jevstyle.com/v1/models + key   -> expects 200; only when the UPTIME_API_KEY secret is set
+# "Down" is judged on api.jevstyle.com alone, since that is the only documented entrypoint.
 
 on:
   schedule:
@@ -32,37 +43,69 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           SIMULATE_DOWN: ${{ inputs.simulate_down && 'true' || 'false' }}
+          # Optional. A monitoring-only API key; when the secret is absent this is empty and the keyed probe is skipped.
+          UPTIME_API_KEY: ${{ secrets.UPTIME_API_KEY }}
         run: |
           python3 - <<'EOF'
-          import datetime, json, os, subprocess, sys, time, urllib.request
+          import datetime, json, os, subprocess, sys, time, urllib.error, urllib.request
 
           OWNER = "lawrence3699"
           LABEL = "uptime-alert"
-          CHECKS = [
+          PRIMARY = "api.jevstyle.com"
+          HEALTH = [
               ("api.jevstyle.com", "https://api.jevstyle.com/healthz"),
               ("api-edge.jevstyle.com", "https://api-edge.jevstyle.com/healthz"),
           ]
+          MODELS_URL = "https://api.jevstyle.com/v1/models"
           simulate = os.environ.get("SIMULATE_DOWN") == "true"
+          api_key = (os.environ.get("UPTIME_API_KEY") or "").strip()
+
+          def get(url, headers=None):
+              req = urllib.request.Request(url, headers={"User-Agent": "jevstyle-uptime/2", **(headers or {})})
+              try:
+                  with urllib.request.urlopen(req, timeout=20) as r:
+                      return r.status, r.read().decode(errors="replace")
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read().decode(errors="replace")
 
           def probe():
-              reasons = []
-              for name, url in CHECKS:
+              """Returns (decisive_reasons, notes). Only decisive reasons count toward 'down'."""
+              decisive, notes = [], []
+              for name, url in HEALTH:
+                  bucket = decisive if name == PRIMARY else notes
                   try:
-                      req = urllib.request.Request(url, headers={"User-Agent": "jevstyle-uptime/1"})
-                      with urllib.request.urlopen(req, timeout=20) as r:
-                          body = json.loads(r.read().decode())
+                      status, text = get(url)
+                      body = json.loads(text)
                   except Exception as e:
-                      reasons.append(f"{name}: unreachable ({type(e).__name__}: {str(e)[:120]})")
+                      bucket.append(f"{name}: unreachable ({type(e).__name__}: {str(e)[:120]})")
                       continue
+                  if status != 200:
+                      bucket.append(f"{name}: healthz HTTP {status}")
                   if body.get("ok") is not True:
-                      reasons.append(f"{name}: ok={body.get('ok')}")
+                      bucket.append(f"{name}: ok={body.get('ok')}")
                   if body.get("inference_ready") is not True:
-                      reasons.append(f"{name}: inference_ready={body.get('inference_ready')}")
+                      bucket.append(f"{name}: inference_ready={body.get('inference_ready')}")
                   if body.get("edge_sync") == "stale":
-                      reasons.append(f"{name}: edge_sync=stale (Windows to Pod forward likely down)")
+                      bucket.append(f"{name}: edge_sync=stale (edge tunnel / local sync likely down)")
+              # Control plane reachability: an unauthenticated /v1/models must answer 401, not 5xx/HTML.
+              try:
+                  status, _ = get(MODELS_URL)
+                  if status != 401:
+                      decisive.append(f"{PRIMARY}: GET /v1/models without a key returned HTTP {status}, expected 401")
+              except Exception as e:
+                  decisive.append(f"{PRIMARY}: /v1/models unreachable ({type(e).__name__}: {str(e)[:120]})")
+              if api_key:
+                  try:
+                      status, text = get(MODELS_URL, {"Authorization": f"Bearer {api_key}"})
+                      if status != 200:
+                          decisive.append(f"{PRIMARY}: GET /v1/models with the monitoring key returned HTTP {status}, expected 200")
+                      else:
+                          json.loads(text)
+                  except Exception as e:
+                      decisive.append(f"{PRIMARY}: keyed /v1/models failed ({type(e).__name__}: {str(e)[:120]})")
               if simulate:
-                  reasons.append("simulated failure (workflow_dispatch test)")
-              return reasons
+                  decisive.append("simulated failure (workflow_dispatch test)")
+              return decisive, notes
 
           # Three probes 20 s apart; down only if at least two fail, so one blip doesn't page.
           results = []
@@ -70,10 +113,11 @@ jobs:
               if i:
                   time.sleep(20)
               results.append(probe())
-              print(f"probe {i + 1}:", results[-1] or "healthy")
-          bad = [r for r in results if r]
+              print(f"probe {i + 1}:", results[-1][0] or "healthy", "| notes:", results[-1][1] or "none")
+          bad = [r[0] for r in results if r[0]]
           down = len(bad) >= 2
           reasons = sorted({x for r in bad for x in r})
+          notes = sorted({x for r in results for x in r[1]})
 
           def gh(*args):
               return subprocess.run(["gh", *args], check=True, capture_output=True, text=True).stdout
@@ -85,22 +129,28 @@ jobs:
 
           if down and not open_issues:
               title = ("[test] " if simulate else "") + "API outage: " + reasons[0][:90]
-              body = (f"@{OWNER} the external uptime check failed at {stamp}.\n\n"
+              body = (f"@{OWNER} the external uptime check failed at {stamp} (2 of 3 probes, 20 s apart).\n\n"
                       + "\n".join(f"- {x}" for x in reasons)
-                      + "\n\nFirst things to check (see 00-HANDOFF-FOR-AI.md): the Windows tasks "
-                        "JevGpuForward / JevControlPlane, ports 28718-28720, and the Pod.\n"
-                        "This issue is closed automatically when the API recovers.")
+                      + ("\n\nSecondary endpoint notes (not used for the down decision):\n"
+                         + "\n".join(f"- {x}" for x in notes) if notes else "")
+                      + "\n\nFirst things to check: on the Windows host DESKTOP-VMVM4EE, the three scheduled tasks "
+                        "\"Jev Local Inference Host\", \"Jev Local Edge Tunnel\" and \"JevControlPlane\" "
+                        "(restart in that order). The runbook lives on the maintainer's Mac in ~/Desktop/Jev免费API落地.\n"
+                        "This check only runs every few hours (GitHub throttles the schedule), so the outage may have "
+                        "started well before this timestamp. This issue is closed automatically when the API recovers.")
               gh("issue", "create", "--title", title, "--body", body, "--label", LABEL)
               print("opened alert issue")
               sys.exit(1)  # failed run -> GitHub notifies the owner
           elif down:
               print(f"still down; alert issue #{open_issues[0]['number']} already open")
+              sys.exit(1)  # keep the run red while the outage lasts, so the Actions list is honest
           elif open_issues:
               for issue in open_issues:
                   since = datetime.datetime.fromisoformat(issue["createdAt"].replace("Z", "+00:00"))
                   minutes = int((now - since).total_seconds() // 60)
                   gh("issue", "comment", str(issue["number"]), "--body",
-                     f"Recovered at {stamp} (about {minutes} min after this alert opened). All probes healthy.")
+                     f"Recovered at {stamp} (about {minutes} min after this alert opened; probes run only every few hours, "
+                     "so the real recovery was somewhere in the last interval). All probes healthy.")
                   gh("issue", "close", str(issue["number"]))
                   print(f"closed alert issue #{issue['number']}")
           else:
