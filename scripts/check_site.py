@@ -167,6 +167,12 @@ def main():
         assert '/guides/local-text-classification/' in source
         assert '/guides/local-decision-models/' in source
         assert '1.14' in source and FACTS['packageVersion'] in source
+    for home in ('index.html', 'zh/index.html'):
+        doc = (ROOT/home).read_text()
+        graph = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', doc, re.S)[1])['@graph']
+        faq = [n for n in graph if n['@type'] == 'FAQPage']
+        visible = re.findall(r'<summary>(.*?)</summary>', re.search(r'<section id="project-guide".*?</section>', doc, re.S)[0])
+        assert len(faq) == 1 and [q['name'] for q in faq[0]['mainEntity']] == visible, f'{home}: FAQ markup must match the visible questions'
     subprocess.run(['node','--check',str(ROOT/'assets/journey.js')],check=True)
     subprocess.run(['node',str(ROOT/'scripts/check_journey.cjs')],check=True)
     print(f'Checked {len(pages)} public growth pages, {len(urls)} sitemap URLs, metadata, links, Python examples and JavaScript syntax.')

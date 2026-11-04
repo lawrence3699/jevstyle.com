@@ -23,8 +23,8 @@ browser/account identifiers, conversation URLs or private source exports.
 python3 scripts/append_geo_run.py --init-template --evidence-dir /private/evidence/run-20261030
 ```
 
-This creates `run.json` with all ten exact protocol-v1 prompts for all three
-platforms. The template has `review_ready: false` and cannot be published. Replace
+This creates `run.json` with all ten exact protocol-v1 prompts, plus the two
+optional category prompts C1–C2, for all three platforms. The template has `review_ready: false` and cannot be published. Replace
 the placeholders only with real observations. Record unavailable platforms rather
 than omitting them; do not invent successful outputs to make a run complete.
 
@@ -63,7 +63,10 @@ Each platform has its fixed `id` (`chatgpt`, `gemini`, `perplexity`), `availabil
 
 Use independent conversations and the exact D1–D7/B1–B3 prompts from the template.
 D questions do not supply the brand. B questions intentionally supply it and are
-fact checks, never discovery samples. Keep browser, model label, tool mode,
+fact checks, never discovery samples. C1–C2 (added 2026-11-05) use the category phrases
+"open-source Jev alternative" and "Jev-compatible" without the brand. They are
+exported as a separate `category_checks` group and never enter the D-question
+comparison. Record both or delete both rows; a run without them is still valid. Keep browser, model label, tool mode,
 temporary-chat/personalization settings and language stable when feasible. Record
 actual differences. Do not clear cookies, switch identities or bypass registration
 or provider restrictions to evade a limit.

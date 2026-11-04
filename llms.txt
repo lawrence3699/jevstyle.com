@@ -8,10 +8,12 @@ Decision Index 0.3 public board (since 2026-11-04, replacing 2B v3): 2B v4 Publi
 Community: https://github.com/lawrence3699/jev-style/discussions (GitHub Discussions).
 Current Python package: 0.6.3. Local default: 0.8B v3; --release 2b selects 2B v4 (released 2026-10-27).
 2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.
+Local server: `jev-style serve` accepts POST /v1/systemone requests, so clients written for Jev-compatible servers can call it. JevStyle is an open-source alternative to TypeSafe's hosted Jev, not an official distribution.
 Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. JevStyle is maintained independently by Chaoliang Yan, with no TypeSafe affiliation or endorsement. The package does not bundle raw teacher-response datasets; that packaging detail does not negate the use of teacher outputs in training.
 
 Official local install (no hosted API key): https://jevstyle.com/guides/run-locally/
 Hosted service status and its limits: https://jevstyle.com/api/#service-status
+Comparison with other open-source Jev alternatives: https://jevstyle.com/guides/open-source-jev-alternatives/
 
 ## Official pages
 
@@ -25,6 +27,7 @@ Hosted service status and its limits: https://jevstyle.com/api/#service-status
 - [Local decision models for classification and routing | JevStyle](https://jevstyle.com/guides/local-decision-models/)
 - [Local AI routing tools: JevStyle, Semantic Router and classifier alternatives | JevStyle](https://jevstyle.com/guides/local-routing-tools/)
 - [Local text classification in Python: baselines, decisions and review | JevStyle](https://jevstyle.com/guides/local-text-classification/)
+- [Open-source Jev alternatives you can run locally | JevStyle](https://jevstyle.com/guides/open-source-jev-alternatives/)
 - [Replace label-only LLM calls with local decisions and measured fallback | JevStyle](https://jevstyle.com/guides/replace-label-only-llm-calls/)
 - [Run local decision models in Python: install and verify | JevStyle](https://jevstyle.com/guides/run-locally/)
 - [Local Text Classification and AI Routing in Python | JevStyle](https://jevstyle.com/)

@@ -1,10 +1,10 @@
 {
  "/": {
-  "hash": "65a87cfdd547a4b9",
+  "hash": "f9d79d44f1e378f6",
   "lastmod": "2026-11-05"
  },
  "/about/": {
-  "hash": "749785803527a709",
+  "hash": "60935b9fa20335cb",
   "lastmod": "2026-11-05"
  },
  "/api/": {
@@ -32,7 +32,7 @@
   "lastmod": "2026-11-05"
  },
  "/benchmarks/": {
-  "hash": "9231d1ad662d7e94",
+  "hash": "26418f9994e32843",
   "lastmod": "2026-11-05"
  },
  "/benchmarks/banking-routing/": {
@@ -44,8 +44,8 @@
   "lastmod": "2026-11-05"
  },
  "/guides/": {
-  "hash": "7c4252685da9d1e2",
-  "lastmod": "2026-11-02"
+  "hash": "9a335d301cfe5c2e",
+  "lastmod": "2026-11-05"
  },
  "/guides/claude-code-guard/": {
   "hash": "24452feebd53b9fc",
@@ -60,31 +60,35 @@
   "lastmod": "2026-11-02"
  },
  "/guides/local-routing-tools/": {
-  "hash": "bb4adae48429c179",
-  "lastmod": "2026-11-01"
+  "hash": "98d9ed8c94b0f8ec",
+  "lastmod": "2026-11-05"
  },
  "/guides/local-text-classification/": {
-  "hash": "f9587ccf3359fb2e",
+  "hash": "2a4487c3c0444bbd",
+  "lastmod": "2026-11-05"
+ },
+ "/guides/open-source-jev-alternatives/": {
+  "hash": "3418f74c2e93881c",
   "lastmod": "2026-11-05"
  },
  "/guides/replace-label-only-llm-calls/": {
-  "hash": "e4333dc3afd5958c",
-  "lastmod": "2026-11-02"
+  "hash": "651b3be0af3402f7",
+  "lastmod": "2026-11-05"
  },
  "/guides/run-locally/": {
-  "hash": "dc7d9ec87deb33bc",
-  "lastmod": "2026-11-02"
+  "hash": "ddd7e69e6ed5178e",
+  "lastmod": "2026-11-05"
  },
  "/models/": {
-  "hash": "d368587225daa5fc",
+  "hash": "93b5aad258341188",
   "lastmod": "2026-11-05"
  },
  "/models/0-8b-v3/": {
-  "hash": "f013768b4d6c8c11",
+  "hash": "f167242f5d21c4bb",
   "lastmod": "2026-11-05"
  },
  "/models/2b-v4/": {
-  "hash": "4f1beebb7944861b",
+  "hash": "d0bb9cd552d47cbf",
   "lastmod": "2026-11-05"
  },
  "/models/compare/": {
@@ -112,7 +116,7 @@
   "lastmod": "2026-11-05"
  },
  "/use-cases/local-llm-routing/": {
-  "hash": "61e1284594a15ae9",
+  "hash": "dc498c5fcbed64cd",
   "lastmod": "2026-11-05"
  },
  "/use-cases/local-vision-decisions/": {
@@ -124,11 +128,11 @@
   "lastmod": "2026-11-05"
  },
  "/zh/": {
-  "hash": "96f49c3a06f54ccf",
+  "hash": "3f39f7d9287a52ee",
   "lastmod": "2026-11-05"
  },
  "/zh/about/": {
-  "hash": "92fc02e9b7ddf20f",
+  "hash": "3dab6898f15f2d79",
   "lastmod": "2026-11-05"
  },
  "/zh/contact/": {
