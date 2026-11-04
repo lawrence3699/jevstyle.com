@@ -8,17 +8,42 @@
   "huggingface": "https://huggingface.co/chaoliangUNSW",
   "pypi": "https://pypi.org/project/jev-style/",
   "linkedin": "https://www.linkedin.com/in/chaoliang-yan-a7061a370/",
+  "discussions": "https://github.com/lawrence3699/jev-style/discussions",
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
-  "reviewed": "2026-11-02",
+  "reviewed": "2026-11-05",
   "hostedApi": {
     "status": "operational",
     "model": "Jev-Style Decision 2B v4",
-    "dailyQuota": 10000,
+    "modelId": "jev-style-2b-decision-v4",
+    "contextTokens": 8192,
     "inputTokenLimit": 8000,
     "textOnly": true,
-    "statusReviewed": "2026-11-02",
+    "statusReviewed": "2026-11-05",
     "healthUrl": "https://api.jevstyle.com/healthz",
-    "concurrencyPolicy": "Elastic shared capacity; up to 3 concurrent requests per account while idle; may reduce to 2 or 1."
+    "limitsPolicy": "There is currently no fixed per-account limit: no daily request count and no per-minute cap. Capacity is shared; when the service is busy, a request returns 429 with Retry-After and the client should retry."
+  },
+  "decisionIndex": {
+    "edition": "0.3",
+    "board": "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+    "listed": "2026-11-04",
+    "replaces": "jev-style-2b-v3",
+    "2b-v4": {
+      "public": 44.37,
+      "full": 34.53,
+      "breadth": 41.75,
+      "visionPublic": 57.55,
+      "visionFull": 51.94
+    },
+    "0.8b-v3": {
+      "public": 17.0,
+      "full": 12.5
+    }
+  },
+  "peopleSearch": {
+    "freeSearchesPerDay": 3,
+    "maxPeoplePerSearch": 50,
+    "retentionDays": 30,
+    "paidData": false
   },
   "packageVersion": "0.6.3",
   "latest2bModel": "Jev-Style-2B-Decision-v4",

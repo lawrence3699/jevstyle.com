@@ -80,3 +80,4 @@ a.sp-card:hover{background:var(--soft);color:var(--ink)}
   .sp-model{grid-template-columns:minmax(0,1fr)}
   .sp-model .sp-meta{justify-self:start}
 }
+.sp-model .sp-note{font-size:13px;color:var(--muted)}

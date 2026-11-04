@@ -3,7 +3,9 @@
 > Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.
 
 Maintainer: Chaoliang Yan. Code and weights: Apache-2.0.
-Hosted API: 2B v4, text only, elastic shared capacity. Reviewed 2026-11-02. Live status: https://api.jevstyle.com/healthz. Local models and hosted demos are separate.
+Hosted API: 2B v4, text only, 8,192-token context, 8,000-token input cap. There is currently no fixed per-account limit: no daily request count and no per-minute cap. Capacity is shared; when the service is busy, a request returns 429 with Retry-After and the client should retry. Reviewed 2026-11-05. Live status: https://api.jevstyle.com/healthz. Local models and hosted demos are separate.
+Decision Index 0.3 public board (since 2026-11-04, replacing 2B v3): 2B v4 Public 44.37, Full 34.53, Breadth 41.75; Vision Public 57.55, Full 51.94; 0.8B v3 Public 17.0, Full 12.5. Public is the suite anyone can run; Full adds the maintainers' private tests and is lower. Board: https://huggingface.co/spaces/multimodalart/jev-decision-index
+Community: https://github.com/lawrence3699/jev-style/discussions (GitHub Discussions).
 Current Python package: 0.6.3. Local default: 0.8B v3; --release 2b selects 2B v4 (released 2026-10-27).
 2B v4: text and images with PyTorch; MLX and GGUF builds are text-only.
 Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. JevStyle is maintained independently by Chaoliang Yan, with no TypeSafe affiliation or endorsement. The package does not bundle raw teacher-response datasets; that packaging detail does not negate the use of teacher outputs in training.
@@ -50,4 +52,4 @@ Hosted service status and its limits: https://jevstyle.com/api/#service-status
 
 ## Reading the evidence
 
-Published benchmark results are project self-runs, not official leaderboard positions. See the benchmark page for protocol and limitations. Weight sizes are not total runtime memory. Select thresholds on held-out examples from the intended task.
+JevBench results are project self-runs; Decision Index scores are quoted from the public board above. See the benchmark page for protocol and limitations. Weight sizes are not total runtime memory. Select thresholds on held-out examples from the intended task.
