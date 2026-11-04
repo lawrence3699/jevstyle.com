@@ -7,3 +7,5 @@
 .ba-protocol small,.ba-scenarios .ba-note{overflow-wrap:anywhere}
 #run-final-page{margin:20px 0}#run-final-page img{display:block;width:100%;height:auto;border:1px solid #ddd;border-radius:7px}#run-final-page figcaption{font-size:11px;line-height:1.5;color:#777;margin-top:6px}
 .ba-historical-proof{margin:0 0 50px}.ba-historical-proof>summary{cursor:pointer;font-size:14px;color:#68616f}.ba-historical-proof .ba-proof{margin:25px 0}
+
+.ba-load{margin:10px 0;padding:8px 14px;border:1px solid #cfd8d4;border-radius:999px;background:#fff;color:inherit;font:inherit;cursor:pointer}.ba-load:disabled{opacity:.6;cursor:default}

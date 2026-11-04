@@ -121,8 +121,23 @@ def main():
     for url in urls:
         assert destination(urlsplit(url).path).exists(), url
     assert 'Sitemap: https://jevstyle.com/sitemap.xml' in (ROOT/'robots.txt').read_text()
-    for path in ('console/index.html', 'login/index.html', 'register/index.html', 'admin/index.html', 'api/docs.html','api/apply.html','api/usage.html'):
-        assert 'noindex' in (ROOT/path).read_text(), f'{path}: utility page should not be indexed'
+    # Every HTML page that is not a public page carries noindex: console, sign-in, password and e-mail flows,
+    # admin, People Search, the browser-agent fixtures and the 404 page. The Google verification file is exempt.
+    public = set(pages)
+    utility = [p for p in ROOT.rglob('*.html') if p not in public and 'node_modules' not in p.parts and p.parts[len(ROOT.parts)] != 'frontend' and not p.name.startswith('google')]
+    for path in ('console/index.html', 'login/index.html', 'register/index.html', 'forgot-password/index.html', 'reset-password/index.html', 'verify-email/index.html', 'admin/index.html', 'tools/people-search/index.html', 'api/docs.html', 'api/apply.html', 'api/usage.html', '404.html', 'tools/browser-agent/fixtures/fixture.html', 'tools/browser-agent/fixtures/scenarios/lab.html'):
+        assert ROOT/path in utility, f'{path}: expected a utility page'
+    for path in utility:
+        assert 'noindex' in path.read_text(), f'{path.relative_to(ROOT)}: utility page should not be indexed'
+    for path in list(public) + utility:
+        assert 'fonts.googleapis.com' not in path.read_text() and 'fonts.gstatic.com' not in path.read_text(), f'{path.relative_to(ROOT)}: fonts are self-hosted'
+    not_found = (ROOT/'404.html').read_text()
+    assert 'sc-nav' in not_found and 'sc-foot' in not_found and '/api/"+a[1]+".html"' in not_found and 'nozh=1' in not_found, '404.html: chrome or redirects missing'
+    for name in ('home.js', 'home.css'):
+        assert (ROOT/'assets'/name).exists(), name
+        assert sum(f'/assets/{name}?v=' in (ROOT/p).read_text() for p in ('index.html', 'zh/index.html')) == 2, f'{name}: both homepages link the versioned asset'
+    subprocess.run(['node','--check',str(ROOT/'assets/home.js')],check=True)
+    subprocess.run(['node','--check',str(ROOT/'assets/site-chrome.js')],check=True)
     assert 'https://jevstyle.com/benchmarks/' in (ROOT/'llms.txt').read_text()
     assert 'https://jevstyle.com/models/compare/' in (ROOT/'llms.txt').read_text()
     assert 'Live:</strong>' not in (ROOT/'api/index.html').read_text()
