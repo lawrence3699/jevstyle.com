@@ -30,11 +30,10 @@ main.v3 > #hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr
 .om-stats{display:flex;gap:clamp(32px,4vw,64px);margin:0}
 .om-stats > div{display:flex;flex-direction:column;gap:4px;min-width:0}
 .om-stats dd{margin:0;font:400 clamp(36px,3.2vw,48px)/1 var(--serif);font-variant-numeric:tabular-nums lining-nums;white-space:nowrap;color:var(--ink)}
-.stats-note{margin-top:12px;font-size:12px;line-height:1.5;color:var(--ink3)}
 .h3-acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:28px}
 .h3-acts .pill.dark{background:var(--acc-ink);color:var(--bg)}
 .h3-acts .more{margin-left:8px;font-size:14.5px}
-.h3-foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;min-height:18px;margin-top:22px;font:500 12px/1.5 var(--mono);color:var(--ink2)}
+.h3-foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;min-height:18px;margin-top:22px;font:500 13.5px/1.5 var(--mono);color:var(--ink2)}
 .api-status{height:auto;padding:0;background:none;font:inherit;color:inherit}
 .proof{display:flex;flex-wrap:wrap;gap:4px 16px;margin:0;padding:0;list-style:none}
 .proof a{color:inherit}
