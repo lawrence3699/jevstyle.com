@@ -48,6 +48,7 @@
             <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
           </div>
           <a class="menu-item" href="/api/"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.8h6.2L15 7.6v8.6H5zM11 3.8v4h4"/></svg>Documentation</a>
+          <button type="button" class="menu-item" id="delete-account-btn" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 6.5h9M8.2 6.5V4.8h3.6v1.7M6.6 6.5l.7 9h5.4l.7-9"/></svg>Delete account…</button>
           <button type="button" class="menu-item" id="logout-btn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4.5H4.8v11H8M11.5 6.8 14.7 10l-3.2 3.2M14.5 10H7.8"/></svg>Log out</button>
         </div>
       </div>
@@ -498,6 +499,26 @@ print(response.json()["answers"]["refund"]["noul"])  # probability of "yes"</pre
       <button type="button" class="btn" data-close>Cancel</button>
       <button type="button" class="btn danger" id="revoke-confirm">Revoke key</button>
     </div>
+  </dialog>
+
+  <dialog class="dlg" id="delete-dialog" aria-labelledby="delete-title">
+    <form id="delete-form" novalidate>
+      <h3 id="delete-title">Delete account</h3>
+      <p>This revokes every API key on the account, signs you out everywhere and permanently replaces your email and name with an anonymous placeholder. It cannot be undone. You can sign up again later with the same email; that creates a new, empty account.</p>
+      <div id="delete-pw-field">
+        <label for="delete-password">Current password</label>
+        <input id="delete-password" type="password" autocomplete="current-password" />
+      </div>
+      <div id="delete-email-field" hidden>
+        <label for="delete-email">Type your account email to confirm</label>
+        <input id="delete-email" type="email" autocomplete="off" spellcheck="false" />
+      </div>
+      <div id="delete-msg" class="notice err" hidden></div>
+      <div class="dlg-actions">
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn danger" id="delete-confirm">Delete account</button>
+      </div>
+    </form>
   </dialog>
 
   <dialog class="dlg dlg-wide" id="code-dialog" aria-labelledby="code-title">

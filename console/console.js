@@ -244,6 +244,7 @@
     state.verified = me.email_verified === true;
     setAccount(me.email || me.name || "Signed in", me.email || "");
     $("logout-btn").hidden = false;
+    $("delete-account-btn").hidden = false;
     $("ov-email").textContent = me.email || me.name || "your account";
     $("verify-banner").hidden = state.verified;
     if (!state.verified) {
@@ -1987,6 +1988,49 @@
   // out of that cache re-checks the session, so a console that was logged out never shows account data.
   window.addEventListener("pagehide", clearSecrets);
   window.addEventListener("pageshow", function (ev) { if (ev.persisted) { clearSecrets(); init(); } });
+
+  /* ---------- Delete account ---------- */
+  var deleteDialog = $("delete-dialog");
+  $("delete-account-btn").onclick = function () {
+    if (!state.me) return;
+    var google = state.me.auth_provider === "google";
+    $("delete-pw-field").hidden = google;
+    $("delete-email-field").hidden = !google;
+    $("delete-password").value = "";
+    $("delete-email").value = "";
+    notice($("delete-msg"), "");
+    $("delete-confirm").disabled = false;
+    if (acctMenu) acctMenu.hidden = true;
+    deleteDialog.showModal();
+    (google ? $("delete-email") : $("delete-password")).focus();
+  };
+  $("delete-form").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var google = state.me && state.me.auth_provider === "google";
+    var body = google ? { confirm: $("delete-email").value.trim() } : { password: $("delete-password").value };
+    if (google ? !body.confirm : !body.password) {
+      notice($("delete-msg"), google ? "Type your account email to confirm." : "Enter your current password.", "err");
+      return;
+    }
+    var btn = $("delete-confirm");
+    btn.disabled = true;
+    try {
+      var r = await api("/account/delete", { method: "POST", body: body });
+      if (r.ok) { clearSecrets(); location.replace("/login/?deleted=1"); return; }
+      var code = r.data && r.data.error;
+      var text = code === "confirmation_failed" ? (google ? "That email doesn't match this account." : "That password is not correct.")
+        : code === "wallet_balance" ? "This account still has a People Search balance. Contact us from the Contact page to settle it before deleting."
+        : r.status === 404 ? "Account deletion isn't available yet. Please try again later."
+        : r.status >= 500 ? "JevStyle is temporarily unavailable. Try again in a few minutes."
+        : errorText(r, "Couldn't delete the account.");
+      notice($("delete-msg"), text, "err");
+    } catch (e) {
+      notice($("delete-msg"), "Couldn't reach JevStyle. Try again shortly.", "err");
+    } finally {
+      $("delete-password").value = "";
+      btn.disabled = false;
+    }
+  });
 
   /* ---------- Log out ---------- */
   $("logout-btn").onclick = async function () {

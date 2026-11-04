@@ -71,6 +71,30 @@
       }
       // Coming back from Console via the back button restores this page as it was left.
       window.addEventListener("pageshow", function () { button.classList.remove("loading"); button.disabled = false; });
+      // Google sign-in failures come back as /login/?error=<code> (control plane 0.7.1+).
+      var OAUTH_ERRORS = {
+        google_cancelled: "Google sign-in was cancelled. Try again, or log in with email and password.",
+        google_expired: "That Google sign-in took too long or was already used. Please start again.",
+        google_failed: "Google sign-in could not be completed. Try again, or log in with email and password.",
+        google_unavailable: "Google sign-in is not available right now. Please log in with email and password.",
+        account_disabled: "This account is disabled."
+      };
+      try {
+        var params = new URLSearchParams(location.search);
+        var code = params.get("error");
+        if (code) {
+          fail(Object.prototype.hasOwnProperty.call(OAUTH_ERRORS, code) ? OAUTH_ERRORS[code] : OAUTH_ERRORS.google_failed);
+          params.delete("error");
+          var rest = params.toString();
+          history.replaceState(null, "", location.pathname + (rest ? "?" + rest : "") + location.hash);
+        }
+      } catch (e) {}
+      try {
+        if (new URLSearchParams(location.search).get("deleted") === "1") {
+          msg.textContent = "Your account was deleted. All its API keys are revoked."; msg.className = "msg ok"; msg.hidden = false;
+          history.replaceState(null, "", location.pathname + location.hash);
+        }
+      } catch (e) {}
       form.addEventListener("submit", async function (ev) {
         ev.preventDefault();
         msg.hidden = true;
