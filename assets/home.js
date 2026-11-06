@@ -527,7 +527,8 @@ const I18N = {
   "k.listed": "on the board since",
   "ty.q.refund": "Refund?",
   "ty.q.team": "Which team?",
-  "ty.q.today": "Action today?"
+  "ty.q.today": "Action today?",
+  "one.v42-2b": "The v4.2 decision model, with PyTorch, GGUF and MLX downloads. PyTorch supports text and images; GGUF and MLX support text."
  },
  "zh": {
   "guide.0.h": "本地大模型路由",
@@ -1053,7 +1054,8 @@ const I18N = {
   "k.listed": "上榜日期",
   "ty.q.refund": "要退款？",
   "ty.q.team": "哪个团队？",
-  "ty.q.today": "今天要处理？"
+  "ty.q.today": "今天要处理？",
+  "one.v42-2b": "v4.2 决策模型，提供 PyTorch、GGUF 和 MLX 下载。PyTorch 支持文本和图片，GGUF 与 MLX 支持文本。"
  }
 };
 let lang = location.pathname.startsWith('/zh/') ? 'zh' : 'en';   // English by default; 中文 only when the visitor picks it
@@ -1063,7 +1065,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fam = id => DATA.families.find(f => f.id === id);
 const HF = 'https://huggingface.co/';
-const display = f => ({'v4-2b':'Jev-Style 2B v4', 'v3-2b':'Jev-Style 2B v3', v3:'Jev-Style 0.8B v3', macjev:'MacJev 322M', v2:'Decision 2B v2', v1:'Decision 2B v1', 'cascade-9b':'Jev-Style Cascade 9B'})[f.id] || f.name;
+const display = f => ({'v42-2b':'Jev-Style 2B v4.2', 'v4-2b':'Jev-Style 2B v4', 'v3-2b':'Jev-Style 2B v3', v3:'Jev-Style 0.8B v3', macjev:'MacJev 322M', v2:'Decision 2B v2', v1:'Decision 2B v1', 'cascade-9b':'Jev-Style Cascade 9B'})[f.id] || f.name;
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const LBL = {en:{'MASSIVE intent':'MASSIVE, 37 held-out locales'}, zh:{'Laya typed':'Laya typed 版','Laya multi':'Laya 多语版','Best Laya':'最佳 Laya','Best official Laya':'最佳官方 Laya','Jailbreak':'越狱检测','Toxicity':'毒性检测','Model routing':'模型路由','MASSIVE intent':'MASSIVE，37 个留出语种','English Laya':'英文 Laya','Laya EN':'英文 Laya','Laya multilingual':'Laya 多语版','Laya':'Laya','Qwen3.5-2B-Base zero-shot':'Qwen3.5-2B-Base 零样本','Qwen base':'Qwen 底座'}};
 const lbl = x => (LBL[lang] && LBL[lang][x]) || x;
@@ -1138,7 +1140,7 @@ const ICON_PLAY = '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2.5v9
 
 /* ---------- sections ---------- */
 
-const MODEL_PAGES = {'v4-2b':'/models/2b-v4/', v3:'/models/0-8b-v3/'};
+const MODEL_PAGES = {'v42-2b':'/models/#v42-2b', 'v4-2b':'/models/2b-v4/', v3:'/models/0-8b-v3/'};
 const SPOT_ID = 'v4-2b';
 const jbRef = (f, k) => f.bench.jevbench.board.find(b => b.key === k).acc;
 const BENCH_NAME = {'v4-2b':'Jev-Style 2B v4', 'v3-2b':'Jev-Style 2B v3', v3:'Jev-Style 0.8B v3'};   // JevBench labels: never "Decision 2B" (FlyMy.AI's model)

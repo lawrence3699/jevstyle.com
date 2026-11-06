@@ -122,10 +122,12 @@ PACKAGE_MODELS = ('v4-2b', 'v3-2b', 'v3', 'cascade-9b')   # what `jev-style` can
 
 
 def model_card(family, one):
-    name = {'v4-2b': 'Jev-Style 2B v4', 'v3-2b': 'Jev-Style 2B v3', 'v3': 'Jev-Style 0.8B v3', 'macjev': 'MacJev 322M', 'v2': 'Decision 2B v2', 'v1': 'Decision 2B v1', 'cascade-9b': 'Jev-Style Cascade 9B'}[family['id']]
+    name = {'v42-2b': 'Jev-Style 2B v4.2', 'v4-2b': 'Jev-Style 2B v4', 'v3-2b': 'Jev-Style 2B v3', 'v3': 'Jev-Style 0.8B v3', 'macjev': 'MacJev 322M', 'v2': 'Decision 2B v2', 'v1': 'Decision 2B v1', 'cascade-9b': 'Jev-Style Cascade 9B'}[family['id']]
     guide = {'v4-2b': '/models/2b-v4/', 'v3': '/models/0-8b-v3/'}.get(family['id'], 'https://huggingface.co/' + family['repos'][0]['repo'])
     links = ''.join(f'<a href="https://huggingface.co/{html.escape(r["repo"])}" data-track="model_open">{html.escape(r["format"])}</a>' for r in family['repos'])
     note = '' if family['id'] in PACKAGE_MODELS else '<p class="sp-note">Not loadable by the jev-style package; run it with the runtime named on its model card (Transformers, llama.cpp or mlx-lm).</p>'
+    if family['id'] == 'v42-2b':
+        note = '<p class="sp-note">Use the custom runtime included in each model repository. MLX BF16 files use FP32 activations; the 8-bit files use native BF16 activations.</p>'
     return f'<article class="sp-model" id="{html.escape(family["id"])}"><h3><a href="{guide}">{name}</a></h3><span class="sp-meta">{html.escape(family["params"])} · {html.escape(family["released"])}</span><p>{html.escape(one)}</p>{note}<p class="sp-links">{links}</p></article>'
 
 
