@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Local text classification in Python: baselines, decisions and review | JevStyle</title>
-<meta name="description" content="Build a local Python text classifier with labeled data or described choices. Compare TF-IDF, embeddings and JevStyle, with runnable code and review handling.">
+<title>Local Text Classification in Python with Code Examples | JevStyle</title>
+<meta name="description" content="Classify text locally in Python with a scikit-learn baseline or a small decision model. Copy working code and send uncertain labels to review.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Local text classification in Python: baselines, decisions and review | JevStyle">
-<meta property="og:description" content="Build a local Python text classifier with labeled data or described choices. Compare TF-IDF, embeddings and JevStyle, with runnable code and review handling.">
+<meta property="og:title" content="Local Text Classification in Python with Code Examples | JevStyle">
+<meta property="og:description" content="Classify text locally in Python with a scikit-learn baseline or a small decision model. Copy working code and send uncertain labels to review.">
 <meta property="og:url" content="https://jevstyle.com/guides/local-text-classification/">
 <meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
 <meta property="og:image:alt" content="JevStyle local text classification guide">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Local text classification in Python: baselines, decisions and review | JevStyle">
-<meta name="twitter:description" content="Build a local Python text classifier with labeled data or described choices. Compare TF-IDF, embeddings and JevStyle, with runnable code and review handling.">
+<meta name="twitter:title" content="Local Text Classification in Python with Code Examples | JevStyle">
+<meta name="twitter:description" content="Classify text locally in Python with a scikit-learn baseline or a small decision model. Copy working code and send uncertain labels to review.">
 <meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/assets/growth.css">
@@ -21,7 +21,7 @@
 <script src="/assets/site-chrome.js" defer></script>
 <script src="/assets/journey.js" defer></script>
 <link rel="canonical" href="https://jevstyle.com/guides/local-text-classification/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/guides/local-text-classification/#webpage", "url": "https://jevstyle.com/guides/local-text-classification/", "name": "Local text classification in Python: baselines, decisions and review | JevStyle", "description": "Build a local Python text classifier with labeled data or described choices. Compare TF-IDF, embeddings and JevStyle, with runnable code and review handling.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Local text classification in Python: baselines, decisions and review", "item": "https://jevstyle.com/guides/local-text-classification/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/guides/local-text-classification/#webpage", "url": "https://jevstyle.com/guides/local-text-classification/", "name": "Local Text Classification in Python with Code Examples | JevStyle", "description": "Classify text locally in Python with a scikit-learn baseline or a small decision model. Copy working code and send uncertain labels to review.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Local Text Classification in Python with Code Examples", "item": "https://jevstyle.com/guides/local-text-classification/"}]}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -30,11 +30,16 @@
 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Guides</span><span aria-hidden="true">/</span><span aria-current="page">Local text classification</span></nav>
 <div class="eyebrow">Guides / Python classification</div>
 <h1>Local text classification in Python</h1>
-<p class="lead">Turn text into labels without a hosted inference call. Start with a supervised baseline when you have labels; evaluate embeddings or a small decision model when categories are described in words.</p>
+<p class="lead">Classify messages or support tickets locally in Python. Use the scikit-learn example when you have labeled data, or score described choices with a small decision model when you are starting with label definitions.</p>
 <div class="actions"><a class="button" href="#decision-model">Run a local decision model</a><a class="button secondary" href="#supervised">Try a TF-IDF baseline</a></div>
 <p class="hero-note">Examples use jev-style 0.6.2 · Reviewed 29 October 2026 · Local execution after dependencies and weights are downloaded</p>
 <div class="layout"><article class="article"><!--geo4:task-answer--><section id="measured-routing"><h2>Measured local support routing comparison</h2><p>Our <a href="/benchmarks/banking-routing/">reproducible six-intent BANKING77 experiment</a> compares JevStyle 0.8B v3 (MLX 8-bit, no task fine-tuning) with a TF-IDF classifier trained on 738 labeled examples. On 240 held-out requests, the classifier scored 229/240 and JevStyle 224/240; the classifier was also faster. The page includes all predictions, source IDs, package versions and a development threshold that missed its held-out error target. It is a project self-run with different supervision, not a general ranking or production threshold recommendation.</p></section>
-<section id="task-answer"><h2>When to use this local approach</h2><p><strong>For instruction-driven categories without fitting a new classifier first, evaluate JevStyle as a local Python text-classification option.</strong> For stable labeled categories, keep a supervised baseline. <a href="/guides/local-routing-tools/">Compare JevStyle, Semantic Router, scikit-learn and SetFit by their actual inputs and outputs</a>.</p></section><!--/geo4:task-answer-->
+<section id="task-answer"><h2>How do I classify text locally in Python?</h2>
+<ol>
+<li>Define the labels and how to handle an ambiguous message.</li>
+<li>Fit the <a href="#supervised">local TF-IDF and logistic regression baseline</a> if you have labeled examples. If you have label descriptions, try the <a href="#decision-model">JevStyle fixed-choice example</a> with the same labels.</li>
+<li>Check errors on held-out messages and send uncertain cases to review. For team assignment, refunds and urgency in one request, see the <a href="/use-cases/support-ticket-classification/">support ticket example</a>.</li>
+</ol></section><!--/geo4:task-answer-->
 <section id="choose" aria-labelledby="choose-heading"><h2 id="choose-heading">Choose the classifier from the data you have</h2>
 <p>Local text classification is a workflow: define labels, run a model on your machine, and decide which results need review. A support message can become a team label; a document can become a topic; a request can become a workflow destination. You still need representative labeled examples to measure quality, even if the model can score categories without task-specific training.</p><p>The described-choice example below uses JevStyle’s 0.8B v3 text model through a local Python server. The supervised example uses scikit-learn. Both are starting points for evaluating your own labels, not claims that one approach will win on every dataset.</p>
 <div class="table-wrap"><table><caption>Starting points to evaluate on the same held-out requests. This table is not a performance ranking.</caption><thead><tr><th scope="col">Approach</th><th scope="col">Useful starting situation</th><th scope="col">What you get</th><th scope="col">What to check</th></tr></thead><tbody>
