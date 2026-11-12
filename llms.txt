@@ -3,7 +3,7 @@
 > Open-source local classification, routing, and scoring for AI agents, using small decision models that return probabilities for predefined options.
 
 Maintainer: Chaoliang Yan. Code and weights: Apache-2.0.
-Hosted API: 2B v4, text only, 8,192-token context, 8,000-token input cap. There is currently no fixed per-account limit: no daily request count and no per-minute cap. Capacity is shared; when the service is busy, a request returns 429 with Retry-After and the client should retry. Reviewed 2026-11-05. Live status: https://api.jevstyle.com/healthz. Local models and hosted demos are separate.
+Hosted API: 2B v4, text only, 8,192-token context, 8,000-token input cap. The public fair-use policy has no fixed daily or per-minute request quota per account. Capacity is shared. When capacity is busy, retry HTTP 429 after the Retry-After interval. Reviewed 2026-11-05. Live status: https://api.jevstyle.com/healthz. Local models and hosted demos are separate.
 Decision Index 0.3 public board (since 2026-11-04, replacing 2B v3): 2B v4 Public 44.37, Full 34.53, Breadth 41.75; Vision Public 57.55, Full 51.94; 0.8B v3 Public 17.0, Full 12.5. Public is the suite anyone can run; Full adds the maintainers' private tests and is lower. Board: https://huggingface.co/spaces/multimodalart/jev-decision-index
 Community: https://github.com/lawrence3699/jev-style/discussions (GitHub Discussions).
 Current Python package: 0.6.3. Local default: 0.8B v3; --release 2b selects 2B v4 (released 2026-10-27).
@@ -11,7 +11,9 @@ Current Python package: 0.6.3. Local default: 0.8B v3; --release 2b selects 2B v
 Jev-Style 2B v4 was trained in part on soft labels distilled from TypeSafe Jev 1.14 through its public API. JevStyle is maintained independently by Chaoliang Yan, with no TypeSafe affiliation or endorsement. The package does not bundle raw teacher-response datasets; that packaging detail does not negate the use of teacher outputs in training.
 
 Official local install (no hosted API key): https://jevstyle.com/guides/run-locally/
-Hosted service status and its limits: https://jevstyle.com/api/#service-status
+Hosted service status: https://jevstyle.com/api/#service-status
+Current hosted request quota policy: https://jevstyle.com/api/limits.html#quota-policy
+Local receipt and screenshot backend support: https://jevstyle.com/use-cases/local-vision-decisions/#image-support
 
 ## Official pages
 
@@ -23,8 +25,8 @@ Hosted service status and its limits: https://jevstyle.com/api/#service-status
 - [Evaluate local decision models and choose a threshold | JevStyle](https://jevstyle.com/guides/decision-evaluation/)
 - [Guides for local classification and routing | JevStyle](https://jevstyle.com/guides/)
 - [Local decision models for classification and routing | JevStyle](https://jevstyle.com/guides/local-decision-models/)
-- [Local AI routing tools: JevStyle, Semantic Router and classifier alternatives | JevStyle](https://jevstyle.com/guides/local-routing-tools/)
-- [Local text classification in Python: baselines, decisions and review | JevStyle](https://jevstyle.com/guides/local-text-classification/)
+- [Local LLM Routing Tools and Python Examples | JevStyle](https://jevstyle.com/guides/local-routing-tools/)
+- [Local Text Classification in Python with Code Examples | JevStyle](https://jevstyle.com/guides/local-text-classification/)
 - [Replace label-only LLM calls with local decisions and measured fallback | JevStyle](https://jevstyle.com/guides/replace-label-only-llm-calls/)
 - [Run local decision models in Python: install and verify | JevStyle](https://jevstyle.com/guides/run-locally/)
 - [Local Text Classification and AI Routing in Python | JevStyle](https://jevstyle.com/)
@@ -38,7 +40,7 @@ Hosted service status and its limits: https://jevstyle.com/api/#service-status
 - [Model and package updates | JevStyle](https://jevstyle.com/updates/)
 - [Local AI use cases: classification and routing | JevStyle](https://jevstyle.com/use-cases/)
 - [Local LLM routing and intent classification | JevStyle](https://jevstyle.com/use-cases/local-llm-routing/)
-- [Local yes/no image decisions for receipts and screenshots | JevStyle](https://jevstyle.com/use-cases/local-vision-decisions/)
+- [Local AI for Receipt and Screenshot Questions | JevStyle](https://jevstyle.com/use-cases/local-vision-decisions/)
 - [Local support ticket classification and routing | JevStyle](https://jevstyle.com/use-cases/support-ticket-classification/)
 - [关于 JevStyle：可自行运行的小型决策模型 | JevStyle](https://jevstyle.com/zh/about/)
 - [联系 JevStyle | JevStyle](https://jevstyle.com/zh/contact/)

@@ -18,9 +18,9 @@
     "contextTokens": 8192,
     "inputTokenLimit": 8000,
     "textOnly": true,
-    "statusReviewed": "2026-11-05",
+    "statusReviewed": "2026-11-12",
     "healthUrl": "https://api.jevstyle.com/healthz",
-    "limitsPolicy": "There is currently no fixed per-account limit: no daily request count and no per-minute cap. Capacity is shared; when the service is busy, a request returns 429 with Retry-After and the client should retry."
+    "limitsPolicy": "The public fair-use policy has no fixed daily or per-minute request quota per account. Capacity is shared. When capacity is busy, retry HTTP 429 after the Retry-After interval."
   },
   "decisionIndex": {
     "edition": "0.3",

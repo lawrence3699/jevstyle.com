@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Limits · Jev-Style API</title>
-  <meta name="description" content="Jev-Style free decision API limits: no fixed per-account limits at the moment, shared capacity with 429 and Retry-After when busy, 8,192-token context and 8,000-token input cap." />
+  <title>JevStyle API Rate Limits, Quotas and HTTP 429</title>
+  <meta name="description" content="Check the current JevStyle API request policy, 8,000-token input limit and shared capacity. Learn how to handle HTTP 429 and Retry-After.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='8' cy='10' r='5.6' fill='none' stroke='%230D0D0F' stroke-width='2'/%3E%3Ccircle cx='8' cy='10' r='1.9' fill='%230D0D0F'/%3E%3Cpath d='M13.6 10H19' stroke='%230D0D0F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="/assets/fonts.css">
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="/assets/site-chrome.css">
   <script src="/assets/site-chrome.js" defer></script>
   <script>(function(){try{var t=localStorage.getItem("jev-api-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-<meta property="og:title" content="Limits · Jev-Style API">
-<meta property="og:description" content="Jev-Style free decision API limits: no fixed per-account limits at the moment, shared capacity with 429 and Retry-After when busy, 8,192-token context and 8,000-token input cap.">
+<meta property="og:title" content="JevStyle API Rate Limits, Quotas and HTTP 429">
+<meta property="og:description" content="Check the current JevStyle API request policy, 8,000-token input limit and shared capacity. Learn how to handle HTTP 429 and Retry-After.">
 <meta property="og:url" content="https://jevstyle.com/api/limits.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://jevstyle.com/assets/social-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Limits · Jev-Style API">
-<meta name="twitter:description" content="Jev-Style free decision API limits: no fixed per-account limits at the moment, shared capacity with 429 and Retry-After when busy, 8,192-token context and 8,000-token input cap.">
+<meta name="twitter:title" content="JevStyle API Rate Limits, Quotas and HTTP 429">
+<meta name="twitter:description" content="Check the current JevStyle API request policy, 8,000-token input limit and shared capacity. Learn how to handle HTTP 429 and Retry-After.">
 <meta name="twitter:image" content="https://jevstyle.com/assets/social-card.png">
 <script src="/assets/service-status.js" defer></script>
 <link rel="canonical" href="https://jevstyle.com/api/limits.html">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/api/limits.html#webpage", "url": "https://jevstyle.com/api/limits.html", "name": "Limits · Jev-Style API", "description": "Jev-Style free decision API limits: no fixed per-account limits at the moment, shared capacity with 429 and Retry-After when busy, 8,192-token context and 8,000-token input cap.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "Limits · Jev-Style API", "item": "https://jevstyle.com/api/limits.html"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://jevstyle.com/#website", "url": "https://jevstyle.com/", "name": "JevStyle", "alternateName": "Jev-Style", "inLanguage": ["en", "zh-CN"]}, {"@type": "WebPage", "@id": "https://jevstyle.com/api/limits.html#webpage", "url": "https://jevstyle.com/api/limits.html", "name": "JevStyle API Rate Limits, Quotas and HTTP 429", "description": "Check the current JevStyle API request policy, 8,000-token input limit and shared capacity. Learn how to handle HTTP 429 and Retry-After.", "inLanguage": "en", "isPartOf": {"@id": "https://jevstyle.com/#website"}, "about": {"@id": "https://jevstyle.com/#software"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://jevstyle.com/"}, {"@type": "ListItem", "position": 2, "name": "JevStyle API Rate Limits, Quotas and HTTP 429", "item": "https://jevstyle.com/api/limits.html"}]}]}</script>
 </head>
 <body>
   <header class="hdr">
@@ -49,10 +49,11 @@
       <a href="/register/">Create account</a>
       <a href="/console/">Console</a>
     </aside>
-    <main class="content"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="https://jevstyle.com/">Home</a> / <span aria-current="page">Limits · Jev-Style API</span></nav>
+    <main class="content"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="https://jevstyle.com/">Home</a> / <span aria-current="page">API rate limits and quotas</span></nav>
 
-      <h1>Limits</h1>
-      <p class="lead">Fair-use free tier. No SLA. Limits may change. Best effort.</p>
+      <h1>Hosted API rate limits and quotas</h1>
+      <p class="lead"><strong>The public fair-use policy has no fixed daily or per-minute request quota per account.</strong> Inference capacity is shared. When you receive <code>429</code>, use the <code>Retry-After</code> header before retrying.</p>
+      <p id="quota-policy">Older references to 10,000 requests per account per day describe a previous policy. The current free tier admits concurrent requests as shared capacity permits. The 8,000-token input limit applies to each request. Availability and limits can change.</p>
       <table>
         <tr><th>Dimension</th><th>Value</th><th>On exceed</th></tr>
         <tr><td>Requests / minute</td><td><strong>No fixed per-account cap</strong></td><td><code>429</code> + <code>Retry-After</code> only while shared capacity is busy</td></tr>
@@ -62,12 +63,12 @@
         <tr><td>Input cap / request</td><td><strong>8,000</strong> model tokens (state + all questions), max 32,000 UTF-8 bytes</td><td><code>413</code></td></tr>
         <tr><td>API keys / account</td><td><strong>3</strong></td><td>Create disabled in Console</td></tr>
       </table>
-      <p>There is currently no fixed per-account limit: no daily request count and no per-minute cap. Capacity is shared by everyone; when the service is busy, a request returns <code>429</code> with <code>Retry-After</code>, and clients should wait and retry. All keys of an account share its usage. Rejected, failed or timed-out requests do not count as successful inference.</p>
+      <p>All keys of an account share its usage. Rejected, failed or timed-out requests do not count as successful inference. The free tier is best effort, with no SLA.</p>
       <h2>Best practices</h2>
       <ul style="margin:0;padding-left:1.2em;color:var(--ink2)">
         <li style="margin-bottom:8px">Backoff on <code>429</code> / <code>504</code> / <code>5xx</code>.</li>
-        <li style="margin-bottom:8px">Keep <code>state</code> + questions under the soft cap.</li>
-        <li style="margin-bottom:8px">Send requests one at a time or from a small pool, and retry on <code>429</code> after <code>Retry-After</code>. Capacity is shared, so a burst from one account reduces what everyone else gets.</li>
+        <li style="margin-bottom:8px">Keep <code>state</code> plus questions within the input cap.</li>
+        <li style="margin-bottom:8px">Use a small client pool. On <code>429</code>, reduce the rate of requests and wait for <code>Retry-After</code> before retrying.</li>
         <li>Do not resell quota or scrape the free tier.</li>
       </ul>
 
@@ -76,7 +77,7 @@
         <a href="https://huggingface.co/chaoliangUNSW/Jev-Style-2B-Decision-v4">Model card</a>
         <span>·</span><span>Base URL <code>https://api.jevstyle.com</code></span>
       </div>
-    <section id="service-status" aria-labelledby="service-status-heading"><h2 id="service-status-heading">Hosted API status and local installation</h2><p><strong>Checked 5 November 2026: the public health endpoint reported ready for inference.</strong> This is a dated observation, not a permanent uptime claim or an end-to-end inference test. <a href="https://api.jevstyle.com/healthz">Check live health</a> for a new observation.</p><p data-service-health role="status">Live health has not been checked in this page session.</p><p>The hosted API serves text-only 2B v4 with an 8,192-token context and an 8,000-token input cap. There is currently no fixed per-account limit: no daily request count and no per-minute cap. Capacity is shared; when the service is busy, a request returns 429 with Retry-After and the client should retry. See the <a href="/api/limits.html">current limits</a>; a 429 is a capacity signal, not by itself evidence of maintenance.</p><p><a href="/guides/run-locally/">Run JevStyle locally without a hosted API key</a>. Local weights and Hugging Face demos are separate from this hosted endpoint. Install the official <code>jev-style</code> package for local inference; TypeSafe/OpenRouter Jev credentials and agent simulation are different paths.</p></section>
+    <section id="service-status" aria-labelledby="service-status-heading"><h2 id="service-status-heading">Hosted API status and local installation</h2><p><strong>Checked 12 November 2026: the public health endpoint reported ready for inference.</strong> This is a dated observation, not a permanent uptime claim or an end-to-end inference test. <a href="https://api.jevstyle.com/healthz">Check live health</a> for a new observation.</p><p data-service-health role="status">Live health has not been checked in this page session.</p><p>The hosted API serves text-only 2B v4 with an 8,192-token context and an 8,000-token input cap. The public fair-use policy has no fixed daily or per-minute request quota per account. Capacity is shared. When capacity is busy, retry HTTP 429 after the Retry-After interval. See the <a href="/api/limits.html">current limits</a>; a 429 is a capacity signal, not by itself evidence of maintenance.</p><p><a href="/guides/run-locally/">Run JevStyle locally without a hosted API key</a>. Local weights and Hugging Face demos are separate from this hosted endpoint. Install the official <code>jev-style</code> package for local inference; TypeSafe/OpenRouter Jev credentials and agent simulation are different paths.</p></section>
 </main>
   </div>
   <script>

@@ -64,13 +64,13 @@
 jev-style serve --release 0.8b</code></pre>
 <p>For the 2B v4 PyTorch build, including image input:</p>
 <div class="code-label"><span>bash</span></div><pre><code class="language-bash">python -m pip install "jev-style[torch]"
-jev-style serve --release 2b --backend torch</code></pre>
+jev-style serve --release 2b-v4 --backend torch</code></pre>
 <p>The first run downloads the model. Once the server is ready, open <a href="http://127.0.0.1:8765">the local Playground</a>. To compare releases, keep your input set and decision definitions fixed, use separate ports, and follow the <a href="/guides/decision-evaluation/">evaluation guide</a>.</p>
 <p>The hosted API is a separate service with its own available model, input cap, and service status. Do not apply these local limits to it; consult <a href="/api/">API documentation</a>.</p></section>
 <section id="questions" aria-labelledby="questions-heading"><h2 id="questions-heading">Model selection questions</h2>
 <h3>Can I use JevStyle offline?</h3><p>Local inference can run without sending decision inputs to a hosted model after the required package, weights, and runtime files have been downloaded. The browser demo and hosted API are separate online services.</p>
 <h3>Is a 0.53 GB file the total memory requirement?</h3><p>No. It is the 0.8B Q4_K_M GGUF weight file. Runtime memory is larger and depends on the backend and input. The default package setup does not necessarily choose that file.</p>
-<h3>Can the MLX or GGUF version of 2B v4 read images?</h3><p>No. Those distributions contain the language model only. Choose the 2B v4 PyTorch distribution and matching runtime for image input.</p>
+<h3>Can the MLX or GGUF version of 2B v4 read images?</h3><p>The JevStyle 2B v4 MLX and GGUF builds accept text or JSON only. For receipts and screenshots, run 2B v4 with PyTorch on CPU, Apple MPS or CUDA. See the <a href="/use-cases/local-vision-decisions/#image-support">image support check</a>.</p>
 <h3>Should I always choose the larger model?</h3><p>No. Compare task accuracy, calibration, warm latency, memory, and review coverage on your own examples. Keep a person or existing LLM available for ambiguous cases and runtime failures.</p></section>
 <section class="related" aria-labelledby="next-heading"><h2 id="next-heading">Use the model in a workflow</h2><div class="related-links"><a href="/use-cases/local-llm-routing/">Local routing<span>Route defined choices with an explicit fallback.</span></a><a href="/use-cases/support-ticket-classification/">Support ticket classification<span>Answer several questions about one ticket.</span></a><a href="/benchmarks/">Benchmark evidence<span>Metrics, hardware, protocols, and source revisions.</span></a><a href="/about/">About JevStyle<span>Maintainer, project identity, and license.</span></a></div></section></article><aside class="toc" aria-label="On this page"><strong>On this page</strong><a href="#choose">Choose a starting point</a><a href="#comparison">Model comparison</a><a href="#hardware">Hardware and backends</a><a href="#start">Run locally</a><a href="#questions">Model selection questions</a></aside></div>
 </main>
